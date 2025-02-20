@@ -3497,10 +3497,6 @@ REGISTER_SCRIPT_CONST_TABLE( Server )
 #endif
 				g_pScriptVM->SetValue( "Constants", vConstantsTable );
 
-				if ( scriptLanguage == SL_SQUIRREL )
-				{
-					g_pScriptVM->Run( g_Script_vscript_server );
-				}
 				g_VScriptGameEventListener.Init();
 
 				VScriptRunScript( "mapspawn", false );
