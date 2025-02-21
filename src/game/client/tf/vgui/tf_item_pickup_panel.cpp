@@ -84,7 +84,7 @@ void CTFItemPickupPanel::OnCommand( const char *command )
 				}
 				else
 				{
-					for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+					for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 					{
 						if ( m_aItems[m_iSelectedItem].pItem.GetStaticData()->CanBeUsedByClass(i) )
 						{
@@ -138,7 +138,7 @@ void CTFItemPickupPanel::UpdateModelPanels( void )
 			else
 			{
 				// Find a class that can use the item, and show that class image
-				for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+				for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 				{
 					if ( pItem->GetStaticData()->CanBeUsedByClass(i) )
 					{
@@ -179,7 +179,7 @@ void CTFItemPickupPanel::UpdateModelPanels( void )
 			else
 			{
 				int iClass = TF_CLASS_UNDEFINED;
-				for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+				for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 				{
 					if ( m_aItems[m_iSelectedItem].pItem.GetStaticData()->CanBeUsedByClass(i) )
 					{

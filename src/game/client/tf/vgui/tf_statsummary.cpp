@@ -435,8 +435,6 @@ void CTFStatsSummaryPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 	m_pClassComboBox->AddItem( "#StatSummary_Label_AsAnyClass", pKeyValues );
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 	{
-		if ( iClass == TF_CLASS_CIVILIAN )
-			continue;
 		pKeyValues = new KeyValues( "data" );
 		pKeyValues->SetInt( "class", iClass );
 		m_pClassComboBox->AddItem( g_aPlayerClassNames[iClass], pKeyValues );
@@ -890,9 +888,6 @@ void CTFStatsSummaryPanel::UpdateDialog()
 	// if we don't have stats for any class, add empty stat entries for them 
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 	{
-		if ( iClass == TF_CLASS_CIVILIAN )
-			continue; // Ignore the civilian.
-
 		int j;
 		for ( j = 0; j < m_aClassStats.Count(); j++ )
 		{
@@ -955,10 +950,6 @@ void CTFStatsSummaryPanel::UpdateBarCharts()
 		for ( int i = 0; i < m_aClassStats.Count(); i++ )
 		{	
 			int iClass = m_aClassStats[i].iPlayerClass;
-			if ( iClass == TF_CLASS_CIVILIAN )
-			{
-				continue;
-			}
 			if ( 0 == iChart )
 			{
 				// if this is the first chart, set the class label for each class

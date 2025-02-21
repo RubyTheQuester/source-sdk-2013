@@ -221,10 +221,10 @@ enum ETFClass
 	TF_CLASS_RANDOM
 };
 
-inline bool IsValidTFPlayerClass( int iClass ) { return iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_LAST_NORMAL_CLASS; }
+inline bool IsValidTFPlayerClass( int iClass ) { return iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS; }
 inline bool IsValidTFTeam( int iTeam ) { return iTeam == TF_TEAM_RED || iTeam == TF_TEAM_BLUE; }
 
-#define FOR_EACH_NORMAL_PLAYER_CLASS( _i ) for ( int _i = TF_FIRST_NORMAL_CLASS; _i < TF_LAST_NORMAL_CLASS; _i++ )
+#define FOR_EACH_NORMAL_PLAYER_CLASS( _i ) for ( int _i = TF_FIRST_NORMAL_CLASS; _i <= TF_LAST_NORMAL_CLASS; _i++ )
 
 extern const char *g_aPlayerClassNames[TF_CLASS_MENU_BUTTONS];				// localization keys
 extern const char *g_aPlayerClassNames_NonLocalized[TF_CLASS_MENU_BUTTONS];	// non-localized class names

@@ -10,15 +10,15 @@ PlayerClass
 	"model_hands"	"models/weapons/c_models/c_medic_arms.mdl"
 	"localize_name"	"TF_Class_Name_Civilian"
 	"speed_max"		"250"
-	"health_max"		"200"
+	"health_max"		"150"
 	"armor_max"		"0"
 
 	// Grenades.
 
 	// Weapons.
 	"weapon1"		"TF_WEAPON_FISTS"
-	"weapon2"		"TF_WEAPON_REVOLVER"
-	"weapon3"		"TF_WEAPON_SHOTGUN_PRIMARY"
+	"weapon2"		""
+	"weapon3"		""
 
 	//Thirdperson
 	"cameraoffset_forward"	"85"

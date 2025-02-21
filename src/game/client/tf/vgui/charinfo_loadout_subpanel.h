@@ -22,7 +22,7 @@
 #include "crafting_panel.h"
 #include "charinfo_armory_subpanel.h"
 
-#define NUM_CLASSES_IN_LOADOUT_PANEL		(TF_LAST_NORMAL_CLASS-1)		// We don't allow unlockables for the civilian
+#define NUM_CLASSES_IN_LOADOUT_PANEL		(TF_LAST_NORMAL_CLASS)		// We don't allow unlockables for the civilian
 
 class CImageButton : public vgui::Button
 {

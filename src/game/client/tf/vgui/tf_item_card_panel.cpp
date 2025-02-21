@@ -362,7 +362,7 @@ void CTFItemCardPanel::UpdateDescription()
 
 	// Set highlighting on the class icons
 	{
-		for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 		{
 			CExImageButton *pExImage = dynamic_cast< CExImageButton* >( m_pClassIconContainer->GetRepeatingChild( GetRemappedMenuIndexForClass(i) - 1 ) );
 			if ( pExImage )

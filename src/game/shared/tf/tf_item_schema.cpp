@@ -492,7 +492,7 @@ static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&out
 	{
 		const char* pszBaseName = pPerClassData->GetString( "basename", NULL );
 
-		for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 		{
 			if ( outputArray[i] && *outputArray[i] )
 			{
@@ -1363,7 +1363,7 @@ void CTFItemDefinition::FilloutSlotUsage( CBitVec<LOADOUT_COUNT> *pBV ) const
 bool CTFItemDefinition::CanBeUsedByAllClasses( void ) const
 {
 	// Right now, Civilian isn't a real class, so we only have 9 classes in this check
-	for ( int iClass = 1; iClass < (LOADOUT_COUNT-1); iClass++ )
+	for ( int iClass = 1; iClass < (LOADOUT_COUNT); iClass++ )
 	{
 		if ( !CanBeUsedByClass(iClass) )
 			return false;
