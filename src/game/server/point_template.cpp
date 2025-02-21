@@ -442,6 +442,7 @@ void ScriptInstallPreSpawnHook()
 {
 	if ( g_pScriptVM && !g_pScriptVM->ValueExists( "__ExecutePreSpawn" ) )
 	{
+		g_pScriptVM->Run( g_Script_spawn_helper );
 	}
 }
 
