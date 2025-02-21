@@ -2786,7 +2786,7 @@ void CTFPlayer::PostThink()
 //-----------------------------------------------------------------------------
 void CTFPlayer::PrecacheMvM()
 {
-	for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; ++i )
+	for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; ++i )
 	{
 		COMPILE_TIME_ASSERT( ARRAYSIZE( g_szBotModels ) == TF_LAST_NORMAL_CLASS );
 		int iModelIndex = PrecacheModel( g_szBotModels[ i ] );
@@ -6880,12 +6880,10 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 				break;
 			}
 		}
-		 
-		bool bCivilianOkay = false;
 
-		if ( !bCivilianOkay && ( i >= TF_LAST_NORMAL_CLASS ) )
+		if ( i > TF_LAST_NORMAL_CLASS )
 		{
-			Warning( "HandleCommand_JoinClass( %s ) - invalid class name.\n", pClassName );
+			Warning( "HandleCommand_JoinClass( %s ) - invalid class name. Frog.\n", pClassName );
 			return;
 		}
 
@@ -6902,7 +6900,7 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		// The player has selected Random class...so let's pick one for them.
 		do{
 			// Don't let them be the same class twice in a row
-			iClass = random->RandomInt( TF_FIRST_NORMAL_CLASS, TF_LAST_NORMAL_CLASS - 1 ); // -1 to remove the civilian from the randomness
+			iClass = random->RandomInt( TF_FIRST_NORMAL_CLASS, TF_LAST_NORMAL_CLASS );
 			iTries--;
 		} while( iClass == GetPlayerClass()->GetClassIndex() || (iTries > 0 && !TFGameRules()->CanPlayerChooseClass(this,iClass)) );
 
@@ -6964,7 +6962,7 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	// @note Tom Bui: we need to restrict the UI somehow
 	// if there's a class restriction on duels...
 	int iDuelClass = DuelMiniGame_GetRequiredPlayerClass( this );
-	if ( iDuelClass >= TF_FIRST_NORMAL_CLASS && iDuelClass < TF_LAST_NORMAL_CLASS )
+	if ( iDuelClass >= TF_FIRST_NORMAL_CLASS && iDuelClass <= TF_LAST_NORMAL_CLASS )
 	{
 		iClass = iDuelClass;
 	}
@@ -7112,7 +7110,7 @@ void CTFPlayer::CheckInstantLoadoutRespawn( void )
 
 	// Not if our current class's loadout hasn't changed
 	int iClass = GetPlayerClass() ? GetPlayerClass()->GetClassIndex() : TF_CLASS_UNDEFINED;
-	if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_LAST_NORMAL_CLASS )
+	if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS )
 	{
 		if ( m_Inventory.ClassLoadoutHasChanged( iClass ) )
 		{
@@ -21325,7 +21323,7 @@ void CTFPlayer::ItemTesting_UpdateBots( KeyValues *pKV )
 	FOR_EACH_VEC( m_ItemsToTest, i )
 	{
 		CEconItemView *pItem = &m_ItemsToTest[i].scriptItem;
-		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
+		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 		{
 			if ( pItem->GetStaticData()->CanBeUsedByClass(iClass) )
 			{
@@ -21361,7 +21359,7 @@ void CTFPlayer::ItemTesting_UpdateBots( KeyValues *pKV )
 	// Spawn bots of each class that uses the item (if we're doing auto addition)
 	if ( bAutoAdd )
 	{
-		for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 		{
 			if ( bNeedsBot[i] )
 			{

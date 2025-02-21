@@ -3499,7 +3499,7 @@ REGISTER_SCRIPT_CONST_TABLE( Server )
 
 				if ( scriptLanguage == SL_SQUIRREL )
 				{
-					g_pScriptVM->Run( g_Script_vscript_server );
+					//g_pScriptVM->Run( g_Script_vscript_server );
 				}
 				g_VScriptGameEventListener.Init();
 
