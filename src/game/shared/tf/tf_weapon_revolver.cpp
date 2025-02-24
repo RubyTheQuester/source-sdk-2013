@@ -39,8 +39,8 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_revolver );
 BEGIN_DATADESC( CTFRevolver )
 END_DATADESC()
 #endif
-
-
+//============================
+CREATE_SIMPLE_WEAPON_TABLE(TFRevolver_Secondary, tf_weapon_revolver_secondary)
 //=============================================================================
 //
 // Weapon Revolver functions.
