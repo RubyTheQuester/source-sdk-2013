@@ -9,14 +9,14 @@ PlayerClass
 	"model_hwm"		"models/bots/engineer/bot_engineer.mdl",
 	"model_hands"	"models/weapons/c_models/c_medic_arms.mdl"
 	"localize_name"	"TF_Class_Name_Civilian"
-	"speed_max"		"250"
-	"health_max"		"150"
+	"speed_max"		"300"
+	"health_max"		"100"
 	"armor_max"		"0"
 
 	// Grenades.
 
 	// Weapons.
-	"weapon1"		"TF_WEAPON_FISTS"
+	"weapon1"		"TF_WEAPON_BAT"
 	"weapon2"		""
 	"weapon3"		""
 

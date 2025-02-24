@@ -492,7 +492,7 @@ static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&out
 	{
 		const char* pszBaseName = pPerClassData->GetString( "basename", NULL );
 
-		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i > TF_LAST_NORMAL_CLASS; i++ )
 		{
 			if ( outputArray[i] && *outputArray[i] )
 			{

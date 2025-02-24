@@ -1154,7 +1154,7 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 	else
 	{
 		bool bFirst = true;
-		for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 		{
 			if ( pDef->CanBeUsedByClass(i) )
 			{
@@ -1194,7 +1194,7 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 	// Slot usage. First, find out if everyone uses it in the same slot, or whether it's used in different slots per class
 	bool bHasPerClassSlots = false;
 	int iDefaultSlot = pDef->GetDefaultLoadoutSlot();
-	for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+	for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 	{
 		if ( !pDef->CanBeUsedByClass(i) )
 			continue;
@@ -1217,7 +1217,7 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 	else
 	{
 		bool bFirst = true;
-		for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; i++ )
+		for ( int i = TF_FIRST_NORMAL_CLASS; i <= TF_LAST_NORMAL_CLASS; i++ )
 		{
 			if ( !pDef->CanBeUsedByClass(i) )
 				continue;

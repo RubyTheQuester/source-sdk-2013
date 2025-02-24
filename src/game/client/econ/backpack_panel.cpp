@@ -2030,7 +2030,7 @@ void CBackpackPanel::OpenContextMenu()
 		// Add equip sub menu
 		{
 			Menu *pEquipSubMenu = NULL;
-			for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
+			for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 			{
 				if ( !pItemDef->CanBeUsedByClass( iClass ) )
 					continue;
@@ -3765,7 +3765,7 @@ void CBackpackPanel::DoInspectModel()
 	else
 	{
 		bool bClassCanUse = false;
-		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; ++iClass )
+		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; ++iClass )
 		{
 			if ( pItem->GetStaticData()->CanBeUsedByClass( iClass ) )
 			{
@@ -3841,7 +3841,7 @@ void CBackpackPanel::OpenInspectModelPanelAndCopyItem( CEconItemView *pItemView 
 	}
 	else
 	{
-		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; ++iClass )
+		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; ++iClass )
 		{
 			if ( pItemView->GetStaticData()->CanBeUsedByClass( iClass ) )
 			{
