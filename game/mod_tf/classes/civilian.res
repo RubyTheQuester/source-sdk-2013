@@ -1,9 +1,9 @@
 #base "default.res"
 
-"classes/spy.res"
+"classes/civilian.res"
 {
 	"classNameLabel"
 	{
-		"labelText"		"#TF_Spy"
+		"labelText"		"#TF_Civilian"
 	}
 }

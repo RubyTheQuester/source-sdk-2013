@@ -181,9 +181,9 @@ const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Engineer =
 const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Civilian =
 {
 	{
-		0,	// LOADOUT_POSITION_PRIMARY = 0,
-		0,	// LOADOUT_POSITION_SECONDARY,
-		2,	// LOADOUT_POSITION_MELEE,
+		1,	// LOADOUT_POSITION_PRIMARY = 0,
+		2,	// LOADOUT_POSITION_SECONDARY,
+		3,	// LOADOUT_POSITION_MELEE,
 		0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
 		0,	// LOADOUT_POSITION_BUILDING,
 		0,	// LOADOUT_POSITION_PDA,

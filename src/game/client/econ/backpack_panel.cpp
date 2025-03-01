@@ -2030,7 +2030,7 @@ void CBackpackPanel::OpenContextMenu()
 		// Add equip sub menu
 		{
 			Menu *pEquipSubMenu = NULL;
-			for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
+			for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass == TF_LAST_NORMAL_CLASS; iClass++ )
 			{
 				if ( !pItemDef->CanBeUsedByClass( iClass ) )
 					continue;
@@ -2056,6 +2056,7 @@ void CBackpackPanel::OpenContextMenu()
 					case TF_CLASS_PYRO: 			pszClassName = "#TF_Class_Name_Pyro"; break;
 					case TF_CLASS_SPY: 				pszClassName = "#TF_Class_Name_Spy"; break;
 					case TF_CLASS_ENGINEER: 		pszClassName = "#TF_Class_Name_Engineer"; break;
+					case TF_CLASS_CIVILIAN: 		pszClassName = "#TF_Class_Name_Civilain"; break;
 				}
 			
 				pEquipSubMenu->AddMenuItem( pszClassName, new KeyValues( "Command", "command", CFmtStr( "equipclass%d", iClass ) ), this );

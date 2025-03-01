@@ -17,8 +17,8 @@ PlayerClass
 
 	// Weapons.
 	"weapon1"		"TF_WEAPON_BAT"
-	"weapon2"		""
-	"weapon3"		""
+	"weapon2"		"TF_WEAPON_PISTOL"
+	"weapon3"		"TF_WEAPON_SHOTGUN"
 
 	//Thirdperson
 	"cameraoffset_forward"	"85"

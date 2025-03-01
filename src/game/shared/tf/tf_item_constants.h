@@ -158,7 +158,7 @@ inline bool IsValidPickupWeaponSlot( int iSlot )
 
 // The total number of loadouts to track for each player.
 // Right now, hardcoded to match TF's 10 classes.
-#define LOADOUT_COUNT					(10+1)	// 0th class is undefined
+#define LOADOUT_COUNT					(10)	// 0th class is undefined
 
 // Halloween! (Shared by GC and game client.)
 enum EHalloweenMap
