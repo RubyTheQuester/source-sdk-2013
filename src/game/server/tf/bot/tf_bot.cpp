@@ -2286,7 +2286,7 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 		return TFGameRules()->GetActiveRoundTimer()->GetTimeRemaining();
 	}
 
-	return 0.0f;
+	return FLT_MAX;
 }
 
 
@@ -3549,6 +3549,7 @@ bool CTFBot::IsHitScanWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_SNIPERRIFLE_DECAP:
 		case TF_WEAPON_PEP_BRAWLER_BLASTER:
 		case TF_WEAPON_SNIPERRIFLE_CLASSIC:
+		case TF_WEAPON_REVOLVER_SECONDARY:
 			return true;
 		};
 	}
