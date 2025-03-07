@@ -251,16 +251,22 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
 	{
-		// push the cart
-		if ( me->GetTeamNumber() == TF_TEAM_BLUE )
+		if (TFGameRules()->HasMultipleTrains())
 		{
-			// blu is pushing
 			return new CTFBotPayloadPush;
 		}
-		else if ( me->GetTeamNumber() == TF_TEAM_RED )
+		else
 		{
-			// red is blocking
-			return new CTFBotPayloadGuard;
+			if (me->GetTeamNumber() == TF_TEAM_BLUE)
+			{
+				// blu is pushing
+				return new CTFBotPayloadPush;
+			}
+			else if (me->GetTeamNumber() == TF_TEAM_RED)
+			{
+				// red is blocking
+				return new CTFBotPayloadGuard;
+			}
 		}
 	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP )
@@ -286,6 +292,17 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		// likely KotH mode and/or all points are locked - assume capture
 		DevMsg( "%3.2f: %s: Gametype is CP, but I can't find a point to capture or defend!\n", gpGlobals->curtime, me->GetDebugIdentifier() );
 		return new CTFBotCapturePoint;
+	}
+	else if (TFGameRules()->GetGameType() == TF_GAMETYPE_ARENA)
+	{
+		// if we have a point we can capture - do it
+		CUtlVector< CTeamControlPoint* > captureVector;
+		TFGameRules()->CollectCapturePoints(me, &captureVector);
+		if (captureVector.Count() > 0)
+		{
+			return new CTFBotCapturePoint;
+		}
+		return new CTFBotSeekAndDestroy;
 	}
 	else
 	{
