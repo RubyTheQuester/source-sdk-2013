@@ -81,6 +81,8 @@ public:
 	DECLARE_CLASS( CTFRevolver_Secondary, CTFRevolver );
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_REVOLVER_SECONDARY; }
 };
 
 #endif // TF_WEAPON_REVOLVER_H

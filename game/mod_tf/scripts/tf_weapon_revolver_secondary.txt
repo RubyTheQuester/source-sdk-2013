@@ -26,7 +26,7 @@ WeaponData
 	default_clip		6
 
 	// Buckets.
-	"bucket"		"0"
+	"bucket"		"1"
 	"bucket_position"	"0"
 
 	// Animation.
