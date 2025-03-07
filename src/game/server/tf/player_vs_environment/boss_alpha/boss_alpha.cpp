@@ -5,7 +5,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_player.h"
 #include "tf_gamerules.h"

@@ -82,7 +82,7 @@ ActionResult< CTFBot >	CTFBotMainAction::OnStart( CTFBot *me, Action< CTFBot > *
 		return ChangeTo( new CTFBotDead, "I'm actually dead" );
 	}
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( TFGameRules()->IsCreepWaveMode() )
 	{
 		return ChangeTo( new CTFBotCreepWave, "I'm a creep" );
@@ -1595,7 +1595,7 @@ void CTFBotMainAction::Dodge( CTFBot *me )
 	}
 
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 		return;
 #endif // TF_RAID_MODE

@@ -308,7 +308,7 @@ CTFNavArea *CSpawnLocation::SelectSpawnArea( void ) const
 		return NULL;
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	CTFPlayer *farRaider = g_pRaidLogic->GetFarthestAlongRaider();
 
 	if ( !farRaider )

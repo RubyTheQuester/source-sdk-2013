@@ -473,7 +473,7 @@ void ClientModeTFNormal::Init()
 
 	ListenForGameEvent( "localplayer_changeclass" );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	ListenForGameEvent( "raid_spawn_mob" );
 	ListenForGameEvent( "raid_spawn_squad" );
 #endif // TF_RAID_MODE
@@ -687,7 +687,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 		}
 	}
 	
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	else if ( FStrEq( "raid_spawn_mob", eventname ) )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();

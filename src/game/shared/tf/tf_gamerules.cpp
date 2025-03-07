@@ -859,7 +859,7 @@ ConVar tf_training_client_message( "tf_training_client_message", "0", FCVAR_REPL
 #define TF_ARENA_MODE_FAST_FIRST_BLOOD_TIME 20.0f
 #define TF_ARENA_MODE_SLOW_FIRST_BLOOD_TIME 50.0f
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 // Raid mode
 ConVar tf_gamemode_raid( "tf_gamemode_raid", "0", FCVAR_REPLICATED | FCVAR_NOTIFY );		// client needs access to this for IsRaidMode()
 ConVar tf_raid_enforce_unique_classes( "tf_raid_enforce_unique_classes", "0", FCVAR_REPLICATED | FCVAR_NOTIFY );
@@ -1036,7 +1036,7 @@ bool BInEndOfMatch()
 }
 #endif
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 ConVar tf_gamemode_creep_wave( "tf_gamemode_creep_wave", "0", FCVAR_REPLICATED | FCVAR_NOTIFY );
 ConVar tf_creep_wave_player_respawn_time( "tf_creep_wave_player_respawn_time", "10", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_CHEAT, "How long it takes for a player to respawn with his team after death." );
 #endif
@@ -2065,7 +2065,7 @@ int	CTFGameRules::Damage_GetShouldNotBleed( void )
 //-----------------------------------------------------------------------------
 bool CTFGameRules::IsPVEModeActive( void ) const
 {
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsRaidMode() || IsBossBattleMode() )
 		return true;
 #endif
@@ -3149,7 +3149,7 @@ bool CTFGameRules::IsDefaultGameMode( void )
 		return false;
 
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsRaidMode() )
 		return false;
 
@@ -3157,7 +3157,7 @@ bool CTFGameRules::IsDefaultGameMode( void )
 		return false;
 #endif // TF_RAID_MODE
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( IsCreepWaveMode() )
 		return false;
 #endif // TF_CREEP_MODE
@@ -3582,14 +3582,14 @@ float CTFGameRules::GetRespawnWaveMaxLength( int iTeam, bool bScaleWithNumPlayer
 {
 	bool bScale = bScaleWithNumPlayers;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsRaidMode() )
 	{
 		return tf_raid_respawn_time.GetFloat();
 	}
 #endif // TF_RAID_MODE
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( IsCreepWaveMode() )
 	{
 		return tf_creep_wave_player_respawn_time.GetFloat();
@@ -4143,7 +4143,7 @@ static const char *s_PreserveEnts[] =
 	"tf_viewmodel",
 	"tf_logic_training",
 	"tf_logic_training_mode",
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	"tf_logic_raid",
 #endif // TF_RAID_MODE
 	"tf_powerup_bottle",
@@ -4194,7 +4194,7 @@ void CTFGameRules::Activate()
 
 	tf_bot_count.SetValue( 0 );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	tf_gamemode_raid.SetValue( 0 );
 	tf_gamemode_boss_battle.SetValue( 0 );
 #endif
@@ -4238,7 +4238,7 @@ void CTFGameRules::Activate()
 		engine->ServerCommand( "exec config_arena.cfg\n" );
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	CRaidLogic *pRaidLogic = dynamic_cast< CRaidLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_raid" ) );
 	if ( pRaidLogic )
 	{
@@ -4879,7 +4879,7 @@ void CTFGameRules::SetupOnRoundStart( void )
 		g_pMonsterResource->HideBossHealthMeter();
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsBossBattleMode() )
 	{
 		CTFTeam *enemyTeam = GetGlobalTFTeam( TF_TEAM_RED );
@@ -8507,7 +8507,7 @@ void CTFGameRules::Think()
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// This check is here for Boss battles that don't have a tf_raid_logic entity
 	if ( IsBossBattleMode() && !IsInWaitingForPlayers() && State_Get() == GR_STATE_RND_RUNNING )
 	{
@@ -9566,7 +9566,7 @@ void CTFGameRules::SetWinningTeam( int team, int iWinReason, bool bForceMapReset
 
 	DuelMiniGame_AssignWinners();
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( !IsBossBattleMode() )
 	{
 		// Don't do a full reset in Raid mode if the defending team didn't win
@@ -13681,7 +13681,7 @@ void CTFGameRules::SendWinPanelInfo( bool bGameOver )
 		winEvent->SetInt( "killstreak_player_1", nMaxStreakPlayerIndex );
 		winEvent->SetInt( "killstreak_player_1_count", nMaxStreakCount );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		if ( !bRoundComplete && ( TEAM_UNASSIGNED != m_iWinningTeam ) && !IsRaidMode() )
 #else
 		if ( !bRoundComplete && ( TEAM_UNASSIGNED != m_iWinningTeam ) )
@@ -13989,7 +13989,7 @@ bool CTFGameRules::TimerMayExpire( void )
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsRaidMode() && IsBossBattleMode() && tf_raid_allow_overtime.GetBool() )
 	{
 		CUtlVector< CTFPlayer * > alivePlayerVector;
@@ -14951,7 +14951,7 @@ void CTFGameRules::RoundRespawn( void )
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// Raid mode: clean up any Red buildings that might be left behind from the previous round
 	if ( IsRaidMode() )
 	{
@@ -16878,7 +16878,7 @@ bool CTFGameRules::PlayerMayCapturePoint( CBasePlayer *pPlayer, int iPointIndex,
 		}
 	}
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( IsCreepWaveMode() )
 	{
 		CTFBot *bot = ToTFBot( pTFPlayer );
@@ -16906,7 +16906,7 @@ bool CTFGameRules::PlayerMayBlockPoint( CBasePlayer *pPlayer, int iPointIndex, c
 		return false;
 
 #ifdef GAME_DLL
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( IsCreepWaveMode() )
 	{
 		CTFBot *bot = ToTFBot( pTFPlayer );
@@ -17601,7 +17601,7 @@ bool CTFGameRules::CanPlayerChooseClass( CBasePlayer *pPlayer, int iClass )
 {
 	int iClassLimit = GetClassLimit( iClass );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( IsRaidMode() && !pPlayer->IsBot() )
 	{
 		// bots are exempt from class limits, to allow for additional support bot "friends"
@@ -18070,7 +18070,7 @@ bool CTFGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 int	CTFGameRules::GetCaptureValueForPlayer( CBasePlayer *pPlayer )
 {
 #ifdef GAME_DLL
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( IsCreepWaveMode() )
 	{
 		CTFBot *bot = ToTFBot( pPlayer );
@@ -19014,7 +19014,7 @@ const char *GetMapDisplayName( const char *mapName, bool bTitleCase /* = false *
 	{
 		pszSrc +=  5;
 	}
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	else if ( !Q_strncmp( pszSrc, "raid_", 5 ) )
 	{
 		pszSrc +=  5;
@@ -19120,7 +19120,7 @@ const char *GetMapType( const char *mapName )
 		{
 			return "#Gametype_SD";
 		}
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		else if ( !Q_strnicmp( mapName, "raid_", 5 ) )
 		{
 			return "#Gametype_Raid";

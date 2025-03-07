@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_LAUNCH_ROCKETS_H
 #define BOSS_ALPHA_LAUNCH_ROCKETS_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 //---------------------------------------------------------------------------------------------
 class CBossAlphaLaunchRockets : public Action< CBossAlpha >

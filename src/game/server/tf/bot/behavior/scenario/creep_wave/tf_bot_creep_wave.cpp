@@ -5,7 +5,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 
 #include "team.h"
 #include "team_control_point_master.h"

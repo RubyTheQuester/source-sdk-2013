@@ -180,7 +180,7 @@ bool CTFBotDestroyEnemySentry::IsPossible( CTFBot *me )
 		return false;
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( me->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
@@ -679,7 +679,7 @@ ActionResult< CTFBot >	CTFBotDestroyEnemySentry::Update( CTFBot *me, float inter
 
 		if ( me->IsRangeLessThan( attackSpot, 200.0f ) )
 		{
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 			if ( m_creepTimer.IsElapsed() )
 			{
 				m_canMove = !m_canMove;

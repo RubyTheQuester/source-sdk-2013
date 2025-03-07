@@ -6,7 +6,7 @@
 #ifndef TF_BOT_SQUAD_ATTACK_H
 #define TF_BOT_SQUAD_ATTACK_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "Path/NextBotPathFollow.h"
 #include "Path/NextBotChasePath.h"

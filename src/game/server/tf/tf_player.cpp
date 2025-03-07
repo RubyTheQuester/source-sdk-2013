@@ -114,7 +114,7 @@
 #include "gcsdk/gcclient_sharedobjectcache.h"
 #include "tf_party.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 #include "bot_npc/bot_npc_decoy.h"
 #include "raid/tf_raid_logic.h"
 #endif
@@ -207,7 +207,7 @@ ConVar tf_allow_player_use( "tf_allow_player_use", "0", FCVAR_NOTIFY, "Allow pla
 ConVar tf_deploying_bomb_time( "tf_deploying_bomb_time", "1.90", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Time to deploy bomb before the point of no return." );
 ConVar tf_deploying_bomb_delay_time( "tf_deploying_bomb_delay_time", "0.0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Time to delay before deploying bomb." );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 ConVar tf_raid_team_size( "tf_raid_team_size", "5", FCVAR_NOTIFY, "Max number of Raiders" );
 ConVar tf_raid_respawn_safety_time( "tf_raid_respawn_safety_time", "1.5", FCVAR_NOTIFY, "Number of seconds of invulnerability after respawning" );
 ConVar tf_raid_allow_class_change( "tf_raid_allow_class_change", "1", FCVAR_NOTIFY, "If nonzero, allow invaders to change their class after leaving the safe room" );
@@ -1576,7 +1576,7 @@ void CTFPlayer::TFPlayerThink()
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	CTFNavArea *area = (CTFNavArea *)GetLastKnownArea();
 	if ( area && area->HasAttributeTF( TF_NAV_RESCUE_CLOSET ) )
 	{
@@ -3272,7 +3272,7 @@ bool CTFPlayer::IsReadyToSpawn( void )
 		return false;
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( GetTeamNumber() == TF_TEAM_RED )
 	{
 		if ( TFGameRules()->IsRaidMode() || TFGameRules()->IsBossBattleMode() )
@@ -3797,7 +3797,7 @@ void CTFPlayer::Spawn()
 		gameeventmanager->FireEvent( event );
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() && GetTeamNumber() == TF_TEAM_BLUE )
 	{
 		// raiders respawn invulnerable for a short time
@@ -5668,7 +5668,7 @@ void CTFPlayer::ApplySetBonuses( void )
 	}
 }
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 //-----------------------------------------------------------------------------
 // Return true if the given entity can be used by a dead Raider
 // as a respawn point in Raid mode.
@@ -5705,7 +5705,7 @@ CBaseEntity* CTFPlayer::EntSelectSpawnPoint()
 	CBaseEntity *pSpot = g_pLastSpawnPoints[ GetTeamNumber() ];
 	const char *pSpawnPointName = "";
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( GetTeamNumber() == TF_TEAM_BLUE )
@@ -6055,7 +6055,7 @@ int CTFPlayer::GetAutoTeam( int nPreferedTeam /*= TF_TEAM_AUTOASSIGN*/ )
 
 			bool bReturnDefenders = false;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 			if ( TFGameRules()->IsBossBattleMode() )
 			{
 				bReturnDefenders = true;
@@ -6324,7 +6324,7 @@ void CTFPlayer::HandleCommand_JoinTeam( const char *pTeamName )
 	if ( IsCoaching() && ( iTeam != TEAM_SPECTATOR ) )
 		return;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( !IsBot() && iTeam != TEAM_SPECTATOR )
@@ -6830,7 +6830,7 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() && GetTeamNumber() == TF_TEAM_BLUE && !tf_raid_allow_class_change.GetBool() )
 	{
 		CTFNavArea *area = (CTFNavArea *)GetLastKnownArea();
@@ -7797,7 +7797,7 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 				ChangeTeam( iTeam, true, false );
 				ShowViewPortPanel( ( iTeam == TF_TEAM_RED ) ? PANEL_CLASS_RED : PANEL_CLASS_BLUE );
 			}
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 			else if ( TFGameRules()->IsBossBattleMode() )
 			{
 				int iTeam = GetAutoTeam();
@@ -8009,7 +8009,7 @@ bool CTFPlayer::ClientCommand( const CCommand &args )
 	else if ( FStrEq( pcmd, "team_ui_setup" ) )
 	{
 		bool bAutoTeam = ShouldForceAutoTeam();
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		bAutoTeam |= TFGameRules()->IsBossBattleMode();
 #endif
 		
@@ -12188,7 +12188,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 		DropHealthPack( info, true );
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// Bots sometimes drop health kits in Raid Mode
 	if ( TFGameRules()->IsRaidMode() && GetTeamNumber() == TF_TEAM_RED )
 	{
@@ -13432,7 +13432,7 @@ void CTFPlayer::RemoveAllOwnedEntitiesFromWorld( bool bExplodeBuildings /* = fal
 	}
 
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() && ( GetTeamNumber() == TF_TEAM_RED ) )
 	{
 		// for now, leave Engineer's sentrygun alive after he dies
@@ -16261,7 +16261,7 @@ int CTFPlayer::BuildObservableEntityList( void )
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// Add all of the objects for my team if we're in Raid mode
 	if ( TFGameRules() && TFGameRules()->IsRaidMode() )
 	{

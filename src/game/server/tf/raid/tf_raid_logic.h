@@ -6,7 +6,7 @@
 #ifndef TF_RAID_LOGIC_H
 #define TF_RAID_LOGIC_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_gamerules.h"
 #include "player_vs_environment/tf_population_manager.h"

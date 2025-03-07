@@ -4,7 +4,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_gamerules.h"
 #include "player_vs_environment/boss_alpha/boss_alpha.h"

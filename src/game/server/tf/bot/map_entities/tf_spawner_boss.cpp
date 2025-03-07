@@ -7,7 +7,7 @@
 
 #ifdef OBSOLETE_USE_BOSS_ALPHA
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_gamerules.h"
 #include "tf_spawner_boss.h"

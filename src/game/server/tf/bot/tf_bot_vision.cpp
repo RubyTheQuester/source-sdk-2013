@@ -152,7 +152,7 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
 {
 	CTFBot *me = (CTFBot *)GetBot()->GetEntity();
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( me->IsPlayerClass( TF_CLASS_SCOUT ) )

@@ -4,7 +4,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_player.h"
 #include "nav_mesh/tf_nav_area.h"

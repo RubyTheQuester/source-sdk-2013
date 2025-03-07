@@ -32,7 +32,7 @@
 #include "takedamageinfo.h"
 #include "tf_team.h"
 #include "physics_collisionevent.h"
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 #include "player_vs_environment/boss_alpha/boss_alpha.h"
 #endif // TF_RAID_MODE
 #include "tf_weapon_medigun.h"
@@ -699,7 +699,7 @@ void CTFGrenadePipebombProjectile::Fizzle( void )
 void CTFGrenadePipebombProjectile::StickybombTouch( CBaseEntity *pOther )
 {
 #ifdef GAME_DLL
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( dynamic_cast< CBossAlpha * >( pOther ) != NULL )

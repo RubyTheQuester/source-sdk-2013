@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_GET_OFF_ME_H
 #define BOSS_ALPHA_GET_OFF_ME_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 
 //----------------------------------------------------------------------------

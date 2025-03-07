@@ -139,7 +139,7 @@ void CTFBotManager::OnRoundRestart( void )
 	}
 
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	m_creepExperience[ TF_TEAM_RED ] = 0;
 	m_creepExperience[ TF_TEAM_BLUE ] = 0;
 #endif
@@ -155,7 +155,7 @@ void CTFBotManager::Update()
 
 	DrawStuckBotData();
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	UpdateCreepWaves();
 #endif
 
@@ -163,7 +163,7 @@ void CTFBotManager::Update()
 }
 
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 ConVar tf_creep_initial_delay( "tf_creep_initial_delay", "30" );
 ConVar tf_creep_wave_interval( "tf_creep_wave_interval", "30" );
 ConVar tf_creep_wave_count( "tf_creep_wave_count", "3" );

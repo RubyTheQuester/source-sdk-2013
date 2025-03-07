@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_WAIT_FOR_PLAYER_H
 #define BOSS_ALPHA_WAIT_FOR_PLAYER_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 class CBossAlphaWaitForPlayers : public Action< CBossAlpha >
 {

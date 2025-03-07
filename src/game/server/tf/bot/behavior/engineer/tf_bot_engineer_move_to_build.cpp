@@ -299,7 +299,7 @@ ActionResult< CTFBot >	CTFBotEngineerMoveToBuild::OnStart( CTFBot *me, Action< C
 {
 	m_path.SetMinLookAheadDistance( me->GetDesiredPathLookAheadRange() );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		if ( me->GetHomeArea() && TFGameRules()->GetRaidLogic() )

@@ -6,7 +6,7 @@
 #ifndef TF_BOT_MOB_RUSH_H
 #define TF_BOT_MOB_RUSH_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "Path/NextBotChasePath.h"
 

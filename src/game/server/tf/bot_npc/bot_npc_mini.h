@@ -6,7 +6,7 @@
 #ifndef BOT_NPC_MINI_H
 #define BOT_NPC_MINI_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "NextBot.h"
 #include "NextBotBehavior.h"

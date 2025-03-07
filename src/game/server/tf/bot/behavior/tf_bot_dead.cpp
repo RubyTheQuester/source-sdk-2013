@@ -45,7 +45,7 @@ ActionResult< CTFBot >	CTFBotDead::Update( CTFBot *me, float interval )
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() && me->GetTeamNumber() == TF_TEAM_RED )
 	{
 		// dead defenders go to spectator for recycling

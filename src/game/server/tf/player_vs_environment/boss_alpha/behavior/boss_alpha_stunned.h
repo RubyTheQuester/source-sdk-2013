@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_STUNNED_H
 #define BOSS_ALPHA_STUNNED_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 class CBossAlphaStunned : public Action< CBossAlpha >
 {

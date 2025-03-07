@@ -34,7 +34,7 @@
 #include "bot/behavior/engineer/tf_bot_engineer_build.h"
 #include "bot/map_entities/tf_bot_hint_sentrygun.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 #include "bot/behavior/scenario/raid/tf_bot_wander.h"
 #include "bot/behavior/scenario/raid/tf_bot_companion.h"
 #include "bot/behavior/scenario/raid/tf_bot_squad_attack.h"
@@ -104,7 +104,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( me->HasAttribute( CTFBot::IS_NPC ) )
 	{
 		// map-spawned guardians
@@ -112,7 +112,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 #endif // TF_RAID_MODE
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsBossBattleMode() )
 	{
 		if ( me->GetTeamNumber() == TF_TEAM_BLUE )

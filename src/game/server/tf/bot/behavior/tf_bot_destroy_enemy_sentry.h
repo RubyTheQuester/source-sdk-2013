@@ -32,7 +32,7 @@ private:
 
 	bool m_canMove;
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	CountdownTimer m_creepTimer;
 #endif
 

@@ -4,7 +4,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "CRagdollMagnet.h"
 #include "tf_gamerules.h"

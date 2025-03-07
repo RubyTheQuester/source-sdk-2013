@@ -8,7 +8,7 @@
 
 #ifdef OBSOLETE_USE_BOSS_ALPHA
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 class CBotNPC;
 

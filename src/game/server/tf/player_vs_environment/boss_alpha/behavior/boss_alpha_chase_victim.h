@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_CHASE_VICTIM_H
 #define BOSS_ALPHA_CHASE_VICTIM_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "nav_mesh/tf_path_follower.h"
 

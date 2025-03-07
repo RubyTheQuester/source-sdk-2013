@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_TACTICAL_MONITOR_H
 #define BOSS_ALPHA_TACTICAL_MONITOR_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 class CBossAlpha;
 

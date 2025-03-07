@@ -313,7 +313,7 @@ void CTFBotGenerator::SpawnBot( void )
 	{										   
 		m_spawnedBotVector.AddToTail( bot );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		if ( TFGameRules()->IsRaidMode() )
 		{
 			bot->SetAttribute( CTFBot::IS_NPC );

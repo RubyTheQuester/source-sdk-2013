@@ -6,7 +6,7 @@
 #ifndef TF_BOT_CREEP_WAVE_H
 #define TF_BOT_CREEP_WAVE_H
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 
 #include "Path/NextBotPathFollow.h"
 #include "Path/NextBotChasePath.h"

@@ -6,7 +6,7 @@
 #ifndef BOSS_ALPHA_H
 #define BOSS_ALPHA_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "NextBot.h"
 #include "NextBotBehavior.h"

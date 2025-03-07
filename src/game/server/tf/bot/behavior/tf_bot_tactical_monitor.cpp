@@ -166,7 +166,7 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 {
 	if ( TFGameRules()->RoundHasBeenWon() )
 	{
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		if ( TFGameRules()->IsBossBattleMode() )
 		{
 			return Continue();

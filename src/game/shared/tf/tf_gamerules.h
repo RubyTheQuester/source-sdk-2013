@@ -79,7 +79,7 @@ extern ConVar	tf_spawn_glows_duration;
 extern ConVar mp_tournament_prevent_team_switch_on_readyup;
 #endif
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 class CRaidLogic;
 class CBossBattleLogic;
@@ -594,12 +594,12 @@ public:
 	bool IsInMedievalMode( void ) const { return m_bPlayingMedieval; }
 	bool IsHolidayMap( int nHoliday ) const { return m_nMapHolidayType == nHoliday; }
 	
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	bool IsRaidMode( void ) const;
 	bool IsBossBattleMode( void ) const;
 #endif // TF_RAID_MODE
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 bool IsCreepWaveMode( void ) const;
 #endif
 
@@ -953,7 +953,7 @@ bool IsCreepWaveMode( void ) const;
 	// Voting
 	void		ManageServerSideVoteCreation( void );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// Raid game mode
 	CRaidLogic	*GetRaidLogic( void ) const		{ return m_hRaidLogic.Get(); }
 #endif // TF_RAID_MODE
@@ -1119,7 +1119,7 @@ private:
 
 	float	m_flMatchSummaryTeleportTime;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	CHandle< CRaidLogic >		m_hRaidLogic;
 	CHandle< CBossBattleLogic > m_hBossBattleLogic;
 #endif // TF_RAID_MODE
@@ -1516,7 +1516,7 @@ inline float CTFGameRules::ItemTesting_GetBotAnimSpeed( void )
 	return m_flItemTesting_BotAnimSpeed;
 }
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 inline bool CTFGameRules::IsRaidMode( void ) const
 {
@@ -1536,7 +1536,7 @@ inline bool CTFGameRules::IsBossBattleMode( void ) const
 
 #endif // TF_RAID_MODE
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 
 inline bool CTFGameRules::IsCreepWaveMode( void ) const
 {

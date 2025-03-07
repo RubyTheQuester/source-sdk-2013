@@ -208,14 +208,18 @@ bool CTFBotSniperAttack::IsImmediateThreat( const CBaseCombatCharacter *subject,
 		}
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( !TFGameRules()->IsRaidMode() )
 	{
 	}
 	else
 #endif // TF_RAID_MODE
 	{
-		if ( player->IsPlayerClass( TF_CLASS_MEDIC ) )
+		if ( 
+			player->IsPlayerClass( TF_CLASS_MEDIC ) || 
+			player->IsPlayerClass( TF_CLASS_ENGINEER ) ||
+			player->IsPlayerClass( TF_CLASS_SNIPER )
+			)
 		{
 			// always try to kill these guys first
 			return true;

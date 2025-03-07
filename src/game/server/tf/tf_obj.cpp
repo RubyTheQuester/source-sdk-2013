@@ -2869,7 +2869,7 @@ bool CBaseObject::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 		// testing quick builds for engineers in Raid mode
 		if ( TFGameRules() && !TFGameRules()->IsPVEModeControlled( pPlayer ) )
 		{
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 			if ( TFGameRules()->IsRaidMode() )
 			{
 				iAmountToAdd = 200;

@@ -110,7 +110,7 @@ bool CTFBotGetHealth::IsPossible( CTFBot *me )
 	if ( me->m_Shared.GetNumHealers() > 0 )
 		return false;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// mobs don't heal
 	if ( TFGameRules()->IsRaidMode() && me->HasAttribute( CTFBot::AGGRESSIVE ) )
 	{

@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_LAUNCH_GRENADES_H
 #define BOSS_ALPHA_LAUNCH_GRENADES_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_weapon_grenade_pipebomb.h"
 

@@ -153,7 +153,7 @@ void CTFBat::Smack( void )
 #ifdef GAME_DLL
 	if ( BatDeflects() )
 	{
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		if ( TFGameRules()->IsRaidMode() )
 		{
 		}

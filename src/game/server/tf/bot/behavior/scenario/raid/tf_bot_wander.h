@@ -6,7 +6,7 @@
 #ifndef TF_BOT_WANDER_H
 #define TF_BOT_WANDER_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 //-----------------------------------------------------------------------------
 class CTFBotWander : public Action< CTFBot >

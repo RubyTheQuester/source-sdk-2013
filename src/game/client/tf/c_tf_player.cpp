@@ -7802,7 +7802,7 @@ void C_TFPlayer::AddDecal( const Vector& rayStart, const Vector& rayEnd,
 		return;
 	}
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	// no decals for the BLUE team in Raid mode
 	// (temp workaround for decals causing the glows to not draw correctly)
 	if ( TFGameRules() && TFGameRules()->IsRaidMode() )
@@ -11313,7 +11313,7 @@ void C_TFPlayer::UpdateGlowColor( void )
 //-----------------------------------------------------------------------------
 void C_TFPlayer::GetGlowEffectColor( float *r, float *g, float *b )
 {
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( TFGameRules() && TFGameRules()->IsCreepWaveMode() )
 	{
 		if ( GetTeamNumber() == TF_TEAM_RED )

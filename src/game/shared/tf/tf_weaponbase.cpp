@@ -4494,7 +4494,7 @@ bool CTFWeaponBase::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget 
 		return ( bot && bot->HasAttribute( CTFBot::ALWAYS_CRIT ) );
 	}
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( TFGameRules()->IsCreepWaveMode() && player )
 	{
 		CTFBot *bot = ToTFBot( player );

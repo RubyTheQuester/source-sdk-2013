@@ -735,7 +735,7 @@ void CTFNavMesh::ComputeBlockedAreas( void )
 		area->UnblockArea();
 	}
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	if ( TFGameRules()->IsCreepWaveMode() )
 	{
 		// no blocking for creeps
@@ -1566,7 +1566,7 @@ void CTFNavMesh::ComputeIncursionDistances( CTFNavArea *spawnArea, int team )
 		
 		bool bIgnoreBlockedAreas = false;
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 		// TODO: Raid mode ignores blocked areas for now (cap gates break this)
 		if ( TFGameRules()->IsRaidMode()  )
 		{

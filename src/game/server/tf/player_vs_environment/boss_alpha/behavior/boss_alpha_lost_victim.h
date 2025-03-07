@@ -5,7 +5,7 @@
 #ifndef BOSS_ALPHA_LOST_VICTIM_H
 #define BOSS_ALPHA_LOST_VICTIM_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 //---------------------------------------------------------------------------------------------
 class CBossAlphaLostVictim : public Action< CBossAlpha >

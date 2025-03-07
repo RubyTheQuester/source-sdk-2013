@@ -3,7 +3,7 @@
 // Defend an area against intruders
 // Michael Booth, October 2009
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #ifndef TF_BOT_GUARD_AREA_H
 #define TF_BOT_GUARD_AREA_H

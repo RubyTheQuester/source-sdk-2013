@@ -6,7 +6,7 @@
 #include "cbase.h"
 #include "tf_player.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 #include "raid/tf_raid_logic.h"
 #endif // TF_RAID_MODE
 
@@ -79,7 +79,7 @@ ActionResult< CTFBot >	CTFBotSniperLurk::OnStart( CTFBot *me, Action< CTFBot > *
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotSniperLurk::Update( CTFBot *me, float interval )
 {
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 	}
@@ -437,7 +437,7 @@ bool CTFBotSniperLurk::FindNewHome( CTFBot *me )
 	m_findHomeTimer.Start( RandomFloat( 1.0f, 2.0f ) );
 
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		// stay put for now

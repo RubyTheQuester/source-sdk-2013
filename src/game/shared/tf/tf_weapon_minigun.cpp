@@ -376,7 +376,7 @@ void CTFMinigun::SharedAttack()
 				int iAttackProjectiles = 0;
 				CALL_ATTRIB_HOOK_INT( iAttackProjectiles, attack_projectiles );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 				if ( TFGameRules()->IsBossBattleMode() )
 				{
 					iAttackProjectiles = 1;

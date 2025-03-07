@@ -99,7 +99,7 @@ public:
 	CStuckBot *FindOrCreateStuckBot( int id, const char *playerClass );	// for parsing and debugging stuck bot server logs
 	void DrawStuckBotData( float deltaT = 0.1f );
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	void OnCreepKilled( CTFPlayer *killer );
 #endif
 
@@ -112,7 +112,7 @@ protected:
 
 	float m_flNextPeriodicThink;
 
-#ifdef TF_CREEP_MODE
+#ifndef TF_CREEP_MODE
 	void UpdateCreepWaves();
 	CountdownTimer m_creepWaveTimer;
 

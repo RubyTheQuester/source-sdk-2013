@@ -468,7 +468,7 @@ void CTFNavArea::Draw( void ) const
 {
 	CNavArea::Draw();
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() && m_wanderCount > 0 )
 	{
 		NDebugOverlay::Text( GetCenter(), UTIL_VarArgs( "%d", m_wanderCount ), false, NDEBUG_PERSIST_TILL_NEXT_SERVER );

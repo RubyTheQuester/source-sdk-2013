@@ -4,7 +4,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_shareddefs.h"
 #include "tf_ammo_pack.h"

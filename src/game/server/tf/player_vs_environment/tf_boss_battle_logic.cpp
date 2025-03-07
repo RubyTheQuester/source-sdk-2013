@@ -5,7 +5,7 @@
 
 #include "cbase.h"
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_team.h"
 #include "bot/map_entities/tf_bot_generator.h"

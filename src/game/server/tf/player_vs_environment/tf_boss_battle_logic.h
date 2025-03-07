@@ -6,7 +6,7 @@
 #ifndef TF_BOSS_BATTLE_H
 #define TF_BOSS_BATTLE_H
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 
 #include "tf_gamerules.h"
 

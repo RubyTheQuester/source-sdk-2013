@@ -201,7 +201,7 @@ bool CTFBotSpyInfiltrate::FindHidingSpot( CTFBot *me )
 	int myTeam = me->GetTeamNumber();
 	const CUtlVector< CTFNavArea * > *enemySpawnExitVector = TheTFNavMesh()->GetSpawnRoomExitAreas( GetEnemyTeam( myTeam ) );
 
-#ifdef TF_RAID_MODE
+#ifndef TF_RAID_MODE
 	if ( TFGameRules()->IsRaidMode() )
 	{
 		// for now, just lurk where we are
