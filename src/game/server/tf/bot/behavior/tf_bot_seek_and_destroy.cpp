@@ -82,12 +82,10 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 				return Done( "The point just unlocked" );
 			}
 		}
-		if (TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT || TFGameRules()->GetGameType() == TF_GAMETYPE_CP)
+
+		if (!TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() != 0.0f && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat())
 		{
-			if (!TFGameRules()->RoundHasBeenWon() && me->GetTimeLeftToCapture() < tf_bot_offense_must_push_time.GetFloat())
-			{
-				return Done("Time to push for the objective");
-			}
+			return Done("Time to push for the objective");
 		}
 	}
 
