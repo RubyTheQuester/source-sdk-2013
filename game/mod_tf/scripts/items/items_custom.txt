@@ -8,59 +8,119 @@
 		{
 			"used_by_classes"
 			{
-				"soldier"	"1"
-				"pyro"	"1"
-				"heavy"	"1"
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
 			}
 		}
-		"weapon_test1"
+		"weapon_gunboats"
 		{
-			"item_name"	"Degreaser Two"
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"demoman"	"primary"
+			}
+		}
+		
+		"weapon_test"
+		{
+			"item_name"	"Degreaser Test"
 			"static_attrs"
 			{
 				"weapon burn dmg reduced"				"0.30"
 			}
 		}
-		"weapon_test2"
+		
+		"weapon_revolver_secondary"
 		{
-			"item_name"	"Degreaser Three"
+			"craft_class"	""
+			"baseitem"		"0"
+			"enabled"	"1"
+			"item_class"	"tf_weapon_revolver_secondary"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_mvm_penetration_damage"	"1"
+				"can_deal_long_distance_damage"	"1"
+			}
+			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Revolver"
+			"item_name"	"Big Iron"
+			"item_slot"	"secondary"
+			"item_quality"		"unique"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			"attach_to_hands"	"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_ranger"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"32"
+			"model_player"					"models/weapons/c_models/c_ranger/c_ranger.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
 			"static_attrs"
 			{
-				"weapon burn dmg reduced"				"0.25"
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
 			}
-		}
-		"weapon_test3"
-		{
-			"item_name"	"Degreaser Four"
-			"static_attrs"
+			"attributes"
 			{
-				"weapon burn dmg reduced"				"0.99"
+				"hidden secondary max ammo penalty"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" "0.12"
+				}
 			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"						"ACT_ENGINEER_REVOLVER_IDLE"
+					"ACT_VM_DRAW"						"ACT_ENGINEER_REVOLVER_DRAW"
+					"ACT_VM_PRIMARYATTACK"				"ACT_ENGINEER_REVOLVER_PRIMARYATTACK"
+					"ACT_VM_RELOAD"						"ACT_ENGINEER_REVOLVER_RELOAD"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"particle_suffix"		"revolver"
 		}
 	}
 	"items"
 	{
+		"444"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"demoman"	"primary"
+			}
+		}
 		"34444"
 		{
-			"name"	"Degreaser Two"
-			"prefab" "weapon_test1 weapon_degreaser paintkit_base"
+			"name"	"Degreaser Test"
+			"prefab" "weapon_test weapon_degreaser paintkit_base"
 			"particle_suffix"	"degreaser"
 			"baseitem" "0"
 			"soloitem" "1"
 		}
-		"34445"
+		"34447"
 		{
-			"name"	"Degreaser Three"
-			"prefab" "weapon_test2 weapon_degreaser paintkit_base"
-			"particle_suffix"	"degreaser"
-			"baseitem" "0"
-			"soloitem" "1"
-		}
-		"34446"
-		{
-			"name"	"Degreaser Four"
-			"prefab" "weapon_test3 weapon_degreaser paintkit_base"
-			"particle_suffix"	"degreaser"
+			"name"	"Big Iron"
+			"prefab" "weapon_revolver_secondary"
 			"baseitem" "0"
 			"soloitem" "1"
 		}
