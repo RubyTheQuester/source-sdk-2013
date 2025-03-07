@@ -1,0 +1,39 @@
+"TestItems"
+{
+	"Item0"
+	{
+		"item_type"		"0"
+		"test_existing_item"		"1"
+		"attach_to_hands"		"1"
+		"model_player_per_class"
+		{
+		}
+		"visuals"
+		{
+			"player_bodygroups"
+			{
+				"hat"		"1"
+				"headphones"		"1"
+				"medal"		"1"
+				"grenades"		"1"
+				"bullets"		"1"
+				"arrows"		"1"
+				"rightarm"		"1"
+				"shoes_socks"		"1"
+			}
+		}
+		"paintcan_index"		"0"
+		"unusual_index"		"0"
+		"existing_itemdef"		"42069"
+		"item_replace"		"42069"
+		"item_def"		"40000"
+	}
+	"class_usage"		"512"
+	"auto_add_bots"		"1"
+	"bots_on_blue_team"		"0"
+	"bot_force_fire"		"0"
+	"bot_view_scan"		"0"
+	"bot_turntable"		"0"
+	"bot_anim"		"0"
+	"bot_animspeed"		"100"
+}
