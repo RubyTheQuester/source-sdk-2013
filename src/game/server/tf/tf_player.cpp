@@ -13106,6 +13106,14 @@ void CTFPlayer::DropAmmoPack( const CTakeDamageInfo &info, bool bEmpty, bool bDi
 //-----------------------------------------------------------------------------
 void CTFPlayer::DropAmmoPackFromProjectile( CBaseEntity *pProjectile )
 {
+	pProjectile->EmitSound("Weapon_Upgrade.ExplosiveHeadshot");
+
+	CPVSFilter filter(WorldSpaceCenter());
+	const char* pszHitEffect = (GetTeamNumber() == TF_TEAM_BLUE) ? "dxhr_lightningball_hit_blue" : "dxhr_lightningball_hit_red";
+	te_tf_particle_effects_control_point_t controlPoint = { PATTACH_ABSORIGIN, pProjectile->GetAbsOrigin()};
+
+	TE_TFParticleEffectComplex(filter, 0.0f, pszHitEffect, WorldSpaceCenter(), QAngle(0, 0, 0), NULL, &controlPoint, pProjectile, PATTACH_CUSTOMORIGIN);
+
 	QAngle qPackAngles = pProjectile->GetAbsAngles();
 	Vector vecPackOrigin = pProjectile->GetAbsOrigin();
 	UTIL_Remove( pProjectile );
