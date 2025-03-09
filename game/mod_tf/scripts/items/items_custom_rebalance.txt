@@ -1,0 +1,81 @@
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_russian_riot"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
+			}
+		}
+		"weapon_reserve_shooter"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
+			}
+		}
+		"weapon_gunboats"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"demoman"	"primary"
+			}
+		}
+		"weapon_winger_pistol"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"1"
+				"scout" "1"
+			}
+		}
+	}
+	
+	"items"
+	{
+		"444"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"demoman"	"primary"
+			}
+		}
+		"307"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"demoman"	"1"
+			}
+		}
+		"588"
+		{
+			"attributes"
+			{
+				"energy weapon penetration"
+				{
+					"attribute_class"	"energy_weapon_penetration"
+					"value"	"1"
+				}
+			}
+		}
+		"773"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"1"
+				"scout" "1"
+			}
+		}
+	}
+}

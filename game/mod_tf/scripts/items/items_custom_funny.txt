@@ -1,0 +1,10 @@
+"items_game"
+{
+	"items"
+	{
+		"519"
+		{
+			"soloitem" "1"
+		}
+	}
+}
