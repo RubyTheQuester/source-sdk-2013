@@ -3,8 +3,28 @@
 #base items_custom_funny.txt
 #base items_custom_rebalance.txt
 #base items_custom_weapons.txt
+#base items_custom_taunts.txt
 
 "items_game"
 {
-	
+	"attributes"
+	{
+		"3500"
+		{
+			"name"				"afterburn duration time"
+			"attribute_class"	"afterburn_duration_time"
+			"hidden"			"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"3501"
+		{
+			"name"				"taunt force signature weapon"
+			"attribute_class"	"taunt_force_signature_weapon"
+			"attribute_type"	"string"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+		}
+	}
 }

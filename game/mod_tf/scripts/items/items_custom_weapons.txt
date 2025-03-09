@@ -46,14 +46,6 @@
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
 			}
-			"attributes"
-			{
-				"hidden secondary max ammo penalty"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value" "0.12"
-				}
-			}
 			"visuals"
 			{
 				"animation_replacement"
@@ -74,12 +66,12 @@
 	{
 		"34444"
 		{
-			"name"	"Catcher Mitt"
+			"name"	"Ammopack Flamethrower"
 			"prefab" "weapon_flamethrower paintkit_base"
 			"baseitem" "0"
 			"soloitem" "1"
 			
-			"item_name"	"Catcher Mitt"
+			"item_name"	"#TF_Flamethrower_Ammopack"
 			
 			"static_attrs"
 			{
@@ -87,53 +79,25 @@
 				"airblast_turn_projectile_to_ammo"		"1"
 				"airblast_give_teammate_speed_boost"	"1"
 			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
 		}
 		
 		"34445"
 		{
-			"name"	"Market Caber"
-			"item_class"	"tf_weapon_bottle"
-			"craft_class"	"weapon"
-			"craft_material_type"	"weapon"
-			"capabilities"
-			{
-				"nameable"		"1"
-			}
-			"tags"
-			{
-				"can_deal_damage"			"1"
-				"can_be_equipped_by_soldier_or_demo"	"1"
-				"can_deal_critical_damage"	"1"
-			}
-			"show_in_armory"	"1"
-			"soloitem" "1"
+			"name"		"The Market Caber"
+			"prefab"	"weapon_bottle"
+			"baseitem" 	"0"
+			"soloitem" 	"1"
 			
-			"item_type_name"	"#TF_Weapon_Bottle"
-			"item_name"	"Market Caber"
-			"propername"	"1"
-			
-			"item_slot"	"melee"
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
-			
-			"image_inventory" "backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"inspect_panel_dist" 				"35"			
+			"item_name"			"#TF_MarketCaber"
+			"propername"		"1"
+		
+			"image_inventory" "backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"			
 			"model_player"	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
-			
-			"attach_to_hands" "1"
-			"used_by_classes"
-			{
-				"demoman"	"1"
-			}
-			"static_attrs"
-			{
-				"min_viewmodel_offset"		"12 0 -17"				
-			}
-			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
-			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+
 			"attributes"
 			{
 				"fire rate penalty"
@@ -152,22 +116,30 @@
 					"value"	"0"
 				}
 			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
 		}
 		
 		"34446"
 		{
-			"name"	"Foxhound"
+			"name"	"The Foxhound"
 			"prefab" "weapon_revolver"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
 			"capabilities"
 			{
 				"nameable"		"1"
 			}
-			"item_name"	"Foxhound"
+			
+			"item_name"	"#TF_Foxhound"
 			"propername"	"1"
-			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
 
 			"image_inventory"				"backpack/weapons/c_models/c_foxhound"
 			
+			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
 			"model_player_per_class"
 			{
 				"spy"		"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
@@ -188,12 +160,27 @@
 				"single wep deploy time decreased"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"	"0.80"
+					"value"	"0.75"
 				}
-				"switch from wep deploy time decreased"
+				"single wep holster time increased"
 				{
 					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"	"0.75"
+					"value"				"1.5"
+				}
+				"honorbound"
+				{
+					"attribute_class"	"honorbound"
+					"value"				"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.85"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.25"
 				}
 				"fire rate bonus"
 				{
@@ -210,17 +197,15 @@
 		
 		"34447"
 		{
-			"name"	"Deputy"
+			"name"	"The Deputy"
 			"prefab" "weapon_revolver_engineer"
-			"item_name"	"Deputy"
-			"propername"	"1"
+			
 			"baseitem" "0"
 			"soloitem" "1"
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
-			
+			"item_name"		"#TF_Deputy"
+			"propername"	"1"
+		
 			"static_attrs"
 			{
 				"weapon_stattrak_module_scale"			"0.497"
@@ -234,22 +219,26 @@
 					"attribute_class"	"mod_pierce_resists_absorbs"
 					"value"	"1"
 				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"	"1.3"
+					"value"	"1.4"
 				}
 				"damage applies to sappers"
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"	"1"
 				}
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"0.8"
-				}
 			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
 		}
 	}
 }

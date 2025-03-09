@@ -5,6 +5,115 @@
 		"519"
 		{
 			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		
+		"167"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"438"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"463"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"1106"
+		{
+			soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"1157"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"1162"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31162"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31288"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31412"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31413"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31441"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31467"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"31492"
+		{
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
 		}
 	}
 }
