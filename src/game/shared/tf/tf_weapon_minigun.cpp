@@ -571,8 +571,14 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 		return;
 
 	// Parameters
-	const int nSweepDist = 300;	// How far out
-	const int nHitDist = ( pPlayer->IsMiniBoss() ) ? 56 : 38;	// How far from the center line (radial)
+	int iAttackProjectiles = 0;
+	CALL_ATTRIB_HOOK_INT(iAttackProjectiles, attack_projectiles);
+
+	int flBruh2 = 300 + ( 100 * iAttackProjectiles );
+	int flBruh3a = clamp( (( pPlayer->IsMiniBoss() ) ? 56 : 38) * (iAttackProjectiles * 0.5), 38, 360);
+
+	const int nSweepDist = flBruh2;	// How far out
+	const int nHitDist = flBruh3a;	// How far from the center line (radial)
 	float flRechargeTime = 0.1f;
 
 	// Pos
@@ -581,7 +587,7 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	AngleVectors( GetAbsAngles(), &vecForward );
 	Vector vecGunAimEnd = vecGunPos + vecForward * (float)nSweepDist;
 
-	bool bDebug = false;
+	bool bDebug = true;
 	if ( bDebug )
 	{
 		// NDebugOverlay::Sphere( vecGunPos + vecForward * nSweepDist, nSweepDist, 0, 255, 0, 40, 5 );
@@ -624,8 +630,6 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 				}
 
 				// Did we destroy it?
-				int iAttackProjectiles = 0;
-				CALL_ATTRIB_HOOK_INT( iAttackProjectiles, attack_projectiles );
 				int nHitsRequired = m_bCritShot ? 1 : (int)RemapValClamped( iAttackProjectiles, 1, 2, 2, 1 );
 				if ( pProjectile->GetDestroyableHitCount() >= nHitsRequired )
 				{
@@ -634,12 +638,14 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 					EmitSound( "Halloween.HeadlessBossAxeHitWorld" );
 
 					CTF_GameStats.Event_PlayerAwardBonusPoints( pPlayer, NULL, 2 );
+					float flBruh = flRechargeTime - (0.066f * iAttackProjectiles);
 
+					flRechargeTime = clamp(flBruh, 0.0f, 0.5f);
 					// Weaker version has a longer cooldown
-					if ( iAttackProjectiles < 2 )
-					{
-						flRechargeTime = 0.3f;
-					}
+					//if ( iAttackProjectiles < 2 )
+					//{
+					//	flRechargeTime = 0.3f;
+					//}
 				}
 				else
 				{
