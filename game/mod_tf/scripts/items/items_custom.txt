@@ -251,17 +251,17 @@
 				"single wep deploy time decreased"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"	"0.5"
+					"value"	"0.80"
 				}
 				"switch from wep deploy time decreased"
 				{
 					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"	"0.5"
+					"value"	"0.75"
 				}
-				"honorbound"
+				"fire rate bonus"
 				{
-					"attribute_class"	"honorbound"
-					"value"	"1"
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"0.5"
 				}
 			}
 			
@@ -300,12 +300,7 @@
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"	"1.25"
-				}
-				"dmg penalty vs players"
-				{
-					"attribute_class"	"mult_dmg_vs_players"
-					"value"	"0.8"
+					"value"	"1.3"
 				}
 				"damage applies to sappers"
 				{
