@@ -2613,7 +2613,7 @@ public:
 	const BaseItemDefinitionMap_t &GetBaseItemDefinitionMap() const { return m_mapBaseItems; }
 
 	typedef CUtlMap<int, CEconItemDefinition*, int>	SoloItemDefinitionMap_t;
-	const SoloItemDefinitionMap_t &GetBaseItemDefinitionMap() const { return m_mapSoloItems; }
+	const SoloItemDefinitionMap_t &GetSoloItemDefinitionMap() const { return m_mapSoloItems; }
 
 	typedef CUtlDict<CEconLootListDefinition *>	LootListDefinitionMap_t;
 	const LootListDefinitionMap_t &GetLootLists() const { return m_dictLootLists; }
