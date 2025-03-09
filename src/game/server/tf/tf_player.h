@@ -577,8 +577,10 @@ public:
 	bool HasWearablesEquipped( const CSchemaItemDefHandle *ppItemDefs, int nWearables ) const;
 
 	CEconItemView* GetEquippedItemForLoadoutSlot(int iLoadoutSlot) {
+
 		auto itemID = m_EquippedLoadoutItemIndices[iLoadoutSlot];
 		CEconItemView* pItem;
+
 		if (itemID < 65536)
 		{
 			int count = TFInventoryManager()->GetSoloItemCount();

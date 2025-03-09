@@ -10,11 +10,11 @@
 #include "tf_item_system.h"
 #include "vgui/ILocalize.h"
 #include "tier3/tier3.h"
+#include "KeyValues.h"
+#include "filesystem.h"
 #ifdef CLIENT_DLL
 #include "c_tf_player.h"
 #include "item_pickup_panel.h"
-#include "KeyValues.h"
-#include "filesystem.h"
 #include "character_info_panel.h"
 #include "ienginevgui.h"
 #include "c_tf_gamestats.h"
@@ -30,6 +30,7 @@
 #include "materialsystem/itexture.h"
 
 #include "tf_gc_client.h"
+#include "vscript_client.h"
 
 #else
 #include "tf_player.h"
@@ -968,6 +969,7 @@ void CTFPlayerInventory::UpdateRealTFLoadoutItems()
 {
 	V_memcpy( m_RealTFLoadoutItems, m_LoadoutItems, sizeof( itemid_t ) * ARRAYSIZE( m_RealTFLoadoutItems ) * ARRAYSIZE( m_RealTFLoadoutItems[0] ) );
 }
+#endif
 
 void CTFPlayerInventory::LoadLocalLoadout()
 {
@@ -981,9 +983,11 @@ void CTFPlayerInventory::LoadLocalLoadout()
 	KeyValues *pLoadoutKV = new KeyValues("local_loadout");
 	if (!pLoadoutKV->LoadFromFile(g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD"))
 	{
+#ifdef CLIENT_DLL
 		SaveLocalLoadout( true, true );
 
 		if ( !pLoadoutKV->LoadFromFile( g_pFullFileSystem, LOCAL_LOADOUT_FILE, "MOD" ) )
+#endif
 		{
 			Warning( "Unable to parse local_loadout.txt into keyvalues.\n" );
 			return;
@@ -1020,7 +1024,9 @@ void CTFPlayerInventory::LoadLocalLoadout()
 				const int iSlot = V_atoi(pLoadoutEntry->GetName());
 				const itemid_t uItemId = pLoadoutEntry->GetUint64();
 
+#ifdef CLIENT_DLL
 				m_PresetItems[iPreset][iClass][iSlot] = uItemId;
+#endif // CLIENT_DLL
 
 				if (iPreset == m_ActivePreset[iClass]) {
 					m_LoadoutItems[iClass][iSlot] = uItemId;
@@ -1036,10 +1042,12 @@ void CTFPlayerInventory::LoadLocalLoadout()
 
 	pLoadoutKV->deleteThis();
 
+#ifdef CLIENT_DLL
 	GTFGCClientSystem()->LocalInventoryChanged();
+#endif // CLIENT_DLL
 	SendInventoryUpdateEvent();
 }
-
+#ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: If we are in mod mode, we track loadout changes locally.
 //-----------------------------------------------------------------------------
@@ -1555,6 +1563,12 @@ CEconItemView *CTFPlayerInventory::GetItemInLoadout( int iClass, int iSlot )
 {
 	if ( iSlot < 0 || iSlot >= CLASS_LOADOUT_POSITION_COUNT )
 		return NULL;
+
+	if (!m_bOfflineLoaded)
+	{
+		m_bOfflineLoaded = true;
+		LoadLocalLoadout();
+	}
 
 	if ( iClass == GEconItemSchema().GetAccountIndex() )
 	{
