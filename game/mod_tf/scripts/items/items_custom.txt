@@ -1,12 +1,59 @@
-#base items_game.txt
-
-#base items_custom_funny.txt
+#base unused_items_custom_funny.txt
 #base items_custom_rebalance.txt
 #base items_custom_weapons.txt
-#base items_custom_taunts.txt
+#base unused_items_custom_taunts.txt
 
+#base items_game.txt
 "items_game"
 {
+	"items"
+	{
+		"356"
+		{
+			"name"	"Conniver's Kunai"
+			"first_sale_date"	"2011/03/08"
+			"prefab"	"weapon_spy_knife_item2"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_taunt_damage"		"1"
+			}
+			"item_name"	"#TF_Kunai"
+			"item_description"	"#TF_Kunai_Desc"
+			"propername"	"0"
+			"item_logname"	"kunai"
+			"item_iconname"	"kunai"
+			"inspect_panel_dist" "35"
+			"image_inventory"	"backpack/workshop_partner/weapons/c_models/c_shogun_kunai/c_shogun_kunai"
+			"model_player"	"models/workshop_partner/weapons/c_models/c_shogun_kunai/c_shogun_kunai.mdl"
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -6"
+			}
+			"attributes"
+			{
+				"cannot disguise"
+				{
+					"attribute_class"	"set_cannot_disguise"
+					"value"				"1"
+				}
+				"restore health on kill"
+				{
+					"attribute_class"	"restore_health_on_kill "
+					"value"				"100"
+				}
+				"max health additive bonus"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "15"
+				}
+			}
+		}
+	}
 	"attributes"
 	{
 		"3500"
@@ -25,6 +72,36 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"1"
 			"effect_type"	"neutral"
+		}
+		"3502"
+		{
+			"name"				"airblast pushback disabled"
+			"attribute_class"	"airblast_pushback_disabled"
+			"description_string"	"#Attrib_Airblast_Pushback_Disabled"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"3503"
+		{
+			"name"				"airblast turn projectile to ammo"
+			"attribute_class"	"airblast_turn_projectile_to_ammo"
+			"description_string"	"#Attrib_Airblast_Ammopack"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		"3504"
+		{
+			"name"				"airblast give teammate speed boost"
+			"attribute_class"	"airblast_give_teammate_speed_boost"
+			"description_string"	"#Attrib_Airblast_Boost"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
 		}
 	}
 }

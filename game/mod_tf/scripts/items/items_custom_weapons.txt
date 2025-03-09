@@ -4,8 +4,6 @@
 	{
 		"weapon_revolver_engineer"
 		{
-			"craft_class"	""
-			"baseitem"		"0"
 			"enabled"	"1"
 			"item_class"	"tf_weapon_revolver"
 			"craft_material_type"	"weapon"
@@ -20,21 +18,25 @@
 				"can_deal_mvm_penetration_damage"	"1"
 				"can_deal_long_distance_damage"	"1"
 			}
+			
 			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
-			"show_in_armory"	"1"
+			
 			"item_type_name"	"#TF_Weapon_Revolver"
-			"item_name"	"Big Iron"
+			"item_name"	"#TF_Weapon_Revolver"
 			"item_slot"	"secondary"
-			"item_quality"		"unique"
+			
+			"item_quality"	"normal"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
-			"attach_to_hands"	"1"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_deputy"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"32"
 			"model_player"					"models/weapons/c_models/c_deputy/c_deputy.mdl"
+			
+			"attach_to_hands"	"1"
+			"inspect_panel_dist" "31"
 			
 			"used_by_classes"
 			{
@@ -72,14 +74,27 @@
 			"soloitem" "1"
 			
 			"item_name"	"#TF_Flamethrower_Ammopack"
-			
-			"static_attrs"
+			"propername"	"1"
+			"item_description"	"#TF_Flamethrower_Ammopack_desc"
+
+			"attributes"
 			{
-				"airblast_pushback_disabled"			"1"
-				"airblast_turn_projectile_to_ammo"		"1"
-				"airblast_give_teammate_speed_boost"	"1"
+				"airblast pushback disabled"
+				{
+					"attribute_class"	"airblast_pushback_disabled"
+					"value"	"1"
+				}
+				"airblast turn projectile to ammo"
+				{
+					"attribute_class"	"airblast_turn_projectile_to_ammo"
+					"value"	"1"
+				}
+				"airblast give teammate speed boost"
+				{
+					"attribute_class"	"airblast_give_teammate_speed_boost"
+					"value"	"1"
+				}
 			}
-			
 			"item_quality"	"selfmade"
 			"min_ilevel"	"69"
 			"max_ilevel"	"69"
@@ -92,8 +107,8 @@
 			"baseitem" 	"0"
 			"soloitem" 	"1"
 			
-			"item_name"			"#TF_MarketCaber"
-			"propername"		"1"
+			"item_name"	"#TF_MarketCaber"
+			"propername"	"1"
 		
 			"image_inventory" "backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"			
 			"model_player"	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
@@ -136,7 +151,8 @@
 			
 			"item_name"	"#TF_Foxhound"
 			"propername"	"1"
-
+			"item_description"	"#TF_Foxhound_desc"
+			
 			"image_inventory"				"backpack/weapons/c_models/c_foxhound"
 			
 			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
@@ -190,7 +206,6 @@
 			}
 			
 			"item_quality"	"selfmade"
-			"propername"	"1"
 			"min_ilevel"	"69"
 			"max_ilevel"	"69"
 		}
@@ -205,7 +220,8 @@
 			
 			"item_name"		"#TF_Deputy"
 			"propername"	"1"
-		
+			"item_description"	"#TF_Deputy_desc"
+			
 			"static_attrs"
 			{
 				"weapon_stattrak_module_scale"			"0.497"
@@ -233,6 +249,43 @@
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"	"1"
+				}
+			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		
+		"34448"
+		{
+			"name"			"Cool Deflector"
+			"prefab"		"weapon_minigun"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_Minigun_Deflector"
+			
+			"item_logname"	"iron_curtain"
+			"item_iconname"	"iron_curtain"
+			"image_inventory"	"backpack/workshop/weapons/c_models/c_iron_curtain/c_iron_curtain"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/workshop/weapons/c_models/c_iron_curtain/c_iron_curtain.mdl"
+			
+			"visuals"
+			{
+				"tracer_effect"	"bullet_tracer02"
+			}
+			
+			"attributes"
+			{
+				"attack projectiles"
+				{
+					"attribute_class"	"attack_projectiles"
+					"value"	"100"
 				}
 			}
 			
