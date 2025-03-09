@@ -260,6 +260,45 @@ const char* CTFRevolver::GetEffectLabelText( void )
 	}
 	return "#TF_CRITS";
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+Activity CTFRevolver::TranslateViewmodelHandActivityInternal(Activity actBase)
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (!pPlayer)
+		return BaseClass::TranslateViewmodelHandActivityInternal(actBase);
+
+	// Alright, so we have some decapitation weapons (katana) that can be used
+	// by both the soldier and the demoman, but the classes play totally different
+	// animations using the same weapon.
+	//
+	// This logic is also responsible for playing the correct animations on the
+	// demo when he's using non-shared weapons like the Eyelanders.
+	if (pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER)
+	{
+		switch (actBase)
+		{
+		case ACT_VM_IDLE:
+			actBase = ACT_ENGINEER_REVOLVER_IDLE;
+			break;
+		case ACT_VM_DRAW:
+			actBase = ACT_ENGINEER_REVOLVER_DRAW;
+			break;
+		case ACT_VM_PRIMARYATTACK:
+			actBase = ACT_ENGINEER_REVOLVER_PRIMARYATTACK;
+			break;
+		case ACT_VM_RELOAD:
+			actBase = ACT_ENGINEER_REVOLVER_RELOAD;
+			break;
+		default:
+			break;
+		}
+	}
+
+	return BaseClass::TranslateViewmodelHandActivityInternal(actBase);
+}
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

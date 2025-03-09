@@ -14,6 +14,16 @@
 				"heavy"		"secondary"
 			}
 		}
+		"weapon_reserve_shooter"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
+			}
+		}
 		"weapon_gunboats"
 		{
 			"used_by_classes"
@@ -32,12 +42,12 @@
 			}
 		}
 		
-		"weapon_revolver_secondary"
+		"weapon_revolver_engineer"
 		{
 			"craft_class"	""
 			"baseitem"		"0"
 			"enabled"	"1"
-			"item_class"	"tf_weapon_revolver_secondary"
+			"item_class"	"tf_weapon_revolver"
 			"craft_material_type"	"weapon"
 			"capabilities"
 			{
@@ -60,11 +70,11 @@
 			"max_ilevel"	"1"
 			"attach_to_hands"	"1"
 			
-			"image_inventory"				"backpack/weapons/c_models/c_ranger"
+			"image_inventory"				"backpack/weapons/c_models/c_deputy"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"32"
-			"model_player"					"models/weapons/c_models/c_ranger/c_ranger.mdl"
+			"model_player"					"models/weapons/c_models/c_deputy/c_deputy.mdl"
 			
 			"used_by_classes"
 			{
@@ -117,14 +127,30 @@
 				"demoman"	"1"
 			}
 		}
+		"588"
+		{
+			"attributes"
+			{
+				"energy weapon penetration"
+				{
+					"attribute_class"	"energy_weapon_penetration"
+					"value"	"1"
+				}
+			}
+		}
+		"519"
+		{
+			"soloitem" "1"
+		}
+		
 		"34444"
 		{
-			"name"	"Degreaser Test"
-			"prefab" "weapon_test weapon_degreaser paintkit_base"
-			"particle_suffix"	"degreaser"
+			"name"	"Catcher Mitt"
+			"prefab" "weapon_test weapon_flamethrower paintkit_base"
 			"baseitem" "0"
 			"soloitem" "1"
 		}
+		
 		"34445"
 		{
 			"name"	"Market Caber"
@@ -144,14 +170,14 @@
 			"show_in_armory"	"1"
 			"soloitem" "1"
 			
-			"item_type_name"	"#TF_Weapon_StickBomb"
+			"item_type_name"	"#TF_Weapon_Bottle"
 			"item_name"	"The Market Caber"
 			
 			"item_slot"	"melee"
-			"item_quality"	"unique"
+			"item_quality"	"selfmade"
 			"propername"	"1"
-			"min_ilevel"	"10"
-			"max_ilevel"	"10"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
 			
 			"image_inventory" "backpack/workshop/weapons/c_models/c_caber/c_caber"
 			"image_inventory_size_w"		"128"
@@ -189,12 +215,89 @@
 				}
 			}
 		}
-		"34447"
+		"34446"
 		{
-			"name"	"Texan Ranger"
-			"prefab" "weapon_revolver_secondary"
+			"name"	"Shared Revolt"
+			"prefab" "weapon_revolver"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"item_name"	"Shared Revolt"
+			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+
+			"image_inventory"				"backpack/weapons/c_models/c_foxhound"
+			
+			"model_player_per_class"
+			{
+				"spy"		"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+				"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
+			}
+			
+			"used_by_classes"
+			{
+				"spy"		"1"
+				"engineer"	"1"
+			}
+		
 			"baseitem" "0"
 			"soloitem" "1"
+			
+			"attributes"
+			{
+				"honorbound"
+				{
+					"attribute_class"	"honorbound"
+					"value"	"1"
+				}
+			}
+			
+			"item_quality"	"selfmade"
+			"propername"	"1"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		"34447"
+		{
+			"name"	"The Deputy"
+			"prefab" "weapon_revolver_engineer"
+			"item_name"	"The Deputy"
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"item_quality"	"selfmade"
+			"propername"	"1"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+			
+			"attributes"
+			{
+				"dmg pierces resists absorbs"
+				{
+					"attribute_class"	"mod_pierce_resists_absorbs"
+					"value"	"1"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"	"1.25"
+				}
+				"dmg penalty vs players"
+				{
+					"attribute_class"	"mult_dmg_vs_players"
+					"value"	"0.8"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"0.8"
+				}
+			}
 		}
 	}
 }

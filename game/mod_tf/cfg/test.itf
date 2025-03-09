@@ -24,8 +24,8 @@
 		}
 		"paintcan_index"		"0"
 		"unusual_index"		"0"
-		"existing_itemdef"		"42069"
-		"item_replace"		"42069"
+		"existing_itemdef"		"34446"
+		"item_replace"		"34446"
 		"item_def"		"40000"
 	}
 	"class_usage"		"512"

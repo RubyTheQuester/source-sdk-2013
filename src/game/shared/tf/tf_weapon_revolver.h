@@ -38,6 +38,7 @@ public:
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_REVOLVER; }
 	virtual int		GetDamageType( void ) const;
+	virtual Activity	TranslateViewmodelHandActivityInternal(Activity actBase);
 
 	virtual bool	CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget = NULL ) OVERRIDE;
 
