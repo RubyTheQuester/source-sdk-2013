@@ -17,6 +17,7 @@
 #include "tf_gamerules.h"
 #include "entity_capture_flag.h"
 #include "func_capture_zone.h"
+#include "func_passtime_goal.h"
 #include "nav_entities.h"
 #include "utlstack.h"
 #include "bot/map_entities/tf_bot_generator.h"		// action point
@@ -115,6 +116,7 @@ public:
 
 	CCaptureFlag *GetFlagToFetch( void ) const;						// return flag we want to fetch
 	CCaptureZone *GetFlagCaptureZone( void ) const;					// return capture zone for our flag(s)
+	CFuncPasstimeGoal* GetBallCaptureZone(void) const;			// return capture zone for our ball
 
 	struct SniperSpotInfo
 	{
