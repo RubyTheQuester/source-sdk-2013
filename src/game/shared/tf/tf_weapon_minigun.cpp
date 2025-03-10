@@ -35,6 +35,8 @@
 #define TF_MINIGUN_SPINUP_TIME 0.75f
 #define TF_MINIGUN_PENALTY_PERIOD 1.f
 
+ConVar tf_debug_minigun_projectile_attacks("tf_debug_minigun_projectile_attacks", "0", FCVAR_REPLICATED, "blah blah huge bitch");
+
 //=============================================================================
 //
 // Weapon Minigun tables.
@@ -574,8 +576,9 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	int iAttackProjectiles = 0;
 	CALL_ATTRIB_HOOK_INT(iAttackProjectiles, attack_projectiles);
 
-	int flBruh2 = 300 + ( 100 * iAttackProjectiles );
-	int flBruh3a = clamp( (( pPlayer->IsMiniBoss() ) ? 56 : 38) * (iAttackProjectiles * 0.5), 38, 360);
+	//int flBruh2 = 300 + ( 25 * iAttackProjectiles );
+	//int nHitDistBossOrNot = (pPlayer->IsMiniBoss()) ? 56 : 38;
+	//int flBruh3a = clamp( nHitDistBossOrNot * (iAttackProjectiles * 0.5), 38, 360);
 
 	const int nSweepDist = 300;
 	const int nHitDist = (pPlayer->IsMiniBoss()) ? 56 : 38;
@@ -587,7 +590,7 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	AngleVectors( GetAbsAngles(), &vecForward );
 	Vector vecGunAimEnd = vecGunPos + vecForward * (float)nSweepDist;
 
-	bool bDebug = true;
+	bool bDebug = tf_debug_minigun_projectile_attacks.GetBool();
 	if (bDebug)
 	{
 		//NDebugOverlay::Sphere( vecGunPos + vecForward * nSweepDist, nSweepDist, 0, 255, 0, 40, 5 );
