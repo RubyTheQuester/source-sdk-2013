@@ -70,12 +70,10 @@ public:
 
 	virtual void		NotifyHasNewItems() { OnHasNewItems(); }
 
-	void				LoadLocalLoadout();
-	void				InvalidateOffline() { m_bOfflineLoaded = false; };
-
 #ifdef CLIENT_DLL
 	virtual ITexture	*GetWeaponSkinBaseLowRes( itemid_t nItemId, int iTeam ) const;
 
+	void				LoadLocalLoadout();
 	void				SaveLocalLoadout( bool bReset=false, bool bDefaultToGC=false );
 	bool				EquipLocalPreset(equipped_class_t unClass, equipped_preset_t unPreset);
 	int					GetActiveLocalPreset(equipped_class_t unClass) { return m_ActivePreset[unClass]; }
@@ -141,6 +139,7 @@ protected:
 
 	CUtlMap< itemid_t, ITexture* > m_CachedBaseTextureLowRes[ TF_TEAM_COUNT ];
 
+	int				m_ActivePreset[TF_CLASS_COUNT];
 	itemid_t		m_PresetItems[CEconItemSchema::kMaxItemPresetCount][TF_CLASS_COUNT][CLASS_LOADOUT_POSITION_COUNT];
 #ifdef CLIENT_DLL
 	itemid_t		m_RealTFLoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
@@ -150,8 +149,6 @@ protected:
 	itemid_t		m_LoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
 	bool			m_bLoadoutChanged[ TF_CLASS_COUNT ];
 	itemid_t		m_AccountLoadoutItems[ ACCOUNT_LOADOUT_POSITION_COUNT ];
-	int				m_ActivePreset[TF_CLASS_COUNT];
-	bool			m_bOfflineLoaded;
 
 	friend class CTFInventoryManager;
 };

@@ -4497,9 +4497,6 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 	// Remove our disguise weapon.
 	m_Shared.RemoveDisguiseWeapon();
 
-	// Reload local inventory
-	m_Inventory.InvalidateOffline();
-
 	CUtlVector<const char *> precacheStrings;
 
 	CBaseCombatWeapon* pCurrentWeapon = m_hActiveWeapon;
@@ -17510,21 +17507,6 @@ bool CTFPlayer::PlayTauntSceneFromItem( const CEconItemView *pEconItemView )
 		{
 			int iForceWeaponSlot = StringFieldToInt( pszTauntForceWeaponSlotName, GetItemSchema()->GetWeaponTypeSubstrings() );
 			Weapon_Switch( Weapon_GetSlot( iForceWeaponSlot ) );
-		}
-
-		static CSchemaAttributeDefHandle pAttrDef_TauntForceWeaponSlotAlt("taunt force signature weapon");
-		if (FindAttribute_UnsafeBitwiseCast<CAttribute_String>(pItemDef, pAttrDef_TauntForceWeaponSlotAlt, &pszTauntForceWeaponSlotName))
-		{
-			int iForceSignatureSlot = 0;
-			if (iClass == TF_CLASS_MEDIC)
-			{
-				iForceSignatureSlot = 1;
-			}
-			else if (iClass == TF_CLASS_SPY || iClass == TF_CLASS_ENGINEER)
-			{
-				iForceSignatureSlot = 2;
-			}
-			Weapon_Switch(Weapon_GetSlot(iForceSignatureSlot));
 		}
 
 		m_bInitTaunt = true;

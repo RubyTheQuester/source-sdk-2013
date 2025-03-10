@@ -68,7 +68,7 @@ static bool IsStorePreviewItem( const IEconItemInterface *pEconItem )
 	Assert( pEconItem );
 
 #ifdef CLIENT_DLL
-	return false;
+	return pEconItem->GetFlags() & kEconItemFlagClient_StoreItem;
 #else
 	return false;
 #endif
