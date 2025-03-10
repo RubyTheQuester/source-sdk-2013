@@ -93,6 +93,8 @@ const char *g_szItemBorders[][5] =
 	{ "BackpackItemBorder_RarityMythical",	"BackpackItemMouseOverBorder_RarityMythical",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityMythical",	"BackpackItemGreyedOutSelectedBorder_RarityMythical"	}, // AE_RARITY_MYTHICAL,
 	{ "BackpackItemBorder_RarityLegendary",	"BackpackItemMouseOverBorder_RarityLegendary",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityLegendary",	"BackpackItemGreyedOutSelectedBorder_RarityLegendary"	}, // AE_RARITY_LEGENDARY,
 	{ "BackpackItemBorder_RarityAncient",	"BackpackItemMouseOverBorder_RarityAncient",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityAncient",	"BackpackItemGreyedOutSelectedBorder_RarityAncient"		}, // AE_RARITY_ANCIENT,
+
+	{ "BackpackItemBorder_ModItem",	"BackpackItemMouseOverBorder_ModItem",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_ModItem",	"BackpackItemGreyedOutSelectedBorder_ModItem"	},		// AE_MODITEM
 };	
 
 COMPILE_TIME_ASSERT( ARRAYSIZE(g_szItemBorders) == AE_MAX_TYPES );
