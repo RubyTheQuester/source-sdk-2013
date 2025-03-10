@@ -111,9 +111,9 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 		
 		"34445"
@@ -148,7 +148,7 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
+			"item_quality"	"rarity2"
 			"min_ilevel"	"69"
 			"max_ilevel"	"69"
 		}
@@ -199,11 +199,6 @@
 					"attribute_class"	"mult_switch_from_wep_deploy_time"
 					"value"				"1.5"
 				}
-				"honorbound"
-				{
-					"attribute_class"	"honorbound"
-					"value"				"1"
-				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
@@ -221,9 +216,9 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 		
 		"34447"
@@ -234,6 +229,7 @@
 			"baseitem" "0"
 			"soloitem" "1"
 			
+			"show_in_armory"	"1"
 			"item_name"		"#TF_Deputy"
 			"propername"	"1"
 			"item_description"	"#TF_Deputy_desc"
@@ -273,9 +269,9 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 		
 		"34448"
@@ -333,50 +329,12 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 		
 		"34449"
-		{
-			"name"			"Dispenser Spy"
-			"prefab"		"weapon_spy_knife_item2"
-			
-			"baseitem" "0"
-			"soloitem" "1"
-			
-			"show_in_armory"	"1"
-			"item_name"		"#TF_Dispenser_Knife"
-			
-			"item_logname"	"black_rose"
-			"item_iconname"	"black_rose"
-			"image_inventory"	"backpack/workshop/weapons/c_models/c_ava_roseknife/c_ava_roseknife_v"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"inspect_panel_dist" 			"25"
-			"model_player"		"models/workshop/weapons/c_models/c_ava_roseknife/c_ava_roseknife.mdl"
-			
-			"attributes"
-			{
-				"disguise_as_dispenser_on_crouch"
-				{
-					"attribute_class"	"disguise_as_dispenser_on_crouch"
-					"value"	"1"
-				}
-				"special taunt"
-				{
-					"attribute_class"	"special_taunt"
-					"value" "1"
-				}
-			}
-			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
-		}
-		
-		"34450"
 		{
 			"name"	"Milk Bolt Crossbow"
 			"prefab" "weapon_crusaders_crossbow"
@@ -397,7 +355,7 @@
 				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"0.9"
+					"value"	"0.5"
 				}
 				"damage penalty"
 				{
@@ -406,9 +364,9 @@
 				}
 			}
 			
-			"item_quality"	"selfmade"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 	}
 }

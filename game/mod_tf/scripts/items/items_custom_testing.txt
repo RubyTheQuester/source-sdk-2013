@@ -1,0 +1,78 @@
+"items_game"
+{
+	"items"
+	{
+		"60000"
+		{
+			"name"	"Last Say"
+			"prefab" "weapon_revolver"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_LastSay"
+			"propername"	"1"
+			"item_description"	"#TF_LastSay_desc"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_foxhound"
+			
+			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+			"model_player_per_class"
+			{
+				"spy"		"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+				"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
+			}
+			
+			"used_by_classes"
+			{
+				"spy"		"1"
+				"engineer"	"1"
+			}
+		
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"attributes"
+			{
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"	"0.5"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "1.25"
+				}
+				"single wep holster time increased"
+				{
+					"attribute_class"	"mult_switch_from_wep_deploy_time"
+					"value"				"1.6"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.35"
+				}
+				"last_shot_crits"
+				{
+					"attribute_class"	"last_shot_crits"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+	}
+}

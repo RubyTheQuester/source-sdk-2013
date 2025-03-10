@@ -1,11 +1,21 @@
-#base unused_items_custom_funny.txt
 #base items_custom_rebalance.txt
 #base items_custom_weapons.txt
-#base unused_items_custom_taunts.txt
+
+#base items_custom_testing.txt
+
+#base items_custom_oddity.txt
 
 #base items_game.txt
+
 "items_game"
 {
+	"qualities"
+	{
+		"moditem"
+		{
+			"value" 	"16"
+		}
+	}
 	"attributes"
 	{
 		"3502"

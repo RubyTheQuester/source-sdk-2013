@@ -1,0 +1,50 @@
+unused stuff
+
+"items"
+{
+	"356"
+	{
+		"name"	"Conniver's Kunai"
+		"first_sale_date"	"2011/03/08"
+		"prefab"	"weapon_spy_knife_item2"
+		"capabilities"
+		{
+			"nameable"		"1"
+		}
+		"tags"
+		{
+			"can_deal_damage"			"1"
+			"can_deal_taunt_damage"		"1"
+		}
+		"item_name"	"#TF_Kunai"
+		"item_description"	"#TF_Kunai_Desc"
+		"propername"	"0"
+		"item_logname"	"kunai"
+		"item_iconname"	"kunai"
+		"inspect_panel_dist" "35"
+		"image_inventory"	"backpack/workshop_partner/weapons/c_models/c_shogun_kunai/c_shogun_kunai"
+		"model_player"	"models/workshop_partner/weapons/c_models/c_shogun_kunai/c_shogun_kunai.mdl"
+		"static_attrs"
+		{
+			"min_viewmodel_offset"		"10 0 -6"
+		}
+		"attributes"
+		{
+			"cannot disguise"
+			{
+				"attribute_class"	"set_cannot_disguise"
+				"value"				"1"
+			}
+			"restore health on kill"
+			{
+				"attribute_class"	"restore_health_on_kill "
+				"value"				"100"
+			}
+			"max health additive bonus"
+			{
+				"attribute_class"	"add_maxhealth"
+				"value" "15"
+			}
+		}
+	}
+}

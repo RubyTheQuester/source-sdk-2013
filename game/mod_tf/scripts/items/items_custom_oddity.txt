@@ -1,0 +1,35 @@
+"items_game"
+{
+	"items"
+	{
+		"50000"
+		{
+			"name"			"Dispenser Spy"
+			"prefab"		"weapon_knife"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"0"
+			"item_name"		"#TF_Dispenser_Knife"
+			
+			"attributes"
+			{
+				"disguise_as_dispenser_on_crouch"
+				{
+					"attribute_class"	"disguise_as_dispenser_on_crouch"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+	}
+}
