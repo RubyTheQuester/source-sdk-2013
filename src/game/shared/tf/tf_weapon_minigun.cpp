@@ -577,8 +577,8 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	int flBruh2 = 300 + ( 100 * iAttackProjectiles );
 	int flBruh3a = clamp( (( pPlayer->IsMiniBoss() ) ? 56 : 38) * (iAttackProjectiles * 0.5), 38, 360);
 
-	const int nSweepDist = flBruh2;	// How far out
-	const int nHitDist = flBruh3a;	// How far from the center line (radial)
+	const int nSweepDist = 300;
+	const int nHitDist = (pPlayer->IsMiniBoss()) ? 56 : 38;
 	float flRechargeTime = 0.1f;
 
 	// Pos
@@ -588,9 +588,9 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 	Vector vecGunAimEnd = vecGunPos + vecForward * (float)nSweepDist;
 
 	bool bDebug = true;
-	if ( bDebug )
+	if (bDebug)
 	{
-		// NDebugOverlay::Sphere( vecGunPos + vecForward * nSweepDist, nSweepDist, 0, 255, 0, 40, 5 );
+		//NDebugOverlay::Sphere( vecGunPos + vecForward * nSweepDist, nSweepDist, 0, 255, 0, 40, 5 );
 		NDebugOverlay::Box( vecGunPos, -Vector( 5, 5, 5 ), Vector( 5, 5, 5 ), 255, 0, 0, 40, 5 );
 		NDebugOverlay::Box( vecGunAimEnd, -Vector( 5, 5, 5 ), Vector( 5, 5, 5 ), 255, 0, 0, 40, 5 );
 		NDebugOverlay::Line( vecGunPos, vecGunAimEnd, 255, 255, 255, true, 5 );
@@ -638,9 +638,9 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 					EmitSound( "Halloween.HeadlessBossAxeHitWorld" );
 
 					CTF_GameStats.Event_PlayerAwardBonusPoints( pPlayer, NULL, 2 );
-					float flBruh = flRechargeTime - (0.066f * iAttackProjectiles);
+					float flRechargeValue = flRechargeTime - (0.0666f * iAttackProjectiles);
 
-					flRechargeTime = clamp(flBruh, 0.0f, 0.5f);
+					flRechargeTime = clamp(flRechargeValue, 0.0f, 0.5f);
 					// Weaker version has a longer cooldown
 					//if ( iAttackProjectiles < 2 )
 					//{
