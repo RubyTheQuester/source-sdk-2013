@@ -1454,14 +1454,14 @@ void CTFBot::Touch( CBaseEntity *pOther )
 		if ( them->m_Shared.IsStealthed() || them->m_Shared.InCond( TF_COND_DISGUISED ) )
 		{
 			// bumped a spy - they are discovered!
-			if ( TFGameRules()->IsMannVsMachineMode() )	// we have to build up to knowing that they are a spy in MvM
-			{
+			//if ( TFGameRules()->IsMannVsMachineMode() )	// we have to build up to knowing that they are a spy in MvM
+			//{
 				SuspectSpy( them );
-			}
-			else
-			{
-				RealizeSpy( them );
-			}
+			//}
+			//else
+			//{
+				//RealizeSpy( them );
+			//}
 		}
 
 		// always notice if we bump an enemy
