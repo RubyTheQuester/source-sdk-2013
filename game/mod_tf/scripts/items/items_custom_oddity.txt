@@ -39,32 +39,11 @@
 			"baseitem" "0"
 			"soloitem" "1"
 			
-			
 			"item_name"	"#TF_Flamethrower_Ammopack"
 			"propername"	"1"
-			"item_description"	"#TF_Flamethrower_Ammopack_desc"
-			
-			"item_logname"		"ai_flamethrower"
-			"item_iconname"		"ai_flamethrower"
-			
-			"image_inventory"		"backpack/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"inspect_panel_dist"		"75"
-			"model_player"		"models/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower.mdl"
 			
 			"attributes"
 			{
-				"airblast cost decreased"
-				{
-					"attribute_class"	"mult_airblast_cost"
-					"value"	"0.8"
-				}
-				"flame ammopersec increased"
-				{
-					"attribute_class"	"mult_flame_ammopersec"
-					"value"	"1.25"
-				}
 				"airblast pushback disabled"
 				{
 					"attribute_class"	"airblast_pushback_disabled"
