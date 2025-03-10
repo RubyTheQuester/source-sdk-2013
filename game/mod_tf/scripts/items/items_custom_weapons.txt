@@ -66,56 +66,6 @@
 	
 	"items"
 	{
-		"34444"
-		{
-			"name"	"Ammopack Flamethrower"
-			"prefab" "weapon_flamethrower paintkit_base"
-			"baseitem" "0"
-			"soloitem" "1"
-			
-			
-			"item_name"	"#TF_Flamethrower_Ammopack"
-			"propername"	"1"
-			"item_description"	"#TF_Flamethrower_Ammopack_desc"
-			
-			"item_logname"		"ai_flamethrower"
-			"item_iconname"		"ai_flamethrower"
-			
-			"image_inventory"		"backpack/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"inspect_panel_dist"		"75"
-			"model_player"		"models/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower.mdl"
-			
-			"attributes"
-			{
-				"airblast cost decreased"
-				{
-					"attribute_class"	"mult_airblast_cost"
-					"value"	"0.8"
-				}
-				"flame ammopersec increased"
-				{
-					"attribute_class"	"mult_flame_ammopersec"
-					"value"	"1.25"
-				}
-				"airblast pushback disabled"
-				{
-					"attribute_class"	"airblast_pushback_disabled"
-					"value"	"1"
-				}
-				"airblast turn projectile to ammo"
-				{
-					"attribute_class"	"airblast_turn_projectile_to_ammo"
-					"value"	"1"
-				}
-			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		}
-		
 		"34445"
 		{
 			"name"		"The Market Caber"
@@ -149,8 +99,8 @@
 			}
 			
 			"item_quality"	"rarity2"
-			"min_ilevel"	"69"
-			"max_ilevel"	"69"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 		
 		"34446"
@@ -260,7 +210,7 @@
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"	"1.4"
+					"value"	"1.6"
 				}
 				"damage applies to sappers"
 				{
@@ -317,50 +267,20 @@
 					"attribute_class"	"mult_minigun_spinup_time"
 					"value" "1.5"
 				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
 				"aiming movespeed decreased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value" "0.4"
+					"value" "0.5"
 				}
 				"dmg taken from blast increased"
 				{
 					"attribute_class"	"mult_dmgtaken_from_explosions"
-					"value" "1.25"
-				}
-			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		}
-		
-		"34449"
-		{
-			"name"	"Milk Bolt Crossbow"
-			"prefab" "weapon_crusaders_crossbow"
-			
-			"baseitem" "0"
-			"soloitem" "1"
-			
-			"show_in_armory"	"1"
-			"item_name"		"#TF_MilkBolt_Crossbow"
-			
-			"attributes"
-			{
-				"fires_milk_bolt"
-				{
-					"attribute_class"	"fires_milk_bolt"
-					"value"	"1"
-				}
-				"reload time increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"	"0.5"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.75"
+					"value" "1.3"
 				}
 			}
 			

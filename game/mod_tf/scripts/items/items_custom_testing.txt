@@ -41,22 +41,12 @@
 				"maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value"	"0.5"
+					"value"	"0.25"
 				}
-				"fire rate penalty"
+				"damage penalty"
 				{
-					"attribute_class"	"mult_postfiredelay"
-					"value" "1.25"
-				}
-				"single wep holster time increased"
-				{
-					"attribute_class"	"mult_switch_from_wep_deploy_time"
-					"value"				"1.6"
-				}
-				"reload time increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"	"1.35"
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
 				}
 				"last_shot_crits"
 				{
@@ -67,6 +57,46 @@
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"60001"
+		{
+			"name"	"Milk Bolt Crossbow"
+			"prefab" "weapon_crusaders_crossbow"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_MilkBolt_Crossbow"
+			
+			"attributes"
+			{
+				"fires_milk_bolt"
+				{
+					"attribute_class"	"fires_milk_bolt"
+					"value"	"1"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.5"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.6"
 				}
 			}
 			
