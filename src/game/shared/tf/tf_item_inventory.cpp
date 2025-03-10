@@ -51,7 +51,7 @@ using namespace GCSDK;
 #define LOCAL_LOADOUT_FILE		"cfg/local_loadout.txt"
 #define LOCAL_LOADOUT_RESERVE   65536
 
-ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "0", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
+ConVar tf_disable_base_econ_items("tf_disable_base_econ_items", "1", FCVAR_REPLICATED, "Disable base TF2 inventory items from being equippable.");
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
@@ -1163,7 +1163,7 @@ void CTFPlayerInventory::EquipLocal(uint64 ulItemID, equipped_class_t unClass, e
 		GTFGCClientSystem()->LocalInventoryChanged();
 #endif
 	}
-	else if (!tf_disable_base_econ_items.GetBool())
+	else
 	{
 		CEconItemView* pItem = GetInventoryItemByItemID(ulItemID);
 		if (pItem)
