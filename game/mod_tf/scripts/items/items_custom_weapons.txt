@@ -73,12 +73,32 @@
 			"baseitem" "0"
 			"soloitem" "1"
 			
+			
 			"item_name"	"#TF_Flamethrower_Ammopack"
 			"propername"	"1"
 			"item_description"	"#TF_Flamethrower_Ammopack_desc"
-
+			
+			"item_logname"		"ai_flamethrower"
+			"item_iconname"		"ai_flamethrower"
+			
+			"image_inventory"		"backpack/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist"		"75"
+			"model_player"		"models/workshop_partner/weapons/c_models/c_ai_flamethrower/c_ai_flamethrower.mdl"
+			
 			"attributes"
 			{
+				"airblast cost decreased"
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"	"0.8"
+				}
+				"flame ammopersec increased"
+				{
+					"attribute_class"	"mult_flame_ammopersec"
+					"value"	"1.25"
+				}
 				"airblast pushback disabled"
 				{
 					"attribute_class"	"airblast_pushback_disabled"
@@ -89,12 +109,8 @@
 					"attribute_class"	"airblast_turn_projectile_to_ammo"
 					"value"	"1"
 				}
-				"airblast give teammate speed boost"
-				{
-					"attribute_class"	"airblast_give_teammate_speed_boost"
-					"value"	"1"
-				}
 			}
+			
 			"item_quality"	"selfmade"
 			"min_ilevel"	"69"
 			"max_ilevel"	"69"
@@ -230,6 +246,11 @@
 			
 			"attributes"
 			{
+				"mult_dmg_vs_same_class"
+				{
+					"attribute_class"	"mult_dmg_vs_same_class"
+					"value"	"1.25"
+				}
 				"dmg pierces resists absorbs"
 				{
 					"attribute_class"	"mod_pierce_resists_absorbs"
@@ -259,7 +280,7 @@
 		
 		"34448"
 		{
-			"name"			"Cool Deflector"
+			"name"			"Deflector"
 			"prefab"		"weapon_minigun"
 			
 			"baseitem" "0"
@@ -278,6 +299,14 @@
 			"visuals"
 			{
 				"tracer_effect"	"bullet_tracer02"
+				
+				"sound_reload"	"Weapon_Gatling.Reload"
+				"sound_empty"	"Weapon_Gatling.ClipEmpty"
+				"sound_double_shot"	"Weapon_Gatling.Fire"
+				"sound_special1"	"Weapon_Gatling.WindUp"
+				"sound_special2"	"Weapon_Gatling.WindDown"
+				"sound_special3"	"Weapon_Gatling.Spin"
+				"sound_burst"	"Weapon_Gatling.FireCrit"
 			}
 			
 			"attributes"
@@ -285,7 +314,95 @@
 				"attack projectiles"
 				{
 					"attribute_class"	"attack_projectiles"
-					"value"	"100"
+					"value"	"3"
+				}
+				"minigun spinup time increased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value" "1.5"
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value" "0.4"
+				}
+				"dmg taken from blast increased"
+				{
+					"attribute_class"	"mult_dmgtaken_from_explosions"
+					"value" "1.25"
+				}
+			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		
+		"34449"
+		{
+			"name"			"Dispenser Spy"
+			"prefab"		"weapon_spy_knife_item2"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_Dispenser_Knife"
+			
+			"item_logname"	"black_rose"
+			"item_iconname"	"black_rose"
+			"image_inventory"	"backpack/workshop/weapons/c_models/c_ava_roseknife/c_ava_roseknife_v"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"25"
+			"model_player"		"models/workshop/weapons/c_models/c_ava_roseknife/c_ava_roseknife.mdl"
+			
+			"attributes"
+			{
+				"disguise_as_dispenser_on_crouch"
+				{
+					"attribute_class"	"disguise_as_dispenser_on_crouch"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			
+			"item_quality"	"selfmade"
+			"min_ilevel"	"69"
+			"max_ilevel"	"69"
+		}
+		
+		"34450"
+		{
+			"name"	"Milk Bolt Crossbow"
+			"prefab" "weapon_crusaders_crossbow"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_MilkBolt_Crossbow"
+			
+			"attributes"
+			{
+				"fires_milk_bolt"
+				{
+					"attribute_class"	"fires_milk_bolt"
+					"value"	"1"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.9"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.75"
 				}
 			}
 			
