@@ -1,4 +1,5 @@
 #base items_custom_share.txt
+#base items_custom_rebalance.txt
 #base items_custom_weapons.txt
 
 #base items_custom_testing.txt
