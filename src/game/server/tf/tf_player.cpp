@@ -113,6 +113,7 @@
 #include "tf_player_resource.h"
 #include "gcsdk/gcclient_sharedobjectcache.h"
 #include "tf_party.h"
+#include "entity_ammopack.h"
 
 #ifdef TF_RAID_MODE
 #include "bot_npc/bot_npc_decoy.h"
@@ -4517,7 +4518,7 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 	{
 		ManageRegularWeaponsLegacy( pData );
 	}
-	else
+	else if (!IsFakeClient() || !m_bRegenerating)
 	{
 		// Loop through our current wearables and ensure we're supposed to have them.
 		ValidateWearables( pData );
@@ -13104,6 +13105,14 @@ void CTFPlayer::DropAmmoPack( const CTakeDamageInfo &info, bool bEmpty, bool bDi
 //-----------------------------------------------------------------------------
 void CTFPlayer::DropAmmoPackFromProjectile( CBaseEntity *pProjectile )
 {
+	pProjectile->EmitSound("Weapon_Upgrade.ExplosiveHeadshot");
+
+	CPVSFilter filter(WorldSpaceCenter());
+	const char* pszHitEffect = (GetTeamNumber() == TF_TEAM_BLUE) ? "dxhr_lightningball_hit_blue" : "dxhr_lightningball_hit_red";
+	te_tf_particle_effects_control_point_t controlPoint = { PATTACH_ABSORIGIN, pProjectile->GetAbsOrigin()};
+
+	TE_TFParticleEffectComplex(filter, 0.0f, pszHitEffect, WorldSpaceCenter(), QAngle(0, 0, 0), NULL, &controlPoint, pProjectile, PATTACH_CUSTOMORIGIN);
+
 	QAngle qPackAngles = pProjectile->GetAbsAngles();
 	Vector vecPackOrigin = pProjectile->GetAbsOrigin();
 	UTIL_Remove( pProjectile );
@@ -13137,6 +13146,95 @@ void CTFPlayer::DropHealthPack( const CTakeDamageInfo &info, bool bEmpty )
 
 		Vector vecVelocity = vecImpulse * 250.0;
 		pMedKit->DropSingleInstance( vecVelocity, this, 0 );
+	}
+}
+//-----------------------------------------------------------------------------
+// Purpose: drops the flag
+//-----------------------------------------------------------------------------
+void CC_DropAmmo(void)
+{
+	CTFPlayer* pPlayer = ToTFPlayer(UTIL_GetCommandClient());
+	if (!pPlayer)
+		return;
+
+	pPlayer->DropAmmoPackCommand();
+}
+
+static ConCommand dropammo("dropammo", CC_DropAmmo, "Drop some ammo.");
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayer::DropAmmoPackCommand()
+{
+	if ( PointInRespawnRoom( this, this->WorldSpaceCenter() ) )
+		return;
+
+	if (m_Shared.InCond(TF_COND_STEALTHED))
+		return;
+
+	float fAmmoPackRatio = 0.2;
+
+	int iMaxPrimary = GetMaxAmmo(TF_AMMO_PRIMARY);
+	int iMaxSecondary = GetMaxAmmo(TF_AMMO_SECONDARY);
+	int iMaxMetal = GetMaxAmmo(TF_AMMO_METAL);
+
+	int iCurrentPrimary = GetAmmoCount(TF_AMMO_PRIMARY);
+	int iCurrentSecondary = GetAmmoCount(TF_AMMO_SECONDARY);
+	int iCurrentMetal = GetAmmoCount(TF_AMMO_METAL);
+
+	int m_iMaxPrimaryRemoval = ceil(iMaxPrimary * fAmmoPackRatio);
+	int m_iMaxSecondaryRemoval = ceil(iMaxSecondary * fAmmoPackRatio);
+	int m_iMaxMetalRemoval = ceil(iMaxMetal * fAmmoPackRatio);
+
+	//( 100.0f * flPackRatio )
+	//( 100.0f * fAmmoPackRatio )
+	int iCloak = m_Shared.m_flCloakMeter;
+	int m_iCloakRemoval = clamp(iCloak - (100.0f * fAmmoPackRatio), 0.0f, 100.0f);
+
+
+	if ( (iCurrentPrimary >= m_iMaxPrimaryRemoval) && (iCurrentSecondary >= m_iMaxSecondaryRemoval) )
+	{
+		if ( IsPlayerClass(TF_CLASS_SPY) && (m_iCloakRemoval >= 20.0f) )
+		{
+			m_Shared.m_flCloakMeter = m_iCloakRemoval; //What the fuck is this.
+		}
+		else if ( IsPlayerClass(TF_CLASS_SPY) )
+		{
+			this->EmitSound("Player.DenyWeaponSelection");
+			return;
+		}
+
+		if (IsPlayerClass(TF_CLASS_ENGINEER) && (iCurrentMetal >= m_iMaxMetalRemoval))
+		{
+			RemoveAmmo(m_iMaxMetalRemoval, TF_AMMO_METAL);
+		}
+		else if (IsPlayerClass(TF_CLASS_ENGINEER))
+		{
+			this->EmitSound("Player.DenyWeaponSelection");
+			return;
+		}
+
+		RemoveAmmo(m_iMaxPrimaryRemoval, TF_AMMO_PRIMARY);
+		RemoveAmmo(m_iMaxSecondaryRemoval, TF_AMMO_SECONDARY);
+	}
+	else {
+		this->EmitSound("Player.DenyWeaponSelection");
+		return;
+	}
+
+	// Throw out the medikit
+	Vector vecSrc = EyePosition() + Vector(0, 0, -8);
+	QAngle angForward = EyeAngles() + QAngle(-10, 0, 0);
+
+	CAmmoPackSmall* pAmmoPack = assert_cast<CAmmoPackSmall*>(CBaseEntity::Create("item_ammopack_small", vecSrc, angForward, this));
+	if (pAmmoPack)
+	{
+		Vector vecForward, vecRight, vecUp;
+		AngleVectors(angForward, &vecForward, &vecRight, &vecUp);
+		Vector vecVelocity = vecForward * 500.0;
+
+		pAmmoPack->SetAbsAngles(vec3_angle);
+		pAmmoPack->DropSingleInstance(vecVelocity, this, 0.3);
 	}
 }
 
