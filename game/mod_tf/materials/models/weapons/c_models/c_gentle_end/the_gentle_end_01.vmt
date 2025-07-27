@@ -1,30 +1,27 @@
-"VertexLitGeneric"
+"VertexlitGeneric"
 {
-		"$basetexture" "console\models/workshop/weapons/c_models/c_tyranny/revolver_tx_02"
-
-			 "$lightwarptexture" "models\lightwarps\weapon_lightwarp"
-
-	"$phong"		"1"
-	"$phongexponent"		"10"
-	"$phongboost"		"0.01"
-	"$phongfresnelranges"		"[1.5 .5 3]"
-	"$phongalbedotint" "1"
-	"$halflambert" "1"
-
-	"$basephongexponent" "1"
-	"$basephongboost" "1"
-
-"$tempvar" "0"
-
-	"$rimlight"		"0"
-	"$rimlightexponent"		"25"
-	"$rimlightboost"		"0.2"
-	"$blendtintbybasealpha"		"0.5"
+	"$basetexture" "models/weapons/c_models/c_gentle_end/the_gentle_end_02"
+	"$bumpmap" "models/weapons/c_models/c_gentle_end/normal_02"
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	
+	"$phong" "1"
+	"$phongexponent" "14"
+	"$phongboost" "7"	
+	"$phongfresnelranges"	"[.2 1 .2]"
+	"$phongExponentTexture" "models/weapons/c_models/c_gentle_end/specular_01"
+	"$phongAlbedoTint" "1"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.055 .055 .055]"
+	"$rimlight" "1"						
+	"$rimlightexponent" "1"				
+	"$rimlightboost" "4"
+	
+	"$glowcolor" "1"
+	
+	//"$blendtintbybasealpha"		"1"
 	"$blendtintcoloroverbase"		"0"
 	"$rimmask" "1"
-
-	"$colortint_base"		"{ 255 255 255 }"
-	"$color2"		"{ 255 255 255 }"
 	
 	"$colortint_tmp"		"[0 0 0]"
 	"$bumpmapalphaphongmask"		"1"
@@ -36,19 +33,13 @@
 	"$sheenmapmaskframe" 	"0"
 	"$sheenindex" 		"0"
 
-
-
-
-	
 	"$detail"		"effects/tiledfire/fireLayeredSlowTiled512"
 	"$detailscale"		"5"
 	"$detailblendfactor"		"0"
 	"$detailblendmode"		"6"
+	
 	"$yellow"		"0"
-	">=DX90"
-	{
-		"$selfillum"		"0"
-	}
+	
 	"proxies"
 	{
 		"invis"
@@ -63,6 +54,20 @@
 		"BurnLevel"
 		{
 			"resultVar"		"$detailblendfactor"
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
 		}
 		"ItemTintColor"
 		{
