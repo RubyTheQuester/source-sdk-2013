@@ -1,0 +1,17 @@
+#base items_game.txt
+
+"items_game"
+{
+	"items"
+	{
+		"9000"
+		{
+			"name"				"Test Launcher"
+			"prefab"			"weapon_rocketlauncher"
+			"item_name"			"Test Launcher"
+			"item_quality"		"developer"
+			"propername"		"1"
+			"customitem"		"1"
+		}
+	}
+}
