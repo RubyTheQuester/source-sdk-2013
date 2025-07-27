@@ -1052,7 +1052,7 @@ ConVar tf_creep_wave_player_respawn_time( "tf_creep_wave_player_respawn_time", "
 
 ConVar hide_server( "hide_server", "0", FCVAR_GAMEDLL, "Whether the server should be hidden from the master server" );
 
-ConVar mp_waitingforplayers_time( "mp_waitingforplayers_time", (IsX360()?"15":"30"), FCVAR_GAMEDLL | WAITING_FOR_PLAYERS_FLAGS, "WaitingForPlayers time length in seconds" );
+ConVar mp_waitingforplayers_time( "mp_waitingforplayers_time", "0", FCVAR_GAMEDLL | WAITING_FOR_PLAYERS_FLAGS, "WaitingForPlayers time length in seconds" );
 
 ConVar tf_gamemode_arena ( "tf_gamemode_arena", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_cp ( "tf_gamemode_cp", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
@@ -3060,13 +3060,13 @@ void CTFGameRules::PlayerReadyStatus_UpdatePlayerState( CTFPlayer *pTFPlayer, bo
 			}
 			else if ( m_flRestartRoundTime < 0 && !PlayerReadyStatus_ShouldStartCountdown() )
 			{
-				m_flRestartRoundTime.Set( gpGlobals->curtime + 150.f );
+				m_flRestartRoundTime.Set( gpGlobals->curtime + 15.f );
 				m_bAwaitingReadyRestart = false;
 
 				IGameEvent* pEvent = gameeventmanager->CreateEvent( "teamplay_round_restart_seconds" );
 				if ( pEvent )
 				{
-					pEvent->SetInt( "seconds", 150 );
+					pEvent->SetInt( "seconds", 15 );
 					gameeventmanager->FireEvent( pEvent );
 				}
 			}
@@ -3516,10 +3516,7 @@ void CTFGameRules::Precache( void )
 		CMerasmus::PrecacheMerasmus();
 	}
 
-	if ( StringHasPrefix( STRING( gpGlobals->mapname ), "mvm_" ) )
-	{
-		CTFPlayer::PrecacheMvM();
-	}
+	CTFPlayer::PrecacheMvM();
 
 	CTFPlayer::m_bTFPlayerNeedsPrecache = true;
 }
@@ -4230,9 +4227,11 @@ void CTFGameRules::Activate()
 
 	m_nMapHolidayType.Set( kHoliday_None );
 
+	bool isOverriden = tf_gamemode_override.GetBool();
+
 	CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
 
-	if ( pArenaLogic != NULL )
+	if ( pArenaLogic != NULL && !isOverriden )
 	{
 		m_hArenaEntity = pArenaLogic;
 
@@ -4246,7 +4245,7 @@ void CTFGameRules::Activate()
 
 #ifdef TF_RAID_MODE
 	CRaidLogic *pRaidLogic = dynamic_cast< CRaidLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_raid" ) );
-	if ( pRaidLogic )
+	if ( pRaidLogic && !isOverriden )
 	{
 		m_hRaidLogic = pRaidLogic;
 
@@ -4257,7 +4256,7 @@ void CTFGameRules::Activate()
 	}
 
 	CBossBattleLogic *pBossBattleLogic = dynamic_cast< CBossBattleLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_boss_battle" ) );
-	if ( pBossBattleLogic )
+	if ( pBossBattleLogic && !isOverriden )
 	{
 		m_hBossBattleLogic = pBossBattleLogic;
 
@@ -4282,7 +4281,10 @@ void CTFGameRules::Activate()
 	CMannVsMachineLogic *pMannVsMachineLogic = dynamic_cast< CMannVsMachineLogic * >( gEntList.FindEntityByClassname( NULL, "tf_logic_mann_vs_machine" ) );
 	CTeamTrainWatcher *pTrainWatch = dynamic_cast<CTeamTrainWatcher*> ( gEntList.FindEntityByClassname( NULL, "team_train_watcher" ) );
 	bool bFlag = ICaptureFlagAutoList::AutoList().Count() > 0;
-	if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+	if ( isOverriden )
+	{
+	}
+	else if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 	{
 		m_bPlayingRobotDestructionMode.Set( true );
 		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFRobotDestructionLogic::TYPE_ROBOT_DESTRUCTION )
@@ -4328,7 +4330,7 @@ void CTFGameRules::Activate()
 	}
 	
 	auto *pPasstime = dynamic_cast<CTFPasstimeLogic*> ( gEntList.FindEntityByClassname( NULL, "passtime_logic" ) );
-	if ( pPasstime )
+	if ( pPasstime && !isOverriden )
 	{
 		m_nGameType.Set( TF_GAMETYPE_PASSTIME );
 		tf_gamemode_passtime.SetValue( 1 );
@@ -4336,7 +4338,7 @@ void CTFGameRules::Activate()
 
 	// the game is in training mode if this entity is found
 	m_hTrainingModeLogic = dynamic_cast< CTrainingModeLogic * > ( gEntList.FindEntityByClassname( NULL, "tf_logic_training_mode" ) );
-	if ( NULL != m_hTrainingModeLogic )
+	if ( NULL != m_hTrainingModeLogic && !isOverriden )
 	{
 		m_bIsInTraining.Set( true );
 		m_bAllowTrainingAchievements.Set( false );
@@ -4348,13 +4350,13 @@ void CTFGameRules::Activate()
 	m_bIsInItemTestingMode.Set( false );
 
 	CKothLogic *pKoth = dynamic_cast<CKothLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_koth" ) );
-	if ( pKoth )
+	if ( pKoth && !isOverriden )
 	{
 		m_bPlayingKoth.Set( true );
 	}
 
 	CMedievalLogic *pMedieval = dynamic_cast<CMedievalLogic*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_medieval" ) );
-	if ( pMedieval || tf_medieval.GetBool() )
+	if ( (pMedieval || tf_medieval.GetBool()) && !isOverriden )
 	{
 		m_bPlayingMedieval.Set( true );
 	}
@@ -4366,7 +4368,7 @@ void CTFGameRules::Activate()
 	}
 
 	CHybridMap_CTF_CP *pHybridMap_CTF_CP = dynamic_cast<CHybridMap_CTF_CP*> ( gEntList.FindEntityByClassname( NULL, "tf_logic_hybrid_ctf_cp" ) );
-	if ( pHybridMap_CTF_CP )
+	if ( pHybridMap_CTF_CP && !isOverriden )
 	{
 		m_bPlayingHybrid_CTF_CP.Set( true );
 	}
@@ -9734,7 +9736,7 @@ void CTFGameRules::RecalculateTruce( void )
 				}
 			}
 
-			if ( bHaveActiveBoss && ( IsValveMap() || tf_halloween_allow_truce_during_boss_event.GetBool() || IsMapForcedTruceDuringBossFight() ) )
+			if ( bHaveActiveBoss && ( tf_halloween_allow_truce_during_boss_event.GetBool() || IsMapForcedTruceDuringBossFight() ) )
 			{
 				bTruceActive = true;
 			}
@@ -16442,6 +16444,9 @@ void CTFGameRules::HandleSwitchTeams( void )
 	if ( IsPVEModeActive() )
 		return;
 
+	if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
+		return;
+
 	m_bTeamsSwitched.Set( !m_bTeamsSwitched );
 
 	// switch this as well
@@ -20902,6 +20907,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the red cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					{
+						m_redPayloadToPush = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20920,6 +20934,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the blue cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					{
+						m_bluePayloadToPush = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20959,6 +20982,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the red cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					{
+						m_redPayloadToBlock = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -20985,6 +21017,15 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
 				// find the blue cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					{
+						m_bluePayloadToBlock = watcher;
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -22389,6 +22430,22 @@ bool	ScriptGetOvertimeAllowedForCTF()							{ return TFGameRules()->GetOvertimeA
 
 void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUpgrades( nState ); }
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
+
+void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
+void	ScriptSetRoundToPlayNext( const char* name )
+{ 
+	CTeamControlPointRound* pRound = dynamic_cast<CTeamControlPointRound*>(gEntList.FindEntityByName(NULL, name));
+	if (pRound)
+	{
+		string_t rname = AllocPooledString(name);
+		TFGameRules()->SetRoundToPlayNext(rname);
+	}
+	else
+	{
+		Msg("Round not found in this map\n");
+		return;
+	}
+}
 
 void CTFGameRules::RegisterScriptFunctions()
 {

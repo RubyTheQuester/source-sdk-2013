@@ -21,14 +21,14 @@ ConVar tf_bot_debug_seek_and_destroy( "tf_bot_debug_seek_and_destroy", "0", FCVA
 
 
 //---------------------------------------------------------------------------------------------
-CTFBotSeekAndDestroy::CTFBotSeekAndDestroy( float duration )
+CTFBotSeekAndDestroy::CTFBotSeekAndDestroy( float duration, bool roamer )
 {
 	if ( duration > 0.0f )
 	{
 		m_giveUpTimer.Start( duration );
 	}
+	m_isRoaming = roamer;
 }
-
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotSeekAndDestroy::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -66,7 +66,7 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 			return Done( "Assist trainee in capturing the point" );
 		}
 	}
-	else
+	else if ( !m_isRoaming )
 	{
 		if ( me->IsCapturingPoint() )
 		{
@@ -112,6 +112,11 @@ ActionResult< CTFBot >	CTFBotSeekAndDestroy::Update( CTFBot *me, float interval 
 	{
 		m_repathTimer.Start( 1.0f );
 
+		RecomputeSeekPath( me );
+	}
+	else if ( m_repathRandTimer.HasStarted() && m_repathRandTimer.IsElapsed() )
+	{
+		m_repathRandTimer.Reset();
 		RecomputeSeekPath( me );
 	}
 
@@ -191,6 +196,23 @@ CTFNavArea *CTFBotSeekAndDestroy::ChooseGoalArea( CTFBot *me )
 		if ( controlPointAreas && controlPointAreas->Count() > 0 )
 		{
 			goalVector.AddToTail( controlPointAreas->Element( RandomInt( 0, controlPointAreas->Count()-1 ) ) );
+		}
+	}
+
+	// Go somewhere already
+	if ( goalVector.Count() == 0 )
+	{
+		int count = TheTFNavMesh()->GetNavAreaCount();
+		auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+		if ( carea )
+		{
+			CTFNavArea *area = static_cast< CTFNavArea * >( carea );
+			goalVector.AddToTail( area );
+			m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+		}
+		else
+		{
+			m_repathRandTimer.Start( RandomFloat( 3.0f, 7.0f ) );
 		}
 	}
 

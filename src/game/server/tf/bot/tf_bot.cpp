@@ -37,6 +37,8 @@
 #include "bot/map_entities/tf_bot_generator.h"
 #include "bot/map_entities/tf_bot_hint_entity.h"
 
+#include "func_passtime_goal.h"
+
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
 ConVar tf_bot_notice_gunfire_range( "tf_bot_notice_gunfire_range", "3000", FCVAR_GAMEDLL );
@@ -2039,7 +2041,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 	{
 		CCaptureFlag *flag = static_cast< CCaptureFlag* >( ICaptureFlagAutoList::AutoList()[i] );
 
-		if ( flag->IsDisabled() )
+		if ( flag->IsDisabled() && !flag->IsReturning() )
 			continue;
 
 		// If I'm carrying a flag, look for mine and early-out
@@ -2054,7 +2056,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		switch( flag->GetType() )
 		{
 		case TF_FLAGTYPE_CTF:
-			if ( flag->GetTeamNumber() == GetEnemyTeam( GetTeamNumber() ) )
+			if ( flag->GetTeamNumber() != GetTeamNumber() )
 			{
 				// we want to steal the other team's flag
 				flagsVector.AddToTail( flag );
@@ -2064,6 +2066,9 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		case TF_FLAGTYPE_ATTACK_DEFEND:
 		case TF_FLAGTYPE_TERRITORY_CONTROL:
 		case TF_FLAGTYPE_INVADE:
+		case TF_FLAGTYPE_RESOURCE_CONTROL:
+		case TF_FLAGTYPE_ROBOT_DESTRUCTION:
+		case TF_FLAGTYPE_PLAYER_DESTRUCTION:
 			if ( flag->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) )
 			{
 				// we want to move our team's flag or a neutral flag
@@ -2168,7 +2173,7 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	for( int i=0; i<ICaptureZoneAutoList::AutoList().Count(); ++i )
 	{
 		CCaptureZone *zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
-		if ( zone->GetTeamNumber() == GetTeamNumber() )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
 		{
 			return zone;
 		}
@@ -2177,6 +2182,71 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	return NULL;
 }
 
+//-----------------------------------------------------------------------------------------------------
+// Return capture zone for our ball
+CFuncPasstimeGoal* CTFBot::GetBallCaptureZone(void) const
+{
+	const auto& list = CFuncPasstimeGoal::GetAutoList();
+	for (int i = 0; i < list.Count(); ++i)
+	{
+		CFuncPasstimeGoal *zone = list[i];
+		if ( !zone->IsDisabled() && (zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		{
+			return zone;
+		}
+	}
+
+	return NULL;
+}
+
+//-----------------------------------------------------------------------------------------------------
+// Return any objective of interest
+CBaseEntity *CTFBot::GetAnyObjective( void ) const
+{
+	for (int i = 0; i < ICaptureZoneAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureZone *zone = static_cast< CCaptureZone *>( ICaptureZoneAutoList::AutoList()[i] );
+		if ( !zone->IsDisabled() )
+		{
+			return zone;
+		}
+	}
+
+	const auto& list = CFuncPasstimeGoal::GetAutoList();
+	for (int i = 0; i < list.Count(); ++i)
+	{
+		CFuncPasstimeGoal *zone = list[i];
+		if ( !zone->IsDisabled() )
+		{
+			return zone;
+		}
+	}
+
+	CTeamControlPointMaster *master = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
+	if ( master )
+	{
+		for (int i = 0; i < master->GetNumPoints(); ++i)
+		{
+			CTeamControlPoint *point = master->GetControlPoint( i );
+			if ( point )
+			{
+				return point;
+			}
+		}
+	}
+
+	for (int i = 0; i < ICaptureFlagAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureFlag *flag = static_cast< CCaptureFlag *>( ICaptureFlagAutoList::AutoList()[i] );
+
+		if ( flag->IsDisabled() && !flag->IsReturning() )
+			continue;
+
+		return flag;
+	}
+
+	return NULL;
+}
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -2281,7 +2351,7 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 			return TFGameRules()->GetKothTeamTimer( GetEnemyTeam( GetTeamNumber() ) )->GetTimeRemaining();
 		}
 	}
-	else if ( TFGameRules()->GetActiveRoundTimer() )
+	else if ( TFGameRules()->GetActiveRoundTimer() && !TFGameRules()->GetActiveRoundTimer()->IsDisabled() )
 	{
 		return TFGameRules()->GetActiveRoundTimer()->GetTimeRemaining();
 	}

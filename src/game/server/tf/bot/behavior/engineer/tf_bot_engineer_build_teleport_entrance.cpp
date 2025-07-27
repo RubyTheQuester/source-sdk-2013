@@ -12,11 +12,25 @@
 #include "bot/behavior/engineer/tf_bot_engineer_build_teleport_entrance.h"
 #include "bot/behavior/engineer/tf_bot_engineer_move_to_build.h"
 #include "bot/behavior/tf_bot_get_ammo.h"
+#include "bot/behavior/tf_bot_seek_and_destroy.h"
 
 extern ConVar tf_bot_path_lookahead_range;
 
 ConVar tf_bot_max_teleport_entrance_travel( "tf_bot_max_teleport_entrance_travel", "1500", FCVAR_CHEAT, "Don't plant teleport entrances farther than this travel distance from our spawn room" );
 ConVar tf_bot_teleport_build_surface_normal_limit( "tf_bot_teleport_build_surface_normal_limit", "0.99", FCVAR_CHEAT, "If the ground normal Z component is less that this value, Engineer bots won't place their entrance teleporter" );
+
+//-----------------------------------------------------------------------------------------
+// Returns the initial Action we will run concurrently as a child to us
+Action< CTFBot >* CTFBotEngineerBuildTeleportEntrance::InitialContainedAction( CTFBot* me )
+{
+	if ( !me->GetAnyObjective() )
+	{
+		// wait until a control point becomes available
+		return new CTFBotSeekAndDestroy( -1.0f, true );
+	}
+
+	return NULL;
+}
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
@@ -29,8 +43,10 @@ ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::OnStart( CTFBot *me,
 ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::Update( CTFBot *me, float interval )
 {
 	CTeamControlPoint *point = me->GetMyControlPoint();
-	CCaptureZone *zone = me->GetFlagCaptureZone();
-	if ( !point && !zone )
+	auto zone = me->GetFlagCaptureZone();
+	auto passzone = me->GetBallCaptureZone();
+	auto generic = me->GetAnyObjective();
+	if ( !generic )
 	{
 		// wait until a control point becomes available
 		return Continue();
@@ -65,13 +81,21 @@ ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::Update( CTFBot *me, 
 	if ( !m_path.IsValid() )
 	{
 		CTFBotPathCost cost( me, FASTEST_ROUTE );
-		if ( point )
+		if (point)
 		{
-			m_path.Compute( me, point->GetAbsOrigin(), cost );
+			m_path.Compute(me, point->GetAbsOrigin(), cost);
 		}
-		else if ( zone )
+		else if (zone)
 		{
-			m_path.Compute( me, zone->WorldSpaceCenter(), cost );
+			m_path.Compute(me, zone->WorldSpaceCenter(), cost);
+		}
+		else if (passzone)
+		{
+			m_path.Compute(me, passzone->WorldSpaceCenter(), cost);
+		}
+		else if (generic)
+		{
+			m_path.Compute(me, generic->WorldSpaceCenter(), cost);
 		}
 	}
 

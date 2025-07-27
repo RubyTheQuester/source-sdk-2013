@@ -66,6 +66,9 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 	int enemyTeam = ( myTeam == TF_TEAM_BLUE ) ? TF_TEAM_RED : TF_TEAM_BLUE;
 
 	CCaptureZone *zone = me->GetFlagCaptureZone();
+	auto passzone = me->GetBallCaptureZone();
+	auto genericzone = me->GetAnyObjective();
+	CTeamControlPoint* ctrlPoint = me->GetMyControlPoint();
 	if ( zone )
 	{
 		// NOTE: Not strictly the right thing - should defend location of our team's flag
@@ -77,17 +80,35 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 			pointEnemyIncursion += zoneArea->GetIncursionDistance( enemyTeam );
 		}
 	}
+	else if ( passzone )
+	{
+		// NOTE: Not strictly the right thing - should defend location of our team's flag
+		CTFNavArea* zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( passzone->WorldSpaceCenter(), false, 500.0f, true );
+		if ( zoneArea )
+		{
+			pointAreaVector.AddToTail( zoneArea );
+			pointCentroid += zoneArea->GetCenter();
+			pointEnemyIncursion += zoneArea->GetIncursionDistance( enemyTeam );
+		}
+	}
 	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
 	{
 		CTeamTrainWatcher *trainWatcher;
 
-		if ( myTeam == TF_TEAM_BLUE )
+		if ( TFGameRules()->HasMultipleTrains() )
 		{
-			trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
+			trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
 		}
 		else
 		{
-			trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
+			if ( myTeam == TF_TEAM_BLUE )
+			{
+				trainWatcher = TFGameRules()->GetPayloadToPush( me->GetTeamNumber() );
+			}
+			else
+			{
+				trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
+			}
 		}
 
 		if ( trainWatcher )
@@ -103,13 +124,9 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 			}
 		}
 	}
-	else
+	else if ( ctrlPoint )
 	{
 		// collect all areas overlapping the point
-		CTeamControlPoint *ctrlPoint = me->GetMyControlPoint();
-		if ( !ctrlPoint )
-			return;
-
 		const CUtlVector< CTFNavArea * > *ctrlPointAreaVector = TheTFNavMesh()->GetControlPointAreas( ctrlPoint->GetPointIndex() );
 
 		if ( ctrlPointAreaVector )
@@ -122,6 +139,16 @@ void CTFBotEngineerMoveToBuild::CollectBuildAreas( CTFBot *me )
 				pointCentroid += area->GetCenter();
 				pointEnemyIncursion += area->GetIncursionDistance( enemyTeam );
 			}
+		}
+	}
+	else if ( genericzone )
+	{
+		CTFNavArea *zoneArea = (CTFNavArea *)TheTFNavMesh()->GetNearestNavArea( genericzone->WorldSpaceCenter(), false, 500.0f, true );
+		if ( zoneArea )
+		{
+			pointAreaVector.AddToTail( zoneArea );
+			pointCentroid += zoneArea->GetCenter();
+			pointEnemyIncursion += zoneArea->GetIncursionDistance( enemyTeam );
 		}
 	}
 
