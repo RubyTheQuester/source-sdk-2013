@@ -4227,7 +4227,7 @@ void CTFGameRules::Activate()
 
 	m_nMapHolidayType.Set( kHoliday_None );
 
-	bool isOverriden = tf_gamemode_override.GetBool();
+	bool isOverriden = false;
 
 	CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
 
@@ -16444,9 +16444,6 @@ void CTFGameRules::HandleSwitchTeams( void )
 	if ( IsPVEModeActive() )
 		return;
 
-	if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
-		return;
-
 	m_bTeamsSwitched.Set( !m_bTeamsSwitched );
 
 	// switch this as well
@@ -22430,8 +22427,6 @@ bool	ScriptGetOvertimeAllowedForCTF()							{ return TFGameRules()->GetOvertimeA
 
 void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUpgrades( nState ); }
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
-
-void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
 void	ScriptSetRoundToPlayNext( const char* name )
 { 
 	CTeamControlPointRound* pRound = dynamic_cast<CTeamControlPointRound*>(gEntList.FindEntityByName(NULL, name));
