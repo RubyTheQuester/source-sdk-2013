@@ -50,6 +50,21 @@
 				"demoman"	"primary"
 			}
 		}
+		"474"
+		{
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"spy"		"1"
+				"engineer"	"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"pyro" 		"1"
+			}
+		}
 		"307"
 		{
 			"used_by_classes"

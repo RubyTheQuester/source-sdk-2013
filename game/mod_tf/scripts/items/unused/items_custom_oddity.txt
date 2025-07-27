@@ -8,7 +8,7 @@
 			"prefab"	"weapon_knife"
 			
 			"baseitem" "0"
-			"soloitem" "1"
+			"customitem" "1"
 			
 			"show_in_armory"	"0"
 			"item_name"		"#TF_Dispenser_Knife"
@@ -37,7 +37,7 @@
 			"name"	"Ammopack Flamethrower"
 			"prefab" "weapon_flamethrower paintkit_base"
 			"baseitem" "0"
-			"soloitem" "1"
+			"customitem" "1"
 			
 			"item_name"	"#TF_Flamethrower_Ammopack"
 			"propername"	"1"
@@ -69,7 +69,7 @@
 			"item_name"	"#TF_SniperRifle_AimAlert"
 			
 			"baseitem" "0"
-			"soloitem" "1"
+			"customitem" "1"
 			
 			"used_by_classes"
 			{

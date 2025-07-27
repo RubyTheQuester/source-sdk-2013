@@ -520,3 +520,4 @@ game/platform/config/InGameDialogConfig.vdf
 /game/mod_tf/custom
 /game/mod_tf/materials/backpack/weapons/c_models/c_foxhound/misc
 game/mod_tf/scripts/whatever/items_game.txt
+game/mod_tf/scripts/items/unused/items_game.txt

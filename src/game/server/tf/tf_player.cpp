@@ -18096,6 +18096,11 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 			m_flTauntAttackTime = gpGlobals->curtime + 3.695f;
 			m_iTauntAttack = TAUNTATK_ENGINEER_GUITAR_SMASH;
 		}
+		if (!V_stricmp(szResponse, "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"))
+		{
+			m_flTauntAttackTime = gpGlobals->curtime + 3.47f;
+			m_iTauntAttack = TAUNTATK_ENGINEER_TRICKSHOT;
+		}
 		else if ( !V_stricmp( szResponse, "scenes/player/engineer/low/taunt09.vcd" ) )
 		{
 			m_flTauntAttackTime = gpGlobals->curtime + 3.2f;
@@ -19121,6 +19126,29 @@ void CTFPlayer::DoTauntAttack( void )
 			// gib the loser
 			pLoser->m_bSuicideExplode = true;
 			pLoser->TakeDamage( CTakeDamageInfo( pWinner, pWinner, NULL, 999, DMG_GENERIC, 0 ) );
+		}
+	}
+	else if (iTauntAttack == TAUNTATK_ENGINEER_TRICKSHOT)
+	{
+		// Engineer's trickshot attack
+		Vector vecForward;
+		AngleVectors(EyeAngles(), &vecForward);
+		Vector vecEnd = EyePosition() + vecForward * 500;
+
+		trace_t tr;
+		UTIL_TraceLine(EyePosition(), vecEnd, (MASK_SOLID | CONTENTS_HITBOX), this, COLLISION_GROUP_PLAYER, &tr);
+		//		DebugDrawLine( EyePosition(), vecEnd, 0, 0, 255, true, 3.0f );
+
+		if (tr.fraction < 1.0)
+		{
+			CBaseEntity* pEnt = tr.m_pEnt;
+
+			if (pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber())
+			{
+				// Launch them up a little
+				AngleVectors(QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward);
+				pEnt->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_BULLET, TF_DMG_CUSTOM_TAUNTATK_ENGINEER_TRICKSHOT));
+			}
 		}
 	}
 	// Particle Being played in VCD instead

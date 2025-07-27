@@ -12294,6 +12294,10 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 	{
 		killer_weapon_name = "gas_blast";
 	}
+	else if (info.GetDamageCustom() == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_TRICKSHOT)
+	{
+		killer_weapon_name = "taunt_trickshot";
+		}
 	else if ( info.GetDamageCustom() == TF_DMG_CUSTOM_SAPPER_RECORDER_DEATH )
 	{
 		killer_weapon_name = "recorder";

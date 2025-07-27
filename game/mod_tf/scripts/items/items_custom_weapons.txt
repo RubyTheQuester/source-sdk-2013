@@ -49,20 +49,8 @@
 			{
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
-				"taunt attack name"		"TAUNTATK_ENGINEER_TRICKSHOT"
-				"taunt attack time"		"3.460000"
 			}
-			"taunt"
-			{
-				"custom_taunt_scene_per_class"
-				{
-					"engineer"		"scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"
-				}
-				"custom_taunt_prop_per_class"
-				{
-					"engineer"		"models/workshop/player/items/engineer/taunt_texan_trickshot/taunt_texan_trickshot.mdl"
-				}
-			}
+			
 			"visuals"
 			{
 				"animation_replacement"
@@ -81,43 +69,6 @@
 	
 	"items"
 	{
-		"34445"
-		{
-			"name"		"The Market Caber"
-			"prefab"	"weapon_bottle"
-			"baseitem" 	"0"
-			"customitem" 	"1"
-			
-			"item_name"	"#TF_MarketCaber"
-			"propername"	"1"
-		
-			"image_inventory" "backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"			
-			"model_player"	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
-
-			"attributes"
-			{
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.2"
-				}
-				"mod crit while airborne"
-				{
-					"attribute_class"	"crit_while_airborne"
-					"value"	"1"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		}
-		
 		"34446"
 		{
 			"name"	"The Foxhound"
@@ -230,6 +181,135 @@
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"	"1"
+				}
+			}
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"34448"
+		{
+			"name"	"Last Say"
+			"prefab" "weapon_revolver"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_LastSay"
+			"propername"	"1"
+			"item_description"	"#TF_LastSay_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
+			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
+			"used_by_classes"
+			{
+				"spy"		"1"
+			}
+		
+			"baseitem" "0"
+			"customitem" "1"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"attributes"
+			{
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"	"0.25"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+				"last_shot_crits"
+				{
+					"attribute_class"	"last_shot_crits"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"34449"
+		{
+			"name"	"Ballestar"
+			"prefab" "weapon_pistol"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_Ballestar"
+			"propername"	"1"
+			"item_description"	"#TF_Ballestar_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_ballestar/c_ballestar"
+			"model_player"		"models/weapons/c_models/c_ballestar/c_ballestar.mdl"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"engineer"	"1"
+			}
+		
+			"baseitem" "0"
+			"customitem" "1"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.723"
+				"min_viewmodel_offset"				"10 0 -10"
+			}
+			
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.6"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value" "1.15"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"	"1.2"
+				}
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
 				}
 			}
 			
