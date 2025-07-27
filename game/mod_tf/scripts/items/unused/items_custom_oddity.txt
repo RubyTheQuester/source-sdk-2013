@@ -1,0 +1,108 @@
+"items_game"
+{
+	"items"
+	{
+		"50000"
+		{
+			"name"		"Dispenser Spy"
+			"prefab"	"weapon_knife"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"0"
+			"item_name"		"#TF_Dispenser_Knife"
+			
+			"attributes"
+			{
+				"disguise_as_dispenser_on_crouch"
+				{
+					"attribute_class"	"disguise_as_dispenser_on_crouch"
+					"value"	"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"50001"
+		{
+			"name"	"Ammopack Flamethrower"
+			"prefab" "weapon_flamethrower paintkit_base"
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"item_name"	"#TF_Flamethrower_Ammopack"
+			"propername"	"1"
+			
+			"attributes"
+			{
+				"airblast pushback disabled"
+				{
+					"attribute_class"	"airblast_pushback_disabled"
+					"value"	"1"
+				}
+				"airblast turn projectile to ammo"
+				{
+					"attribute_class"	"airblast_turn_projectile_to_ammo"
+					"value"	"1"
+				}
+			}
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"50002"
+		{
+			"name"	"Sniper Rifle AimAlert"
+			"prefab" "weapon_sniperrifle"
+			
+			"item_name"	"#TF_SniperRifle_AimAlert"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				"sniper beep"
+				{
+					"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+					"value"	"1"
+				}
+				"sniper fires tracer"
+				{
+					"attribute_class"	"sniper_fires_tracer"
+					"value"	"1"
+				}
+				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+					"value"	"10"
+				}
+				"SRifle Charge rate decreased"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec"
+					"value"	"0.1"
+				}
+			}
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+	}
+}

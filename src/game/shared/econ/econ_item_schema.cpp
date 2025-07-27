@@ -2306,7 +2306,7 @@ m_bIsPackBundle( false ),
 m_pOwningPackBundle( NULL ),
 m_bIsPackItem( false ),
 m_bBaseItem( false ),
-m_bCustomItem( false ),
+m_bCustomItem(false),
 m_pszItemLogClassname( NULL ),
 m_pszItemIconClassname( NULL ),
 m_pszDatabaseAuditTable( NULL ),
@@ -3178,7 +3178,7 @@ bool CEconItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString
 	m_bHidden = m_pKVItem->GetInt( "hidden", 0 ) != 0;
 	m_bShouldShowInArmory = m_pKVItem->GetInt( "show_in_armory", 0 ) != 0;
 	m_bBaseItem = m_pKVItem->GetInt( "baseitem", 0 ) != 0;
-	m_bCustomItem = m_pKVItem->GetInt( "customitem", 0 ) != 0;
+	m_bCustomItem = m_pKVItem->GetInt("customitem", 0) != 0;
 	m_pszItemLogClassname = m_pKVItem->GetString( "item_logname", NULL );
 	m_pszItemIconClassname = m_pKVItem->GetString( "item_iconname", NULL );
 	m_pszDatabaseAuditTable = m_pKVItem->GetString( "database_audit_table", NULL );
@@ -3807,7 +3807,7 @@ CEconItemSchema::CEconItemSchema( )
 ,	m_mapToolsItems( DefLessFunc(int) )
 ,	m_mapPaintKitTools( DefLessFunc(uint32) )
 ,	m_mapBaseItems( DefLessFunc(int) )
-,	m_mapCustomItems(DefLessFunc(int))
+,	m_mapCustomItems( DefLessFunc(int) )
 ,	m_unVersion( 0 )
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 ,	m_pDefaultItemDefinition( NULL )
@@ -4422,8 +4422,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString
 
 	Reset();
 	m_pKVRawDefinition = new KeyValues( "CEconItemSchema" );
-	//if ( m_pKVRawDefinition->LoadFromBuffer( NULL, buffer ) )
-	if (m_pKVRawDefinition->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom_weapons.txt", "GAME"))
+	if (m_pKVRawDefinition->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom.txt", "GAME"))
 	{
 		return BInitSchema( m_pKVRawDefinition, pVecErrors )
 			&& BPostSchemaInit( pVecErrors );
@@ -4433,6 +4432,14 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString
 		pVecErrors->AddToTail( "Error parsing keyvalues" );
 	}
 	return false;
+}
+
+bool CEconItemSchema::BInitFromKV(KeyValues* kv)
+{
+	CUtlVector<CUtlString> pVecErrors;
+	Reset();
+	m_pKVRawDefinition = kv;
+	return BInitSchema(m_pKVRawDefinition, &pVecErrors) && BPostSchemaInit(&pVecErrors);
 }
 
 bool CEconItemSchema::DumpItems ( const char *fileName, const char *pathID )
@@ -5348,9 +5355,9 @@ bool CEconItemSchema::BInitItems( KeyValues *pKVItems, CUtlVector<CUtlString> *p
 				{
 					m_mapBaseItems.Insert( nItemIndex, pItemDef );
 				}
-				if ( pItemDef->IsCustomItem() )
+				if (pItemDef->IsCustomItem())
 				{
-					m_mapCustomItems.Insert( nItemIndex, pItemDef );
+					m_mapCustomItems.Insert(nItemIndex, pItemDef);
 				}
 
 				// Cache off bundles for the link phase below.

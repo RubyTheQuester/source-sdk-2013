@@ -1,0 +1,239 @@
+"items_game"
+{
+	"items"
+	{
+		"60000"
+		{
+			"name"	"Last Say"
+			"prefab" "weapon_revolver"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_LastSay"
+			"propername"	"1"
+			"item_description"	"#TF_LastSay_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
+			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
+			"used_by_classes"
+			{
+				"spy"		"1"
+			}
+		
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"attributes"
+			{
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"	"0.25"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+				"last_shot_crits"
+				{
+					"attribute_class"	"last_shot_crits"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"60001"
+		{
+			"name"	"Milk Bolt Crossbow"
+			"prefab" "weapon_crusaders_crossbow"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_MilkBolt_Crossbow"
+			
+			"attributes"
+			{
+				"fires_milk_bolt"
+				{
+					"attribute_class"	"fires_milk_bolt"
+					"value"	"1"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.5"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.6"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"60002"
+		{
+			"name"			"Deflector"
+			"prefab"		"weapon_minigun"
+			
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_Minigun_Deflector"
+			
+			"item_logname"	"iron_curtain"
+			"item_iconname"	"iron_curtain"
+			"image_inventory"	"backpack/workshop/weapons/c_models/c_iron_curtain/c_iron_curtain"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"	"models/workshop/weapons/c_models/c_iron_curtain/c_iron_curtain.mdl"
+			
+			"visuals"
+			{
+				"tracer_effect"	"bullet_tracer02"
+				
+				"sound_reload"	"Weapon_Gatling.Reload"
+				"sound_empty"	"Weapon_Gatling.ClipEmpty"
+				"sound_double_shot"	"Weapon_Gatling.Fire"
+				"sound_special1"	"Weapon_Gatling.WindUp"
+				"sound_special2"	"Weapon_Gatling.WindDown"
+				"sound_special3"	"Weapon_Gatling.Spin"
+				"sound_burst"	"Weapon_Gatling.FireCrit"
+			}
+			
+			"attributes"
+			{
+				"attack projectiles"
+				{
+					"attribute_class"	"attack_projectiles"
+					"value"	"3"
+				}
+				"minigun spinup time increased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value" "1.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+				"aiming movespeed decreased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value" "0.5"
+				}
+				"dmg taken from blast increased"
+				{
+					"attribute_class"	"mult_dmgtaken_from_explosions"
+					"value" "1.3"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"60003"
+		{
+			"name"	"Ballestar"
+			"prefab" "weapon_pistol"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_Ballestar"
+			"propername"	"1"
+			"item_description"	"#TF_Ballestar_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_ballestar/c_ballestar"
+			"model_player"		"models/weapons/c_models/c_ballestar/c_ballestar.mdl"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"engineer"	"1"
+			}
+		
+			"baseitem" "0"
+			"soloitem" "1"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.723"
+				"min_viewmodel_offset"				"10 0 -10"
+			}
+			
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.6"
+				}
+				"move speed bonus"
+				{
+					"attribute_class"	"mult_player_movespeed"
+					"value" "1.15"
+				}
+				"dmg taken increased"
+				{
+					"attribute_class"	"mult_dmgtaken"
+					"value"	"1.2"
+				}
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value" "1"
+				}
+			}
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+	}
+}

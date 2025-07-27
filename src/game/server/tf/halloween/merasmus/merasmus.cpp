@@ -417,6 +417,7 @@ float MerasmusModifyDamage( const CTakeDamageInfo &info )
 
 		case TF_WEAPON_SCATTERGUN:
 		case TF_WEAPON_REVOLVER:
+		case TF_WEAPON_REVOLVER_SECONDARY:
 			return info.GetDamage() * 2.f;
 
 		case TF_WEAPON_SNIPERRIFLE:

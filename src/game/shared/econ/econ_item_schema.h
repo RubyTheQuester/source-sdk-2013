@@ -1291,7 +1291,17 @@ public:
 	int			GetInventoryImagePosition( int iIndex ) const	{ Assert( iIndex >= 0 && iIndex < 2); return m_iInventoryImagePosition[iIndex]; }
 	int			GetInventoryImageSize( int iIndex ) const	{ Assert( iIndex >= 0 && iIndex < 2); return m_iInventoryImageSize[iIndex]; }
 	int			GetDropType( void ) const			{ return m_iDropType; }
-	const char	*GetHolidayRestriction( void ) const	{ return m_pszHolidayRestriction; }
+	const char	*GetHolidayRestriction( void ) const	{ 
+		ConVarRef tf_disable_holiday_restrictions("tf_disable_holiday_restrictions");
+		if (tf_disable_holiday_restrictions.GetBool())
+		{
+			return NULL;
+		}
+		else
+		{
+			return m_pszHolidayRestriction;
+		}
+	}
 	int			GetVisionFilterFlags( void ) const	{ return m_nVisionFilterFlags; }
 	int			GetSubType( void ) const	{ return m_iSubType; }
 	item_capabilities_t GetCapabilities( void ) const { return m_iCapabilities; }
@@ -2558,6 +2568,7 @@ public:
 	virtual bool BInit( const char *fileName, const char *pathID, CUtlVector<CUtlString> *pVecErrors = NULL );
 	bool		BInitBinaryBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString> *pVecErrors = NULL );
 	bool		BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString> *pVecErrors = NULL );
+	bool		BInitFromKV( KeyValues* kv );
 
 	uint32		GetVersion() const { return m_unVersion; }
 	CSHA		GetSchemaSHA() const { return m_schemaSHA; }
@@ -2613,7 +2624,7 @@ public:
 	const BaseItemDefinitionMap_t &GetBaseItemDefinitionMap() const { return m_mapBaseItems; }
 
 	typedef CUtlMap<int, CEconItemDefinition*, int>	CustomItemDefinitionMap_t;
-	const CustomItemDefinitionMap_t& GetCustomItemDefinitionMap() const { return m_mapCustomItems; }
+	const CustomItemDefinitionMap_t &GetCustomItemDefinitionMap() const { return m_mapCustomItems; }
 
 	typedef CUtlDict<CEconLootListDefinition *>	LootListDefinitionMap_t;
 	const LootListDefinitionMap_t &GetLootLists() const { return m_dictLootLists; }

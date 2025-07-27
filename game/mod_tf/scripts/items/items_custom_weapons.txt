@@ -1,17 +1,241 @@
-#base items_game.txt
-
 "items_game"
 {
+	"prefabs"
+	{
+		"weapon_revolver_engineer"
+		{
+			"enabled"	"1"
+			"item_class"	"tf_weapon_revolver"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			"tags"
+			{
+				"can_deal_damage"			"1"
+				"can_deal_critical_damage"	"1"
+				"can_deal_mvm_penetration_damage"	"1"
+				"can_deal_long_distance_damage"	"1"
+			}
+			
+			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
+			
+			"item_type_name"	"#TF_Weapon_Revolver"
+			"item_name"	"#TF_Weapon_Revolver"
+			"item_slot"	"secondary"
+			
+			"item_iconname"	"revolver"
+			
+			"item_quality"	"normal"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_deputy/c_deputy"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"32"
+			"model_player"					"models/weapons/c_models/c_deputy/c_deputy.mdl"
+			
+			"attach_to_hands"	"1"
+			"inspect_panel_dist" "31"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+				"taunt attack name"		"TAUNTATK_ENGINEER_TRICKSHOT"
+				"taunt attack time"		"3.460000"
+			}
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"engineer"		"scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"
+				}
+				"custom_taunt_prop_per_class"
+				{
+					"engineer"		"models/workshop/player/items/engineer/taunt_texan_trickshot/taunt_texan_trickshot.mdl"
+				}
+			}
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"						"ACT_ENGINEER_REVOLVER_IDLE"
+					"ACT_VM_DRAW"						"ACT_ENGINEER_REVOLVER_DRAW"
+					"ACT_VM_PRIMARYATTACK"				"ACT_ENGINEER_REVOLVER_PRIMARYATTACK"
+					"ACT_VM_RELOAD"						"ACT_ENGINEER_REVOLVER_RELOAD"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"particle_suffix"		"revolver"
+		}
+	}
+	
 	"items"
 	{
-		"9000"
+		"34445"
 		{
-			"name"				"Test Launcher"
-			"prefab"			"weapon_rocketlauncher"
-			"item_name"			"Test Launcher"
-			"item_quality"		"developer"
-			"propername"		"1"
-			"customitem"		"1"
+			"name"		"The Market Caber"
+			"prefab"	"weapon_bottle"
+			"baseitem" 	"0"
+			"customitem" 	"1"
+			
+			"item_name"	"#TF_MarketCaber"
+			"propername"	"1"
+		
+			"image_inventory" "backpack/workshop/weapons/c_models/c_market_gardener/c_market_gardener"			
+			"model_player"	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
+
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"mod crit while airborne"
+				{
+					"attribute_class"	"crit_while_airborne"
+					"value"	"1"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"34446"
+		{
+			"name"	"The Foxhound"
+			"prefab" "weapon_revolver"
+			
+			"craft_class"	"weapon"
+			"craft_material_type"	"weapon"
+			"capabilities"
+			{
+				"nameable"		"1"
+			}
+			
+			"item_name"	"#TF_Foxhound"
+			"propername"	"1"
+			"item_description"	"#TF_Foxhound_desc"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_foxhound/c_foxhound"
+			
+			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+			"model_player_per_class"
+			{
+				"spy"		"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
+				"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
+			}
+			
+			"used_by_classes"
+			{
+				"spy"		"1"
+				"engineer"	"1"
+			}
+		
+			"baseitem" "0"
+			"customitem" "1"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			"attributes"
+			{
+				"single wep deploy time decreased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"	"0.75"
+				}
+				"single wep holster time increased"
+				{
+					"attribute_class"	"mult_switch_from_wep_deploy_time"
+					"value"				"1.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.85"
+				}
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.25"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"0.5"
+				}
+			}
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		}
+		
+		"34447"
+		{
+			"name"	"The Deputy"
+			"prefab" "weapon_revolver_engineer"
+			
+			"baseitem" "0"
+			"customitem" "1"
+			
+			"show_in_armory"	"1"
+			"item_name"		"#TF_Deputy"
+			"propername"	"1"
+			"item_description"	"#TF_Deputy_desc"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			"attributes"
+			{
+				"mult_dmg_vs_same_class"
+				{
+					"attribute_class"	"mult_dmg_vs_same_class"
+					"value"	"1.25"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"	"1.6"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+			}
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 		}
 	}
 }
