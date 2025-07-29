@@ -116,7 +116,7 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"	"#TF_GentleEnd"
+			"item_name"	"#TF_Gentle_End"
 			"item_description"	"#TF_GentleEnd_desc"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
@@ -166,7 +166,7 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"			"#TF_Fatscout"
+			"item_name"			"#TF_Fatscout_Primary"
 			"item_description"	"#TF_Fatscout_desc"
 			
 			"image_inventory"	"backpack/workshop/player/items/sniper/croc_shield/croc_shield"
@@ -222,8 +222,8 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"			"#TF_Heavy_BackstabShield"
-			"item_description"	"#TF_Heavy_BackstabShield_Desc"
+			"item_name"			"#TF_Heavy_Back_Shield"
+			"item_description"	"#TF_Heavy_Back_Shield_Desc"
 			
 			"image_inventory"	"backpack/player/items/sniper/knife_shield"
 			"image_inventory_size_w"		"128"
