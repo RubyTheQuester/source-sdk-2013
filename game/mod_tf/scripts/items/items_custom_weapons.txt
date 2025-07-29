@@ -6,11 +6,7 @@
 		{
 			"enabled"	"1"
 			"item_class"	"tf_weapon_revolver"
-			"craft_material_type"	"weapon"
-			"capabilities"
-			{
-				"nameable"		"1"
-			}
+			
 			"tags"
 			{
 				"can_deal_damage"			"1"
@@ -22,14 +18,18 @@
 			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
 			
 			"item_type_name"	"#TF_Weapon_Revolver"
-			"item_name"	"#TF_Weapon_Revolver"
-			"item_slot"	"secondary"
+			"item_name"			"#TF_Weapon_Revolver"
 			
-			"item_iconname"	"revolver"
+			"item_slot"		"secondary"
+			"item_iconname"	"revolver_engineer"
 			
-			"item_quality"	"normal"
+			"item_quality"	"collector"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
+			
+			"particle_suffix"		"revolver"
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_deputy/c_deputy"
 			"image_inventory_size_w"		"128"
@@ -61,9 +61,6 @@
 					"ACT_VM_RELOAD"						"ACT_ENGINEER_REVOLVER_RELOAD"
 				}
 			}
-			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
-			"drop_sound"		"ui/item_light_gun_drop.wav"
-			"particle_suffix"		"revolver"
 		}
 	}
 	
@@ -74,40 +71,28 @@
 			"name"	"The Foxhound"
 			"prefab" "weapon_revolver"
 			
-			"craft_class"	"weapon"
-			"craft_material_type"	"weapon"
-			"capabilities"
-			{
-				"nameable"		"1"
-			}
+			"show_in_armory"	"1"
+			"propername"	"1"
+			"customitem" "1"
 			
 			"item_name"	"#TF_Foxhound"
-			"propername"	"1"
 			"item_description"	"#TF_Foxhound_desc"
 			
-			"image_inventory"				"backpack/weapons/c_models/c_foxhound/c_foxhound"
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_foxhound/c_foxhound"
 			
 			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
-			"model_player_per_class"
-			{
-				"spy"		"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
-				"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
-			}
-			
-			"used_by_classes"
-			{
-				"spy"		"1"
-				"engineer"	"1"
-			}
-		
-			"baseitem" "0"
-			"customitem" "1"
+			//"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
 			
 			"static_attrs"
 			{
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
 			}
+			
 			"attributes"
 			{
 				"single wep deploy time decreased"
@@ -136,10 +121,6 @@
 					"value"	"0.5"
 				}
 			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 		}
 		
 		"34447"
@@ -147,12 +128,15 @@
 			"name"	"The Deputy"
 			"prefab" "weapon_revolver_engineer"
 			
-			"baseitem" "0"
-			"customitem" "1"
-			
 			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem" 		"1"
+
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
 			"item_name"		"#TF_Deputy"
-			"propername"	"1"
 			"item_description"	"#TF_Deputy_desc"
 			
 			"static_attrs"
@@ -160,6 +144,7 @@
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
 			}
+			
 			"attributes"
 			{
 				"mult_dmg_vs_same_class"
@@ -183,87 +168,22 @@
 					"value"	"1"
 				}
 			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 		}
-		
+	
 		"34448"
-		{
-			"name"	"Last Say"
-			"prefab" "weapon_revolver"
-			
-			"craft_class"	"weapon"
-			"craft_material_type"	"weapon"
-			"capabilities"
-			{
-				"nameable"		"1"
-			}
-			
-			"item_name"	"#TF_LastSay"
-			"propername"	"1"
-			"item_description"	"#TF_LastSay_desc"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
-			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
-			"used_by_classes"
-			{
-				"spy"		"1"
-			}
-		
-			"baseitem" "0"
-			"customitem" "1"
-			
-			"static_attrs"
-			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
-			}
-			
-			"attributes"
-			{
-				"maxammo secondary reduced"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"	"0.25"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.8"
-				}
-				"last_shot_crits"
-				{
-					"attribute_class"	"last_shot_crits"
-					"value"	"1"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		}
-		
-		"34449"
 		{
 			"name"	"Ballestar"
 			"prefab" "weapon_pistol"
 			
-			"craft_class"	"weapon"
-			"craft_material_type"	"weapon"
-			"capabilities"
-			{
-				"nameable"		"1"
-			}
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem" 		"1"
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 			
 			"item_name"	"#TF_Ballestar"
-			"propername"	"1"
 			"item_description"	"#TF_Ballestar_desc"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_ballestar/c_ballestar"
@@ -271,12 +191,9 @@
 			
 			"used_by_classes"
 			{
-				"scout"		"1"
+				"scout"		"0"
 				"engineer"	"1"
 			}
-		
-			"baseitem" "0"
-			"customitem" "1"
 			
 			"static_attrs"
 			{
@@ -312,10 +229,6 @@
 					"value" "1"
 				}
 			}
-			
-			"item_quality"	"rarity2"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 		}
 	}
 }

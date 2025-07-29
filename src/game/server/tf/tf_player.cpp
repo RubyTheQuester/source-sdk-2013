@@ -18781,17 +18781,7 @@ void CTFPlayer::DoTauntAttack( void )
 				// If they're within the radius, give 'em the buff
 				if ( (vecOrg - pTeamPlayer->GetAbsOrigin()).LengthSqr() < (1024*1024) )
 				{
-					pTeamPlayer->TakeHealth( 50, DMG_GENERIC );
-					pTeamPlayer->m_Shared.AddTempCritBonus( 0.5 );
-
-					IGameEvent *event = gameeventmanager->CreateEvent( "player_healonhit" );
-					if ( event )
-					{
-						event->SetInt( "amount", 50 );
-						event->SetInt( "entindex", pTeamPlayer->entindex() );
-						event->SetInt( "weapon_def_index", INVALID_ITEM_DEF_INDEX );
-						gameeventmanager->FireEvent( event );
-					}
+					pTeamPlayer->m_Shared.AddCond(TF_COND_CRITBOOSTED_ON_KILL, 4.0f);
 				}
 			}
 		}

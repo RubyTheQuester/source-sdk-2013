@@ -15,6 +15,7 @@
 			"value" 	"16"
 		}
 	}
+	
 	"attributes"
 	{
 		"3502"
@@ -105,7 +106,6 @@
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
 			"effect_type"	"positive"
-			"stored_as_integer"	"1"
 		}
 		"3511"
 		{
@@ -362,6 +362,15 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
 			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		"4005"
+		{
+			"name"	"fists radial buff taunt crits"
+			"attribute_class"	"set_weapon_mode"
+			"description_string"	"#Attrib_FistsTauntRadialBuffCrits"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
 			"stored_as_integer"	"0"
 		}
 	}

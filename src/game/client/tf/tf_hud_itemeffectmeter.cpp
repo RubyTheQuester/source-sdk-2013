@@ -284,6 +284,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 	{
 		lambdaAddItemEffectMeter( "tf_weapon_lunchbox", true );
 		DECLARE_ITEM_EFFECT_METER( CTFMinigun, TF_WEAPON_MINIGUN, true, "resource/UI/HudItemEffectMeter_Heavy.res" );
+		lambdaAddItemEffectMeter( "tf_wearable_razorback", true );
 		break;
 	}
 
