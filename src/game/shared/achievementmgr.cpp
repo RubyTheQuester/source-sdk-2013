@@ -1109,7 +1109,7 @@ bool CAchievementMgr::CheckAchievementsEnabled()
 			// on Steam public
 			if ( developer.GetInt() == 0 || ( k_EUniverseInvalid == GetUniverse() ) || ( k_EUniversePublic == GetUniverse() ) )
 			{
-				Msg( "Achievements disabled: cheats turned on in this app session.\n" );
+				//Msg( "Achievements disabled: cheats turned on in this app session.\n" );
 				return false;
 			}
 #endif
