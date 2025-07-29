@@ -505,7 +505,6 @@ FodyWeavers.xsd
 game/mod_tf/cfg/local_loadout.txt
 game/mod_tf/cfg/server_blacklist.txt
 game/mod_tf/cfg/settings.scr
-*.lst
 game/mod_tf/GameState.txt
 game/mod_tf/ServerConfig.vdf
 game/mod_tf/stats.txt
@@ -523,3 +522,4 @@ game/mod_tf/scripts/whatever/items_game.txt
 game/mod_tf/scripts/items/unused/items_game.txt
 /game/tf
 game/mod_tf.zip
+/game/mod_tf/downloadlists
