@@ -10083,11 +10083,15 @@ bool CTFPlayer::CheckBlockBackstab( CTFPlayer *pTFAttacker )
 
 				// Unequip.
 				CTFWearable *pItem = dynamic_cast<CTFWearable *>( pEntity );
+
+				int iLoadoutSlot = pItem->GetAttributeContainer()->GetItem()->GetStaticData()->GetLoadoutSlot(GetPlayerClass()->GetClassIndex());
+				//loadout_positions_t(weaponPostion)
+
 				pItem->Break();
 				pItem->AddEffects( EF_NODRAW );
 
 				// reset the charge.
-				m_Shared.SetItemChargeMeter( LOADOUT_POSITION_SECONDARY, 0.f );
+				m_Shared.SetItemChargeMeter(loadout_positions_t(iLoadoutSlot), 0.f);
 			}
 
 			// tell the bot his Razorback just got broken
@@ -13149,28 +13153,65 @@ void CTFPlayer::DropHealthPack( const CTakeDamageInfo &info, bool bEmpty )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: drops the flag
+// Purpose: CC Command to drop ammopack
 //-----------------------------------------------------------------------------
 void CC_DropAmmo(void)
 {
 	CTFPlayer* pPlayer = ToTFPlayer(UTIL_GetCommandClient());
+
 	if (!pPlayer)
+		return;
+
+	if (pPlayer->IsAlive() == false || pPlayer->GetObserverMode() != OBS_MODE_NONE)
 		return;
 
 	pPlayer->DropAmmoPackCommand();
 }
 
-static ConCommand dropammo("dropammo", CC_DropAmmo, "Drop some ammo.");
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose: CC Command to drop healthkit
+//-----------------------------------------------------------------------------
+void CC_DropHealth(void)
+{
+	CTFPlayer* pPlayer = ToTFPlayer(UTIL_GetCommandClient());
+
+	if (!pPlayer)
+		return;
+
+	if (pPlayer->IsAlive() == false || pPlayer->GetObserverMode() != OBS_MODE_NONE)
+		return;
+
+	pPlayer->DropHealthKitCommand();
+}
+static ConCommand dropammo("dropammo", CC_DropAmmo, "Drop some reserve ammo.");
+static ConCommand drophealth("drophealth", CC_DropHealth, "Drop some blood.");
+//-----------------------------------------------------------------------------
+// Purpose: Player uses own ammo to throw down small ammopack
 //-----------------------------------------------------------------------------
 void CTFPlayer::DropAmmoPackCommand()
 {
-	if ( PointInRespawnRoom( this, this->WorldSpaceCenter() ) )
+	if ( PointInRespawnRoom(this, this->WorldSpaceCenter()) )
+	{
+		this->EmitSound("Player.DenyWeaponSelection");
 		return;
+	}
 
 	if (m_Shared.InCond(TF_COND_STEALTHED))
+	{
+		this->EmitSound("Player.DenyWeaponSelection");
 		return;
+	}
+
+	int i;
+	int iNumHealers = m_Shared.GetNumHealers();
+	for (i = 0; i < iNumHealers; i++)
+	{
+		if (m_Shared.HealerIsDispenser(i))
+		{
+			this->EmitSound("Player.DenyWeaponSelection");
+			return;
+		}
+	}
 
 	float fAmmoPackRatio = 0.2;
 
@@ -13222,7 +13263,7 @@ void CTFPlayer::DropAmmoPackCommand()
 		return;
 	}
 
-	// Throw out the medikit
+	// Throw out the ammo pack
 	Vector vecSrc = EyePosition() + Vector(0, 0, -8);
 	QAngle angForward = EyeAngles() + QAngle(-10, 0, 0);
 
@@ -13237,7 +13278,58 @@ void CTFPlayer::DropAmmoPackCommand()
 		pAmmoPack->DropSingleInstance(vecVelocity, this, 0.3);
 	}
 }
+//-----------------------------------------------------------------------------
+// Purpose: Player uses own health to throw down small healthkit
+//-----------------------------------------------------------------------------
+void CTFPlayer::DropHealthKitCommand()
+{
+	if (PointInRespawnRoom(this, this->WorldSpaceCenter()))
+	{
+		this->EmitSound("Player.DenyWeaponSelection");
+		return;
+	}
 
+	if (m_Shared.InCond(TF_COND_STEALTHED))
+	{
+		this->EmitSound("Player.DenyWeaponSelection");
+		return;
+	}
+
+	if (m_Shared.GetNumHealers() > 0)
+	{
+		this->EmitSound("Player.DenyWeaponSelection");
+		return;
+	}
+
+	float fHealthKitRatio = 0.2;
+	int m_iHealthRemoval_Amount = ceil(GetMaxHealth() * fHealthKitRatio);
+
+	if (
+		GetHealth() > (GetHealth() - m_iHealthRemoval_Amount)
+		)
+	{
+		TakeDamage(CTakeDamageInfo(this, this, m_iHealthRemoval_Amount, DMG_PREVENT_PHYSICS_FORCE));
+	}
+	else {
+		this->EmitSound("Player.DenyWeaponSelection");
+		return;
+	}
+
+	// Throw out the health kit
+	Vector vecSrc = EyePosition() + Vector(0, 0, -8);
+	QAngle angForward = EyeAngles() + QAngle(-10, 0, 0);
+
+	CHealthKitSmall* pHealthKit = assert_cast<CHealthKitSmall*>(CBaseEntity::Create("item_healthkit_small", vecSrc, angForward, this));
+	if (pHealthKit)
+	{
+		Vector vecForward, vecRight, vecUp;
+		AngleVectors(angForward, &vecForward, &vecRight, &vecUp);
+		Vector vecVelocity = vecForward * 500.0;
+
+		pHealthKit->SetAbsAngles(vec3_angle);
+		pHealthKit->DropSingleInstance(vecVelocity, this, 0.3);
+	}
+}
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

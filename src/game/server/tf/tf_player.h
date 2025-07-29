@@ -455,6 +455,7 @@ public:
 	void DropCurrencyPack( CurrencyRewards_t nSize = TF_CURRENCY_PACK_SMALL, int nAmount = 0, bool bForceDistribute = false, CBasePlayer* pMoneyMaker = NULL );	// Only pass in an amount when nSize = TF_CURRENCY_PACK_CUSTOM
 	
 	void DropAmmoPackCommand( void );
+	void DropHealthKitCommand(void);
 
 	bool CanDisguise( void );
 	bool CanDisguise_OnKill( void );
