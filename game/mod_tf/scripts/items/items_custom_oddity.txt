@@ -62,10 +62,10 @@
 		
 		"50002"
 		{
-			"name"	"Sniper Rifle Aim Alert"
+			"name"	"Sniper Rifle Aim Charge"
 			"prefab" "weapon_sniperrifle"
 			
-			"item_name"	"#TF_AimAlert"
+			"item_name"	"#TF_AimCharge"
 			
 			"customitem" "1"
 			
@@ -80,11 +80,11 @@
 			
 			"attributes"
 			{
-				"sniper beep"
-				{
-					"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
-					"value"	"1"
-				}
+				//"sniper beep"
+				//{
+				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+				//	"value"	"1"
+				//}
 				"sniper fires tracer"
 				{
 					"attribute_class"	"sniper_fires_tracer"
@@ -93,7 +93,7 @@
 				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"10"
+					"value"	"11"
 				}
 				"SRifle Charge rate decreased"
 				{

@@ -5,6 +5,7 @@
 #base items_custom_oddity.txt
 
 #base items_game.txt
+#base items_custom_lol.txt
 
 "items_game"
 {

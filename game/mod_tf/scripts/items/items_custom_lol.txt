@@ -1,0 +1,79 @@
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_sniperrifle_alt1"
+		{
+			"attributes"
+			{
+				"sniper fires tracer HIDDEN"
+ 				{
+					"attribute_class"	"sniper_fires_tracer_HIDDEN"
+					"value"	"1"
+				}
+			}
+		}
+		
+		"weapon_sniperrifle"
+		{
+			"attributes"
+			{
+				"sniper fires tracer HIDDEN"
+ 				{
+					"attribute_class"	"sniper_fires_tracer_HIDDEN"
+					"value"	"1"
+				}
+			}
+		}
+	}
+	
+	"items"
+	{
+		"14"
+		{
+			"attributes"
+			{
+				"sniper fires tracer HIDDEN"
+ 				{
+					"attribute_class"	"sniper_fires_tracer_HIDDEN"
+					"value"	"1"
+				}
+			}
+		}
+		
+		"201"
+		{
+			"attributes"
+			{
+				"sniper fires tracer HIDDEN"
+ 				{
+					"attribute_class"	"sniper_fires_tracer_HIDDEN"
+					"value"	"1"
+				}
+			}
+		}
+		
+		"513"
+		{
+			"attributes"
+			{
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"0.5"
+				}
+				"mod no reload DISPLAY ONLY"
+				{
+					"attribute_class"	"mod_no_reload_display_only"
+					"value"				"1"
+				}
+				"mod max primary clip override"
+				{
+					"attribute_class"	"mod_max_primary_clip_override"
+					"value"	"-1"
+				}
+			}
+		}
+	}
+	
+}

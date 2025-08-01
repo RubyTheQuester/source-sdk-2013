@@ -10026,9 +10026,16 @@ void CTFPlayer::MaybeDrawRailgunBeam( IRecipientFilter *pFilter, CTFWeaponBase *
 	{
 		const char *pParticleSystemName = pWeapon->GetTeamNumber() == TF_TEAM_BLUE ? "dxhr_sniper_rail_blue" : "dxhr_sniper_rail_red";
 		CTFSniperRifle *pRifle = dynamic_cast< CTFSniperRifle* >( pWeapon );
-		if ( pRifle && ( pRifle->GetRifleType() == RIFLE_CLASSIC ) )
+		if ( pRifle )
 		{
-			pParticleSystemName = "tfc_sniper_distortion_trail";
+			if (pRifle->GetRifleType() == RIFLE_CLASSIC)
+			{
+				pParticleSystemName = "tfc_sniper_distortion_trail";
+			}
+			else if (pRifle->GetRifleType() != RIFLE_MACHINA)
+			{
+				pParticleSystemName = pWeapon->GetTeamNumber() == TF_TEAM_BLUE ? "bullet_tracer_sniper_blue" : "bullet_tracer_sniper_red";
+			}
 		}
 
 #ifdef GAME_DLL
