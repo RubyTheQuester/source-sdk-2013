@@ -356,25 +356,6 @@
 		}
 		"4004"
 		{
-			"name"	"cloak blink time penalty"
-			"attribute_class"	"cloak_blink_time_penalty"
-			"description_string"	"#Attrib_CloakBlinkTimePenalty"
-			"description_format"	"value_is_additive"
-			"hidden"	"0"
-			"effect_type"	"negative"
-			"stored_as_integer"	"0"
-		}
-		"4005"
-		{
-			"name"	"fists radial buff taunt crits"
-			"attribute_class"	"set_weapon_mode"
-			"description_string"	"#Attrib_FistsTauntRadialBuffCrits"
-			"description_format"	"value_is_additive"
-			"hidden"	"0"
-			"stored_as_integer"	"0"
-		}
-		"4006"
-		{
 			"name"				"extra_damage_on_hit_penalty"
 			"attribute_class"	"extra_damage_on_hit_penalty"
 			"description_string"	"#Attrib_ExtraDamageOnHitPenalty"
