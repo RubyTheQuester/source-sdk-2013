@@ -51,108 +51,6 @@
 	
 	"items"
 	{
-
-		"60001"
-		{
-			"name"				"Radial Buff Fists"
-			"prefab"			"valve weapon_fists"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_name"			"#TF_RadialBuff_Fists"
-			"item_description"	"#TF_RadialBuff_Fists_Desc"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		
-			"static_attrs"
-			{
-				"min_viewmodel_offset"		"10 0 -10"
-			}
-			
-			"attributes"
-			{
-				"ragdolls become ash"
-				{
-					"attribute_class"	"ragdolls_become_ash"
-					"value"	"1"
-				}
-				"add_give_health_to_teammate_on_hit"
-				{
-					"attribute_class"	"add_give_health_to_teammate_on_hit"
-					"value"	"25"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-				"special taunt"
-				{
-					"attribute_class"	"special_taunt"
-					"value" "1"
-				}
-				"fists radial buff taunt crits"
-				{
-					"attribute_class"	"set_weapon_mode"
-					"value" "1"
-				}
-			}
-		}
-		
-		"60002"
-		{
-			"name"	"The Gentle End"
-			"prefab" "weapon_revolver"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"item_name"	"#TF_Gentle_End"
-			"item_description"	"#TF_GentleEnd_desc"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
-			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
-			
-			"static_attrs"
-			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
-			}
-			
-			"attributes"
-			{
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.5"
-				}
-				"extra_damage_on_hit"
-				{
-					"attribute_class"	"extra_damage_on_hit"
-					"value"	"10"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.5"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-			}
-		}
-		
 		"60000"
 		{
 			"name"				"Fat Scout"
@@ -208,7 +106,57 @@
 			}
 		}
 		
-		"60003"
+		"60001"
+		{
+			"name"	"The Gentle End"
+			"prefab" "weapon_revolver"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_Gentle_End"
+			"item_description"	"#TF_Gentle_End_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
+			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
+				}
+				"extra_damage_on_hit"
+				{
+					"attribute_class"	"extra_damage_on_hit"
+					"value"	"10"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.5"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		
+		"60002"
 		{
 			"name"				"Heavy Backstab Shield"
 			"prefab"			"valve weapon_heavy_wearable"
@@ -244,6 +192,44 @@
 				{
 					"attribute_class"	"set_blockbackstab_once"
 					"value" "1"
+				}
+			}
+		}
+		
+		"60003"
+		{
+			"name"				"Healer Sapper"
+			"prefab"			"valve weapon_sapper"
+			
+			"item_class"	"tf_weapon_sapper"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_Healer_Sapper"
+			"item_description"	"#TF_Healer_Sapper_Desc"
+			
+			"attributes"
+			{
+				"sapper damage leaches health"
+				{
+					"attribute_class"	"sapper_damage_leaches_health"
+					"value" "5"
+				}
+				"sapper health penalty"
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value" "0.5"
+				}
+				"sapper damage penalty"
+				{
+					"attribute_class"	"mult_sapper_damage"
+					"value" "0.5"
 				}
 			}
 		}

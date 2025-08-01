@@ -373,5 +373,14 @@
 			"hidden"	"0"
 			"stored_as_integer"	"0"
 		}
+		"4006"
+		{
+			"name"				"extra_damage_on_hit_penalty"
+			"attribute_class"	"extra_damage_on_hit_penalty"
+			"description_string"	"#Attrib_ExtraDamageOnHitPenalty"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"negative"
+		}
 	}
 }
