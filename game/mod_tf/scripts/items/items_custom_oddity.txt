@@ -51,6 +51,11 @@
 					"attribute_class"	"airblast_turn_projectile_to_ammo"
 					"value"	"1"
 				}
+				"airblast cost increased"
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"	"1.50"
+				}
 			}
 			
 		}
@@ -120,6 +125,7 @@
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 				"53"					
 			"model_player"	"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves.mdl"
+			"attach_to_hands"	"1"
 			
 			"item_quality"	"rarity4"
 			"min_ilevel"	"1"
@@ -137,14 +143,7 @@
 					"attribute_class"	"set_weapon_mode"
 					"value" "1"
 				}
-				"attach particle effect"
-				{
-					"attribute_class"	"set_attached_particle"
-					"value"	"2"
-				}
 			}
-			
-			"attach_to_hands"	"1"
 			"hide_bodygroups_deployed_only"	"1"
 			"visuals"
 			{
