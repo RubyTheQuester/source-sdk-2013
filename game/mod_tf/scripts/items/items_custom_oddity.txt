@@ -93,12 +93,12 @@
 				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"11"
+					"value"	"2"
 				}
 				"SRifle Charge rate decreased"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec"
-					"value"	"0.1"
+					"value"	"0.5"
 				}
 			}
 		}

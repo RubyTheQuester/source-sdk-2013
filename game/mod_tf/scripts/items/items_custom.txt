@@ -220,7 +220,7 @@
 		}
 		"3522"
 		{
-			"name"				"sapper_deploy_time"
+			"name"				"sapper_deploy_time_negative"
 			"attribute_class"	"sapper_deploy_time"
 			"description_string"	"#Attrib_SapperDeployTime_Negative"
 			"description_format"	"value_is_percentage"

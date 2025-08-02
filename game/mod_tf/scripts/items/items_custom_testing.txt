@@ -136,7 +136,7 @@
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.5"
+					"value"	"1.2"
 				}
 				"extra_damage_on_hit"
 				{
