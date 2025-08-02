@@ -526,7 +526,9 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 		}
 
 		// ignore player who disguises as my team
-		if ( player->m_Shared.InCond( TF_COND_DISGUISED ) && player->m_Shared.GetDisguiseTeam() == GetTeamNumber() )
+		if ( 
+			(player->m_Shared.InCond(TF_COND_DISGUISED) || player->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER))
+			&& player->m_Shared.GetDisguiseTeam() == GetTeamNumber() )
 		{
 			continue;
 		}
