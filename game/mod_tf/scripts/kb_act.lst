@@ -44,6 +44,7 @@
 "blank"			"=========================="
 "dropammo"		"#TF_Mod_DropAmmo"
 "drophealth"	"#TF_Mod_DropHealth"
+"+spywalk"		"#TF_Mod_SpyWalk"
 "blank"			"=========================="
 "blank"			"#TF_ClassSpecific_Keys"
 "blank"			"=========================="

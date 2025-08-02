@@ -25,8 +25,9 @@
 "n"			"open_charinfo_backpack"
 "CAPSLOCK"	"+quickswitch"
 
-"j"			"dropammo"
-"k"			"drophealth"
+"j"				"dropammo"
+"k"				"drophealth"
+"shift"			"+spywalk"
 
 "b"				"lastdisguise"
 "-"				"disguiseteam"
