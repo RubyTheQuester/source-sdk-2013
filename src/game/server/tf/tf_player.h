@@ -1003,6 +1003,8 @@ public:
 	int					m_iOldStunFlags;
 
 	bool				m_bFlipViewModels;
+	bool				m_bSpyWalk;
+	bool				m_bSpyWalkInvertedToggle;
 	int					m_iBlastJumpState;
 	float				m_flBlastJumpLandTime;
 	bool				m_bTakenBlastDamageSinceLastMovement;

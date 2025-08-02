@@ -147,6 +147,7 @@ static  kbutton_t   in_grenade1;
 static  kbutton_t   in_grenade2;
 static	kbutton_t	in_attack3;
 kbutton_t	in_ducktoggle;
+static kbutton_t	in_spywalk;
 
 /*
 ===========
@@ -549,6 +550,16 @@ void IN_ScoreUp( const CCommand &args )
 	}
 }
 
+void IN_SpyWalkDown(const CCommand& args)
+{
+	KeyDown(&in_spywalk, args[1]);
+}
+
+void IN_SpyWalkUp(const CCommand& args)
+{
+	KeyUp(&in_spywalk, args[1]);
+	in_cancel = 0;
+}
 
 /*
 ============
@@ -1476,6 +1487,8 @@ int CInput::GetButtonBits( int bResetState )
 	CalcButtonBits( bits, IN_GRENADE2, s_ClearInputState, &in_grenade2, bResetState );
 	CalcButtonBits( bits, IN_ATTACK3, s_ClearInputState, &in_attack3, bResetState );
 
+	CalcButtonBits( bits, IN_SPYWALK, s_ClearInputState, &in_spywalk, bResetState);
+
 	if ( KeyState(&in_ducktoggle) )
 	{
 		bits |= IN_DUCK;
@@ -1632,6 +1645,9 @@ static ConCommand endgrenade2( "-grenade2", IN_Grenade2Up );
 static ConCommand startgrenade2( "+grenade2", IN_Grenade2Down );
 static ConCommand startattack3("+attack3", IN_Attack3Down);
 static ConCommand endattack3("-attack3", IN_Attack3Up);
+
+static ConCommand startspywalk("+spywalk", IN_SpyWalkDown);
+static ConCommand endspywalk("-spywalk", IN_SpyWalkUp);
 
 #ifdef TF_CLIENT_DLL
 static ConCommand toggle_duck( "toggle_duck", IN_DuckToggle );

@@ -10783,9 +10783,12 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 
 	if ( m_Shared.InCond( TF_COND_DISGUISED_AS_DISPENSER ) && !m_Shared.IsStealthed() )
 	{
-		maxfbspeed = 0.0f;
+		maxfbspeed = 80.0f;
 	}
-	else if ( m_Shared.InCond( TF_COND_DISGUISED ) && !m_Shared.IsStealthed() )
+	else if ( 
+		m_Shared.InCond( TF_COND_DISGUISED ) && !m_Shared.IsStealthed() 
+		&& !(m_nButtons & IN_SPYWALK) // replace this with something better.
+		)
 	{
 		float flMaxDisguiseSpeed = GetPlayerClassData( m_Shared.GetDisguiseClass() )->m_flMaxSpeed;
 		maxfbspeed = MIN( flMaxDisguiseSpeed, maxfbspeed );

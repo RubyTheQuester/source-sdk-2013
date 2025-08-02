@@ -10245,6 +10245,7 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetDefaultFOV( iFov );
 
 	pTFPlayer->m_bFlipViewModels = Q_strcmp( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ), "1" ) == 0;
+	pTFPlayer->m_bSpyWalkInvertedToggle = Q_strcmp(engine->GetClientConVarValue( pPlayer->entindex(), "tf_spywalk_inverted"), "1") == 0;
 }
 
 //-----------------------------------------------------------------------------

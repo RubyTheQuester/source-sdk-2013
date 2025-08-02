@@ -1002,6 +1002,8 @@ CTFPlayer::CTFPlayer()
 	m_iLastWeaponSlot = 1;
 	m_iNumberofDominations = 0;
 	m_bFlipViewModels = false;
+	m_bSpyWalk = false;
+	m_bSpyWalkInvertedToggle = false;
 	m_iBlastJumpState = 0;
 	m_flBlastJumpLandTime = 0;
 	m_fMaxHealthTime = -1;
@@ -1770,6 +1772,20 @@ void CTFPlayer::TFPlayerThink()
 	}
 #endif
 */
+	if (m_Shared.InCond(TF_COND_DISGUISED) ) 
+	{
+		if ( (m_nButtons & IN_SPYWALK) && !m_bSpyWalk)
+		{
+			TeamFortress_SetSpeed();
+			m_bSpyWalk = true;
+		}
+		else if ( !(m_nButtons & IN_SPYWALK) && m_bSpyWalk )
+		{
+			TeamFortress_SetSpeed();
+			m_bSpyWalk = false;
+		}
+		//Is this even smart.
+	}
 
 	SetContextThink( &CTFPlayer::TFPlayerThink, gpGlobals->curtime, "TFPlayerThink" );
 	m_flLastThinkTime = gpGlobals->curtime;
