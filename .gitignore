@@ -524,3 +524,6 @@ game/mod_tf/scripts/items/unused/items_game.txt
 game/mod_tf.zip
 /game/mod_tf/downloadlists
 /game/mod_tf/scripts/items/unused
+/game/mod_tf/download
+/game/mod_tf/materials/temp
+/game/mod_tf/materials/vgui/logos
