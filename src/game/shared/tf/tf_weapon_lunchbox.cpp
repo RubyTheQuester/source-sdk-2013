@@ -357,6 +357,7 @@ void CTFLunchBox::Detach( void )
 			// Prevents use-then-switch-class exploit (heavy->scout)
 			// Not a big deal in pubs, but it can mess with competitive
 			pOwner->RemoveCustomAttribute( "hidden maxhealth non buffed" );
+			pOwner->RemoveCustomAttribute( "health regen" );
 		}
 	}
 #endif

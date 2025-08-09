@@ -207,7 +207,7 @@ ConVar tf_remember_activeweapon( "tf_remember_activeweapon", "1", FCVAR_CLIENTDL
 ConVar tf_remember_lastswitched( "tf_remember_lastswitched", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Setting this to 1 will make the 'last weapon' persist between lives." );
 ConVar cl_autoreload( "cl_autoreload", "1", FCVAR_USERINFO | FCVAR_ARCHIVE, "When set to 1, clip-using weapons will automatically be reloaded whenever they're not being fired." );
 
-ConVar tf_respawn_on_loadoutchanges( "tf_respawn_on_loadoutchanges", "0", FCVAR_ARCHIVE, "When set to 1, you will automatically respawn whenever you change loadouts inside a respawn zone." );
+ConVar tf_respawn_on_loadoutchanges( "tf_respawn_on_loadoutchanges", "1", FCVAR_ARCHIVE, "When set to 1, you will automatically respawn whenever you change loadouts inside a respawn zone." );
 
 ConVar sb_dontshow_maxplayer_warning( "sb_dontshow_maxplayer_warning", "0", FCVAR_ARCHIVE );
 ConVar sb_close_browser_on_connect( "sb_close_browser_on_connect", "1", FCVAR_ARCHIVE );
@@ -3756,6 +3756,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFPlayer, DT_TFPlayer, CTFPlayer )
 	RecvPropInt( RECVINFO( m_iPlayerSkinOverride ) ),
 	RecvPropBool( RECVINFO( m_bViewingCYOAPDA ) ),
 	RecvPropBool( RECVINFO( m_bRegenerating ) ),
+
+	RecvPropInt( RECVINFO( m_nCurrency ) ),
 END_RECV_TABLE()
 
 
@@ -8831,7 +8833,7 @@ bool C_TFPlayer::CanShowTeamMenu( void )
 	if ( IsHLTV() )
 		return false;
 
-	if ( TFGameRules() && ( TFGameRules()->IsCompetitiveMode() || TFGameRules()->IsPowerupMode() ) )
+	if ( TFGameRules() && ( TFGameRules()->IsCompetitiveMode() ) )
 	
 		return false;
 
@@ -11429,8 +11431,7 @@ static ConVar tf_inspect_hint_count( "tf_inspect_hint_count", "0", FCVAR_ARCHIVE
 void C_TFPlayer::HandleInspectHint()
 {
 	int nNotifyCount = tf_inspect_hint_count.GetInt();
-	if ( nNotifyCount > 10 )
-		return;
+	return;
 
 	if ( m_bNotifiedWeaponInspectThisLife )
 		return;

@@ -1,0 +1,7 @@
+armory_config
+{
+	"Pip-Boy"
+	{
+		Cost 50
+	}
+}

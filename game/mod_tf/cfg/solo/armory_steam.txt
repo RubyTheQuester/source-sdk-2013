@@ -1,0 +1,182 @@
+armory_config
+{
+	"The Ambassador"
+	{
+		Cost 100
+	}
+	"The Axtinguisher"
+	{
+		Cost 100
+	}
+	"The Backburner"
+	{
+		Cost 100
+	}
+	"The Blutsauger"
+	{
+		Cost 100
+	}
+	"Bonk! Atomic Punch"
+	{
+		Cost 100
+	}
+	"The Buff Banner"
+	{
+		Cost 100
+	}
+	"The Chargin' Targe"
+	{
+		Cost 100
+	}
+	"The Cloak and Dagger"
+	{
+		Cost 100
+	}
+	"The Dead Ringer"
+	{
+		Cost 100
+	}
+	"The Direct Hit"
+	{
+		Cost 100
+	}
+	"The Equalizer"
+	{
+		Cost 100
+	}
+	"The Eyelander"
+	{
+		Cost 100
+	}
+	"The Flare Gun"
+	{
+		Cost 100
+	}
+	"The Force-a-Nature"
+	{
+		Cost 100
+	}
+	"The Frontier Justice"
+	{
+		Cost 100
+	}
+	"The Gunslinger"
+	{
+		Cost 100
+	}
+	"The Huntsman"
+	{
+		Cost 100
+	}
+	"Jarate"
+	{
+		Cost 100
+	}
+	"The Killing Gloves of Boxing"
+	{
+		Cost 100
+	}
+	"The Kritzkrieg"
+	{
+		Cost 100
+	}
+	"Natascha"
+	{
+		Cost 100
+	}
+	"Necro Smasher"
+	{
+		Cost 100
+	}
+	"The Razorback"
+	{
+		Cost 100
+	}
+	"The Sandman"
+	{
+		Cost 100
+	}
+	"The Sandvich"
+	{
+		Cost 100
+	}
+	"The Scottish Resistance"
+	{
+		Cost 100
+	}
+	"The Ubersaw"
+	{
+		Cost 100
+	}
+	"The Wrangler"
+	{
+		Cost 100
+	}
+	
+	"Power Up Canteen (MvM)"
+	{
+		Cost 100
+	}
+	"Halloween Spellbook"
+	{
+		Cost 100
+	}
+	
+	"Ghostly Gibus"
+	{
+		Cost 100
+	}
+	"Mildly Disturbing Halloween Mask"
+	{
+		Cost 100
+	}
+	"Horseless Headless Horseman's Head"
+	{
+		Cost 100
+	}
+	"Camera Helm"
+	{
+		Cost 100
+	}
+	"MONOCULUS!"
+	{
+		Cost 100
+	}
+	"The Full Head of Steam"
+	{
+		Cost 100
+	}
+	"The Gentle Munitionne of Leisure"
+	{
+		Cost 100
+	}
+	"The Skull Island Topper"
+	{
+		Cost 100
+	}
+	"Bombinomicon"
+	{
+		Cost 100
+	}
+	"Pyrovision Goggles"
+	{
+		Cost 100
+	}
+	"Civilian Grade JACK Hat"
+	{
+		Cost 100
+	}
+	"Military Grade JACK Hat"
+	{
+		Cost 100
+	}
+	"PASS Time Miniature Half JACK"
+	{
+		Cost 100
+	}
+	
+	"Replay Taunt"
+	{
+		Cost 100
+	}
+}

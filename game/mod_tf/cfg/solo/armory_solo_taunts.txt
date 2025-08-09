@@ -1,0 +1,27 @@
+armory_config
+{
+	"Taunt Thriller"
+	{
+		Cost 75
+	}
+	//"Taunt Robot"
+	//{
+	//	Cost 30
+	//}
+	//"Taunt Werewolf"
+	//{
+	//	Cost 30
+	//}
+	//"Taunt Frankenheavy"
+	//{
+	//	Cost 30
+	//}
+	"Taunt ComeAndGetMe"
+	{
+		Cost 30
+	}
+	"Taunt HeroPose"
+	{
+		Cost 75
+	}
+}

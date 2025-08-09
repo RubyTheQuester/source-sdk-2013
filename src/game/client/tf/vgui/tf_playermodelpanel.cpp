@@ -530,7 +530,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 		}
 		else
 		{
-			SetToPlayerClass(m_iCurrentClassIndex, false, m_strPlayerModelOverride);
+			SetToPlayerClass( m_iCurrentClassIndex, false, m_strPlayerModelOverride );
 		}
 	}
 
@@ -665,6 +665,21 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 			{
 				int iForceWeaponSlot = StringFieldToInt( pszTauntForceWeaponSlotName, GetItemSchema()->GetWeaponTypeSubstrings() );
 				EquipRequiredLoadoutSlot( iForceWeaponSlot );
+			}
+
+			static CSchemaAttributeDefHandle pAttrDef_TauntForceWeaponSlotAlt( "taunt force signature weapon" );
+			if ( FindAttribute_UnsafeBitwiseCast<CAttribute_String>(pItem, pAttrDef_TauntForceWeaponSlotAlt, &pszTauntForceWeaponSlotName) )
+			{
+				int iForceSignatureSlot = 0;
+				if (m_iCurrentClassIndex == TF_CLASS_MEDIC)
+				{
+					iForceSignatureSlot = 1;
+				}
+				else if (m_iCurrentClassIndex == TF_CLASS_SPY || m_iCurrentClassIndex == TF_CLASS_ENGINEER)
+				{
+					iForceSignatureSlot = 2;
+				}
+				EquipRequiredLoadoutSlot(iForceSignatureSlot);
 			}
 		}
 		else

@@ -16,6 +16,7 @@
 #include "tf_weapon_flamethrower.h"
 #include "tf_weapon_sniperrifle.h"
 #include "tf_weapon_compound_bow.h"
+#include "tf_weapon_pistol.h"
 #include "bot/tf_bot.h"
 #include "bot/tf_bot_manager.h"
 #include "bot/behavior/tf_bot_behavior.h"
@@ -151,8 +152,10 @@ ActionResult< CTFBot >	CTFBotMainAction::Update( CTFBot *me, float interval )
 
 	// should I try to change class?
 	if ( tf_bot_reevaluate_class_in_spawnroom.GetBool() &&
+		 !me->GetDidReselectClass() &&
 	     !TFGameRules()->IsMannVsMachineMode() && 
 		 !TFGameRules()->IsInTraining() && 
+		 !me->GetPreset() &&
 		 myArea && myArea->HasAttributeTF( spawnRoomFlag ) )
 	{
 		if ( !m_reevaluateClassTimer.HasStarted() )
@@ -1076,7 +1079,7 @@ const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreatInternal( const I
 	// close range sentries are the most dangerous of all
 	bool shouldFearSentryGuns = true;
 
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		// MvM bots are not afraid of sentry guns and treat them like other enemy players
 		shouldFearSentryGuns = false;
@@ -1316,7 +1319,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 		{
 			if ( !myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) &&
 				!myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) &&
-				!myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) &
+				!myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) &&
 				!myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
 			{
 				// firing would just waste ammo, so don't
@@ -1344,7 +1347,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 	}
 
 	// limit range of hitscan weapon fire in MvM
-	if ( TFGameRules()->IsMannVsMachineMode() && !me->IsPlayerClass( TF_CLASS_SNIPER ) && me->IsHitScanWeapon( myWeapon ) )
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS && !me->IsPlayerClass( TF_CLASS_SNIPER ) && me->IsHitScanWeapon( myWeapon ) )
 	{
 		if ( me->IsRangeGreaterThan( threat->GetEntity(), tf_bot_hitscan_range_limit.GetFloat() ) )
 		{
@@ -1369,6 +1372,18 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 
 		return;
 	}
+	else if ( myWeapon->IsWeapon( TF_WEAPON_HANDGUN_SCOUT_PRIMARY ) )
+	{
+		CTFPistol_ScoutPrimary *pPistolPrimary = assert_cast<CTFPistol_ScoutPrimary*>( myWeapon );
+		// watch for enemy projectiles heading our way
+		if ( pPistolPrimary->CanUsePush() && me->ShouldFireCompressionBlast() )
+		{
+			// bounce missiles with compression blast
+			me->PressAltFireButton();
+		}
+
+		return;
+	}
 
 	float threatRange = ( threat->GetEntity()->GetAbsOrigin() - me->GetAbsOrigin() ).Length();
 
@@ -1389,7 +1404,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 			// only fire if zoomed in
 			if ( me->m_Shared.InCond( TF_COND_ZOOMED ) )
 			{
-				const float reactionTime = TFGameRules()->IsMannVsMachineMode() ? 0.5f : 0.1f;	// just a moment to stop headshots when obviously panning too fast to see
+				const float reactionTime = ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS ) ? 0.5f : 0.1f;	// just a moment to stop headshots when obviously panning too fast to see
 				if ( m_steadyTimer.HasStarted() && m_steadyTimer.IsGreaterThen( reactionTime ) )
 				{
 					trace_t trace;
@@ -1509,7 +1524,7 @@ QueryResultType	CTFBotMainAction::ShouldRetreat( const INextBot *bot ) const
 	CTFBot *me = (CTFBot *)bot->GetEntity();
 
 	// don't retreat if we're in "melee only" mode
-	if ( TheTFBots().IsMeleeOnly() )
+	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || me->HasWeaponRestriction( 1 ) || me->m_Shared.InCond( TF_COND_CANNOT_SWITCH_FROM_MELEE ) )
 		return ANSWER_NO;
 
 	// don't retreat if ubered

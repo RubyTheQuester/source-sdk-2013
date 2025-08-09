@@ -38,7 +38,7 @@
 				"move speed bonus"
 				{
 					"attribute_class"	"mult_player_movespeed"
-					"value"	"1.15"
+					"value"	"1.05"
 				}
 				"allowed in medieval mode"
 				{

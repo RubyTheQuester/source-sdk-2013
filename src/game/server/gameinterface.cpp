@@ -226,6 +226,8 @@ INetworkStringTable *g_pStringTableServerPopFiles = NULL;
 INetworkStringTable *g_pStringTableServerMapCycleMvM = NULL;
 #endif
 
+INetworkStringTable* g_pStringTableDynamicModels = NULL;
+
 CStringTableSaveRestoreOps g_VguiScreenStringOps;
 
 // Holds global variables shared between engine and game.
@@ -708,6 +710,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 	// load Mod specific game events ( MUST be before InitAllSystems() so it can pickup the mod specific events)
 	gameeventmanager->LoadEventsFromFile("resource/ModEvents.res");
+	gameeventmanager->LoadEventsFromFile("resource/ModEventsSolo.res");
 
 #ifdef CSTRIKE_DLL // BOTPORT: TODO: move these ifdefs out
 	InstallBotControl();
@@ -1452,6 +1455,8 @@ void CServerGameDLL::CreateNetworkStringTables( void )
 	g_pStringTableServerPopFiles = networkstringtable->CreateStringTable( "ServerPopFiles", 128 );
 	g_pStringTableServerMapCycleMvM = networkstringtable->CreateStringTable( "ServerMapCycleMvM", 128 );
 #endif
+
+	g_pStringTableDynamicModels = networkstringtable->FindTable( "DynamicModels" );
 
 	bool bPopFilesValid = true;
 	(void)bPopFilesValid; // Avoid unreferenced variable warning

@@ -45,7 +45,8 @@ bool ShouldUseMatchHUD()
 	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		return false;
 
-	return tf_use_match_hud.GetBool();
+	return false;
+	//return tf_use_match_hud.GetBool();
 
 }
 

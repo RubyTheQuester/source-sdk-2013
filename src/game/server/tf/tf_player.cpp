@@ -113,6 +113,7 @@
 #include "tf_player_resource.h"
 #include "gcsdk/gcclient_sharedobjectcache.h"
 #include "tf_party.h"
+#include "nav_mesh.h"
 #include "entity_ammopack.h"
 
 #ifdef TF_RAID_MODE
@@ -168,6 +169,7 @@ extern ConVar	tf_gravetalk;
 extern ConVar	tf_bot_quota_mode;
 extern ConVar	tf_bot_quota;
 extern ConVar	halloween_starting_souls;
+extern ConVar	nav_generate_auto;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -277,6 +279,9 @@ ConVar tf_maxhealth_drain_deploy_cost( "tf_maxhealth_drain_deploy_cost", "20", F
 extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
+
+ConVar tf_bot_random_weapons("tf_bot_random_weapons", "1", FCVAR_GAMEDLL, "Gives bots random weapon items.");
+ConVar tf_bot_random_weapons_chance("tf_bot_random_weapons_chance", "85", FCVAR_GAMEDLL, "Percent chance a bot will get a weapon.");//what
 
 extern ConVar tf_voice_command_suspension_mode;
 extern ConVar tf_feign_death_duration;
@@ -642,6 +647,13 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetResupplyPoints, "GetResupplyPoints", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKillAssists, "GetKillAssists", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetBonusPoints, "GetBonusPoints", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKills, "GetKills", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetDeaths, "GetDeaths", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSuicides, "GetSuicides", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetBuildingsBuilt, "GetBuildingsBuilt", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetDamageDone, "GetDamageDone", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetCrits, "GetCrits", "" )
+	DEFINE_SCRIPTFUNC_NAMED( ScriptGetPoints, "GetPoints", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptResetScores, "ResetScores", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptIsParachuteEquipped, "IsParachuteEquipped", "" )
 
@@ -711,6 +723,9 @@ BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer , "Team Fortress 2 Playe
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetCustomAttribute, "GetCustomAttribute", "Get a custom attribute float from the player" )
 
 	DEFINE_SCRIPTFUNC_WRAPPED( StunPlayer, "" )
+
+	DEFINE_SCRIPTFUNC_WRAPPED( GenerateAndWearItem, "Give me an item!" )
+	DEFINE_SCRIPTFUNC( PostInventoryApplication, "" )
 END_SCRIPTDESC();
 
 
@@ -844,6 +859,8 @@ IMPLEMENT_SERVERCLASS_ST( CTFPlayer, DT_TFPlayer )
 	SendPropInt( SENDINFO( m_iPlayerSkinOverride ) ),
 	SendPropBool( SENDINFO( m_bViewingCYOAPDA ) ),
 	SendPropBool( SENDINFO( m_bRegenerating ) ),
+
+	SendPropInt( SENDINFO( m_nCurrency ) ),
 END_SEND_TABLE()
 
 // -------------------------------------------------------------------------------- //
@@ -1003,7 +1020,6 @@ CTFPlayer::CTFPlayer()
 	m_iNumberofDominations = 0;
 	m_bFlipViewModels = false;
 	m_bSpyWalk = false;
-	m_bSpyWalkInvertedToggle = false;
 	m_iBlastJumpState = 0;
 	m_flBlastJumpLandTime = 0;
 	m_fMaxHealthTime = -1;
@@ -3323,7 +3339,7 @@ void CTFPlayer::InitialSpawn( void )
 
 	ResetScores();
 	StateEnter( TF_STATE_WELCOME );
-	UpdateInventory( true );
+	//UpdateInventory(true);
 
 	ResetAccumulatedSentryGunDamageDealt();
 	ResetAccumulatedSentryGunKillCount();
@@ -3372,7 +3388,7 @@ void CTFPlayer::ApplyAbsVelocityImpulse( const Vector &vecImpulse )
 	if ( m_Shared.InCond( TF_COND_PARACHUTE_ACTIVE ) )
 	{
 		// don't allow parachute robot to get push in MvM
-		float flHorizontalScale = TFGameRules()->IsMannVsMachineMode() && IsBot() ? 0.f : 1.5f;
+		float flHorizontalScale = (TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS) ? 0.f : 1.5f;
 		vecForce.x *= flHorizontalScale;
 		vecForce.y *= flHorizontalScale;
 	}
@@ -4518,6 +4534,9 @@ void CTFPlayer::ManageRegularWeapons( TFPlayerClassData_t *pData )
 	// Remove our disguise weapon.
 	m_Shared.RemoveDisguiseWeapon();
 
+	// Reload local inventory
+	m_Inventory.InvalidateOffline();
+
 	CUtlVector<const char *> precacheStrings;
 
 	CBaseCombatWeapon* pCurrentWeapon = m_hActiveWeapon;
@@ -5183,6 +5202,16 @@ void CTFPlayer::ValidateWeapons( TFPlayerClassData_t *pData, bool bResetWeapons 
 
 		// See if gamerules says this item isn't allowed right now
 		bool bForceRemoved = bOverrideRemoval || !ItemIsAllowed( pItem );
+
+		if ( pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_DESTROY )
+		{
+			int iBlockDetonate = 0;
+			CALL_ATTRIB_HOOK_INT( iBlockDetonate, no_manual_building_destroy );
+			if ( iBlockDetonate != 0 )
+			{
+				bForceRemoved = true;
+			}
+		}
 
 		if ( bForceRemoved || !ItemsMatch( pData, pWeapon->GetAttributeContainer()->GetItem(), pItem, pWeapon ) )
 		{
@@ -6250,7 +6279,7 @@ void CTFPlayer::HandleCommand_JoinTeam( const char *pTeamName )
 			ClientPrint( this, HUD_PRINTCENTER, "#TF_Ladder_NoTeamChange" );
 			return;
 		}
-		else if ( TFGameRules()->ArePlayersInHell() || TFGameRules()->IsPowerupMode() )
+		else if ( TFGameRules()->ArePlayersInHell() )
 		{
 			ClientPrint( this, HUD_PRINTCENTER, "#TF_CantChangeTeamNow" );
 			return;
@@ -6638,6 +6667,12 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
 		return;
 	}
 
+	// deny team changes while nav is generating
+	if (nav_generate_auto.GetBool() && TheNavMesh->IsGenerating() && iTeamNum >= FIRST_GAME_TEAM)
+	{
+		return;
+	}
+
 	// Some game modes will overrule our player-based logic
 	iTeamNum = TFGameRules()->GetTeamAssignmentOverride( this, iTeamNum, bAutoBalance );
 
@@ -6680,6 +6715,10 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
 		}
 
 		ResetPlayerClass();
+	}
+	if ( !IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
 	}
 
 	RemoveNemesisRelationships();
@@ -6758,6 +6797,14 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	if ( TFGameRules()->State_Get() == GR_STATE_GAME_OVER )
 	{
 		return;
+	}
+	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		if (stricmp(pClassName, GetPlayerClassData(TFGameRules()->GetAssignedHumanClass())->m_szClassName))
+		{
+			ClientPrint(this, HUD_PRINTCENTER, "#TF_CantChangeClassNow");
+			return;
+		}
 	}
 
 // 	if ( TFGameRules()->ArePlayersInHell() && ( m_Shared.m_iDesiredPlayerClass > TF_CLASS_UNDEFINED ) )
@@ -8198,6 +8245,11 @@ void CTFPlayer::DetonateObjectOfType( int iType, int iMode, bool bIgnoreSapperSt
 		return;
 
 	if( !bIgnoreSapperState && ( pObj->HasSapper() || pObj->IsPlasmaDisabled() ) )
+		return;
+
+	int iBlockDetonate = 0;
+	CALL_ATTRIB_HOOK_INT(iBlockDetonate, no_manual_building_destroy);
+	if (iBlockDetonate != 0)
 		return;
 
 	IGameEvent *event = gameeventmanager->CreateEvent( "object_removed" );	
@@ -10688,7 +10740,10 @@ int CTFPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	if ( pTFWeapon && WeaponID_IsSniperRifle( pTFWeapon->GetWeaponID() ) )
 	{
 		CTFSniperRifle *pSniper = dynamic_cast<CTFSniperRifle*>( pTFWeapon );
-		if ( pSniper && ( pSniper->IsZoomed() || ( pSniper->GetWeaponID() == TF_WEAPON_SNIPERRIFLE_CLASSIC ) ) )
+		float flMaxJarateTimeOnHit = 0.0f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pSniper, flMaxJarateTimeOnHit, rifle_jarate_on_hit );
+
+		if ( pSniper && ( flMaxJarateTimeOnHit > 0 || pSniper->IsZoomed() || ( pSniper->GetWeaponID() == TF_WEAPON_SNIPERRIFLE_CLASSIC ) ) )
 		{
 			float flJarateTime = pSniper->GetJarateTime();
 			if ( flJarateTime >= 1.f )
@@ -11810,6 +11865,11 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 		float flChargeLevel = pMedigun ? pMedigun->GetChargeLevel() : 0.f;
 		float flMinChargeLevel = pMedigun ? pMedigun->GetMinChargeAmount() : 1.f;
 
+		if ( pMedigun )
+		{
+			pMedigun->SetChargeLevelToPreserve( pMedigun->GetChargeLevel() );
+		}
+
 		bool bCharged = flChargeLevel >= flMinChargeLevel;
 
 		if ( bCharged )
@@ -12195,7 +12255,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 	{
 		MannVsMachineStats_PlayerEvent_Died( this );
 
-		if ( IsBot() )
+		if ( IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			m_nCurrency = 0;
 			if ( !IsMissionEnemy() && m_pWaveSpawnPopulator )
@@ -12305,7 +12365,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 			}
 		}
 
-		if ( !IsBot() && !m_hReviveMarker )
+		if ( ( !IsBot() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) && !m_hReviveMarker )
 		{
 			m_hReviveMarker = CTFReviveMarker::Create( this );
 		}
@@ -12430,7 +12490,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 	
 	SetGibbedOnLastDeath( bGib );
 
-	bool bIsMvMRobot = TFGameRules()->IsMannVsMachineMode() && IsBot();
+	bool bIsMvMRobot = TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS;
 	if ( bGib && !bIsMvMRobot && IsPlayerClass( TF_CLASS_SCOUT ) && RandomInt( 1, 100 ) <= SCOUT_ADD_BIRD_ON_GIB_CHANCE )
 	{
 		Vector vecPos = WorldSpaceCenter();
@@ -12894,7 +12954,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 
 	// Is the player inside a respawn time override volume?
 	// don't do this for MvM bots
-	if ( !TFGameRules()->IsMannVsMachineMode() || !IsBot() )
+	if ( !TFGameRules()->IsMannVsMachineMode() || !IsBot() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS )
 	{
 		FOR_EACH_VEC( ITriggerPlayerRespawnOverride::AutoList(), i )
 		{
@@ -13025,7 +13085,7 @@ void CTFPlayer::AmmoPackCleanUp( void )
 //-----------------------------------------------------------------------------
 bool CTFPlayer::ShouldDropAmmoPack()
 {
-	if ( TFGameRules()->IsMannVsMachineMode() && IsBot() )
+	if ( TFGameRules()->IsMannVsMachineMode() && IsBot() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		return false;
 
 	if ( TFGameRules()->IsInArenaMode() && TFGameRules()->InStalemate() == false )
@@ -13796,6 +13856,28 @@ void CTFPlayer::StateEnterWELCOME( void )
 
 	PhysObjectSleep();
 
+	if (nav_generate_auto.GetBool())
+	{
+		if (TheNavMesh->IsGenerating())
+		{
+			m_bSeenRoundInfo = true;
+			ChangeTeam(TEAM_SPECTATOR, false, true);
+			ClientPrint(this, HUD_PRINTCENTER, "#TFSOLO_NavGenerateAuto");
+			return;
+		}
+		else if (TheNavMesh->GetNavAreaCount() == 0)
+		{
+			m_bSeenRoundInfo = true;
+			ConVarRef nav_max_view_distance("nav_max_view_distance");
+			ConVarRef nav_generate_auto_view_distance("nav_generate_auto_view_distance");
+			nav_max_view_distance.SetValue(nav_generate_auto_view_distance.GetFloat());
+			engine->ServerCommand("nav_generate\n");
+			ChangeTeam(TEAM_SPECTATOR, false, true);
+			ClientPrint(this, HUD_PRINTCENTER, "#TFSOLO_NavGenerateAuto");
+			return;
+		}
+	}
+
 	if ( g_pServerBenchmark->IsLocalBenchmarkPlayer( this ) )
 	{
 		m_bSeenRoundInfo = true;
@@ -13807,6 +13889,31 @@ void CTFPlayer::StateEnterWELCOME( void )
 		m_bSeenRoundInfo = true;
 
 		ChangeTeam( TEAM_SPECTATOR );
+	}
+	else if (IsFakeClient() == false)
+	{
+		m_bSeenRoundInfo = true;
+		if (TFGameRules() && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
+		{
+			int team = TFGameRules()->GetAssignedHumanTeam();
+			if (ShouldForceAutoTeam())
+			{
+				team = GetAutoTeam();
+			}
+			if (TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+			{
+				MarkTeamJoinTime();
+			}
+			else
+			{
+				ChangeTeam(team, false, true);
+				ShowViewPortPanel((GetTeamNumber() == TF_TEAM_BLUE) ? PANEL_CLASS_BLUE : PANEL_CLASS_RED);
+			}
+		}
+		else
+		{
+			ShowViewPortPanel(PANEL_MAPINFO, true);
+		}
 	}
 	else if ( (TFGameRules() && TFGameRules()->IsLoadingBugBaitReport()) )
 	{
@@ -13884,6 +13991,22 @@ void CTFPlayer::StateThinkWELCOME( void )
 			ChangeTeam( iTeam != TEAM_ANY ? iTeam : TF_TEAM_BLUE );
 			SetDesiredPlayerClassIndex( iClass );
 			ForceRespawn();
+		}
+		else
+		{
+			if (nav_generate_auto.GetBool() && TheNavMesh->IsGenerating())
+				return;
+			if (TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED && (TFGameRules()->GetAssignedHumanTeam() != TEAM_ANY || ShouldForceAutoTeam()))
+			{
+				int team = TFGameRules()->GetAssignedHumanTeam();
+				if (ShouldForceAutoTeam())
+				{
+					team = GetAutoTeam();
+				}
+				ChangeTeam(team, false, true);
+				SetDesiredPlayerClassIndex(TFGameRules()->GetAssignedHumanClass());
+				ForceRespawn();
+			}
 		}
 	}
 }
@@ -14818,6 +14941,11 @@ void CTFPlayer::ForceRespawn( void )
 		} while( iDesiredClass == GetPlayerClass()->GetClassIndex() );
 	}
 
+	if (!IsFakeClient() && TFGameRules() && TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED)
+	{
+		iDesiredClass = TFGameRules()->GetAssignedHumanClass();
+	}
+
 	if ( HasTheFlag() )
 	{
 		DropFlag();
@@ -14833,6 +14961,31 @@ void CTFPlayer::ForceRespawn( void )
 		int iOldClass = GetPlayerClass()->GetClassIndex();
 
 		GetPlayerClass()->Init( iDesiredClass );
+
+		// Are we a bot?
+		if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+		{
+			CTFBot* pBot = ToTFBot(this);
+
+			// This is a new class, so start it all null
+			pBot->SetRandomPrimary(NULL);
+			pBot->SetRandomSecondary(NULL);
+			pBot->SetRandomMelee(NULL);
+			//pBot->SetRandomHat(NULL);
+			//pBot->SetRandomArmor(NULL);
+
+			// Set random weapons for this class
+			if (RandomInt(0, 100) < tf_bot_random_weapons_chance.GetInt())
+			{
+				pBot->SetRandomPrimary(pBot->GiveRandomItemName(LOADOUT_POSITION_PRIMARY));
+
+				// Sandvich is broken right now
+				//if (GetPlayerClass()->GetClassIndex() != TF_CLASS_HEAVYWEAPONS)
+				pBot->SetRandomSecondary(pBot->GiveRandomItemName(LOADOUT_POSITION_SECONDARY));
+
+				pBot->SetRandomMelee(pBot->GiveRandomItemName(LOADOUT_POSITION_MELEE));
+			}
+		}
 
 		// Don't report class changes if we're random, because it's not a player choice
 		if ( !bRandom )
@@ -14917,6 +15070,54 @@ void CTFPlayer::ForceRespawn( void )
 	}
 
 	m_bSwitchedClass = false;
+	if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+	{
+		CTFBot* pBot = ToTFBot(this);
+
+		// Should we equip a random weapon?
+		if (tf_bot_random_weapons.GetBool() == true)
+		{
+			const char* primaryName = pBot->GetRandomPrimary();
+			const char* secondaryName = pBot->GetRandomSecondary();
+			const char* meleeName = pBot->GetRandomMelee();
+
+			if (primaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_PRIMARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)primaryName);
+			}
+
+			if (secondaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)secondaryName);
+			}
+
+			if (meleeName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_MELEE);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, meleeName);
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -15755,7 +15956,7 @@ void CTFPlayer::TeleportEffect( void )
 	m_Shared.AddCond( TF_COND_TELEPORTED );
 
 	float flDuration = 12.f;
-	if ( TFGameRules()->IsMannVsMachineMode() && m_bIsABot && IsBotOfType( TF_BOT_TYPE ) )
+	if ( TFGameRules()->IsMannVsMachineMode() && m_bIsABot && IsBotOfType( TF_BOT_TYPE ) && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		flDuration = 30.f;
 	}
@@ -17707,6 +17908,21 @@ bool CTFPlayer::PlayTauntSceneFromItem( const CEconItemView *pEconItemView )
 			Weapon_Switch( Weapon_GetSlot( iForceWeaponSlot ) );
 		}
 
+		static CSchemaAttributeDefHandle pAttrDef_TauntForceWeaponSlotAlt( "taunt force signature weapon" );
+		if ( FindAttribute_UnsafeBitwiseCast<CAttribute_String>(pItemDef, pAttrDef_TauntForceWeaponSlotAlt, &pszTauntForceWeaponSlotName) )
+		{
+			int iForceSignatureSlot = 0;
+			if (iClass == TF_CLASS_MEDIC)
+			{
+				iForceSignatureSlot = 1;
+			}
+			else if (iClass == TF_CLASS_SPY || iClass == TF_CLASS_ENGINEER)
+			{
+				iForceSignatureSlot = 2;
+			}
+			Weapon_Switch( Weapon_GetSlot( iForceSignatureSlot ) );
+		}
+
 		m_bInitTaunt = true;
 
 		// Allow voice commands, etc to be interrupted.
@@ -18799,16 +19015,16 @@ void CTFPlayer::DoTauntAttack( void )
 				// If they're within the radius, give 'em the buff
 				if ( (vecOrg - pTeamPlayer->GetAbsOrigin()).LengthSqr() < (1024*1024) )
 				{
-					pTeamPlayer->TakeHealth(50, DMG_GENERIC);
-					pTeamPlayer->m_Shared.AddTempCritBonus(0.5);
+					pTeamPlayer->TakeHealth( 50, DMG_GENERIC );
+					pTeamPlayer->m_Shared.AddTempCritBonus( 0.5 );
 
-					IGameEvent* event = gameeventmanager->CreateEvent("player_healonhit");
-					if (event)
+					IGameEvent *event = gameeventmanager->CreateEvent( "player_healonhit" );
+					if ( event )
 					{
-						event->SetInt("amount", 50);
-						event->SetInt("entindex", pTeamPlayer->entindex());
-						event->SetInt("weapon_def_index", INVALID_ITEM_DEF_INDEX);
-						gameeventmanager->FireEvent(event);
+						event->SetInt( "amount", 50 );
+						event->SetInt( "entindex", pTeamPlayer->entindex() );
+						event->SetInt( "weapon_def_index", INVALID_ITEM_DEF_INDEX );
+						gameeventmanager->FireEvent( event );
 					}
 				}
 			}
@@ -19712,7 +19928,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 					float frand = (float) rand() / VALVE_RAND_MAX;
 					if ( frand < 0.4f )
 					{
-						criteriaSet.AppendCriteria( "IsHalloweenTaunt", "1" );
+						//criteriaSet.AppendCriteria( "IsHalloweenTaunt", "1" );
 					}
 				}
 			}
@@ -19733,7 +19949,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 				float frand = (float)rand() / VALVE_RAND_MAX;
 				if ( frand < 0.8f )
 				{		
-					criteriaSet.AppendCriteria( "IsAprilFoolsTaunt", "1" );
+					//criteriaSet.AppendCriteria( "IsAprilFoolsTaunt", "1" );
 				}
 			}
 		}
@@ -19751,15 +19967,15 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 		// Halloween costume sets
 		if ( IsRobotCostumeEquipped() )
 		{
-			criteriaSet.AppendCriteria( "IsRobotCostume", "1" );
+			//criteriaSet.AppendCriteria( "IsRobotCostume", "1" );
 		}
 		else if ( IsDemowolf() )
 		{
-			criteriaSet.AppendCriteria( "IsDemowolf", "1" );
+			//criteriaSet.AppendCriteria( "IsDemowolf", "1" );
 		}
 		else if ( IsFrankenHeavy() )
 		{
-			criteriaSet.AppendCriteria( "IsFrankenHeavy", "1" );
+			//criteriaSet.AppendCriteria( "IsFrankenHeavy", "1" );
 		}
 		// Single items with response rules
 		else
@@ -20637,6 +20853,12 @@ medigun_charge_types CTFPlayer::GetChargeEffectBeingProvided( void )
 		// which causes their think functions to shut down
 		if ( GetTimeSinceLastThink() > flUberDuration )
 			return MEDIGUN_CHARGE_INVALID;
+	}
+
+	CWeaponMedigun* pAnyMedigun = dynamic_cast<CWeaponMedigun*>( Weapon_OwnsThisID(TF_WEAPON_MEDIGUN) );
+	if ( pAnyMedigun && pAnyMedigun->IsReleasingCharge() && pAnyMedigun->GetMedigunType() == MEDIGUN_EMERALD )
+	{
+		return pAnyMedigun->GetChargeType();
 	}
 
 	CTFWeaponBase *pWpn = GetActiveTFWeapon();
@@ -22339,7 +22561,12 @@ void CTFPlayer::GrantOrRemoveAllUpgrades( bool bRemove, bool bRefund )
 void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUpgrade, int nCost, bool bDowngrade )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	if ( TFGameRules() == NULL || !TFGameRules()->GameModeUsesUpgrades() )
 		return;
@@ -22407,7 +22634,12 @@ void CTFPlayer::RememberUpgrade( int iPlayerClass, CEconItemView *pItem, int iUp
 void CTFPlayer::ForgetFirstUpgradeForItem( CEconItemView *pItem )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	if ( TFGameRules() && !TFGameRules()->GameModeUsesUpgrades() )
 		return;
@@ -22458,7 +22690,12 @@ void CTFPlayer::ClearUpgradeHistory( void )
 void CTFPlayer::ReapplyItemUpgrades( CEconItemView *pItem )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	int iClassIndex = GetPlayerClass()->GetClassIndex();
 
@@ -22488,7 +22725,12 @@ void CTFPlayer::ReapplyItemUpgrades( CEconItemView *pItem )
 void CTFPlayer::ReapplyPlayerUpgrades( void )
 {
 	if ( IsBot() )
-		return;
+	{
+		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		{
+			return;
+		}
+	}
 
 	int iClassIndex = GetPlayerClass()->GetClassIndex();
 	RemovePlayerAttributes( false );

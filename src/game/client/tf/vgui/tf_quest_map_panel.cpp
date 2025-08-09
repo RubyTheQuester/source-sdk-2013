@@ -520,7 +520,7 @@ void CQuestMapPanel::SetVisible( bool bVisible )
 		{
 			m_pIntroPanel->SetVisible( false );
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "QuestMap_Start", false );	
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && GTFGCClientSystem()->BHealthyGCConnection() ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_bMapLoaded && GTFGCClientSystem()->BHealthyGCConnection() ? "QuestMap_MapLoaded" : "QuestMap_LoadingLoop", false );
 		}
 		else 
 		{

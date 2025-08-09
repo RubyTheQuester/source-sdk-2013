@@ -422,7 +422,7 @@ void CTFHudPlayerClass::UpdateModelPanel()
 		return;
 	}
 
-	if ( !cl_hud_playerclass_playermodel_showed_confirm_dialog.GetBool() )
+	if ( false )
 	{
 		// only show this message one time
 		ShowConfirmDialog(	"#GameUI_HudPlayerClassUsePlayerModelDialogTitle",

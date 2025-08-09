@@ -2868,6 +2868,10 @@ void CTFPlayerShared::ConditionGameRulesThink( void )
 				float flBurnDamage = TF_BURNING_DMG;
 				int nKillType = TF_DMG_CUSTOM_BURNING;
 
+				if ( m_hBurnAttacker )
+				{
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hBurnAttacker, flBurnDamage, mult_player_burndmg );
+				}
 				if ( m_hBurnWeapon )
 				{
 					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hBurnWeapon, flBurnDamage, mult_wpn_burndmg );
@@ -6711,6 +6715,9 @@ void CTFPlayerShared::Burn( CTFPlayer *pAttacker, CTFWeaponBase *pWeapon, float 
 		flFlameLife = flBurningTime;
 	}
 	
+	float flFlameAdd = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flFlameAdd, afterburn_duration_time );
+	flFlameLife += flFlameAdd;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flFlameLife, mult_wpn_burntime );
 
 	// flame immunity will always have a fixed duration
@@ -8097,6 +8104,14 @@ bool CTFPlayerShared::IsImmuneToPushback( void ) const
 
 	if ( InCond( TF_COND_IMMUNE_TO_PUSHBACK ) )
 		return true;
+
+	if ( m_pOuter )
+	{
+		int iImmune = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_pOuter, iImmune, knockback_immunity);
+		if (iImmune)
+			return true;
+	}
 
 	if ( m_pOuter->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) && InCond( TF_COND_AIMING ) )
 	{
@@ -9659,8 +9674,13 @@ bool CTFPlayerShared::AddToSpyCloakMeter( float val, bool bForce )
 	}
 
 	bool bResult = ( val > 0 && m_flCloakMeter < 100.0f );
+	bool bFull = ( ( m_flCloakMeter < 100.0f ) && ( ( m_flCloakMeter + val ) >= 100.0f ) );
 
 	m_flCloakMeter = clamp( m_flCloakMeter + val, 0.0f, 100.0f );
+	if ( bFull )
+	{
+		pWpn->OnCloakMeterFull();
+	}
 
 	return bResult;
 }
@@ -11244,6 +11264,18 @@ int CTFPlayer::CanBuild( int iObjectType, int iObjectMode )
 				return ( ( GetAmmoCount( TF_AMMO_GRENADES2 ) > 0 ) ? CB_CAN_BUILD : CB_CANNOT_BUILD );
 			}
 		}
+		else if ( iObjectType == OBJ_ATTACHMENT_SAPPER )
+		{
+			int iChargedSapper = 0;
+			CALL_ATTRIB_HOOK_INT( iChargedSapper, sapper_recharge_time );
+			if ( iChargedSapper != 0 )
+			{
+				if ( GetNumObjects( iObjectType, BUILDING_MODE_ANY ) )
+					return CB_LIMIT_REACHED;
+
+				return ( ( GetAmmoCount( TF_AMMO_GRENADES2 ) > 0 ) ? CB_CAN_BUILD : CB_CANNOT_BUILD );
+			}
+		}
 	}
 
 #ifndef CLIENT_DLL
@@ -11450,6 +11482,15 @@ int CTFPlayerShared::CalculateObjectCost( CTFPlayer* pBuilder, int iObjectType )
 	{
 		float flCostMod = 1.f;
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flCostMod, mod_teleporter_cost );
+		if ( flCostMod != 1.f )
+		{
+			nCost *= flCostMod;
+		}
+	}
+	else if ( iObjectType == OBJ_SENTRYGUN )
+	{
+		float flCostMod = 1.f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flCostMod, mod_sentry_cost );
 		if ( flCostMod != 1.f )
 		{
 			nCost *= flCostMod;
@@ -12135,7 +12176,10 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 
 	if ( ( m_Shared.GetStealthNoAttackExpireTime() > gpGlobals->curtime && !m_Shared.InCond( TF_COND_STEALTHED_USER_BUFF ) ) || m_Shared.InCond( TF_COND_STEALTHED ) )
 	{
-		if ( !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
+		int iCloakCheck = 0;
+		CALL_ATTRIB_HOOK_INT( iCloakCheck, invis_allow_deploy_firing );
+
+		if ( iCloakCheck == 0 && !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
 		{
 #ifdef CLIENT_DLL
 			HintMessage( HINT_CANNOT_ATTACK_WHILE_CLOAKED, true, true );
@@ -14121,11 +14165,21 @@ void CTFPlayerShared::UpdateCloakMeter( void )
 	} 
 	else
 	{
+		bool bFull = ( ( m_flCloakMeter < 100.0f ) && ( ( m_flCloakMeter + gpGlobals->frametime * m_fCloakRegenRate) >= 100.0f ) );
 		m_flCloakMeter += gpGlobals->frametime * m_fCloakRegenRate;
 
 		if ( m_flCloakMeter >= 100.0f )
 		{
 			m_flCloakMeter = 100.0f;
+		}
+
+		if ( bFull )
+		{
+			CTFWeaponInvis* pWpn = (CTFWeaponInvis*)m_pOuter->Weapon_OwnsThisID(TF_WEAPON_INVIS);
+			if ( pWpn )
+			{
+				pWpn->OnCloakMeterFull();
+			}
 		}
 	}
 }
