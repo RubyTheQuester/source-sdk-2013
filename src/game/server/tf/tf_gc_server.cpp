@@ -4026,7 +4026,7 @@ ConVar tf_mm_trusted( "tf_mm_trusted", "0", FCVAR_NOTIFY | FCVAR_HIDDEN,
 	"Set to 1 on Valve servers to requested trusted status.  (Yes, it is authenticated on the backend, and attempts by non-valve servers are logged.)\n",
 	OnMMServerModeTrustedChanged );
 
-/*Backoff api
+/* Backoff api
 void CTFGCServerSystem::WebapiEquipmentState_t::Backoff()
 {
 	if ( m_nBackoffSec == 0 )
@@ -4389,6 +4389,15 @@ void CTFGCServerSystem::SDK_ApplyLocalLoadout(CGCClientSharedObjectCache* pCache
 			soIndex.SetItemID(uItemId);
 
 			pTFInventory->EquipLocal(uItemId, iClass, iSlot);
+			/*
+			CEconItem* pItem = (CEconItem*) pItemCache->FindSharedObject(soIndex);
+			if (pItem) {
+				pTFInventory->EquipLocal(uItemId, iClass, iSlot);
+			}
+			else {
+				Warning("Failed to find item %llu in shared object, but client says it should be equipped by [%i] in slot [%i].\n", uItemId, iClass, iSlot);
+			}
+			*/
 		}
 	}
 

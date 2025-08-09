@@ -122,9 +122,7 @@ void CZombieAttack::SelectVictim( CZombie *me )
 		}
 
 		// ignore player who disguises as my team
-		if (
-			(pPlayer->m_Shared.InCond(TF_COND_DISGUISED) || pPlayer->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER))
-			&& pPlayer->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
+		if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pPlayer->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 		{
 			continue;
 		}

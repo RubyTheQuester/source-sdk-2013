@@ -642,11 +642,12 @@ void CTFClassMenu::ShowPanel( bool bShow )
 			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED
 			 && GetSpectatorMode() == OBS_MODE_NONE ) ||
 			 TFGameRules()->State_Get() == GR_STATE_GAME_OVER ||
+			 TFGameRules()->GetAssignedHumanClass() != TF_CLASS_UNDEFINED ||
 			( TFGameRules()->IsInTraining() && C_TFPlayer::GetLocalTFPlayer() &&
 			  ( C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass() == NULL || C_TFPlayer::GetLocalTFPlayer()->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
 		{
 			SetVisible( false );
-
+			/*
 			CHudNotificationPanel *pNotifyPanel = GET_HUDELEMENT( CHudNotificationPanel );
 			if ( pNotifyPanel )
 			{
@@ -655,7 +656,7 @@ void CTFClassMenu::ShowPanel( bool bShow )
 					pNotifyPanel->SetupNotifyCustom( "#TF_CantChangeClassNow", "ico_notify_flag_moving", C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() );
 				}
 			}
-
+			*/
 			return;
 		}
 
@@ -1183,6 +1184,8 @@ void CTFClassMenu::SetVisible( bool state )
 		engine->ClientCmd( "_cl_classmenuopen 1" );	// for other panels
 		CBroadcastRecipientFilter filter;
 
+		CBaseEntity::StopSound(SOUND_FROM_UI_PANEL, "music.mvm_class_menu");
+		CBaseEntity::StopSound(SOUND_FROM_UI_PANEL, "music.class_menu");
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		{
 			CBaseEntity::EmitSound( filter, SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
@@ -1199,14 +1202,8 @@ void CTFClassMenu::SetVisible( bool state )
 		engine->ServerCmd( "menuclosed" );	
 		engine->ClientCmd( "_cl_classmenuopen 0" );
 		
-		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
-		{
-			CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
-		}
-		else
-		{
-			CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.class_menu" );
-		}
+		CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
+		CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.class_menu" );
 	}
 }
 
@@ -1229,7 +1226,7 @@ void CTFClassMenu::Go()
 	if ( g_pReplay->IsReplayEnabled() &&
 		 !g_pEngineClientReplay->IsPlayingReplayDemo() &&	// FIXME: We shouldn't need this here but for some reason the engine thinks a replay is recording during demo playback, even though replay_recording has a FCVAR_DONTRECORD flag
 		 !nDisplayedConnectedRecording &&
-		 replay_replaywelcomedlgcount.GetInt() <= MAX_TIMES_TO_SHOW_REPLAY_WELCOME_DLG )
+		 false )
 	{
 		wchar_t wText[256];
 		wchar wKeyBind[80];
@@ -1655,7 +1652,7 @@ void CTFClassMenu::CheckMvMUpgrades()
 			nNumUpgradeIconsForHint++;
 
 			// Only show the hint if we've shown it 3 or less times ever
-			if ( nShowUpgradingHint == -1 && tf_mvm_classupgradehelpcount.GetInt() < 3 )
+			if ( false )
 			{
 				int nY;
 				pUpgradeImage->GetPos( nShowUpgradingHint, nY );

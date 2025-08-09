@@ -1,0 +1,327 @@
+armory_config
+{
+	"Taunt: True Scotsman's Call"
+	{
+		Cost 100
+	}
+	"Taunt: The Balloonibouncer"
+	{
+		Cost 100
+	}
+	"Taunt: Bare Knuckle Beatdown"
+	{
+		Cost 100
+	}
+	"Taunt: Borrowed Bones"
+	{
+		Cost 100
+	}
+	"Taunt: The Boston Boarder"
+	{
+		Cost 100
+	}
+	"Taunt: The Boston Breakdance"
+	{
+		Cost 100
+	}
+	"Taunt: The Boxtrot"
+	{
+		Cost 100
+	}
+	"Taunt: Bucking Bronco"
+	{
+		Cost 100
+	}
+	"Taunt: The Bunnyhopper"
+	{
+		Cost 100
+	}
+	"Taunt: Burstchester"
+	{
+		Cost 100
+	}
+	"Taunt: Can It!"
+	{
+		Cost 100
+	}
+	"Taunt: Cheers!"
+	{
+		Cost 100
+	}
+	"Taunt: Commending Clap"
+	{
+		Cost 100
+	}
+	"Taunt: Cremator's Condolences"
+	{
+		Cost 100
+	}
+	"Taunt: Crushing Defeat"
+	{
+		Cost 100
+	}
+	"Taunt: The Crypt Creeper"
+	{
+		Cost 100
+	}
+	"Taunt: Curtain Call"
+	{
+		Cost 100
+	}
+	"Taunt: Didgeridrongo"
+	{
+		Cost 100
+	}
+	"Taunt: Disco Fever"
+	{
+		Cost 100
+	}
+	"Taunt: Doctor's Defibrillators"
+	{
+		Cost 100
+	}
+	"Taunt: Drunk Mann's Cannon"
+	{
+		Cost 100
+	}
+	"Taunt: The Drunken Sailor"
+	{
+		Cost 100
+	}
+	"Taunt: The Dueling Banjo"
+	{
+		Cost 100
+	}
+	"Taunt: The Fist Bump"
+	{
+		Cost 100
+	}
+	"Taunt: Fore-Head Slice"
+	{
+		Cost 100
+	}
+	"Taunt: Foul Play"
+	{
+		Cost 100
+	}
+	"Taunt: The Fubar Fanfare"
+	{
+		Cost 100
+	}
+	"Taunt: The Head Doctor"
+	{
+		Cost 100
+	}
+	"Taunt: The Headcase"
+	{
+		Cost 100
+	}
+	"Taunt: The Homerunner's Hobby"
+	{
+		Cost 100
+	}
+	"Taunt: The Hot Wheeler"
+	{
+		Cost 100
+	}
+	"Taunt: The Jumping Jack"
+	{
+		Cost 100
+	}
+	"Taunt: Killer Joke"
+	{
+		Cost 100
+	}
+	"Taunt: The Killer Signature"
+	{
+		Cost 100
+	}
+	"Taunt: The Killer Solo"
+	{
+		Cost 100
+	}
+	"Taunt: Luxury Lounge"
+	{
+		Cost 100
+	}
+	"Taunt: The Mannbulance!"
+	{
+		Cost 100
+	}
+	"Taunt: Most Wanted"
+	{
+		Cost 100
+	}
+	"Taunt: Mourning Mercs"
+	{
+		Cost 100
+	}
+	"Taunt: Neck Snap"
+	{
+		Cost 100
+	}
+	"Taunt: Peace Out"
+	{
+		Cost 100
+	}
+	"Taunt: Peace!"
+	{
+		Cost 100
+	}
+	"Pool Party Taunt"
+	{
+		Cost 100
+	}
+	"Taunt: The Pooped Deck"
+	{
+		Cost 100
+	}
+	"Taunt: The Profane Puppeteer"
+	{
+		Cost 100
+	}
+	"Taunt: The Proletariat Showoff"
+	{
+		Cost 100
+	}
+	"Taunt: The Punchline"
+	{
+		Cost 100
+	}
+	"Taunt: The Road Rager"
+	{
+		Cost 100
+	}
+	"Taunt: Roar O'War"
+	{
+		Cost 100
+	}
+	"Taunt: Roasty Toasty"
+	{
+		Cost 100
+	}
+	"Taunt: Rocket Jockey"
+	{
+		Cost 100
+	}
+	"Taunt: Runner's Rhythm"
+	{
+		Cost 100
+	}
+	"Taunt: The Russian Arms Race"
+	{
+		Cost 100
+	}
+	"Taunt: Russian Rubdown"
+	{
+		Cost 100
+	}
+	"Taunt: The Scaredy-cat!"
+	{
+		Cost 100
+	}
+	"Taunt: Scorcher's Solo"
+	{
+		Cost 100
+	}
+	"Taunt: Scotsmann's Stagger"
+	{
+		Cost 100
+	}
+	"Taunt: Second Rate Sorcery"
+	{
+		Cost 100
+	}
+	"Taunt: Shanty Shipmate"
+	{
+		Cost 100
+	}
+	"Taunt: Shooter's Stakeout"
+	{
+		Cost 100
+	}
+	"The Shred Alert"
+	{
+		Cost 100
+	}
+	"Taunt: The Skating Scorcher"
+	{
+		Cost 100
+	}
+	"Taunt: Soldier's Requiem"
+	{
+		Cost 100
+	}
+	"Taunt: The Soviet Strongarm"
+	{
+		Cost 100
+	}
+	"Taunt: Spin-to-Win"
+	{
+		Cost 100
+	}
+	"Taunt: Star-Spangled Strategy"
+	{
+		Cost 100
+	}
+	"Taunt: Straight Shooter Tutor"
+	{
+		Cost 100
+	}
+	"Taunt: Surgeon's Squeezebox"
+	{
+		Cost 100
+	}
+	"Taunt: Tailored Terminal"
+	{
+		Cost 100
+	}
+	"Taunt: Tuefort Tango"
+	{
+		Cost 100
+	}
+	"Taunt: Texas Truckin"
+	{
+		Cost 100
+	}
+	"Taunt: Texas Twirl 'Em"
+	{
+		Cost 100
+	}
+	"Taunt: Time Out Therapy"
+	{
+		Cost 100
+	}
+	"Taunt: The Trackman's Touchdown"
+	{
+		Cost 100
+	}
+	"Taunt: The Travel Agent"
+	{
+		Cost 100
+	}
+	"Taunt: Unleashed Rage"
+	{
+		Cost 100
+	}
+	"Taunt: Zoomin' Broom"
+	{
+		Cost 100
+	}
+	"Taunt: The Final Score"
+	{
+		Cost 100
+	}
+	"Taunt: Bear Hug"
+	{
+		Cost 100
+	}
+	"Taunt: Texan Trickshot"
+	{
+		Cost 100
+	}
+	"Taunt: Flying Colors"
+	{
+		Cost 100
+	}
+}

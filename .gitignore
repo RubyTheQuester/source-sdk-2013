@@ -527,3 +527,6 @@ game/mod_tf.zip
 /game/mod_tf/download
 /game/mod_tf/materials/temp
 /game/mod_tf/materials/vgui/logos
+game/mod_tf/cfg/local_loadout_73117512.txt
+/game/mod_tf/scripts/vscripts/solo/balancing/unused
+/game/mod_tf/scripts/items/tfsolo

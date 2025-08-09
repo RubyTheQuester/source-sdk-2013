@@ -92,6 +92,7 @@ extern ConVar tf_weapon_criticals_bucket_bottom;
 #ifdef CLIENT_DLL
 extern ConVar cl_crosshair_file;
 extern ConVar cl_flipviewmodels;
+extern ConVar tf_mirrormode;
 #endif
 
 //=============================================================================
@@ -5068,6 +5069,14 @@ void CTFWeaponBase::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPla
 		pAttacker->m_Shared.AddCond( TF_COND_SPEED_BOOST, iSpeedBoostOnHit );
 	}
 
+	// Metal on hit
+	int iMetalOnHit = 0;
+	CALL_ATTRIB_HOOK_INT( iMetalOnHit, metal_on_hit );
+	if ( iMetalOnHit )
+	{
+		pAttacker->GiveAmmo( iMetalOnHit, TF_AMMO_METAL, true );
+	}
+
 	if ( pVictim )
 	{
 		if ( pVictim->m_Shared.InCond( TF_COND_MAD_MILK ) )
@@ -5593,7 +5602,12 @@ bool CTFWeaponBase::IsViewModelFlipped( void )
 		return true;
 	}
 #else
-	if ( m_bFlipViewModel != cl_flipviewmodels.GetBool() )
+	bool isFlipped = cl_flipviewmodels.GetBool();
+	if ( tf_mirrormode.GetBool() )
+	{
+		isFlipped = !isFlipped;
+	}
+	if ( m_bFlipViewModel != isFlipped )
 	{
 		return true;
 	}
@@ -6774,7 +6788,12 @@ void CTFWeaponBase::AddStatTrakModel( CEconItemView *pItem, int nStatTrakType, A
 				pStatTrakEnt->m_nSkin = nSkin;
 				m_viewmodelStatTrakAddon = pStatTrakEnt;
 				
-				if ( cl_flipviewmodels.GetBool() )
+				bool isFlipped = cl_flipviewmodels.GetBool();
+				if ( tf_mirrormode.GetBool() )
+				{
+					isFlipped = !isFlipped;
+				}
+				if ( isFlipped )
 				{
 					pStatTrakEnt->SetBodygroup( 1, 1 ); // use a special mirror-image stattrak module that appears correct for lefties
 					flScale *= -1.0f;					// flip scale

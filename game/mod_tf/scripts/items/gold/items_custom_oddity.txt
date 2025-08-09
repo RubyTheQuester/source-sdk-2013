@@ -1,0 +1,169 @@
+"items_game"
+{
+	"items"
+	{
+		"50000"
+		{
+			"name"		"Dispenser Spy"
+			"prefab"	"weapon_knife"
+			
+			"customitem" "1"
+
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"		"#TF_Dispenser_Knife"
+			
+			"attributes"
+			{
+				"disguise_as_dispenser_on_crouch"
+				{
+					"attribute_class"	"disguise_as_dispenser_on_crouch"
+					"value"	"1"
+				}
+			}
+		}
+		
+		"50001"
+		{
+			"name"	"Ammopack Flamethrower"
+			"prefab" "weapon_flamethrower"
+
+			"customitem" "1"
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"	"#TF_FT_ReflectAmmo"
+			"propername"	"1"
+			
+			"attributes"
+			{
+				"airblast pushback disabled"
+				{
+					"attribute_class"	"airblast_pushback_disabled"
+					"value"	"1"
+				}
+				"airblast turn projectile to ammo"
+				{
+					"attribute_class"	"airblast_turn_projectile_to_ammo"
+					"value"	"1"
+				}
+				"airblast cost increased"
+				{
+					"attribute_class"	"mult_airblast_cost"
+					"value"	"1.50"
+				}
+			}
+			
+		}
+		
+		"50002"
+		{
+			"name"	"Sniper Rifle Aim Charge"
+			"prefab" "weapon_sniperrifle"
+			
+			"item_name"	"#TF_AimCharge"
+			
+			"customitem" "1"
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				//"sniper beep"
+				//{
+				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+				//	"value"	"1"
+				//}
+				"sniper fires tracer"
+				{
+					"attribute_class"	"sniper_fires_tracer"
+					"value"	"1"
+				}
+				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+					"value"	"2"
+				}
+				"SRifle Charge rate decreased"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec"
+					"value"	"0.5"
+				}
+			}
+		}
+		
+		"50003"
+		{
+			"name"				"Radial Buff Killing Gloves of Boxing"
+			"prefab"			"valve weapon_fists"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_type_name"	"#TF_Weapon_Gloves"
+			"item_name"			"#TF_RadialBuff_Fists"
+			"item_description"	"#TF_RadialBuff_Fists_Desc"
+			
+			"item_slot"	"melee"
+			"item_logname"	"gloves"
+			"item_iconname"	"gloves"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_boxing_gloves/c_boxing_gloves"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 				"53"					
+			"model_player"	"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves.mdl"
+			"attach_to_hands"	"1"
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+		
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -10"
+			}
+			
+			"attributes"
+			{
+				"fists have radial buff"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value" "1"
+				}
+			}
+			"hide_bodygroups_deployed_only"	"1"
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"hands"		"1"
+				}
+				"sound_melee_miss"	"Weapon_BoxingGloves.Miss"
+				"sound_melee_hit"	"Weapon_BoxingGloves.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
+				"sound_burst"	"Weapon_BoxingGloves.MissCrit"
+				"animation_replacement"
+				{
+					"ACT_MELEE_VM_INSPECT_START"	"ACT_MELEE_ALT1_VM_INSPECT_START"
+					"ACT_MELEE_VM_INSPECT_IDLE"		"ACT_MELEE_ALT1_VM_INSPECT_IDLE"
+					"ACT_MELEE_VM_INSPECT_END"		"ACT_MELEE_ALT1_VM_INSPECT_END"
+				}
+			}
+			"mouse_pressed_sound" 	"ui/item_boxing_gloves_pickup.wav"
+			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
+		}
+	}
+}

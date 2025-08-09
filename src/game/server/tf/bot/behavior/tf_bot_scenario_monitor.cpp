@@ -24,6 +24,7 @@
 #include "bot/behavior/scenario/capture_point/tf_bot_defend_point.h"
 #include "bot/behavior/scenario/payload/tf_bot_payload_guard.h"
 #include "bot/behavior/scenario/payload/tf_bot_payload_push.h"
+#include "bot/behavior/scenario/capture_the_flag/tf_bot_defend_flag_capzone.h"
 #include "bot/behavior/tf_bot_use_teleporter.h"
 #include "bot/behavior/training/tf_bot_training.h"
 #include "bot/behavior/tf_bot_destroy_enemy_sentry.h"
@@ -227,7 +228,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		return new CTFBotSpyInfiltrate;
 	}
 
-	if ( !TheTFBots().IsMeleeOnly() )
+	if ( !TheTFBots().IsMeleeOnly() && !TFGameRules()->IsInMedievalMode() && !me->HasWeaponRestriction( 1 ) )
 	{
 		if ( me->IsPlayerClass( TF_CLASS_SNIPER ) )
 		{
@@ -250,7 +251,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 		// capture the flag
 		return new CTFBotFetchFlag;
 	}
-	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT )
+	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_ESCORT && TFGameRules()->GetHUDType() != TF_HUDTYPE_CP )
 	{
 		if ( TFGameRules()->HasMultipleTrains() )
 		{
@@ -270,7 +271,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 			}
 		}
 	}
-	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP )
+	else if ( TFGameRules()->GetGameType() == TF_GAMETYPE_CP || TFGameRules()->GetHUDType() == TF_HUDTYPE_CP )
 	{
 		// if we have a point we can capture - do it
 		CUtlVector< CTeamControlPoint * > captureVector;
@@ -296,6 +297,16 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 	}
 	else
 	{
+		// Attack/Defend CTF
+		if ( TFGameRules()->GetHUDType() == TF_HUDTYPE_CTF && me->GetEnemyFlagCaptureZone() )
+		{
+			if ( me->GetTeamNumber() == TF_TEAM_RED )
+			{
+				// Red is defending
+				return new CTFBotDefendFlagCapzone;
+			}
+		}
+
 		// Arena PLR
 		if ( TFGameRules()->HasMultipleTrains() )
 		{

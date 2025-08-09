@@ -26,6 +26,7 @@
 #include "tf_weapon_buff_item.h"
 #include "tf_weapon_lunchbox.h"
 #include "tf_weapon_medigun.h"
+#include "halloween/tf_weapon_spellbook.h"
 #include "func_respawnroom.h"
 #include "soundenvelope.h"
 
@@ -36,8 +37,8 @@
 #include "bot/behavior/tf_bot_behavior.h"
 #include "bot/map_entities/tf_bot_generator.h"
 #include "bot/map_entities/tf_bot_hint_entity.h"
-
 #include "func_passtime_goal.h"
+#include "tf_item_powerup_bottle.h"
 
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
@@ -66,6 +67,8 @@ ConVar tf_bot_debug_tags( "tf_bot_debug_tags", "0", FCVAR_CHEAT, "ent_text will 
 
 ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FCVAR_CHEAT, "Bot will choose class from a preset class table." );
 
+ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
+
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
 extern ConVar tf_bot_sniper_misfire_chance;
@@ -77,6 +80,8 @@ extern ConVar tf_mvm_miniboss_min_health;
 extern ConVar tf_bot_path_lookahead_range;
 
 extern ConVar tf_mvm_miniboss_scale;
+extern ConVar tf_bot_health_critical_ratio;
+extern ConVar tf_bot_health_ok_ratio;
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -335,6 +340,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	const char *teamname = "auto";
 	const char *pszBotNameViaArg = NULL;
 	CTFBot::DifficultyType skill = clamp( (CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT );
+	const char *preset = NULL;
 
 	int i;
 	for( i=1; i<args.ArgC(); ++i )
@@ -343,7 +349,12 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 		int nArgAsInteger = atoi( args.Arg(i) );
 
 		// each argument could be a classname, a team, a difficulty level, a count, or a name
-		if ( IsPlayerClassname( args.Arg(i) ) )
+		if (!stricmp(args.Arg(i), "preset"))
+		{
+			i++;
+			preset = args.Arg(i);
+		}
+		else if ( IsPlayerClassname( args.Arg(i) ) )
 		{
 			classname = args.Arg(i);
 		}
@@ -392,6 +403,39 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	{
 		skill = CTFBot::EASY;
 	}
+
+	if (preset != NULL)
+	{
+		auto presetKey = TheTFBots().m_presetsKV->FindKey(preset);
+		if (presetKey)
+		{
+			if (presetKey->FindKey("Name"))
+			{
+				pszBotNameViaArg = presetKey->GetString("Name");
+			}
+			if (presetKey->FindKey("Class"))
+			{
+				iClassIndex = GetClassIndexFromString(presetKey->GetString("Class"));
+				classname = presetKey->GetString("Class");
+			}
+			if (presetKey->FindKey("Team"))
+			{
+				iTeam = presetKey->GetInt("Team");
+				if (iTeam == 2)
+				{
+					teamname = "red";
+				}
+				else if (iTeam == 3)
+				{
+					teamname = "blue";
+				}
+				else
+				{
+					teamname = "spectate";
+				}
+			}
+		}
+	}
 	
 	char name[256];
 	int iNumAdded = 0;
@@ -410,11 +454,16 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			pszBotName = pszBotNameViaArg;
 		}
 
-		pBot = NextBotCreatePlayerBot< CTFBot >( pszBotName );
+		pBot = NextBotCreatePlayerBot< CTFBot >( pszBotName, false );
 
 		if ( pBot ) 
 		{
-			if ( bQuotaManaged )
+			if (preset != NULL)
+			{
+				CUtlString spreset(preset);
+				pBot->SetPreset(spreset);
+			}
+			if ( bQuotaManaged || preset != NULL )
 			{
 				pBot->SetAttribute( CTFBot::QUOTA_MANANGED );
 			}
@@ -424,14 +473,17 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 			pBot->SetDifficulty( skill );
 
 			// if no class is set, auto-select one
-			const char *thisClassname = classname ? classname : pBot->GetNextSpawnClassname();
-			pBot->HandleCommand_JoinClass( thisClassname );
+			const char* thisClassname = classname ? classname : pBot->GetNextSpawnClassname();
+			pBot->HandleCommand_JoinClass(thisClassname);
 
-			// set up a proper name now that we are in training
-			if ( TFGameRules()->IsInTraining() )
+			if (preset != NULL)
 			{
-				CreateBotName( pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name) );
-				engine->SetFakeClientConVarValue( pBot->edict(), "name", name );
+				// set up a proper name now that we are in training
+				if (TFGameRules()->IsInTraining())
+				{
+					CreateBotName(pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name));
+					engine->SetFakeClientConVarValue(pBot->edict(), "name", name);
+				}
 			}
 
 			++iNumAdded;
@@ -657,7 +709,6 @@ DEFINE_SCRIPTFUNC( ShouldQuickBuild, "Returns if the bot should build instantly"
 DEFINE_SCRIPTFUNC( SetShouldQuickBuild, "Sets if the bot should build instantly" )
 
 DEFINE_SCRIPTFUNC_WRAPPED( GetNearestKnownSappableTarget, "Gets the nearest known sappable target" )
-DEFINE_SCRIPTFUNC_WRAPPED( GenerateAndWearItem, "Give me an item!" )
 
 DEFINE_SCRIPTFUNC( IsInASquad, "Checks if we are in a squad" )
 DEFINE_SCRIPTFUNC( LeaveSquad, "Makes us leave the current squad (if any)" )
@@ -712,6 +763,9 @@ DEFINE_SCRIPTFUNC_WRAPPED( IsBehaviorFlagSet, "Return true if the given behavior
 
 DEFINE_SCRIPTFUNC_WRAPPED( SetActionPoint, "Set the given action point for this bot" )
 DEFINE_SCRIPTFUNC_WRAPPED( GetActionPoint, "Get the given action point for this bot" )
+
+DEFINE_SCRIPTFUNC_WRAPPED( GetPreset, "GetPreset", "Get the preset for this bot");
+DEFINE_SCRIPTFUNC_WRAPPED( SetPreset, "SetPreset", "Set the preset for this bot");
 
 END_SCRIPTDESC();
 
@@ -1358,6 +1412,10 @@ void CTFBot::Spawn()
 	SetBrokenFormation( false );
 
 	GetVisionInterface()->ForgetAllKnownEntities();
+
+	SpawnCustom();
+	m_lastUsedCanteenTimer.Invalidate();
+	m_lastUsedHaleChargeTimer.Invalidate();
 }
 
 
@@ -1431,7 +1489,7 @@ void CTFBot::PhysicsSimulate( void )
 	// If we're dead, choose a new class.
 	// We need to do this outside of the behavior system, since changing class can
 	// sometimes force an immediate respawn, which will destroy the bot's existing actions out from under it.
-	if ( !IsAlive() && !m_didReselectClass && tf_bot_keep_class_after_death.GetBool() == false && TFGameRules()->CanBotChangeClass( this ) )
+	if ( !IsAlive() && !m_didReselectClass && tf_bot_keep_class_after_death.GetBool() == false && TFGameRules()->CanBotChangeClass( this ) && !GetPreset() )
 	{
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 			return;
@@ -1451,10 +1509,10 @@ void CTFBot::Touch( CBaseEntity *pOther )
 	CTFPlayer *them = ToTFPlayer( pOther );
 	if ( them && IsEnemy( them ) )
 	{
-		if ( them->m_Shared.IsStealthed() || them->m_Shared.InCond( TF_COND_DISGUISED ) || them->m_Shared.InCond( TF_COND_DISGUISED_AS_DISPENSER) )
+		if ( them->m_Shared.IsStealthed() || them->m_Shared.InCond( TF_COND_DISGUISED ) )
 		{
 			// bumped a spy - they are discovered!
-			if ( TFGameRules()->IsMannVsMachineMode() )	// we have to build up to knowing that they are a spy in MvM
+			if ( TFGameRules()->IsMannVsMachineMode() && them->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS )	// we have to build up to knowing that they are a spy in MvM
 			{
 				SuspectSpy( them );
 			}
@@ -1487,7 +1545,7 @@ void CTFBot::AvoidPlayers( CUserCmd *pCmd )
 	Vector avoidVector = vec3_origin;
 
 	float tooClose = 50.0f;
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		// bots stay farther apart in MvM mode
 		tooClose = 150.0f;
@@ -1716,7 +1774,7 @@ void CTFBot::Event_Killed( const CTakeDamageInfo &info )
 	}
 
 	// announce Spies
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( IsPlayerClass( TF_CLASS_SPY ) )
 		{
@@ -2173,7 +2231,21 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 	for( int i=0; i<ICaptureZoneAutoList::AutoList().Count(); ++i )
 	{
 		CCaptureZone *zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
-		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) ) )
+		{
+			return zone;
+		}
+	}
+
+	return NULL;
+}
+
+CCaptureZone* CTFBot::GetEnemyFlagCaptureZone( void ) const
+{
+	for (int i = 0; i < ICaptureZoneAutoList::AutoList().Count(); ++i)
+	{
+		CCaptureZone* zone = static_cast< CCaptureZone* >( ICaptureZoneAutoList::AutoList()[i] );
+		if ( zone->GetTeamNumber() != GetTeamNumber() )
 		{
 			return zone;
 		}
@@ -2184,13 +2256,13 @@ CCaptureZone *CTFBot::GetFlagCaptureZone( void ) const
 
 //-----------------------------------------------------------------------------------------------------
 // Return capture zone for our ball
-CFuncPasstimeGoal* CTFBot::GetBallCaptureZone(void) const
+CFuncPasstimeGoal* CTFBot::GetBallCaptureZone( void ) const
 {
 	const auto& list = CFuncPasstimeGoal::GetAutoList();
-	for (int i = 0; i < list.Count(); ++i)
+	for ( int i = 0; i < list.Count(); ++i )
 	{
 		CFuncPasstimeGoal *zone = list[i];
-		if ( !zone->IsDisabled() && (zone->GetTeamNumber() != GetEnemyTeam(GetTeamNumber())) )
+		if ( !zone->IsDisabled() && ( zone->GetTeamNumber() != GetEnemyTeam( GetTeamNumber() ) ) )
 		{
 			return zone;
 		}
@@ -3274,7 +3346,7 @@ float CTFBot::GetDesiredAttackRange( void ) const
 		return FLT_MAX;
 	}
 
-	if ( myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) && !TFGameRules()->IsMannVsMachineMode() )
+	if ( myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) && ( !TFGameRules()->IsMannVsMachineMode() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) )
 	{
 		return 1250.0f;
 	}
@@ -3295,7 +3367,7 @@ bool CTFBot::EquipRequiredWeapon( void )
 		return Weapon_Switch( pWeapon );
 	}
 
-	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || HasWeaponRestriction( MELEE_ONLY ) )
+	if ( TheTFBots().IsMeleeOnly() || TFGameRules()->IsInMedievalMode() || HasWeaponRestriction( MELEE_ONLY ) || m_Shared.InCond( TF_COND_CANNOT_SWITCH_FROM_MELEE ) )
 	{
 		// force use of melee weapons
 		Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_MELEE ) );
@@ -3356,7 +3428,7 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 	}
 
 	// no secondary weapons in MvM
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		if ( IsPlayerClass( TF_CLASS_MEDIC ) && IsInASquad() && GetSquad() && !GetSquad()->IsLeader( this ) )
 		{
@@ -3503,7 +3575,7 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 bool CTFBot::EquipLongRangeWeapon( void )
 {
 	// no secondary weapons in MvM
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		return false;
 
 	if ( IsPlayerClass( TF_CLASS_SOLDIER ) || 
@@ -4175,7 +4247,7 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		}
 	}
 
-	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode();
+	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS;
 
 	if ( shouldPushPlayers )
 	{
@@ -4215,6 +4287,10 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		}
 	}
 
+	// if we use the shortstop, we shouldn't try to push enemy projectiles here.
+	CTFWeaponBase* myWeapon = m_Shared.GetActiveTFWeapon();
+	if ( myWeapon->IsWeapon( TF_WEAPON_HANDGUN_SCOUT_PRIMARY ) )
+		return false;
 
 	Vector vecEye = EyePosition();
 	Vector vecForward, vecRight, vecUp;
@@ -4639,6 +4715,91 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 		return NULL;
 	}
 
+	if ( TFGameRules()->GameModeUsesUpgrades() )
+	{
+		CTFWearable* pWearable = GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_ACTION );
+		CTFPowerupBottle* pPowerupBottle = dynamic_cast<CTFPowerupBottle*>( pWearable );
+		if ( !m_lastUsedCanteenTimer.HasStarted() )
+		{
+			m_lastUsedCanteenTimer.Start( RandomFloat( 3.0f, 10.0f ) );
+		}
+		if ( pPowerupBottle && pPowerupBottle->GetNumCharges() > 0 && pPowerupBottle->AllowedToUse() && m_lastUsedCanteenTimer.HasStarted() && m_lastUsedCanteenTimer.IsElapsed() )
+		{
+			bool isThreatVisible = false;
+			bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+			bool isBadlyHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
+			bool inCombat = IsInCombat();
+			bool isAmmoLow = IsAmmoLow();
+			bool willUse = false;
+
+			const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+			if ( threat && threat->IsVisibleInFOVNow() )
+			{
+				isThreatVisible = true;
+			}
+
+			switch ( pPowerupBottle->GetPowerupType() )
+			{
+				case POWERUP_BOTTLE_CRITBOOST:
+				{
+					if ( inCombat && isThreatVisible )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_UBERCHARGE:
+				{
+					if ( isBadlyHurt )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_RECALL:
+				{
+					if ( isBadlyHurt )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_REFILL_AMMO:
+				{
+					if ( inCombat && isAmmoLow )
+					{
+						willUse = true;
+					}
+					break;
+				}
+				case POWERUP_BOTTLE_BUILDINGS_INSTANT_UPGRADE:
+				{
+					break;
+				}
+				case POWERUP_BOTTLE_RADIUS_STEALTH:
+				{
+					break;
+				}
+				default:
+				{
+					if ( inCombat && isThreatVisible )
+					{
+						willUse = true;
+					}
+					break;
+				}
+			}
+
+			if ( willUse )
+			{
+				UseActionSlotItemPressed();
+				UseActionSlotItemReleased();
+				m_lastUsedCanteenTimer.Reset();
+				m_lastUsedCanteenTimer.Start( RandomFloat( 3.0f, 10.0f ) );
+			}
+		}
+	}
+
 	for ( int w=0; w<MAX_WEAPONS; ++w )
 	{
 		CTFWeaponBase *weapon = ( CTFWeaponBase * )GetWeapon( w );
@@ -4667,18 +4828,289 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				}
 			}
 		}
-		else if ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD )
+		else if ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD || weapon->GetWeaponID() == TF_WEAPON_BAT_GIFTWRAP )
 		{
-			// sandman
+			// sandman or wrap assassin
 			if ( GetAmmoCount( TF_AMMO_GRENADES1 ) > 0 )
 			{
 				const CKnownEntity *threat = GetVisionInterface()->GetPrimaryKnownThreat();
 				if ( threat && threat->IsVisibleInFOVNow() )
 				{
-					// hit a stunball
+					// hit a stunball or bauble
 					PressAltFireButton();			
 				}
 			}
+		}
+		else if ( weapon->GetWeaponID() == TF_WEAPON_SPELLBOOK && tf_bot_spells.GetBool() )
+		{
+			CTFSpellBook *book = (CTFSpellBook *)weapon;
+			if ( book->HasASpellWithCharges() )
+			{
+				bool threatVisible = false;
+				bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+				bool inCombat = IsInCombat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+
+				switch ( book->m_iSelectedSpellIndex )
+				{
+					case 0: // Fireball
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 1: // Bats
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 3: // Heal
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 4: // Pumpkins
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+					
+					case 5: // Jump
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 6: // Teleport
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 7: // Lightning
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 8: // Mouse
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 9: // Meteor
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 10: // Monoculus
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 11: // Skeletons
+					{
+						if ( inCombat )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 12: // Kart Glove
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 13: // Kart Jump
+					{
+						if ( isHurt )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 14: // Kart Heal
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					case 15: // Kart Bomb
+					{
+						if ( threatVisible )
+						{
+							return new CTFBotUseItem( book );
+						}
+						break;
+					}
+
+					default:
+						break;
+				}
+			}
+		}
+		else if ( weapon->GetWeaponID() == TF_WEAPON_FISTS )
+		{
+			// Zombie Infection (Community) zombies
+			int iZombieFists = 0;
+			CALL_ATTRIB_HOOK_INT( iZombieFists, zombiezombiezombiezombie );
+			float flHealthMult = 1.0f;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( this, flHealthMult, mult_health_frompacks );
+			if ( iZombieFists > 0 && flHealthMult <= 0.0f )
+			{
+				SetWeaponRestriction( 1 ); // force melee only behavior
+
+				bool threatVisible = false;
+				bool inCombat = IsInCombat();
+				bool isBadlyHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_critical_ratio.GetFloat();
+				bool isHurt = ( (float)GetHealth() / (float)GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+
+				int iClass = GetPlayerClass()->GetClassIndex();
+				switch ( iClass )
+				{
+				case TF_CLASS_SOLDIER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_PYRO:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_DEMOMAN:
+				{
+					if ( isBadlyHurt && threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_ENGINEER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_MEDIC:
+				{
+					if ( isHurt || inCombat )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_SNIPER:
+				{
+					if ( threatVisible )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				case TF_CLASS_SPY:
+				{
+					if ( isHurt || inCombat )
+					{
+						PressAltFireButton();
+					}
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
+			}
+			else if ( flHealthMult <= 0.0f )
+			{
+				// Versus Saxton Hale (Community) Hale's Own Fists
+				bool threatVisible = false;
+				bool inCombat = IsInCombat();
+
+				const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat();
+				if ( threat && threat->IsVisibleInFOVNow() )
+				{
+					threatVisible = true;
+				}
+
+				if ( !m_lastUsedHaleChargeTimer.HasStarted() )
+				{
+					m_lastUsedHaleChargeTimer.Start( RandomFloat( 15.0f, 30.0f ) );
+				}
+				if ( threatVisible && m_lastUsedHaleChargeTimer.IsElapsed() )
+				{
+					PressReloadButton( RandomFloat( 1.0f, 4.0f ) );
+					m_lastUsedHaleChargeTimer.Reset();
+					m_lastUsedHaleChargeTimer.Start( RandomFloat( 15.0f, 35.0f ) );
+				}
+
+
+			}
+
 		}
 	}
 
@@ -5034,6 +5466,71 @@ void CTFBot::AddItem( const char* pszItemName )
 	}
 }
 
+void CTFBot::AddItemBulk(const char* pszItemName)
+{
+	auto def = GetItemSchema()->GetItemDefinitionByName(pszItemName);
+	CBaseEntity* pItem = ItemGeneration()->GenerateItemFromDefIndex(def->GetDefinitionIndex(), WorldSpaceCenter(), vec3_angle);
+	if (pItem)
+	{
+		CEconItemView* pScriptItem = static_cast<CBaseCombatWeapon*>(pItem)->GetAttributeContainer()->GetItem();
+
+		// If we already have an item in that slot, remove it
+		int iClass = GetPlayerClass()->GetClassIndex();
+		int iSlot = pScriptItem->GetStaticData()->GetLoadoutSlot(iClass);
+		equip_region_mask_t unNewItemRegionMask = pScriptItem->GetItemDefinition() ? pScriptItem->GetItemDefinition()->GetEquipRegionConflictMask() : 0;
+
+		if (IsWearableSlot(iSlot))
+		{
+			// Remove any wearable that has a conflicting equip_region
+			for (int wbl = 0; wbl < GetNumWearables(); wbl++)
+			{
+				CEconWearable* pWearable = GetWearable(wbl);
+				if (!pWearable)
+					continue;
+
+				equip_region_mask_t unWearableRegionMask = 0;
+				if (pWearable->GetAttributeContainer()->GetItem())
+				{
+					unWearableRegionMask = pWearable->GetAttributeContainer()->GetItem()->GetItemDefinition()->GetEquipRegionConflictMask();
+				}
+
+				if (unWearableRegionMask & unNewItemRegionMask)
+				{
+					RemoveWearable(pWearable);
+				}
+			}
+		}
+		else
+		{
+			CBaseEntity* pEntity = GetEntityForLoadoutSlot(iSlot);
+			if (pEntity)
+			{
+				CBaseCombatWeapon* pWpn = dynamic_cast<CBaseCombatWeapon*>(pEntity);
+				Weapon_Detach(pWpn);
+				UTIL_Remove(pEntity);
+			}
+		}
+
+		// Fake global id
+		pScriptItem->SetItemID(1);
+
+		DispatchSpawn(pItem);
+
+		CEconEntity* pNewItem = assert_cast<CEconEntity*>(pItem);
+		if (pNewItem)
+		{
+			pNewItem->GiveTo(this);
+		}
+	}
+	else
+	{
+		if (pszItemName && pszItemName[0])
+		{
+			Msg("CTFBotSpawner::AddItemToBot: Invalid item %s.\n", pszItemName);
+		}
+	}
+}
+
 
 int CTFBot::GetUberHealthThreshold()
 {
@@ -5058,4 +5555,191 @@ float CTFBot::GetUberDeployDelayDuration()
 	}
 	
 	return -1.f;
+}
+
+void CTFBot::SpawnCustom()
+{
+	if (!m_preset || m_preset == "")
+	{
+		return;
+	}
+
+	auto preset = TheTFBots().m_presetsKV->FindKey(m_preset);
+	if (!preset)
+	{
+		Msg("Bot preset not found.\n");
+		return;
+	}
+
+	RemovePlayerAttributes(false);
+
+	if (preset->FindKey("Name"))
+	{
+		engine->SetFakeClientConVarValue(edict(), "name", preset->GetString("Name"));
+	}
+	int iClassIndex = 0;
+	if (preset->FindKey("Class"))
+	{
+		HandleCommand_JoinClass(preset->GetString("Class"));
+		iClassIndex = GetClassIndexFromString(preset->GetString("Class"));
+	}
+	if (preset->FindKey("Team"))
+	{
+		ChangeTeam(preset->GetInt("Team"), false, true);
+	}
+
+	auto kConds = preset->FindKey("Conds");
+	if (kConds)
+	{
+		FOR_EACH_SUBKEY(kConds, kCond)
+		{
+			ETFCond cond = static_cast<ETFCond>(kCond->GetInt());
+			m_Shared.AddCond(cond);
+		}
+	}
+
+	if (preset->FindKey("Scale"))
+	{
+		SetScaleOverride(preset->GetFloat("Scale"));
+	}
+	if (preset->FindKey("Miniboss"))
+	{
+		SetIsMiniBoss(true);
+	}
+	if (preset->FindKey("Robot") && iClassIndex != 0)
+	{
+		if (preset->FindKey("Miniboss") && g_pFullFileSystem->FileExists(g_szBotBossModels[iClassIndex]))
+		{
+			GetPlayerClass()->SetCustomModel(g_szBotBossModels[iClassIndex], USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(DONT_BLEED);
+		}
+		else if (g_pFullFileSystem->FileExists(g_szBotModels[iClassIndex]))
+		{
+			GetPlayerClass()->SetCustomModel(g_szBotModels[iClassIndex], USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(DONT_BLEED);
+		}
+	}
+	else if (preset->FindKey("Model"))
+	{
+		int mIndex = PrecacheModel(preset->GetString("Model"));
+		if (mIndex != -1)
+		{
+			GetPlayerClass()->SetCustomModel(preset->GetString("Model"), USE_CLASS_ANIMATIONS);
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+	}
+	else if (preset->FindKey("ModelStatic"))
+	{
+		int mIndex = PrecacheModel(preset->GetString("ModelStatic"));
+		if (mIndex != -1)
+		{
+			GetPlayerClass()->SetCustomModel(preset->GetString("ModelStatic"));
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+	}
+
+	if (preset->FindKey("Skill"))
+	{
+		auto skill = static_cast<DifficultyType>(preset->GetInt("Skill"));
+		SetDifficulty(skill);
+	}
+
+	ClearWeaponRestrictions();
+	if (preset->FindKey("WeaponRestrictions"))
+	{
+		SetWeaponRestriction(preset->GetInt("WeaponRestrictions"));
+	}
+	if (preset->FindKey("Mission"))
+	{
+		auto mission = static_cast<MissionType>(preset->GetInt("Mission"));
+		SetMission(mission);
+	}
+
+	ClearAllAttributes();
+	auto kBAttrs = preset->FindKey("BotAttributes");
+	if (kBAttrs)
+	{
+		FOR_EACH_SUBKEY(kBAttrs, kBAttr)
+		{
+			SetAttribute(kBAttr->GetInt());
+		}
+	}
+	SetAttribute(CTFBot::QUOTA_MANANGED);
+	
+	if (preset->FindKey("MaxVisionRange"))
+	{
+		SetMaxVisionRangeOverride(preset->GetFloat("MaxVisionRange"));
+	}
+
+	auto kAttrs = preset->FindKey("Attributes");
+	if (kAttrs)
+	{
+		FOR_EACH_SUBKEY(kAttrs, kAttr)
+		{
+			const CEconItemAttributeDefinition* pAttrDef = GetItemSchema()->GetAttributeDefinitionByName(kAttr->GetName());
+			GetAttributeList()->SetRuntimeAttributeValue(pAttrDef, kAttr->GetFloat());
+		}
+	}
+
+	NetworkStateChanged();
+
+	if (preset->FindKey("Health"))
+	{
+		ModifyMaxHealth(preset->GetInt("Health"));
+		SetHealth(preset->GetInt("Health"));
+	}
+
+	ClearTags();
+	auto kTags = preset->FindKey("Tags");
+	if (kTags)
+	{
+		FOR_EACH_SUBKEY(kTags, kTag)
+		{
+			AddTag(kTag->GetName());
+		}
+	}
+
+	auto kItems = preset->FindKey("Items");
+	if (kItems)
+	{
+		FOR_EACH_SUBKEY(kItems, kItem)
+		{
+			auto itemName = kItem->GetName();
+			AddItemBulk(itemName);
+			if (kItem->GetFirstSubKey())
+			{
+				CSchemaItemDefHandle itemDef(itemName);
+				for (int iItemSlot = LOADOUT_POSITION_PRIMARY; iItemSlot < CLASS_LOADOUT_POSITION_COUNT; iItemSlot++)
+				{
+					CEconEntity* pEntity = NULL;
+					CEconItemView* pCurItemData = CTFPlayerSharedUtils::GetEconItemViewByLoadoutSlot(this, iItemSlot, &pEntity);
+					if (pCurItemData && itemDef && (pCurItemData->GetItemDefIndex() == itemDef->GetDefinitionIndex()))
+					{
+						FOR_EACH_SUBKEY(kItem, kAttr)
+						{
+							CAttributeList* pAttribList = pCurItemData->GetAttributeList();
+							if (pAttribList)
+							{
+								const CEconItemAttributeDefinition* pAttrDef = GetItemSchema()->GetAttributeDefinitionByName(kAttr->GetName());
+								pAttribList->SetRuntimeAttributeValue(pAttrDef, kAttr->GetFloat());
+							}
+						}
+
+						if (pEntity)
+						{
+							pEntity->UpdateModelToClass();
+						}
+
+						break;
+					}
+				}
+			}
+		}
+		PostInventoryApplication();
+	}
+
 }

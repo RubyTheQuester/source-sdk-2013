@@ -201,7 +201,7 @@ void CBaseAchievement::IncrementCount( int iOptIncrement )
 	{
 		if ( !AlwaysEnabled() && !m_pAchievementMgr->CheckAchievementsEnabled() )
 		{
-			//Msg( "Achievements disabled, ignoring achievement progress for %s\n", GetName() );
+			Msg( "Achievements disabled, ignoring achievement progress for %s\n", GetName() );
 			return;
 		}
 
@@ -421,7 +421,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 	{				
 		if ( !AlwaysEnabled() && !m_pAchievementMgr->CheckAchievementsEnabled() )
 		{
-			Msg( "Achievements disabled, ignoring achievement component for %s\n", GetName() );
+			//Msg( "Achievements disabled, ignoring achievement component for %s\n", GetName() );
 			return;
 		}
 
@@ -748,4 +748,14 @@ void CAchievement_AchievedCount::SetAchievementsRequired( int iNumRequired, int 
 	m_iNumRequired = iNumRequired;
 	m_iLowRange = iLowRange;
 	m_iHighRange = iHighRange;
+}
+
+//----------------------------------------------------------------------------------------------------------------
+void CCustomAchievement::InitFromKV(KeyValues* pKV)
+{
+	SetAchievementID( pKV->GetInt( "id" ) );
+	SetName( pKV->GetName() );
+	SetPointValue( pKV->GetInt( "pointValue", 5 ) );
+	SetHideUntilAchieved( false );
+	SetGoal( pKV->GetInt( "goal", 1 ) );
 }

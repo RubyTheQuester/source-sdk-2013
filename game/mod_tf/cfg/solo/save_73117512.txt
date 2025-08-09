@@ -1,0 +1,17 @@
+"solo_data"
+{
+	"UnlockedItems"
+	{
+		"Solo BaseGameUnlock Weapons"		"1"
+		"Solo BaseGameUnlock Taunts"		"1"
+		"Solo BaseGameUnlock Cosmetics"		"1"
+		"Taunt: Texan Trickshot"		"1"
+	}
+	"Generic"
+	{
+		"BaseGameWeapons"		"1"
+		"BaseGameTaunts"		"1"
+		"BaseGameCosmetics"		"1"
+	}
+	"Credits"		"4200"
+}

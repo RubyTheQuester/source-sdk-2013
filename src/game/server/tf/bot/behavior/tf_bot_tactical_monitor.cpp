@@ -34,9 +34,14 @@
 
 #include "tf_obj_sentrygun.h"
 #include "tf_item_system.h"
+#include "halloween/spell/tf_spell_pickup.h"
+#include "halloween/tf_weapon_spellbook.h"
+#include "halloween/merasmus/merasmus.h"
 
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar tf_bot_health_critical_ratio;
+extern ConVar tf_bot_spells;
+extern ConVar tf_gamemode_pd;
 
 ConVar tf_bot_force_jump( "tf_bot_force_jump", "0", FCVAR_CHEAT, "Force bots to continuously jump" );
 
@@ -205,6 +210,15 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		me->GetLocomotionInterface()->ClearStuckStatus( "In preround" );
 	}
 
+	if ( me->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) )
+	{
+		if ( TFGameRules()->GetActiveBoss() && TFGameRules()->GetActiveBoss()->GetBossType() == HALLOWEEN_BOSS_MERASMUS )
+		{
+			CMerasmus *pMerasmus = assert_cast< CMerasmus *>( TFGameRules()->GetActiveBoss() );
+			return SuspendFor( new CTFBotGetAmmo( me, pMerasmus ), "Heading for MERASMUS" );
+		}
+	}
+
 	Action< CTFBot > *result = me->OpportunisticallyUseWeaponAbilities();
 	if ( result )
 	{
@@ -253,7 +267,7 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 	// check if we need to get to cover
 	QueryResultType shouldRetreat = me->GetIntentionInterface()->ShouldRetreat( me );
 
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 	{
 		// never retreat in MvM mode
 		shouldRetreat = ANSWER_NO;
@@ -318,7 +332,7 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 
 		bool shouldDestroySentries = true;
 
-		if ( TFGameRules()->IsMannVsMachineMode() )
+		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
 		{
 			shouldDestroySentries = false;
 		}
@@ -345,6 +359,31 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 				return SuspendFor( new CTFBotUseTeleporter( nearbyTeleporter ), "Using nearby teleporter" );
 			}
 		}
+	}
+
+	if ( ShouldOpportunisticallyCollectCrumpkins( me ) && CTFBotGetAmmo::IsCrumpkinPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( true ), "Grabbing nearby crumpkin" );
+	}
+
+	if ( ShouldOpportunisticallyCollectSpell( me ) && CTFBotGetAmmo::IsSpellPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby spell" );
+	}
+
+	if ( ShouldOpportunisticallyCollectPowerup( me ) && CTFBotGetAmmo::IsPowerupPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby powerup" );
+	}
+
+	if ( ShouldOpportunisticallyCollectCredits( me ) && CTFBotGetAmmo::IsCreditPossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby credits" );
+	}
+
+	if ( ShouldOpportunisticallyCollectCores( me ) && CTFBotGetAmmo::IsCorePossible( me ) )
+	{
+		return SuspendFor( new CTFBotGetAmmo( false, true ), "Grabbing nearby cores" );
 	}
 
 	// detonate sticky bomb traps when victims are near
@@ -568,4 +607,130 @@ CObjectTeleporter *CTFBotTacticalMonitor::FindNearbyTeleporter( CTFBot *me )
 	}
 
 	return NULL;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCrumpkins( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsHolidayActive( kHoliday_Halloween ) || !TFGameRules()->IsHolidayMap( kHoliday_Halloween ) || TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) )
+	{
+		return false;
+	}
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	// only if I'm fighting
+	if ( !me->IsInCombat() )
+	{
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectSpell( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsUsingSpells() || !tf_bot_spells.GetBool() )
+	{
+		return false;
+	}
+
+	CTFSpellBook *pSpellBook = dynamic_cast<CTFSpellBook *>( me->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
+	if ( !pSpellBook || pSpellBook->HasASpellWithCharges() )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectPowerup( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsPowerupMode() )
+	{
+		return false;
+	}
+
+	if ( me->m_Shared.IsCarryingRune() )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCredits( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsMannVsMachineMode() || me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	{
+		return false;
+	}
+
+	if ( me->IsInCombat() && !me->IsPlayerClass( TF_CLASS_SCOUT ) )
+		return false;
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+//-----------------------------------------------------------------------------------------
+bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCores( CTFBot* me ) const
+{
+	if ( !TFGameRules()->IsPlayingRobotDestructionMode() || tf_gamemode_pd.GetBool() )
+	{
+		return false;
+	}
+
+	// only if my patient is dead
+	if ( me->IsPlayerClass( TF_CLASS_MEDIC ) && me->MedicGetHealTarget() )
+	{
+		CTFPlayer* pPatient = ToTFPlayer( me->MedicGetHealTarget() );
+		if ( pPatient && pPatient->IsDead() )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	return true;
 }

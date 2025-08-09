@@ -3756,6 +3756,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFPlayer, DT_TFPlayer, CTFPlayer )
 	RecvPropInt( RECVINFO( m_iPlayerSkinOverride ) ),
 	RecvPropBool( RECVINFO( m_bViewingCYOAPDA ) ),
 	RecvPropBool( RECVINFO( m_bRegenerating ) ),
+
+	RecvPropInt( RECVINFO( m_nCurrency ) ),
 END_RECV_TABLE()
 
 
@@ -8831,7 +8833,7 @@ bool C_TFPlayer::CanShowTeamMenu( void )
 	if ( IsHLTV() )
 		return false;
 
-	if ( TFGameRules() && ( TFGameRules()->IsCompetitiveMode() || TFGameRules()->IsPowerupMode() ) )
+	if ( TFGameRules() && ( TFGameRules()->IsCompetitiveMode() ) )
 	
 		return false;
 
@@ -11429,8 +11431,7 @@ static ConVar tf_inspect_hint_count( "tf_inspect_hint_count", "0", FCVAR_ARCHIVE
 void C_TFPlayer::HandleInspectHint()
 {
 	int nNotifyCount = tf_inspect_hint_count.GetInt();
-	if ( nNotifyCount > 10 )
-		return;
+	return;
 
 	if ( m_bNotifiedWeaponInspectThisLife )
 		return;

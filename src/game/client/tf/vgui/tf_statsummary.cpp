@@ -91,6 +91,9 @@ CTFStatsSummaryPanel *g_pTFStatsSummaryPanel = NULL;
 
 CUtlVector<CTFStatsSummaryPanel *> g_vecStatPanels;
 
+ConVar cl_loadingimage_override("cl_loadingimage_override", "", FCVAR_REPLICATED, "Override the loading screen image");
+ConVar cl_loadingimage_force("cl_loadingimage_force", "0", FCVAR_REPLICATED, "Force the loading screen image to be used for the whole loading");
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -149,6 +152,7 @@ void CTFStatsSummaryPanel::Init( void )
 	m_xStartRHBar = 0;
 	m_iBarHeight = 1;
 	m_iBarMaxWidth = 1;
+	m_bWasActivated = false;
 
 	m_pPlayerData = new vgui::EditablePanel( this, "statdata" );
 	m_pInteractiveHeaders = new vgui::EditablePanel( m_pPlayerData, "InteractiveHeaders" );
@@ -355,6 +359,7 @@ void CTFStatsSummaryPanel::UpdateMainBackground( void )
 			surface()->GetScreenSize( screenWide, screenTall );
 			float aspectRatio = (float)screenWide/(float)screenTall;
 			bool bIsWidescreen = aspectRatio >= 1.5999f;
+			auto pszOverride = cl_loadingimage_override.GetString();
 
 			if ( g_bIsReplayRewinding )
 			{
@@ -368,9 +373,27 @@ void CTFStatsSummaryPanel::UpdateMainBackground( void )
 			{
 				m_pMainBackground->SetImage( pMatchDesc->GetMapLoadBackgroundOverride( bIsWidescreen ) );
 			}
+			else if ( pszOverride && pszOverride[0] )
+			{
+				m_pMainBackground->SetImage( pszOverride );
+			}
 			else
 			{
-				m_pMainBackground->SetImage( bIsWidescreen ? "../console/background01_widescreen" : "../console/background01" );
+				const char* image = bIsWidescreen ? "../console/background01_widescreen" : "../console/background01";
+				int rand = RandomInt( 0, 3 );
+				if ( rand == 1 )
+				{
+					image = bIsWidescreen ? "../console/title_blue_widescreen" : "../console/title_blue";
+				}
+				else if ( rand == 2 )
+				{
+					image = bIsWidescreen ? "../console/background02_widescreen" : "../console/background02";
+				}
+				else if ( rand == 3 )
+				{
+					image = bIsWidescreen ? "../console/title_team_tough_break_widescreen" : "../console/title_team_tough_break";
+				}
+				m_pMainBackground->SetImage( image );
 			}
 		}
 	}
@@ -544,6 +567,13 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 {
 	if ( g_bIsReplayRewinding || engine->IsLoadingDemo() || engine->IsPlayingDemo() || engine->IsSkippingPlayback() )
 		return;
+
+	cl_loadingimage_override.SetValue( "" );
+	if ( cl_loadingimage_force.GetBool() )
+	{
+		cl_loadingimage_force.SetValue( 0 );
+		return;
+	}
 
 	bool bWidescreenBackground = false;
 
@@ -853,7 +883,7 @@ void CTFStatsSummaryPanel::UpdateDialog()
 {
 	UpdateMainBackground();
 
-	if ( g_bIsReplayRewinding || engine->IsLoadingDemo() || engine->IsPlayingDemo() || engine->IsSkippingPlayback() )
+	if ( g_bIsReplayRewinding || engine->IsLoadingDemo() || engine->IsPlayingDemo() || engine->IsSkippingPlayback() || cl_loadingimage_force.GetBool() )
 	{
 		// hide all of the various panels for the other loadscreen modes
 		if ( IsPC() )
@@ -1476,6 +1506,12 @@ void CTFStatsSummaryPanel::FireGameEvent( IGameEvent *event )
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnActivate()
 {
+	if ( m_bWasActivated )
+	{
+		// For some reason workshop maps call this again at the end
+		return;
+	}
+	m_bWasActivated = true;
 	ClearMapLabel();
 
 	m_bShowingLeaderboard = false;
@@ -1494,6 +1530,7 @@ void CTFStatsSummaryPanel::OnActivate()
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnDeactivate()
 {
+	m_bWasActivated = false;
 	ClearMapLabel();
 }
 

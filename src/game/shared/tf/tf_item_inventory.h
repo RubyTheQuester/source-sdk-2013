@@ -14,6 +14,7 @@
 #include "tf_shareddefs.h"
 #include "econ_item_constants.h"
 #include "tf_item_constants.h"
+#include "GameEventListener.h"
 
 #ifdef CLIENT_DLL
 #include "econ_notifications.h"
@@ -70,10 +71,11 @@ public:
 
 	virtual void		NotifyHasNewItems() { OnHasNewItems(); }
 
+	void				LoadLocalLoadout();
+	void				InvalidateOffline() { m_bOfflineLoaded = false; };
 #ifdef CLIENT_DLL
 	virtual ITexture	*GetWeaponSkinBaseLowRes( itemid_t nItemId, int iTeam ) const;
 
-	void				LoadLocalLoadout();
 	void				SaveLocalLoadout( bool bReset=false, bool bDefaultToGC=false );
 	bool				EquipLocalPreset(equipped_class_t unClass, equipped_preset_t unPreset);
 	int					GetActiveLocalPreset(equipped_class_t unClass) { return m_ActivePreset[unClass]; }
@@ -139,7 +141,6 @@ protected:
 
 	CUtlMap< itemid_t, ITexture* > m_CachedBaseTextureLowRes[ TF_TEAM_COUNT ];
 
-	int				m_ActivePreset[TF_CLASS_COUNT];
 	itemid_t		m_PresetItems[CEconItemSchema::kMaxItemPresetCount][TF_CLASS_COUNT][CLASS_LOADOUT_POSITION_COUNT];
 #ifdef CLIENT_DLL
 	itemid_t		m_RealTFLoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
@@ -149,6 +150,8 @@ protected:
 	itemid_t		m_LoadoutItems[ TF_CLASS_COUNT ][ CLASS_LOADOUT_POSITION_COUNT ];
 	bool			m_bLoadoutChanged[ TF_CLASS_COUNT ];
 	itemid_t		m_AccountLoadoutItems[ ACCOUNT_LOADOUT_POSITION_COUNT ];
+	int				m_ActivePreset[TF_CLASS_COUNT];
+	bool			m_bOfflineLoaded;
 
 	friend class CTFInventoryManager;
 };
@@ -156,7 +159,7 @@ protected:
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-class CTFInventoryManager : public CInventoryManager
+class CTFInventoryManager : public CInventoryManager, public CGameEventListener
 {
 	DECLARE_CLASS( CTFInventoryManager, CInventoryManager );
 public:
@@ -196,7 +199,7 @@ public:
 	// Returns the item data for the base item in the loadout slot for a given class
 	CEconItemView		*GetBaseItemForClass( int iClass, int iSlot );
 	void				GenerateBaseItems( void );
-	CEconItemView*		AddCustomItem(int id);
+	CEconItemView		*AddSoloItem( int id );
 
 	// Gets the specified inventory for the steam ID
 	CTFPlayerInventory	*GetInventoryForPlayer( const CSteamID &playerID );
@@ -213,21 +216,36 @@ public:
 	virtual void		AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CItemSelectionCriteria *pSelectionCriteria );
 	
 	bool				SlotContainsBaseItems( EEquipType_t eType, int iSlot );
+	bool				CheckAllowItemEquip( int iClass, int iSlot );
 
 	int					GetBaseItemCount( )			{ return m_pBaseLoadoutItems.Count(); }
 	CEconItemView*		GetBaseItem( int iIndex )	{ return m_pBaseLoadoutItems[iIndex]; }
+	int					GetSoloItemCount()			{ return m_pSoloLoadoutItems.Count(); }
+	CEconItemView*		GetSoloItem(int iIndex)		{ return m_pSoloLoadoutItems[iIndex]; }
 
-	int					GetCustomItemCount()			{ return m_pCustomLoadoutItems.Count(); }
-	CEconItemView*		GetCustomItem(int iIndex)		{ return m_pCustomLoadoutItems[iIndex]; }
+#ifdef CLIENT_DLL
+	KeyValues* GetSaveData() {
+		if (!m_SoloSaveData)
+			InitSaveData();
+		return m_SoloSaveData;
+	}
 
+	void				InitSaveData();
+	void				LoadSaveData();
+	void				WriteSaveData();
+	void				ResetSaveData();
+#endif
+
+	virtual void FireGameEvent(IGameEvent* event);
 
 private:
 	// Base items, returned for slots that the player doesn't have anything in
 	CEconItemView				*m_pDefaultItem;
 	CUtlVector<CEconItemView*>	m_pBaseLoadoutItems;
-	CUtlVector<CEconItemView*>	m_pCustomLoadoutItems;
+	CUtlVector<CEconItemView*>	m_pSoloLoadoutItems;
 
 #ifdef CLIENT_DLL
+	KeyValues* m_SoloSaveData;
 	// On the client, we have a single inventory for the local player. Stored here, instead of in the
 	// local player entity, because players need to access it while not being connected to a server.
 public:
