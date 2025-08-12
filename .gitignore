@@ -502,6 +502,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.ain
+*.vdf
+
+/game/tf
+
 game/mod_tf/cfg/local_loadout.txt
 game/mod_tf/cfg/server_blacklist.txt
 game/mod_tf/cfg/settings.scr
@@ -512,21 +517,21 @@ game/mod_tf/voice_ban.dt
 game/mod_tf/media/viewed.res
 game/mod_tf/tf2_playerstats.dmx
 game/mod_tf/cfg/user.scr
-*.ain
 game/platform/config/InGameDialogConfig.vdf
-game/platform/config/InGameDialogConfig.vdf
-*.vdf
-/game/mod_tf/custom
-/game/mod_tf/materials/backpack/weapons/c_models/c_foxhound/misc
-game/mod_tf/scripts/whatever/items_game.txt
-game/mod_tf/scripts/items/unused/items_game.txt
-/game/tf
 game/mod_tf.zip
+
+/game/mod_tf/custom
 /game/mod_tf/downloadlists
 /game/mod_tf/scripts/items/unused
 /game/mod_tf/download
 /game/mod_tf/materials/temp
 /game/mod_tf/materials/vgui/logos
-game/mod_tf/cfg/local_loadout_73117512.txt
+
 /game/mod_tf/scripts/vscripts/solo/balancing/unused
 /game/mod_tf/scripts/items/tfsolo
+
+/game/mod_tf/scripts/items/gold
+/game/mod_tf/scripts/items/tfsolo
+
+/game/mod_tf/cfg/local_loadout_*.txt
+/game/mod_tf/cfg/solo/save_*.txt
