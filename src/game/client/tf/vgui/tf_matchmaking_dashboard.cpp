@@ -301,7 +301,7 @@ void CTFMatchmakingDashboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	SetMouseInputEnabled( true );
-	LoadControlSettings( "resource/UI/MatchMakingDashboard.res" );
+	LoadControlSettings( "resource/UI/MatchMakingDashboardSolo.res" );
 
 	// This cannot ever be true or else things get weird when in-game
 	SetKeyBoardInputEnabled( false );

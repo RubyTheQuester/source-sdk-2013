@@ -1017,7 +1017,6 @@ CTFPlayer::CTFPlayer()
 	m_iNumberofDominations = 0;
 	m_bFlipViewModels = false;
 	m_bSpyWalk = false;
-	m_bSpyWalkInvertedToggle = false;
 	m_iBlastJumpState = 0;
 	m_flBlastJumpLandTime = 0;
 	m_fMaxHealthTime = -1;

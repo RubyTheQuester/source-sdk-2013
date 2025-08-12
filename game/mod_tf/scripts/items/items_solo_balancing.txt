@@ -1,9 +1,0 @@
-"items_game"
-{
-	"prefabs"
-	{
-	}
-	"items"
-	{
-	}
-}

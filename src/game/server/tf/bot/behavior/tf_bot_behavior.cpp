@@ -152,6 +152,7 @@ ActionResult< CTFBot >	CTFBotMainAction::Update( CTFBot *me, float interval )
 
 	// should I try to change class?
 	if ( tf_bot_reevaluate_class_in_spawnroom.GetBool() &&
+		 !me->GetDidReselectClass() &&
 	     !TFGameRules()->IsMannVsMachineMode() && 
 		 !TFGameRules()->IsInTraining() && 
 		 !me->GetPreset() &&

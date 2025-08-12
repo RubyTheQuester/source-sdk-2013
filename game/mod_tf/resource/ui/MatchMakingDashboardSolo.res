@@ -838,6 +838,7 @@
 			"dulltext"		"0"
 			"brighttext"	"0"
 			"Command"		"find_game"
+
 			"proportionaltoparent"	"1"
 			"labeltext"		"#TFSOLO_JoinButton"
 			"mouseinputenabled"	"1"
@@ -895,7 +896,7 @@
 			"textAlignment"	"center"
 			"dulltext"		"0"
 			"brighttext"	"0"
-			"Command"		"open_solo"
+			"Command"		"find_game"
 			"proportionaltoparent"	"1"
 			"labeltext"		"#TFSOLO_PlayButton"
 			"mouseinputenabled"	"1"

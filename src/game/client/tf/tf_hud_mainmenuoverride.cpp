@@ -524,7 +524,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	RemoveAllMenuEntries();
 
-	LoadControlSettings( "resource/UI/MainMenuOverride.res", NULL, NULL, pConditions );
+	LoadControlSettings( "resource/UI/MainMenuOverrideSolo.res", NULL, NULL, pConditions );
 
 	BaseClass::ApplySchemeSettings( vgui::scheme()->GetIScheme(pScheme) );
 
