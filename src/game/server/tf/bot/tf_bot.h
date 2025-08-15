@@ -604,6 +604,8 @@ private:
 	const char* m_strRandomPrimary;
 	const char* m_strRandomSecondary;
 	const char* m_strRandomMelee;
+
+	CUtlString m_preset;
 };
 
 
