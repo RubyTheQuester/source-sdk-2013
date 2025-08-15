@@ -85,7 +85,6 @@ CGhost::CGhost()
 
 	m_eyeOffset = vec3_origin;
 	m_lifetime = 10.0f;
-	m_lifeState = LIFE_DEAD;
 }
 
 

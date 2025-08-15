@@ -150,7 +150,7 @@ ActionResult< CTFBot >	CTFBotStickybombSentrygun::Update( CTFBot *me, float inte
 
 	int requiredStickyBombs = 3;
 
-	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
 		// launch more stickies to make sure we take out beefed-up sentries
 		requiredStickyBombs = 5;

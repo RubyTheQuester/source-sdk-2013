@@ -36,7 +36,6 @@ class CTFTauntProp;
 class CTFDroppedWeapon;
 
 extern const float tf_afterburn_max_duration;
-extern void BotGenerateAndWearItem(CTFPlayer* pBot, const char* itemName);
 
 #define MAX_FIRE_WEAPON_SCENES 4
 
@@ -622,23 +621,24 @@ public:
 	bool IsZombieCostumeEquipped( void ) const;
 	bool HasWearablesEquipped( const CSchemaItemDefHandle *ppItemDefs, int nWearables ) const;
 
-	CEconItemView *GetEquippedItemForLoadoutSlot( int iLoadoutSlot ){ 
+	CEconItemView* GetEquippedItemForLoadoutSlot(int iLoadoutSlot) {
 		auto itemID = m_EquippedLoadoutItemIndices[iLoadoutSlot];
 		CEconItemView* pItem;
 		if (itemID < 65536)
 		{
-			int count = TFInventoryManager()->GetSoloItemCount();
+			int count = TFInventoryManager()->GetCustomItemCount();
 			for (int i = 0; i < count; i++)
 			{
-				pItem = TFInventoryManager()->GetSoloItem(i);
+				pItem = TFInventoryManager()->GetCustomItem(i);
 				if (pItem && pItem->GetItemDefIndex() == itemID)
 				{
 					return pItem;
 				}
 			}
 		}
-		return m_Inventory.GetInventoryItemByItemID( m_EquippedLoadoutItemIndices[iLoadoutSlot] ); 
+		return m_Inventory.GetInventoryItemByItemID(m_EquippedLoadoutItemIndices[iLoadoutSlot]);
 	}
+
 	CBaseEntity *GetEntityForLoadoutSlot( int iLoadoutSlot, bool bForceCheckWearable = false );			//Gets whatever entity is associated with the loadout slot (wearable or weapon)
 	CTFWearable *GetEquippedWearableForLoadoutSlot( int iLoadoutSlot );
 
@@ -844,17 +844,8 @@ public:
 	int					ScriptGetResupplyPoints() const				{ return m_Shared.GetResupplyPoints( 0 ); }
 	int					ScriptGetKillAssists() const				{ return m_Shared.GetKillAssists( 0 ); }
 	int					ScriptGetBonusPoints() const				{ return m_Shared.GetBonusPoints( 0 ); }
-	int					ScriptGetKills() const						{ return m_Shared.GetKills( 0 ); }
-	int					ScriptGetDeaths() const						{ return m_Shared.GetDeaths( 0 ); }
-	int					ScriptGetSuicides() const					{ return m_Shared.GetSuicides( 0 ); }
-	int					ScriptGetBuildingsBuilt() const				{ return m_Shared.GetBuildingsBuilt( 0 ); }
-	int					ScriptGetDamageDone() const					{ return m_Shared.GetDamageDone( 0 ); }
-	int					ScriptGetCrits() const						{ return m_Shared.GetCrits( 0 ); }
-	int					ScriptGetPoints() const						{ return m_Shared.GetPoints( 0 ); }
 	void				ScriptResetScores()							{ m_Shared.ResetScores(); }
 	bool				ScriptIsParachuteEquipped()					{ return m_Shared.IsParachuteEquipped(); }
-
-	void				ScriptGenerateAndWearItem(const char* pszItemName) { if (pszItemName) BotGenerateAndWearItem(this, pszItemName); }
 
 	int					ScriptGetPlayerClass()
 	{
@@ -1013,6 +1004,7 @@ public:
 
 	bool				m_bFlipViewModels;
 	bool				m_bSpyWalk;
+	bool				m_bSpyWalkInvertedToggle;
 	int					m_iBlastJumpState;
 	float				m_flBlastJumpLandTime;
 	bool				m_bTakenBlastDamageSinceLastMovement;
@@ -1176,6 +1168,7 @@ private:
 	CPlayerStateInfo	*StateLookupInfo( int nState );
 	void				StateEnter( int nState );
 	void				StateLeave( void );
+	void				StateTransition( int nState );
 	void				StateEnterWELCOME( void );
 	void				StateThinkWELCOME( void );
 	void				StateEnterPICKINGTEAM( void );
@@ -1193,7 +1186,6 @@ private:
 	bool				GetResponseSceneFromConcept( int iConcept, char *chSceneBuffer, int numSceneBufferBytes );
 
 public:
-	void				StateTransition(int nState);
 	const QAngle& GetNetworkEyeAngles() const { return m_angEyeAngles; }
 
 	// Achievement data storage

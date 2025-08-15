@@ -1248,7 +1248,6 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendToolUsage( const CEconItemDefinition *pDef )
 {
-	return;
 	// Loop through the tools, and list any that can be applied to this item
 	bool bFirstTool = true;
 	for ( int i = 0; i < m_ToolList.Count(); i++ )
@@ -1382,7 +1381,7 @@ void CEconItemDetailsRichText::DataText_AppendItemData( const CEconItemDefinitio
 
 	// Can this item be earned by an achievement?
 	const AchievementAward_t *pAchievementAward = GetItemSchema()->GetAchievementRewardByDefIndex( pDef->GetDefinitionIndex() );
-	if( false )
+	if( pAchievementAward )
 	{
 		wchar_t *pszAchName = ACHIEVEMENT_LOCALIZED_NAME_FROM_STR( pAchievementAward->m_sNativeName.String() );
 		if ( pszAchName )

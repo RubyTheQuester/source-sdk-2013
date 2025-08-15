@@ -41,13 +41,7 @@ void CTFBotLocomotion::Update( void )
 // Move directly towards the given position
 void CTFBotLocomotion::Approach( const Vector &pos, float goalWeight )
 {
-	CTFBot* me = ToTFBot( GetBot()->GetEntity() );
-	if ( !me )
-	{
-		return;
-	}
-
-	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
 		if ( !IsOnGround() && !IsClimbingOrJumping() )
 		{
@@ -85,12 +79,6 @@ bool CTFBotLocomotion::IsAreaTraversable( const CNavArea *baseArea ) const
 	CTFNavArea *area = (CTFNavArea *)baseArea;
 
 	if ( area->IsBlocked( me->GetTeamNumber() ) )
-	{
-		return false;
-	}
-
-	// Force giants to avoid low ceilings
-	if ( area->HasAttributes( NAV_MESH_STOP ) && me->m_flModelScale > 1.0f )
 	{
 		return false;
 	}

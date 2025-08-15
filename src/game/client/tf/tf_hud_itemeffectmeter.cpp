@@ -284,6 +284,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 	{
 		lambdaAddItemEffectMeter( "tf_weapon_lunchbox", true );
 		DECLARE_ITEM_EFFECT_METER( CTFMinigun, TF_WEAPON_MINIGUN, true, "resource/UI/HudItemEffectMeter_Heavy.res" );
+		lambdaAddItemEffectMeter( "tf_wearable_razorback", true );
 		break;
 	}
 
@@ -1299,17 +1300,8 @@ bool CHudItemEffectMeter_Weapon<C_TFWeaponBuilder>::IsEnabled( void )
 {
 	if ( !m_pPlayer )
 		return false;
-	
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
-		return true;
 
-	int iChargedSapper = 0;
-	if ( m_pPlayer )
-	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iChargedSapper, sapper_recharge_time );
-	}
-
-	return ( iChargedSapper > 0 );
+	return ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1323,12 +1315,6 @@ bool CHudItemEffectMeter_Weapon<C_TFWeaponBuilder>::ShouldBeep( void )
 
 	int iRoboSapper = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iRoboSapper, robo_sapper );
-	if ( iRoboSapper > 0 )
-	{
-		return true;
-	}
-
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pPlayer, iRoboSapper, sapper_recharge_time );
 
 	return ( iRoboSapper > 0 );
 }

@@ -29,11 +29,8 @@
 #include "in_buttons.h"
 #include "coordsize.h"
 #include "team.h"
-#include <tier1/utlhashtable.h>
-#include "bsp_utils.h"
 
 #ifdef TF_DLL
-#include "tf_gc_server.h"
 #include "tf/tf_gamerules.h"
 #include "nav_mesh/tf_nav_mesh.h"
 #include "nav_mesh/tf_nav_area.h"
@@ -57,7 +54,6 @@
 extern ScriptClassDesc_t * GetScriptDesc( CBaseEntity * );
 
 extern CServerGameDLL g_ServerGameDLL;
-extern int g_bspCacheJobsRunning;
 
 // #define VMPROFILE 1
 
@@ -897,7 +893,6 @@ END_SCRIPTDESC();
 BEGIN_SCRIPTDESC_ROOT( CScriptKeyValues, "Wrapper class over KeyValues instance" )
 	DEFINE_SCRIPT_CONSTRUCTOR()	
 	DEFINE_SCRIPTFUNC_NAMED( ScriptFindKey, "FindKey", "Given a KeyValues object and a key name, find a KeyValues object associated with the key name" );
-	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKey, "GetKey", "Given a KeyValues object and a key name, find a KeyValues object associated with the key name (optional bool to create it)" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetFirstSubKey, "GetFirstSubKey", "Given a KeyValues object, return the first sub key object" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetNextKey, "GetNextKey", "Given a KeyValues object, return the next key object in a sub key group" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKeyValueInt, "GetKeyInt", "Given a KeyValues object and a key name, return associated integer value" );
@@ -906,23 +901,6 @@ BEGIN_SCRIPTDESC_ROOT( CScriptKeyValues, "Wrapper class over KeyValues instance"
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetKeyValueString, "GetKeyString", "Given a KeyValues object and a key name, return associated string value" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptIsKeyValueEmpty, "IsKeyEmpty", "Given a KeyValues object and a key name, return true if key name has no value" );
 	DEFINE_SCRIPTFUNC_NAMED( ScriptReleaseKeyValues, "ReleaseKeyValues", "Given a root KeyValues object, release its contents" );
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueName, "GetKeyName", "Given a KeyValues object, return key name");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueName, "GetName", "Given a KeyValues object, return key name");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueInt, "GetInt", "Given a KeyValues object and a key name, return associated integer value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueFloat, "GetFloat", "Given a KeyValues object and a key name, return associated float value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueBool, "GetBool", "Given a KeyValues object and a key name, return associated bool value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptGetKeyValueString, "GetString", "Given a KeyValues object and a key name, return associated string value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueInt, "SetInt", "Given a KeyValues object and a key name, set associated integer value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueFloat, "SetFloat", "Given a KeyValues object and a key name, set associated float value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueBool, "SetBool", "Given a KeyValues object and a key name, set associated bool value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueString, "SetString", "Given a KeyValues object and a key name, set associated string value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueInt, "SetKeyInt", "Given a KeyValues object and a key name, set associated integer value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueFloat, "SetKeyFloat", "Given a KeyValues object and a key name, set associated float value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueBool, "SetKeyBool", "Given a KeyValues object and a key name, set associated bool value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueString, "SetKeyString", "Given a KeyValues object and a key name, set associated string value");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueName, "SetName", "Given a KeyValues object and a key name, set associated key name");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptSetKeyValueName, "SetKeyName", "Given a KeyValues object and a key name, set associated key name");
-	DEFINE_SCRIPTFUNC_NAMED(ScriptRemoveSubKey, "RemoveSubKey", "Given a KeyValues object and a key name, remove sub key");
 END_SCRIPTDESC();
 
 HSCRIPT CScriptKeyValues::ScriptFindKey( const char *pszName )
@@ -935,19 +913,6 @@ HSCRIPT CScriptKeyValues::ScriptFindKey( const char *pszName )
 
 	// UNDONE: who calls ReleaseInstance on this??
 	HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance( pScriptKey );
-	return hScriptInstance;
-}
-
-HSCRIPT CScriptKeyValues::ScriptGetKey(const char* pszName, bool bCreate)
-{
-	KeyValues* pKeyValues = m_pKeyValues->FindKey(pszName, bCreate);
-	if (pKeyValues == NULL)
-		return NULL;
-
-	CScriptKeyValues* pScriptKey = new CScriptKeyValues(pKeyValues);
-
-	// UNDONE: who calls ReleaseInstance on this??
-	HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance(pScriptKey);
 	return hScriptInstance;
 }
 
@@ -1013,47 +978,6 @@ void CScriptKeyValues::ScriptReleaseKeyValues( )
 	m_pKeyValues = NULL;
 }
 
-void CScriptKeyValues::ScriptRemoveSubKey(const char* pszName)
-{
-	auto key = m_pKeyValues->FindKey(pszName);
-	if (key)
-	{
-		m_pKeyValues->RemoveSubKey(key);
-		key->deleteThis();
-	}
-}
-
-const char* CScriptKeyValues::ScriptGetKeyValueName()
-{
-	const char* psz = m_pKeyValues->GetName();
-	return psz;
-}
-
-void CScriptKeyValues::ScriptSetKeyValueName(const char* pszName, const char* i)
-{
-	m_pKeyValues->SetName(i);
-}
-
-void CScriptKeyValues::ScriptSetKeyValueInt(const char* pszName, int i)
-{
-	m_pKeyValues->SetInt(pszName, i);
-}
-
-void CScriptKeyValues::ScriptSetKeyValueFloat(const char* pszName, float i)
-{
-	m_pKeyValues->SetFloat(pszName, i);
-}
-
-void CScriptKeyValues::ScriptSetKeyValueString(const char* pszName, const char* i)
-{
-	m_pKeyValues->SetString(pszName, i);
-}
-
-void CScriptKeyValues::ScriptSetKeyValueBool(const char* pszName, bool i)
-{
-	m_pKeyValues->SetBool(pszName, i);
-}
-
 
 // constructors
 CScriptKeyValues::CScriptKeyValues( KeyValues *pKeyValues )
@@ -1064,10 +988,10 @@ CScriptKeyValues::CScriptKeyValues( KeyValues *pKeyValues )
 // destructor
 CScriptKeyValues::~CScriptKeyValues( )
 {
-	//if (m_pKeyValues)
-	//{
-	//	m_pKeyValues->deleteThis();
-	//}
+	if (m_pKeyValues)
+	{
+		m_pKeyValues->deleteThis();
+	}
 	m_pKeyValues = NULL;
 }
 
@@ -2530,374 +2454,6 @@ int SetMapAsPlayed( void )
 }
 #endif // PORTAL2_PUZZLEMAKER
 
-static HSCRIPT Script_FileToKeyValues(const char* pszFileName)
-{
-	if (!pszFileName || !*pszFileName)
-	{
-		Log_Warning(LOG_VScript, "Script_FileToKeyValues: NULL/empty file name\n");
-		return NULL;
-	}
-
-	KeyValues* pKeyValues = new KeyValues("scriptkv");
-	if (pKeyValues->LoadFromFile(g_pFullFileSystem, pszFileName, "GAME"))
-	{
-		CScriptKeyValues* pScriptKey = new CScriptKeyValues(pKeyValues);
-		HSCRIPT hScriptInstance = g_pScriptVM->RegisterInstance(pScriptKey);
-		return hScriptInstance;
-	}
-	return NULL;
-}
-
-bool Script_FileExists(const char* file, const char* pathID = "GAME")
-{
-	return g_pFullFileSystem->FileExists(file, pathID);
-}
-
-bool Script_IsServer()
-{
-	return true;
-}
-bool Script_IsClient()
-{
-	return false;
-}
-
-bool Script_ConnectedOnline()
-{
-	return steamapicontext != NULL && steamapicontext->SteamUser() != NULL && steamapicontext->SteamUser()->BLoggedOn();
-}
-int Script_GetAppID()
-{
-	return engine->GetAppID();
-}
-
-void Script_BSP_CacheStartSingle(HSCRIPT hTable)
-{
-	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
-	if (nEntryCount == 0)
-	{
-		Warning("No valid entries found in table.\n");
-		return;
-	}
-
-	int nIter = 0;
-	int nMaps = 0;
-	int nFiles = 0;
-	for (int i = 0; i < nEntryCount; i++)
-	{
-		ScriptVariant_t vKey, vValue;
-		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
-		nMaps++;
-		const char* pszKeyName = (const char*)vKey;
-		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
-
-		switch (vValue.GetType())
-		{
-		case FIELD_CSTRING:
-		{
-			// Just one asset. Example: ["maps/pd_selbyen.bsp"] = "models/props_selbyen/seal.mdl"
-			thread->AddFile((const char*)vValue, (const char*)vValue);
-			nFiles++;
-			break;
-		}
-		default:
-		{
-			//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
-			break;
-		}
-		}
-
-		thread->Start();
-	}
-
-	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
-}
-void Script_BSP_CacheStartArray(HSCRIPT hTable)
-{
-	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
-	if (nEntryCount == 0)
-	{
-		Warning("No valid entries found in table.\n");
-		return;
-	}
-
-	int nIter = 0;
-	int nMaps = 0;
-	int nFiles = 0;
-	for (int i = 0; i < nEntryCount; i++)
-	{
-		ScriptVariant_t vKey, vValue;
-		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
-		nMaps++;
-		const char* pszKeyName = (const char*)vKey;
-		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
-
-		switch (vValue.GetType())
-		{
-		case FIELD_HSCRIPT:
-		{
-			// Array - no remapping. Example: ["maps/pd_selbyen.bsp"] = [
-			// "models/props_selbyen/seal.mdl", "models/props_selbyen/seal.vvd", "models/props_selbyen/seal.dx80.vtx" ]
-
-			int nArrayIter = 0;
-			while (true)
-			{
-				ScriptVariant_t vItemKey, vItemValue;
-				nArrayIter = g_pScriptVM->GetKeyValue(vValue, nArrayIter, &vItemKey, &vItemValue);
-				if (nArrayIter >= 0)
-				{
-					thread->AddFile((const char*)vItemValue, (const char*)vItemValue);
-					nFiles++;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
-		default:
-		{
-			//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
-			break;
-		}
-		}
-
-		thread->Start();
-	}
-
-	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
-}
-void Script_BSP_CacheStartRemap(HSCRIPT hTable)
-{
-	int nEntryCount = g_pScriptVM->GetNumTableEntries(hTable);
-	if (nEntryCount == 0)
-	{
-		Warning("No valid entries found in table.\n");
-		return;
-	}
-
-	int nIter = 0;
-	int nMaps = 0;
-	int nFiles = 0;
-	for (int i = 0; i < nEntryCount; i++)
-	{
-		ScriptVariant_t vKey, vValue;
-		nIter = g_pScriptVM->GetKeyValue(hTable, nIter, &vKey, &vValue);
-		nMaps++;
-		const char* pszKeyName = (const char*)vKey;
-		BackgroundBSPCacheThread* thread = new BackgroundBSPCacheThread(pszKeyName);
-
-		switch (vValue.GetType())
-		{
-		case FIELD_HSCRIPT:
-		{
-			// Table - file remapping. Example: ["maps/pd_selbyen.bsp"] = {
-			// ["models/props_selbyen/seal.mdl"] = "models/props_selbyen/sealremap.mdl",
-			// ["models/props_selbyen/seal.vvd"] = "models/props_selbyen/sealremap.vvd",
-			// ["models/props_selbyen/seal.dx80.vtx"] = "models/props_selbyen/sealremap.dx80.vtx" }
-
-			int nMapEntryCount = g_pScriptVM->GetNumTableEntries(vValue);
-			int nMapIter = 0;
-			if (nMapEntryCount == 0)
-			{
-				Warning("No valid entries found in map table.\n");
-				continue;
-			}
-			for (int a = 0; a < nMapEntryCount; a++)
-			{
-				ScriptVariant_t vItemKey, vItemValue;
-				nMapIter = g_pScriptVM->GetKeyValue(vValue, nMapIter, &vItemKey, &vItemValue);
-				switch (vItemValue.GetType())
-				{
-				case FIELD_CSTRING:
-				{
-					thread->AddFile((const char*)vItemKey, (const char*)vItemValue);
-					nFiles++;
-					break;
-				}
-				default:
-				{
-					//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for map key %s.\n", pszKeyName);
-					break;
-				}
-				}
-			}
-		}
-		default:
-		{
-			//Log_Msg(LOG_VScript, "Don't understand FIELD_TYPE of value for key %s.\n", pszKeyName);
-			break;
-		}
-		}
-
-		thread->Start();
-	}
-
-	Msg("Started cache jobs for %d files in %d maps.\n", nFiles, nMaps);
-}
-
-int Script_BSP_GetCacheJobsRunning()
-{
-	return g_bspCacheJobsRunning;
-}
-
-void Script_BSP_CacheRemove(const char* pszAsset)
-{
-	BSP_RemoveAssetFromCache(pszAsset);
-}
-
-void Script_BSP_CacheRemoveArray(HSCRIPT hTable)
-{
-	int nArrayIter = 0;
-	while (true)
-	{
-		ScriptVariant_t vItemKey, vItemValue;
-		nArrayIter = g_pScriptVM->GetKeyValue(hTable, nArrayIter, &vItemKey, &vItemValue);
-		if (nArrayIter >= 0)
-		{
-			BSP_RemoveAssetFromCache((const char*)vItemValue);
-		}
-		else
-		{
-			break;
-		}
-	}
-}
-
-void Script_BSP_CacheClear()
-{
-	BSP_ClearCache();
-}
-
-const char* Script_LocalizeString(const char* input)
-{
-	return g_pVGuiLocalize->FindAsUTF8(input);
-}
-
-static bool Script_ScriptTableToFile(HSCRIPT hTable, const char* pszFileName)
-{
-	if ( !pszFileName || !*pszFileName )
-	{
-		Log_Warning(LOG_VScript, "Script_ScriptTableToFile: NULL/empty file name\n");
-		return false;
-	}
-
-	if ( V_strstr(pszFileName, "..") )
-	{
-		Log_Warning(LOG_VScript, "ScriptTableToFile() file name cannot contain '..'\n");
-		return false;
-	}
-
-	char szFilePath[MAX_PATH];
-	if ( !CreateAndValidateFileLocation( szFilePath, pszFileName ) )
-		return false;
-
-	KeyValues* hKV = ScriptTableToKeyValues( g_pScriptVM, "ScriptTable", hTable );
-	hKV->SaveToFile( g_pFullFileSystem, szFilePath, "DEFAULT_WRITE_PATH" );
-
-	return true;
-}
-
-static HSCRIPT Script_FileToScriptTable(const char* pszFileName)
-{
-	if ( !pszFileName || !*pszFileName )
-	{
-		Log_Warning(LOG_VScript, "Script_FileToScriptTable: NULL/empty file name\n");
-		return NULL;
-	}
-
-	KeyValues* pKeyValues = new KeyValues( "ScriptTable" );
-	if ( pKeyValues->LoadFromFile( g_pFullFileSystem, pszFileName, "GAME" ) )
-	{
-		HSCRIPT hScriptInstance = ScriptTableFromKeyValues( g_pScriptVM, pKeyValues );
-		return hScriptInstance;
-	}
-	return NULL;
-}
-
-static void Script_AwardAchievement( int iPlayerIndex, int achID, int achCount )
-{
-	if ( iPlayerIndex < 0 )
-	{
-		Warning("AwardAchievement called with invalid player index!\n");
-		return;
-	}
-
-	CBasePlayer* pPlayer = NULL;
-	pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
-	if ( !pPlayer || pPlayer->IsFakeClient() )
-	{
-		Warning("AwardAchievement called with a player index that doesn't resolve to a valid player!\n");
-		return;
-	}
-
-#if TF_DLL
-	CTFPlayer* pTFPlayer = ToTFPlayer( pPlayer );
-	pTFPlayer->AwardAchievement( achID, achCount );
-#endif
-
-}
-
-#ifdef TF_DLL
-// ----------------------------------------------------------------------------
-// Solo access
-// ----------------------------------------------------------------------------
-class CSoloAccess
-{
-public:
-	CSoloAccess() { };
-	~CSoloAccess() { };
-
-	bool ItemDefExists(const char* name)
-	{
-		return GetItemSchema()->GetItemDefinitionByName(name) != NULL;
-	}
-	bool ItemDefIDExists(int id)
-	{
-		return GetItemSchema()->GetItemDefinition(id) != NULL;
-	}
-	const char* ItemDefName(int id)
-	{
-		if (GetItemSchema()->GetItemDefinition(id) != NULL)
-		{
-			return GetItemSchema()->GetItemDefinition(id)->GetDefinitionName();
-		}
-		return NULL;
-	}
-	int ItemDefID(const char* name)
-	{
-		if (GetItemSchema()->GetItemDefinitionByName(name) != NULL)
-		{
-			return GetItemSchema()->GetItemDefinitionByName(name)->GetDefinitionIndex();
-		}
-		return -1;
-	}
-	HSCRIPT ItemSchemaGetKV()
-	{
-		return Script_FileToKeyValues("scripts/items/items_custom.txt");
-	}
-	void ItemSchemaReload(HSCRIPT kv)
-	{
-		auto kvs = (CScriptKeyValues*)g_pScriptVM->GetInstanceValue(kv, GetScriptDescForClass(CScriptKeyValues));
-		GetItemSchema()->BInitFromKV(kvs->m_pKeyValues);
-	}
-};
-
-CSoloAccess g_SoloAccess;
-
-BEGIN_SCRIPTDESC_ROOT_NAMED(CSoloAccess, "CSolo", SCRIPT_SINGLETON "Solo access")
-
-DEFINE_SCRIPTFUNC(ItemSchemaGetKV, "")
-DEFINE_SCRIPTFUNC(ItemSchemaReload, "")
-DEFINE_SCRIPTFUNC(ItemDefExists, "")
-DEFINE_SCRIPTFUNC(ItemDefIDExists, "")
-DEFINE_SCRIPTFUNC(ItemDefName, "")
-DEFINE_SCRIPTFUNC(ItemDefID, "")
-
-END_SCRIPTDESC();
-#endif // TF_CLIENT_DLL
-
-
 bool VScriptServerInit()
 {
 	VMPROF_START
@@ -3054,34 +2610,12 @@ bool VScriptServerInit()
 #endif	// PORTAL2_PUZZLEMAKER
 #endif
 
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToKeyValues, "FileToKeyValues", "Reads KeyValues from a file to send to script");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileToScriptTable, "FileToScriptTable", "Reads KeyValues from a file to send to script as a table");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ScriptTableToFile, "ScriptTableToFile", "Store a table to a KeyValues file for later reading");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_FileExists, "FileExists", "Returns true if file exists in file system.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsServer, "IsServer", "Returns true if script is running on the server.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_IsClient, "IsClient", "Returns true if script is running on the client.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_ConnectedOnline, "ConnectedOnline", "Returns true if server is connected to the internet.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_GetAppID, "GetAppID", "Get the Steam app ID that the game is currently running on.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_LocalizeString, "LocalizeString", "Localize the input string.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_AwardAchievement, "AwardAchievement", "Update progress of an achievement for a player.");
-
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartSingle, "BSP_CacheStartSingle", "Request a single asset to be loaded per map file. Example table: [maps/pd_selbyen.bsp] = models/props_selbyen/seal.mdl");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartArray, "BSP_CacheStartArray", "Request assets to be loaded from map files. Example table: [maps/pd_selbyen.bsp] = [models/props_selbyen/seal.mdl, models/props_selbyen/seal.vvd]");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheStartRemap, "BSP_CacheStartRemap", "Request assets to be loaded from map files with filename remapping. Example table: [maps/pd_selbyen.bsp] = { [models/props_selbyen/seal.mdl] = models/props_selbyen/sealremap.mdl }");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_GetCacheJobsRunning, "BSP_GetCacheJobsRunning", "Get the number of currently running BSP cache jobs.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemove, "BSP_CacheRemove", "Remove an asset from the BSP cache.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheRemoveArray, "BSP_CacheRemoveArray", "Remove multiple assets from the BSP cache.");
-				ScriptRegisterFunctionNamed(g_pScriptVM, Script_BSP_CacheClear, "BSP_CacheClear", "Clear out the BSP cache.");
-
 				g_pScriptVM->RegisterAllClasses();
 				
 				if ( GameRules() )
 				{
 					GameRules()->RegisterScriptFunctions();
 				}
-#ifdef TF_DLL
-				g_pScriptVM->RegisterInstance(&g_SoloAccess, "Solo");
-#endif // TF_DLL
 
 #ifdef TF_DLL
 				g_pScriptVM->RegisterInstance( TheNavMesh, "NavMesh" );
@@ -3836,6 +3370,7 @@ DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_SLAP_KILL )
 DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_CROC )
 DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_TAUNTATK_GASBLAST )
 DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_AXTINGUISHER_BOOSTED )
+DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_TAUNTATK_ENGINEER_TRICKSHOT )
 DECLARE_SCRIPT_CONST( ETFDmgCustom, TF_DMG_CUSTOM_END )
 REGISTER_SCRIPT_CONST_TABLE( ETFDmgCustom )
 
@@ -3969,9 +3504,7 @@ REGISTER_SCRIPT_CONST_TABLE( Server )
 				}
 				g_VScriptGameEventListener.Init();
 
-				VScriptRunScript( "tfsolo_init", false );
 				VScriptRunScript( "mapspawn", false );
-				VScriptRunScript( "tfsolo_postinit", false );
 
 				if ( script_connect_debugger_on_mapspawn.GetBool() )
 				{

@@ -196,11 +196,6 @@ void CTFPistol_ScoutPrimary::Push( void )
 #endif
 }
 
-bool CTFPistol_ScoutPrimary::CanUsePush()
-{
-	return ( m_flPushTime > -1.f && gpGlobals->curtime > m_flPushTime );
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  :  - 
@@ -208,7 +203,7 @@ bool CTFPistol_ScoutPrimary::CanUsePush()
 void CTFPistol_ScoutPrimary::ItemPostFrame()
 {
 	// Check for smack.
-	if ( CanUsePush() )
+	if ( m_flPushTime > -1.f && gpGlobals->curtime > m_flPushTime )
 	{
 		Push();
 		m_flPushTime = -1.f;

@@ -61,8 +61,6 @@
 
 #include "econ_paintkit.h"
 #include "ienginevgui.h"
-#include "vscript_client.h"
-#include "vgui/solo/tf_solo_panel.h"
 
 
 #include "c_tf_gamestats.h"
@@ -109,7 +107,6 @@ ConVar cl_mainmenu_operation_motd_reset( "cl_mainmenu_operation_motd_reset", "0"
 ConVar cl_mainmenu_safemode( "cl_mainmenu_safemode", "0", FCVAR_NONE, "Enable safe mode", cc_tf_safemode_toggle );
 ConVar cl_mainmenu_updateglow( "cl_mainmenu_updateglow", "1", FCVAR_ARCHIVE | FCVAR_HIDDEN );
 ConVar tf_mainmenu_match_panel_type( "tf_mainmenu_match_panel_type", "7", FCVAR_ARCHIVE | FCVAR_HIDDEN, "The match group data to show on the main menu", cc_tf_mainmenu_match_panel_type );
-ConVar cl_default_networking_off("cl_default_networking_off", "0", FCVAR_ARCHIVE, "Disable Steam Networking on boot by default." );
 
 void cc_promotional_codes_button_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -125,7 +122,7 @@ extern bool Training_IsComplete();
 
 void PromptOrFireCommand( const char* pszCommand )
 {
-	if ( false )
+	if ( engine->IsInGame()  )
 	{
 		CTFDisconnectConfirmDialog *pDialog = BuildDisconnectConfirmDialog();
 		if ( pDialog )
@@ -189,11 +186,6 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 
 	m_flCheckTrainingAt = 0;
 	m_bWasInTraining = false;
-
-	if ( g_pVGuiLocalize )
-	{
-		g_pVGuiLocalize->AddFile( "resource/tfsolo_%language%.txt" );
-	}
 
 	ScheduleItemCheck();
 
@@ -524,7 +516,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	RemoveAllMenuEntries();
 
-	LoadControlSettings( "resource/UI/MainMenuOverrideSolo.res", NULL, NULL, pConditions );
+	LoadControlSettings( "resource/UI/MainMenuOverride.res", NULL, NULL, pConditions );
 
 	BaseClass::ApplySchemeSettings( vgui::scheme()->GetIScheme(pScheme) );
 
@@ -657,20 +649,6 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	GetMMDashboard();
 	GetCompRanksTooltip();
-}
-
-void ConfirmModProgressReset(bool bConfirmed, void* pContext)
-{
-	if (bConfirmed)
-	{
-		engine->ClientCmd_Unrestricted("tfsolo_reset_menu");
-		engine->ClientCmd_Unrestricted("tfsolo_reset");
-		IViewPortPanel* pMMOverride = (gViewPortInterface->FindPanelByName(PANEL_MAINMENUOVERRIDE));
-		if (pMMOverride)
-		{
-			((CHudMainMenuOverride*)pMMOverride)->OnMainMenuStabilized();
-		}
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1166,16 +1144,10 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 
 void CHudMainMenuOverride::OnMainMenuStabilized()
 {
-	g_pScriptVM->RegisterInstance(this, "MainMenu");
-	g_pScriptVM->RegisterInstance(GetMMDashboard(), "MainDashboard");
 	IGameEvent *event = gameeventmanager->CreateEvent( "mainmenu_stabilized" );
 	if ( event )
 	{
 		gameeventmanager->FireEventClientSide( event );
-	}
-	if ( cl_default_networking_off.GetBool() )
-	{
-		engine->ClientCmd_Unrestricted("sv_use_steam_networking 0");
 	}
 }
 
@@ -1564,7 +1536,7 @@ bool CHudMainMenuOverride::CheckAndWarnForPREC( void )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::UpdateNotifications()
 {
-	//return;
+	return;
 
 	int iNumNotifications = NotificationQueue_GetNumMainMenuNotifications();
 
@@ -1606,7 +1578,7 @@ void CHudMainMenuOverride::UpdateNotifications()
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 {
-	//return;
+	return;
 
 	if ( bVisible && ( m_pNotificationsPanel && m_pNotificationsPanel->IsVisible() ) )
 		return;
@@ -1629,7 +1601,7 @@ void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 {
-	//return;
+	return;
 
 	if ( m_pNotificationsPanel )
 	{
@@ -1682,7 +1654,7 @@ void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
 {
-	//return;
+	return;
 
 	// Fit to our contents, which may change without notifying us.
 	int iNotiTall = m_pNotificationsControl->GetTall();
@@ -2105,19 +2077,6 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 		ETFMatchGroup eMatchGroup = (ETFMatchGroup)atoi( command + 16 );
 		tf_mainmenu_match_panel_type.SetValue( eMatchGroup );
 	}
-	else if (!Q_stricmp(command, "openmodcredits"))
-	{
-		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("engine openmodcredits");
-	}
-	else if (!Q_stricmp(command, "resetmodprogress"))
-	{
-		if (!engine->IsInGame())
-		{
-			EconUI()->CloseEconUI();
-			GetSoloPanel()->SetVisible(false);
-			ShowConfirmDialog("#TFSOLO_ResetProgress_Title", "#TFSOLO_ResetProgress_Body", "#TF_Coach_Yes", "#TF_Coach_No", ConfirmModProgressReset, this);
-		}
-	}
 	else
 	{
 		// Pass it on to GameUI main menu
@@ -2167,17 +2126,17 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 		}
 	}
 
-	if ( false )
+	if ( !tf_find_a_match_hint_viewed.GetBool() )
 	{
 		tf_find_a_match_hint_viewed.SetValue( true );
 		ShowDashboardExplanation( "FindAMatch" );
 	}
-	else if ( false )
+	else if ( !bDashboardSidePanels && bShowLoadout )
 	{
 		tf_training_has_prompted_for_loadout.SetValue( 1 );
 		StartHighlightAnimation( MMHA_LOADOUT );
 	}
-	else if ( false )
+	else if ( bDashboardSidePanels && bNeedsTraining)
 	{
 		tf_training_has_prompted_for_training.SetValue( 1 );
 
@@ -2198,7 +2157,7 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 
 		
 	}
-	else if ( false )
+	else if ( bDashboardSidePanels && bWasInTraining && Training_IsComplete() == false && tf_training_has_prompted_for_training.GetInt() < 2 )
 	{
 		tf_training_has_prompted_for_training.SetValue( 2 );
 
@@ -2208,17 +2167,17 @@ void CHudMainMenuOverride::CheckTrainingStatus( void )
 			pExplanation->SetDialogVariable( "highlighttext", g_pVGuiLocalize->Find( "#MMenu_TutorialHighlight_Title3" ) );
 		}
 	}
-	else if ( false )
+	else if ( bDashboardSidePanels && bNeedsPractice )
 	{
 		tf_training_has_prompted_for_offline_practice.SetValue( 1 );
 		StartHighlightAnimation( MMHA_PRACTICE );
 	}
-	else if ( false )
+	else if ( bShowForum )
 	{
 		tf_training_has_prompted_for_forums.SetValue( 1 );
 		StartHighlightAnimation( MMHA_NEWUSERFORUM );
 	}
-	else if ( false )
+	else if ( bShowOptions )
 	{
 		tf_training_has_prompted_for_options.SetValue( 1 );
 		StartHighlightAnimation( MMHA_OPTIONS );
@@ -2486,7 +2445,3 @@ void CMainMenuToolTip::SetText(const char *pszText)
 //-----------------------------------------------------------------------------
 // Purpose: Reload the .res file
 //-----------------------------------------------------------------------------
-
-BEGIN_SCRIPTDESC_ROOT(CHudMainMenuOverride, SCRIPT_SINGLETON "Used to access the main menu interface")
-	DEFINE_SCRIPTFUNC(Reset, "")
-END_SCRIPTDESC();

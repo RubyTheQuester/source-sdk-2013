@@ -28,10 +28,6 @@ public:
 	virtual void OnDataChanged( DataUpdateType_t type );
 
 	virtual bool	IsHostileUpgrade( void ) { return true; }
-	virtual bool    ValidateEntityAttachedToPlayer( bool& bShouldRetry ) {
-		bShouldRetry = false;
-		return true;
-	}
 
 	float			GetReversesBuildingConstructionSpeed( void );
 

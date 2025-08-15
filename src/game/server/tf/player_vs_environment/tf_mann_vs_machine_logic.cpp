@@ -13,8 +13,6 @@
 #include "tf_gamerules.h"
 #include "tf_objective_resource.h"
 
-ConVar tf_mvm_popfile_requested("tf_mvm_popfile_requested", "", FCVAR_REPLICATED, "Request a specific default popfile to be loaded first.");
-
 CHandle<CMannVsMachineLogic> g_hMannVsMachineLogic;
 
 //-------------------------------------------------------------------------
@@ -156,14 +154,7 @@ void CMannVsMachineLogic::InitPopulationManager( void )
 		CUtlVector< CUtlString > defaultPopFileList;
 		CUtlString defaultPopFileName;
 		g_pPopulationManager->FindDefaultPopulationFileShortNames( defaultPopFileList );
-
-		Q_snprintf(szFileName, sizeof(szFileName), pszFormat, tf_mvm_popfile_requested.GetString());
-		if (g_pFullFileSystem->FileExists(szFileName, "GAME"))
-		{
-			bFound = true;
-		}
-
-		if ( !bFound && defaultPopFileList.Count() )
+		if ( defaultPopFileList.Count() )
 		{
 			if ( g_pPopulationManager->FindPopulationFileByShortName( defaultPopFileList[0], defaultPopFileName ) && g_pPopulationManager->IsValidPopfile( defaultPopFileName ) )
 			{
@@ -177,9 +168,7 @@ void CMannVsMachineLogic::InitPopulationManager( void )
 	// about the file of last resort.
 	if ( !bFound )
 	{
-		char maptmp[256];
-		const char* pszMapName = GetCleanMapName(STRING(gpGlobals->mapname), maptmp);
-		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, pszMapName );
+		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, STRING( gpGlobals->mapname ) );
 	}
 
 	if ( m_populationManager && V_strcmp( m_populationManager->GetPopulationFilename(), szFileName ) != 0 )

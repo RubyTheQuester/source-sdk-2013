@@ -38,7 +38,7 @@ ActionResult< CTFBot >	CTFBotCapturePoint::OnStart( CTFBot *me, Action< CTFBot >
 //---------------------------------------------------------------------------------------------
 ActionResult< CTFBot >	CTFBotCapturePoint::Update( CTFBot *me, float interval )
 {
-	if ( TFGameRules()->InSetup() && TFGameRules()->IsAttackDefenseMode() )
+	if ( TFGameRules()->InSetup() )
 	{
 		// wait until the gates open, then path
 		m_path.Invalidate();
@@ -52,7 +52,7 @@ ActionResult< CTFBot >	CTFBotCapturePoint::Update( CTFBot *me, float interval )
 	if ( point == NULL )
 	{
 		const float roamTime = 10.0f;
-		return SuspendFor( new CTFBotSeekAndDestroy( roamTime, true ), "Seek and destroy until a point becomes available" );
+		return SuspendFor( new CTFBotSeekAndDestroy( roamTime ), "Seek and destroy until a point becomes available" );
 	}
 
 	if ( point->GetTeamNumber() == me->GetTeamNumber() )
@@ -95,7 +95,7 @@ ActionResult< CTFBot >	CTFBotCapturePoint::Update( CTFBot *me, float interval )
 			if ( controlPointAreas->Count() == 0 )
 			{
 				Assert( controlPointAreas->Count() );
-				return Continue(); // this control point has no nav areas for bot to move around
+				Continue(); // this control point has no nav areas for bot to move around
 			}
 
 			// move to a random spot on this control point

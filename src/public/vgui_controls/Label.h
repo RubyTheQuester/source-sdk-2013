@@ -38,8 +38,6 @@ public:
 	// Take the string and looks it up in the localization file to convert it to unicode
 	virtual void SetText(const char *tokenName);
 
-	void SetTextConst(const char* tokenName) { SetText(tokenName); }
-
 	// Set unicode text directly
 	virtual void SetText(const wchar_t *unicodeString, bool bClearUnlocalizedSymbol = false );
 

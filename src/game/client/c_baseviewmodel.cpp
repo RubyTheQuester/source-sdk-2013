@@ -41,7 +41,6 @@
 
 #ifdef TF_CLIENT_DLL
 	ConVar cl_flipviewmodels( "cl_flipviewmodels", "0", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_NOT_CONNECTED, "Flip view models." );
-	extern ConVar tf_mirrormode;
 #endif
 
 void PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg );
@@ -212,12 +211,7 @@ bool C_BaseViewModel::ShouldFlipViewModel()
 	CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
 	if ( pWeapon )
 	{
-		bool isFlipped = cl_flipviewmodels.GetBool();
-		if ( tf_mirrormode.GetBool() )
-		{
-			isFlipped = !isFlipped;
-		}
-		return pWeapon->m_bFlipViewModel != isFlipped;
+		return pWeapon->m_bFlipViewModel != cl_flipviewmodels.GetBool();
 	}
 #endif
 

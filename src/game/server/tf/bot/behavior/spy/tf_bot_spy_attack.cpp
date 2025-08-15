@@ -138,7 +138,7 @@ ActionResult< CTFBot >	CTFBotSpyAttack::Update( CTFBot *me, float interval )
 	case CTFBot::EXPERT:	behindTolerance = 0.0f;		break;
 	}
 
-	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
 		behindTolerance = 0.7071f;
 	}

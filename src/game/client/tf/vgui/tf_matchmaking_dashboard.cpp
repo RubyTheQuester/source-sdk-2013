@@ -28,8 +28,6 @@
 #include "tf_matchmaking_dashboard_side_panel.h"
 #include "tf_matchmaking_dashboard_explanations.h"
 #include "tf_matchmaking_dashboard_mvm_criteria.h"
-#include "tf_statsummary.h"
-#include "vscript_client.h"
 
 using namespace vgui;
 using namespace GCSDK;
@@ -279,7 +277,6 @@ CTFMatchmakingDashboard::CTFMatchmakingDashboard()
 	m_pResumeButton = new CExImageButton( m_pTopBar, "ResumeButton", (const char*)NULL );
 	m_pQuitButton = new CExImageButton( m_pTopBar, "QuitButton", (const char*)NULL );
 	m_pDisconnectButton = new CExImageButton( m_pTopBar, "DisconnectButton", (const char*)NULL );
-	m_pRestartButton = new CExImageButton(m_pTopBar, "RestartButton", (const char*)NULL);
 
 	ListenForGameEvent( "gameui_hidden" );
 	ListenForGameEvent( "gameui_activated" );
@@ -301,7 +298,7 @@ void CTFMatchmakingDashboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	SetMouseInputEnabled( true );
-	LoadControlSettings( "resource/UI/MatchMakingDashboardSolo.res" );
+	LoadControlSettings( "resource/UI/MatchMakingDashboard.res" );
 
 	// This cannot ever be true or else things get weird when in-game
 	SetKeyBoardInputEnabled( false );
@@ -364,14 +361,11 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 {
 	if ( FStrEq( command, "disconnect" ) )
 	{
-		engine->ClientCmd_Unrestricted("disconnect");
-		/*
 		CTFDisconnectConfirmDialog *pDialog = BuildDisconnectConfirmDialog();
 		if ( pDialog )
 		{
 			pDialog->Show();
 		}
-		*/
 	}
 	else if ( FStrEq( command, "toggle_chat" ) )
 	{
@@ -381,22 +375,6 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	else if (FStrEq("create_server", command))
 	{
 		OnCreateServer();
-		return;
-	}
-	else if (FStrEq("open_campaigns", command))
-	{
-		OnOpenCampaigns();
-		return;
-	}
-	else if (FStrEq("open_solo", command))
-	{
-		OnPlayTraining();
-		return;
-	}
-	else if (FStrEq("restart_round", command))
-	{
-		engine->ClientCmd_Unrestricted("mp_restartgame_immediate 1");
-		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("ResumeGame");
 		return;
 	}
 	else if ( FStrEq( command, "find_game" ) )
@@ -424,11 +402,6 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 	{
 		ClearAllStacks();
 		UpdateDimmer();
-	}
-	else if (FStrEq(command, "dimmer_hide"))
-	{
-		ClearAllStacks();
-		HideDimmer();
 	}
 	else if ( FStrEq( command, "leave_queue" ) ) 
 	{
@@ -575,11 +548,6 @@ void CTFMatchmakingDashboard::OnOpenSettings()
 	PushSlidePanel( GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >( k_eMMSettings ) );
 }
 
-void CTFMatchmakingDashboard::OnOpenCampaigns()
-{
-	PushSlidePanel(GetDashboardPanel().GetTypedPanel< CMatchMakingDashboardSidePanel >(k_eCampaigns));
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: Figure out if we should be visible and require mouse input
 //-----------------------------------------------------------------------------
@@ -632,10 +600,7 @@ void CTFMatchmakingDashboard::OnTick()
 	{
 		bShouldBeVisible = true;
 	}
-	if (GStatsSummaryPanel()->IsVisible())
-	{
-		bShouldBeVisible = false;
-	}
+
 
 	if ( BIsExpanded() && !bShouldBeVisible )
 	{
@@ -926,8 +891,6 @@ void CTFMatchmakingDashboard::OnPlayTraining()
 {
 	ClearAllStacks();
 
-	engine->ClientCmd_Unrestricted("tfsolo_show_menu");
-	/*
 	if ( engine->IsInGame() )
 	{
 		const char *pText = "#TF_Training_Prompt";
@@ -948,7 +911,6 @@ void CTFMatchmakingDashboard::OnPlayTraining()
 	{
 		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand( "engine training_showdlg" );
 	}
-	*/
 }
 
 
@@ -1320,15 +1282,14 @@ void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 	bool bInGame = engine->IsInGame();
 
 	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() );
-	m_pRestartButton->SetVisible( bInGame && !BInEndOfMatch() );
 
 	m_pTopBar->SetControlVisible( "DisconnectButton", bInGame );
 	m_pTopBar->SetControlVisible( "QuitButton", !bInGame );
 
-	//Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
+	Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
 
-	//m_pPlayButton->SetPos( pOffsetPanel->GetXPos() - m_pPlayButton->GetWide() - 1, m_pPlayButton->GetYPos() );
-	//m_pResumeButton->SetPos( m_pPlayButton->GetXPos() - m_pResumeButton->GetWide() - 1, m_pResumeButton->GetYPos() );
+	m_pPlayButton->SetPos( pOffsetPanel->GetXPos() - m_pPlayButton->GetWide() - 1, m_pPlayButton->GetYPos() );
+	m_pResumeButton->SetPos( m_pPlayButton->GetXPos() - m_pResumeButton->GetWide() - 1, m_pResumeButton->GetYPos() );
 }
 
 bool CTFMatchmakingDashboard::BAnySidePanelsShowing() const
@@ -1363,15 +1324,8 @@ void CTFMatchmakingDashboard::UpdateDimmer()
 
 	Panel* pDimmer = GetDashboardPanel().GetPanel( k_eBGDimmer );
 	int nDimmerAlpha = bShowDimmer ? 230 : 0;
-	pDimmer->SetMouseInputEnabled(bShowDimmer);
-	pDimmer->SetVisible(bShowDimmer);
 	g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( pDimmer, "alpha", nDimmerAlpha, 0.0f, 0.4f, vgui::AnimationController::INTERPOLATOR_GAIN, 0.8f, true, false );
-}
-void CTFMatchmakingDashboard::HideDimmer()
-{
-	Panel* pDimmer = GetDashboardPanel().GetPanel(k_eBGDimmer);
-	pDimmer->SetMouseInputEnabled(false);
-	pDimmer->SetVisible(false);
+	pDimmer->SetMouseInputEnabled( bShowDimmer );
 }
 
 void GetQueuedString( wchar_t* pwszBuff, int nSize )
@@ -1511,7 +1465,3 @@ void CTFMatchmakingDashboard::UpdateJoinPartyLobbyPanel()
 		g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( m_pJoinPartyLobbyPanel, "ypos", -YRES(50), 0.0f, tf_dashboard_slide_time.GetFloat(), vgui::AnimationController::INTERPOLATOR_GAIN, 0.8f, true, false );
 	}
 }
-
-BEGIN_SCRIPTDESC_ROOT(CTFMatchmakingDashboard, SCRIPT_SINGLETON "Used to access the dashboard interface")
-	DEFINE_SCRIPTFUNC(HideDimmer, "")
-END_SCRIPTDESC();

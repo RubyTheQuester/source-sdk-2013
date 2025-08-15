@@ -81,45 +81,21 @@ ActionResult< CTFBot >	CTFBotEngineerBuildTeleportEntrance::Update( CTFBot *me, 
 	if ( !m_path.IsValid() )
 	{
 		CTFBotPathCost cost( me, FASTEST_ROUTE );
-		if ( point )
+		if (point)
 		{
-			m_path.Compute( me, point->GetAbsOrigin(), cost );
+			m_path.Compute(me, point->GetAbsOrigin(), cost);
 		}
-		else if ( zone )
+		else if (zone)
 		{
-			CNavArea* pointArea = TheTFNavMesh()->GetNearestNavArea( zone->WorldSpaceCenter() );
-			if ( pointArea )
-			{
-				m_path.Compute( me, pointArea->GetCenter(), cost );
-			}
-			else
-			{
-				m_path.Compute( me, zone->WorldSpaceCenter(), cost );
-			}
+			m_path.Compute(me, zone->WorldSpaceCenter(), cost);
 		}
-		else if ( passzone ) 
+		else if (passzone)
 		{
-			CNavArea* pointArea = TheTFNavMesh()->GetNearestNavArea( passzone->WorldSpaceCenter() );
-			if ( pointArea )
-			{
-				m_path.Compute( me, pointArea->GetCenter(), cost );
-			}
-			else
-			{
-				m_path.Compute( me, passzone->WorldSpaceCenter(), cost );
-			}
+			m_path.Compute(me, passzone->WorldSpaceCenter(), cost);
 		}
-		else if ( generic )
+		else if (generic)
 		{
-			CNavArea* pointArea = TheTFNavMesh()->GetNearestNavArea( generic->WorldSpaceCenter() );
-			if ( pointArea )
-			{
-				m_path.Compute( me, pointArea->GetCenter(), cost );
-			}
-			else
-			{
-				m_path.Compute( me, generic->WorldSpaceCenter(), cost );
-			}
+			m_path.Compute(me, generic->WorldSpaceCenter(), cost);
 		}
 	}
 

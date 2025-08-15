@@ -109,8 +109,6 @@ $Project "Server (TF)"
 			$File	"$SRCDIR\game\shared\workshop\ugc_utils.cpp"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.h"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.cpp"
-			$File	"$SRCDIR\game\shared\bsp_utils.cpp"
-			$File	"$SRCDIR\game\shared\bsp_utils.h"
 		}
 
 		$Folder	"TF"
@@ -593,8 +591,6 @@ $Project "Server (TF)"
 						{
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_fetch_flag.cpp"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_fetch_flag.h"
-							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_defend_flag_capzone.cpp"
-							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_defend_flag_capzone.h"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_deliver_flag.cpp"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_deliver_flag.h"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_escort_flag_carrier.cpp"

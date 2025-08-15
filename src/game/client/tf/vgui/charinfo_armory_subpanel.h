@@ -71,12 +71,10 @@ public:
 	virtual void OnCommand( const char *command );
 	virtual void PerformLayout( void );
 
-	bool		 ShouldShowExplanations( void ) { return false; }
+	bool		 ShouldShowExplanations( void ) { return true; }
 	void		 UpdateItemList( void );
 	void		 UpdateSelectedItem( void );
 	void		 AllowGotoStore( void ) { m_bAllowGotoStore = true; }
-
-	void		ShowCustomList(const char* listname, KeyValues* kvItems);
 
 	MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
 	MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
@@ -96,7 +94,7 @@ private:
 	void		 SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );
 	bool		 DefPassesFilter( const CTFItemDefinition *pDef, armory_filters_t iFilter );
 
-	void		 SetupComboBox( const char *pszCustomAddition, bool loc = true );
+	void		 SetupComboBox( const char *pszCustomAddition );
 
 	void		 SetSelectedItem( CEconItemView* newItem );
 	void		 SetSelectedItem( int newIndex );
@@ -135,10 +133,6 @@ private:
 
 	bool							m_bAllowGotoStore;
 	CExButton						*m_pStoreButton;
-	CExButton						*m_pWikiButton;
-	CExLabel						*m_pSoloCreditsLabel;
-	CExLabel						*m_pSoloCostLabel;
-	CExLabel						*m_pSoloUnlockLabel;
 
 	CPanelAnimationVar( int, m_iThumbnailRows, "thumbnails_rows", "1" );
 	CPanelAnimationVar( int, m_iThumbnailColumns, "thumbnails_columns", "1" );
@@ -149,12 +143,8 @@ private:
 	Color						m_colThumbnailBG;
 	Color						m_colThumbnailBGMouseover;
 	Color						m_colThumbnailBGSelected;
-	Color						m_colThumbnailBGUnlocked;
-	Color						m_colThumbnailBGLocked;
 
 	Color						m_colSetName;
-
-	KeyValues*					m_armoryConfig;
 };
 
 #endif // CHARINFO_ARMORY_SUBPANEL_H

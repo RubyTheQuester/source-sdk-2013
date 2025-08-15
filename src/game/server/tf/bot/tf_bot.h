@@ -116,7 +116,6 @@ public:
 
 	CCaptureFlag *GetFlagToFetch( void ) const;						// return flag we want to fetch
 	CCaptureZone *GetFlagCaptureZone( void ) const;					// return capture zone for our flag(s)
-	CCaptureZone *GetEnemyFlagCaptureZone( void ) const;			// return capture zone for enemy flag(s)
 	CFuncPasstimeGoal *GetBallCaptureZone( void ) const;			// return capture zone for our ball
 	CBaseEntity *GetAnyObjective( void ) const;						// return any objective of interest
 
@@ -342,23 +341,7 @@ public:
 	bool FindSplashTarget( CBaseEntity *target, float maxSplashRadius, Vector *splashTarget ) const;
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
-	const char* GiveRandomItemName(loadout_positions_t loadoutPosition);
-	void ScriptGenerateAndWearItem(const char* pszItemName) { if (pszItemName) BotGenerateAndWearItem(this, pszItemName); }
-
-	const char* GetRandomPrimary(void) { return m_strRandomPrimary; }
-	const char* GetRandomSecondary(void) { return m_strRandomSecondary; }
-	const char* GetRandomMelee(void) { return m_strRandomMelee; }
-
-	//const char* GetRandomHat(void) { return m_strRandomHat; }
-	//const char* GetRandomArmor(void) { return m_strRandomArmor; }
-
-	void SetRandomPrimary(const char* pszItemName) { m_strRandomPrimary = pszItemName; }
-	void SetRandomSecondary(const char* pszItemName) { m_strRandomSecondary = pszItemName; }
-	void SetRandomMelee(const char* pszItemName) { m_strRandomMelee = pszItemName; }
-
-	//void SetRandomHat(const char* pszItemName) { m_strRandomHat = pszItemName; }
-	//void SetRandomArmor(const char* pszItemName) { m_strRandomArmor = pszItemName; }
-
+	void ScriptGenerateAndWearItem( const char *pszItemName ) { if ( pszItemName ) BotGenerateAndWearItem( this, pszItemName ); }
 
 	enum MissionType
 	{
@@ -388,8 +371,6 @@ public:
 	bool ScriptHasMission( int mission ) const { return this->HasMission( (MissionType)mission ); }
 	void ScriptSetMissionTarget( HSCRIPT hTarget ) { this->SetMissionTarget( ToEnt( hTarget ) ); }
 	HSCRIPT ScriptGetMissionTarget( void ) const { return ToHScript( this->GetMissionTarget() ); }
-
-	bool GetDidReselectClass( void ) const;
 
 	void SetTeleportWhere( const CUtlStringList& teleportWhereName );
 	const CUtlStringList& GetTeleportWhere();
@@ -507,19 +488,12 @@ public:
 	void OnEventChangeAttributes( const CTFBot::EventChangeAttributes_t* pEvent );
 
 	void AddItem( const char* pszItemName );
-	void AddItemBulk( const char* pszItemName );
 
 	int GetUberHealthThreshold();
 	float GetUberDeployDelayDuration();
 
 	bool ShouldReEvaluateCurrentClass( void ) const;
 	void ReEvaluateCurrentClass( void );
-
-	void SpawnCustom( void );
-	CUtlString GetPreset() { return m_preset; }
-	void SetPreset(CUtlString preset) { m_preset = preset; }
-	CUtlString ScriptGetPreset() { return GetPreset(); }
-	void ScriptSetPreset(const char* preset) { SetPreset(preset); }
 
 private:
 	CTFBotLocomotion	*m_locomotor;
@@ -611,16 +585,6 @@ private:
 	CHandle< CCaptureFlag > m_hFollowingFlagTarget;
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
-
-	const char* m_strRandomPrimary;
-	const char* m_strRandomSecondary;
-	const char* m_strRandomMelee;
-	//const char* m_strRandomHat;
-	//const char* m_strRandomArmor;
-
-	CUtlString m_preset;
-	CountdownTimer m_lastUsedCanteenTimer;
-	CountdownTimer m_lastUsedHaleChargeTimer;
 };
 
 
@@ -661,11 +625,6 @@ inline void CTFBot::SetMissionTarget( CBaseEntity *target )
 inline CBaseEntity *CTFBot::GetMissionTarget( void ) const
 {
 	return m_missionTarget;
-}
-
-inline bool CTFBot::GetDidReselectClass( void ) const
-{
-	return m_didReselectClass;
 }
 
 inline float CTFBot::GetSquadFormationError( void ) const
@@ -1100,12 +1059,6 @@ public:
 			{
 				cost *= area->ComputeFuncNavCost( m_me );
 				DebuggerBreakOnNaN_StagingOnly( cost );
-			}
-
-			// Crouch-only areas
-			if ( area->HasAttributes( NAV_MESH_CROUCH ) )
-			{
-				cost *= 2.0f;
 			}
 
 			return cost + fromArea->GetCostSoFar();

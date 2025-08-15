@@ -18,14 +18,11 @@
 #include "iachievementmgr.h"
 #include "store/store_panel.h"
 #include "character_info_panel.h"
-#include "KeyValues.h"
-#include "filesystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
 ConVar tf_explanations_charinfo_armory_panel( "tf_explanations_charinfo_armory_panel", "1", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
-ConVar tf_armory_custom( "tf_armory_config", "cfg/solo/armory_config.txt", FCVAR_ARCHIVE, "" );
 
 const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 {
@@ -67,7 +64,6 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	m_pPrevPageButton = NULL;
 	m_pViewSetButton = NULL;
 	m_pStoreButton = NULL;
-	m_pWikiButton = NULL;
 	m_bAllowGotoStore = false;
 
 	m_pDataPanel = new vgui::EditablePanel( this, "DataPanel" );
@@ -84,16 +80,8 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBG, "thumbnail_bgcolor" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGMouseover, "thumbnail_bgcolor_mouseover" );
 	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGSelected, "thumbnail_bgcolor_selected" );
-	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGUnlocked, "thumbnail_bgcolor_unlocked" );
-	REGISTER_COLOR_AS_OVERRIDABLE( m_colThumbnailBGLocked, "thumbnail_bgcolor_locked" );
 
 	m_bEventLogging = false;
-
-	m_armoryConfig = new KeyValues("armory_config");
-	if (!m_armoryConfig->LoadFromFile(g_pFullFileSystem, tf_armory_custom.GetString(), "GAME"))
-	{
-		Msg("Unable to parse armory_config.txt into keyvalues.\n");
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -106,8 +94,6 @@ CArmoryPanel::~CArmoryPanel()
 		m_pThumbnailModelPanelKVs->deleteThis();
 		m_pThumbnailModelPanelKVs = NULL;
 	}
-	m_armoryConfig->deleteThis();
-	m_armoryConfig = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -117,7 +103,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "Resource/UI/CharInfoArmorySubPanelSolo.res" );
+	LoadControlSettings( "Resource/UI/CharInfoArmorySubPanel.res" );
 
 	m_bReapplyItemKVs = true;
 	m_pMouseOverItemPanel->SetBorder( pScheme->GetBorder("LoadoutItemPopupBorder") );
@@ -127,10 +113,6 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pPrevPageButton = dynamic_cast<CExButton*>( FindChildByName("PrevPageButton") );
 	m_pViewSetButton = dynamic_cast<CExButton*>( FindChildByName("ViewSetButton") );
 	m_pStoreButton = dynamic_cast<CExButton*>( FindChildByName("StoreButton") );
-	m_pWikiButton = dynamic_cast<CExButton*>( FindChildByName("WikiButton") );
-	m_pSoloCreditsLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCreditsAmountLabel") );
-	m_pSoloCostLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloCostAmountLabel") );
-	m_pSoloUnlockLabel = dynamic_cast<CExLabel*>( FindChildByName("SoloUnlockLabel") );
 
 	m_pDataTextRichText->SetURLClickedHandler( this );
 
@@ -146,7 +128,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CArmoryPanel::SetupComboBox( const char *pszCustomAddition, bool loc )
+void CArmoryPanel::SetupComboBox( const char *pszCustomAddition )
 {
 	m_pFilterComboBox->RemoveAll();
 
@@ -164,14 +146,7 @@ void CArmoryPanel::SetupComboBox( const char *pszCustomAddition, bool loc )
 	if ( pszCustomAddition )
 	{
 		pKeyValues->SetInt( "setfilter", ARMFILT_CUSTOM );
-		if (loc)
-		{
-			m_pFilterComboBox->AddItem(g_pVGuiLocalize->Find(pszCustomAddition), pKeyValues);
-		}
-		else
-		{
-			m_pFilterComboBox->AddItem(pszCustomAddition, pKeyValues);
-		}
+		m_pFilterComboBox->AddItem( g_pVGuiLocalize->Find( pszCustomAddition ), pKeyValues );
 
 		// Start with the custom filter selected
 		m_pFilterComboBox->SetNumberOfEditLines( ARMFILT_NUM_IN_DROPDOWN + 1 );
@@ -213,13 +188,6 @@ void CArmoryPanel::ApplySettings( KeyValues *inResourceData )
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnShowPanel( void )
 {
-	m_armoryConfig->deleteThis();
-	m_armoryConfig = new KeyValues("armory_config");
-	if (!m_armoryConfig->LoadFromFile(g_pFullFileSystem, tf_armory_custom.GetString(), "GAME"))
-	{
-		Msg("Unable to parse armory_config.txt into keyvalues.\n");
-	}
-
 	InvalidateLayout( true, true );
 
 	m_pMouseOverItemPanel->SetVisible( false );
@@ -233,10 +201,6 @@ void CArmoryPanel::OnShowPanel( void )
 	}
 
 	SetVisible( true );
-
-	auto kvSave = TFInventoryManager()->GetSaveData();
-	int credits = kvSave->GetInt("Credits");
-	SetDialogVariable("armorycredits", credits);
 
 	if ( !m_bEventLogging )
 	{
@@ -391,33 +355,22 @@ void CArmoryPanel::OnCommand( const char *command )
 	}
 	else if ( !Q_stricmp( command, "wiki" ) )
 	{
-		if (IsVisible() && m_SelectedItem.IsValid())
+		if ( steamapicontext && steamapicontext->SteamFriends() )
 		{
-			auto kvSave = TFInventoryManager()->GetSaveData();
-			auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
-			int credits = kvSave->GetInt("Credits");
-			int price = 0;
-			if (m_armoryConfig->FindKey(name))
+			if ( IsVisible() && m_SelectedItem.IsValid() )
 			{
-				auto key = m_armoryConfig->FindKey(name);
-				if (key->GetInt("Cost"))
-				{
-					price = key->GetInt("Cost");
-				}
+				// Determine which language we should use
+				char uilanguage[ 64 ];
+				uilanguage[0] = 0;
+				engine->GetUILanguage( uilanguage, sizeof( uilanguage ) );
+				ELanguage iLang = PchLanguageToELanguage( uilanguage );
+
+				char szURL[512];
+				Q_snprintf( szURL, sizeof(szURL), "http://wiki.teamfortress.com/scripts/itemredirect.php?id=%d&lang=%s", m_SelectedItem.GetItemDefIndex(), GetLanguageICUName( iLang ) );
+				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( szURL );
+
+				C_CTF_GameStats.Event_Catalog( IE_ARMORY_BROWSE_WIKI, NULL, &m_SelectedItem );
 			}
-			kvSave->SetInt("Credits", credits - price);
-
-			m_pWikiButton->SetEnabled(false);
-
-			IGameEvent* event = gameeventmanager->CreateEvent( "solo_client_armory_unlocked" );
-			if ( event )
-			{
-				event->SetString ( "item", name );
-				event->SetInt( "itemid", m_SelectedItem.GetItemDefIndex() );
-				gameeventmanager->FireEventClientSide( event );
-			}
-
-			UpdateSelectedItem();
 		}
 	}
 	else if ( !Q_stricmp( command, "viewset" ) )
@@ -427,46 +380,10 @@ void CArmoryPanel::OnCommand( const char *command )
 			const CEconItemSetDefinition *pItemSet = m_SelectedItem.GetStaticData()->GetItemSetDefinition();
 			if ( pItemSet )
 			{
-				bool CustomArmory = false;
-				auto kvSave = TFInventoryManager()->GetSaveData();
-				CUtlVector<int> ArmoryList;
-				if (tf_armory_custom.GetString() != "")
-				{
-					CustomArmory = true;
-					auto key = m_armoryConfig->GetFirstSubKey();
-					while (key)
-					{
-						auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
-						if (item)
-						{
-							bool pass = true;
-							if (key->FindKey("AppearFlag"))
-							{
-								uint64_t flagrequire = key->GetInt("AppearValue", 1);
-								auto armoryKV = kvSave->FindKey("Armory", true);
-								auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
-								if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
-								{
-									pass = false;
-								}
-							}
-
-							if (pass)
-							{
-								ArmoryList.AddToTail(item->GetDefinitionIndex());
-							}
-						}
-						key = key->GetNextKey();
-					}
-				}
-
 				m_CustomFilteredList.Purge();
 				FOR_EACH_VEC( pItemSet->m_iItemDefs, i )
 				{
-					if (!CustomArmory || ArmoryList.HasElement(pItemSet->m_iItemDefs[i]))
-					{
-						m_CustomFilteredList.AddToTail(pItemSet->m_iItemDefs[i]);
-					}
+					m_CustomFilteredList.AddToTail( pItemSet->m_iItemDefs[i] );
 				}
 
 				SetupComboBox( pItemSet->m_pszLocalizedName );
@@ -476,63 +393,6 @@ void CArmoryPanel::OnCommand( const char *command )
 	}
 
 	BaseClass::OnCommand( command );
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CArmoryPanel::ShowCustomList(const char* listname, KeyValues* kvItems)
-{
-	///
-	bool CustomArmory = false;
-	auto kvSave = TFInventoryManager()->GetSaveData();
-	CUtlVector<int> ArmoryList;
-	if (tf_armory_custom.GetString() != "")
-	{
-		CustomArmory = true;
-		auto key = m_armoryConfig->GetFirstSubKey();
-		while (key)
-		{
-			auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
-			if (item)
-			{
-				bool pass = true;
-				if (key->FindKey("AppearFlag"))
-				{
-					uint64_t flagrequire = key->GetInt("AppearValue", 1);
-					auto armoryKV = kvSave->FindKey("Armory", true);
-					auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
-					if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
-					{
-						pass = false;
-					}
-				}
-
-				if (pass)
-				{
-					ArmoryList.AddToTail(item->GetDefinitionIndex());
-				}
-			}
-			key = key->GetNextKey();
-		}
-	}
-
-	m_CustomFilteredList.Purge();
-	FOR_EACH_SUBKEY(kvItems, kvItem)
-	{
-		auto itemName = kvItem->GetName();
-		auto def = GetItemSchema()->GetItemDefinitionByName(itemName);
-		if (def)
-		{
-			if (!CustomArmory || ArmoryList.HasElement(def->GetDefinitionIndex()))
-			{
-				m_CustomFilteredList.AddToTail(def->GetDefinitionIndex());
-			}
-		}
-	}
-
-	SetupComboBox(listname, false);
-	SetFilterTo(0, ARMFILT_CUSTOM);
 }
 
 //-----------------------------------------------------------------------------
@@ -627,62 +487,19 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 	}
 	else
 	{
-		bool CustomArmory = false;
-		auto kvSave = TFInventoryManager()->GetSaveData();
-		CUtlVector<int> ArmoryList;
-		if (tf_armory_custom.GetString() != "")
-		{
-			CustomArmory = true;
-			auto key = m_armoryConfig->GetFirstSubKey();
-			while (key)
-			{
-				auto item = ItemSystem()->GetItemSchema()->GetItemDefinitionByName(key->GetName());
-				if (item)
-				{
-					bool pass = true;
-					if (key->FindKey("AppearFlag"))
-					{
-						uint64_t flagrequire = key->GetInt("AppearValue", 1);
-						auto armoryKV = kvSave->FindKey("Armory", true);
-						auto flagKV = armoryKV->FindKey(key->GetString("AppearFlag"));
-						if (!flagKV || armoryKV->GetInt(key->GetString("AppearFlag")) < flagrequire)
-						{
-							pass = false;
-						}
-					}
-
-					if (pass)
-					{
-						ArmoryList.AddToTail(item->GetDefinitionIndex());
-					}
-				}
-				key = key->GetNextKey();
-			}
-		}
-
 		// First, build a list of all the items that match the filter
 		const CEconItemSchema::SortedItemDefinitionMap_t& mapItemDefs = ItemSystem()->GetItemSchema()->GetSortedItemDefinitionMap();
 		FOR_EACH_MAP( mapItemDefs, i )
 		{
 			const CTFItemDefinition *pDef = dynamic_cast<const CTFItemDefinition *>( mapItemDefs[i] );
 
-			if (CustomArmory)
-			{
-				if (!ArmoryList.HasElement(pDef->GetDefinitionIndex()))
-				{
-					continue;
-				}
-			}
-			else
-			{
-				// Never show:
-				//	- Hidden items
-				//	- Items that don't have fixed qualities
-				//	- Normal quality items
-				//	- Items that haven't asked to be shown
-					if (pDef->IsHidden() || pDef->GetQuality() == k_unItemQuality_Any || pDef->GetQuality() == AE_NORMAL || !pDef->ShouldShowInArmory())
-						continue;
-			}
+			// Never show:
+			//	- Hidden items
+			//	- Items that don't have fixed qualities
+			//	- Normal quality items
+			//	- Items that haven't asked to be shown
+			if ( pDef->IsHidden() || pDef->GetQuality() == k_unItemQuality_Any || pDef->GetQuality() == AE_NORMAL || !pDef->ShouldShowInArmory() )
+				continue;
 
 #ifdef DEBUG
 			// In Debug, make sure that every item shows up in a filter other than the All Items list
@@ -814,7 +631,6 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 //-----------------------------------------------------------------------------
 void CArmoryPanel::UpdateItemList( void )
 {
-	m_pSoloUnlockLabel->SetText("");
 	int iMaxThumbnails = (m_iThumbnailRows * m_iThumbnailColumns);
 	int iNumThumbnails = MIN( m_FilteredItemList.Count(), iMaxThumbnails );
 
@@ -853,14 +669,12 @@ void CArmoryPanel::UpdateItemList( void )
 		{
 			m_pThumbnailModelPanels[i]->SetItem( NULL );
 			m_pThumbnailModelPanels[i]->SetVisible( false );
-			SetBorderForItem(m_pThumbnailModelPanels[i], false);
 			continue;
 		}
 
 		pItemData->Init( m_FilteredItemList[iItemPos], AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, true );
 		m_pThumbnailModelPanels[i]->SetItem( pItemData );
 		m_pThumbnailModelPanels[i]->SetVisible( true );
-		SetBorderForItem(m_pThumbnailModelPanels[i], false);
 	}
 	delete pItemData;
 
@@ -952,65 +766,6 @@ void CArmoryPanel::UpdateSelectedItem( void )
 	{
 		bool bShowStoreButton = m_bAllowGotoStore && EconUI()->GetStorePanel() && EconUI()->GetStorePanel()->GetPriceSheet() && EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry( m_SelectedItem.GetItemDefIndex() );
 		m_pStoreButton->SetVisible( bShowStoreButton );
-	}
-
-	if (m_SelectedItem.IsValid())
-	{
-		m_pWikiButton->SetEnabled(true);
-		m_pSoloUnlockLabel->SetText("");
-
-		auto name = m_SelectedItem.GetItemDefinition()->GetDefinitionName();
-		auto kvSave = TFInventoryManager()->GetSaveData();
-		int credits = kvSave->GetInt("Credits");
-		int price = 0;
-		if (m_armoryConfig->FindKey(name))
-		{
-			auto key = m_armoryConfig->FindKey(name);
-			if (key->GetInt("Cost"))
-			{
-				price = key->GetInt("Cost");
-			}
-		}
-		SetDialogVariable("armorycost", price);
-		SetDialogVariable("armorycredits", credits);
-
-		// is the item already unlocked?
-		int count = TFInventoryManager()->GetSoloItemCount();
-		for (int i = 0; i < count; i++)
-		{
-			auto pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetItemDefIndex() == m_SelectedItem.GetItemDefIndex())
-			{
-				m_pWikiButton->SetEnabled(false);
-				return;
-			}
-		}
-
-		// are we allowed to unlock it?
-		if (m_armoryConfig->FindKey(name))
-		{
-			auto key = m_armoryConfig->FindKey(name);
-			if (key->FindKey("UnlockFlag"))
-			{
-				uint64_t flagrequire = key->GetInt("UnlockValue", 1);
-				auto armoryKV = kvSave->FindKey("Armory", true);
-				auto flagKV = armoryKV->FindKey(key->GetString("UnlockFlag"));
-				if (!flagKV || armoryKV->GetInt(key->GetString("UnlockFlag")) < flagrequire)
-				{
-					m_pWikiButton->SetEnabled(false);
-					m_pSoloUnlockLabel->SetText(key->GetString("UnlockText"));
-					return;
-				}
-			}
-		}
-
-		// can we unlock it?
-		if (credits < price)
-		{
-			m_pWikiButton->SetEnabled(false);
-			return;
-		}
-
 	}
 }
 
@@ -1140,39 +895,6 @@ void CArmoryPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOve
 	else
 	{
 		pItemPanel->SetBgColor( m_colThumbnailBG );
-		auto item = pItemPanel->GetItem();
-		if (item)
-		{
-			// check if unlocked
-			int count = TFInventoryManager()->GetSoloItemCount();
-			for (int i = 0; i < count; i++)
-			{
-				auto pItem = TFInventoryManager()->GetSoloItem(i);
-				if (pItem && pItem->GetItemDefIndex() == item->GetItemDefIndex())
-				{
-					pItemPanel->SetBgColor(m_colThumbnailBGUnlocked);
-					break;
-				}
-			}
-
-			// check if locked
-			auto kvSave = TFInventoryManager()->GetSaveData();
-			auto name = item->GetItemDefinition()->GetDefinitionName();
-			if (m_armoryConfig->FindKey(name))
-			{
-				auto key = m_armoryConfig->FindKey(name);
-				if (key->FindKey("UnlockFlag"))
-				{
-					uint64_t flagrequire = key->GetInt("UnlockValue", 1);
-					auto armoryKV = kvSave->FindKey("Armory", true);
-					auto flagKV = armoryKV->FindKey(key->GetString("UnlockFlag"));
-					if (!flagKV || armoryKV->GetInt(key->GetString("UnlockFlag")) < flagrequire)
-					{
-						pItemPanel->SetBgColor(m_colThumbnailBGLocked);
-					}
-				}
-			}
-		}
 	}
 }
 

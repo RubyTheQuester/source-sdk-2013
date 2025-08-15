@@ -1119,7 +1119,7 @@ void CTFWeaponBuilder::StartBuilding( void )
 			if ( pObj->ObjectType() == OBJ_ATTACHMENT_SAPPER )
 			{
 				// Let human players place player-targeted sappers in modes that allow upgrades
-				if ( pOwner->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
+				if ( !pOwner->IsBot() && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
 				{
 					int iRoboSapper = 0;
 					CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iRoboSapper, robo_sapper );
@@ -1127,19 +1127,6 @@ void CTFWeaponBuilder::StartBuilding( void )
 					int nMode = iRoboSapper ? MODE_SAPPER_ANTI_ROBOT_RADIUS : MODE_SAPPER_ANTI_ROBOT;
 					pObj->SetObjectMode( nMode );
 
-					pOwner->RemoveAmmo( 1, TF_AMMO_GRENADES2 );
-					StartEffectBarRegen();
-				}
-			}
-		}
-		else
-		{
-			if ( pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
-			{
-				int iChargedSapper = 0;
-				CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iChargedSapper, sapper_recharge_time );
-				if ( iChargedSapper != 0 )
-				{
 					pOwner->RemoveAmmo( 1, TF_AMMO_GRENADES2 );
 					StartEffectBarRegen();
 				}

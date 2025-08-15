@@ -26,8 +26,6 @@ using namespace vgui;
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-extern ConVar tf_mirrormode;
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -162,10 +160,6 @@ void CHudDamageIndicator::GetDamagePosition( const Vector &vecDelta, float flRad
 	CrossProduct( up, forward, right );
 	float front = DotProduct(vecDelta, forward);
 	float side = DotProduct(vecDelta, right);
-	if ( tf_mirrormode.GetBool() )
-	{
-		side = -side;
-	}
 	*xpos = flRadius * -side;
 	*ypos = flRadius * -front;
 

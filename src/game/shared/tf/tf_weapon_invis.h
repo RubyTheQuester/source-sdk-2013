@@ -24,8 +24,6 @@ enum invis_weapontypes_t
 	INVIS_BASE = 0,
 	INVIS_FEIGN_DEATH,
 	INVIS_MOTION_CLOAK,
-
-	INVIS_BOUNCE = 10,
 };
 
 class CTFWeaponInvis : public CTFWeaponBase
@@ -77,8 +75,6 @@ public:
 	virtual bool	CanDeploy( void )								{ return false; }
 
 	virtual const char *GetViewModel( int viewmodelindex  ) const;
-
-	virtual void	OnCloakMeterFull(void);
 
 #ifndef CLIENT_DLL
 	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );

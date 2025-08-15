@@ -1140,8 +1140,7 @@ void ClientModeShared::FireGameEvent( IGameEvent *event )
 				char szLocalized[100];
 				g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalized, szLocalized, sizeof(szLocalized) );
 
-				//hudChat->Printf( CHAT_FILTER_TEAMCHANGE, "%s", szLocalized );
-				Msg( "%s\n", szLocalized );
+				hudChat->Printf( CHAT_FILTER_TEAMCHANGE, "%s", szLocalized );
 			}
 		}
 
@@ -1174,8 +1173,7 @@ void ClientModeShared::FireGameEvent( IGameEvent *event )
 		char szLocalized[100];
 		g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalized, szLocalized, sizeof(szLocalized) );
 
-		//hudChat->Printf( CHAT_FILTER_NAMECHANGE, "%s", szLocalized );
-		Msg( "%s\n", szLocalized );
+		hudChat->Printf( CHAT_FILTER_NAMECHANGE, "%s", szLocalized );
 	}
 	else if ( Q_strcmp( "teamplay_broadcast_audio", eventname ) == 0 )
 	{
@@ -1250,8 +1248,7 @@ void ClientModeShared::FireGameEvent( IGameEvent *event )
 			char szLocalized[256];
 			g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalized, szLocalized, sizeof(szLocalized) );
 
-			//hudChat->Printf( CHAT_FILTER_SERVERMSG, "%s", szLocalized );
-			Msg( "%s\n", szLocalized );
+			hudChat->Printf( CHAT_FILTER_SERVERMSG, "%s", szLocalized );
 		}
 	}
 	else if ( Q_strcmp( "achievement_earned", eventname ) == 0 )

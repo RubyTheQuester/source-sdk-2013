@@ -1,6 +1,0 @@
-#base achievements_solo.txt
-
-achievements
-{
-	
-}

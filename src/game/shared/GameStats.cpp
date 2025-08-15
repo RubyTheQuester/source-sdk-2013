@@ -989,7 +989,7 @@ void CBaseGameStats_Driver::CollectData( StatSendType_t sendType )
 	Assert( pGamestatsData );
 	KeyValues *pKV = pGamestatsData->m_pKVData;
 
-	int iAppID = 243750;
+	int iAppID = engine->GetAppID();
 	pKV->SetInt( "appid", iAppID );
 
 	switch ( sendType )

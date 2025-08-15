@@ -188,33 +188,32 @@ CTFNavArea *CTFBotSeekAndDestroy::ChooseGoalArea( CTFBot *me )
 
 	TheTFNavMesh()->CollectSpawnRoomThresholdAreas( &goalVector, GetEnemyTeam( me->GetTeamNumber() ) );
 
-	// Find any objective
-	if ( goalVector.Count() == 0 )
+	CTeamControlPoint *point = me->GetMyControlPoint();
+	if ( point && !point->IsLocked() )
 	{
-		CBaseEntity* point = me->GetAnyObjective();
-		if ( point )
+		// add current control point as a seek goal
+		const CUtlVector< CTFNavArea * > *controlPointAreas = TheTFNavMesh()->GetControlPointAreas( point->GetPointIndex() );
+		if ( controlPointAreas && controlPointAreas->Count() > 0 )
 		{
-			CNavArea* pointArea = TheTFNavMesh()->GetNearestNavArea( point->GetAbsOrigin() );
-			if ( pointArea )
-			{
-				CTFNavArea* area = static_cast<CTFNavArea*>( pointArea );
-				goalVector.AddToTail( area );
-			}
+			goalVector.AddToTail( controlPointAreas->Element( RandomInt( 0, controlPointAreas->Count()-1 ) ) );
 		}
 	}
 
 	// Go somewhere already
-	int count = TheTFNavMesh()->GetNavAreaCount();
-	auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
-	if ( carea )
+	if ( goalVector.Count() == 0 )
 	{
-		CTFNavArea* area = static_cast<CTFNavArea*>( carea );
-		goalVector.AddToTail( area );
-		m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
-	}
-	else
-	{
-		m_repathRandTimer.Start( RandomFloat( 3.0f, 7.0f ) );
+		int count = TheTFNavMesh()->GetNavAreaCount();
+		auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
+		if ( carea )
+		{
+			CTFNavArea *area = static_cast< CTFNavArea * >( carea );
+			goalVector.AddToTail( area );
+			m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+		}
+		else
+		{
+			m_repathRandTimer.Start( RandomFloat( 3.0f, 7.0f ) );
+		}
 	}
 
 	if ( tf_bot_debug_seek_and_destroy.GetBool() )

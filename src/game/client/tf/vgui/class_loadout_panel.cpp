@@ -747,12 +747,12 @@ void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 
 		m_bLoadoutHasChanged = false;
 
-		if ( false )
+		if ( tf_show_preset_explanation_in_class_loadout.GetBool() && m_pPresetsExplanationPopup )
 		{
 			m_pPresetsExplanationPopup->Popup();
 			tf_show_preset_explanation_in_class_loadout.SetValue( 0 );
 		}
-		else if ( false )
+		else if ( tf_show_taunt_explanation_in_class_loadout.GetBool() && m_pTauntsExplanationPopup )
 		{
 			m_pTauntsExplanationPopup->Popup();
 			tf_show_taunt_explanation_in_class_loadout.SetValue( 0 );
@@ -943,11 +943,6 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 		if ( ulIndex != 0 )
 		{
 			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
-			C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if (pPlayer)
-			{
-				pPlayer->Inventory()->InvalidateOffline();
-			}
 
 			m_bLoadoutHasChanged = true;
 

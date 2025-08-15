@@ -7,7 +7,6 @@
 #define TF_BOT_TACTICAL_MONITOR_H
 
 class CObjectTeleporter;
-class CSpellPickup;
 
 class CTFBotTacticalMonitor : public Action< CTFBot >
 {
@@ -39,12 +38,6 @@ private:
 	bool ShouldOpportunisticallyTeleport( CTFBot *me ) const;
 	CObjectTeleporter *FindNearbyTeleporter( CTFBot *me );
 	CountdownTimer m_findTeleporterTimer;
-
-	bool ShouldOpportunisticallyCollectCrumpkins( CTFBot* me ) const;
-	bool ShouldOpportunisticallyCollectSpell( CTFBot* me ) const;
-	bool ShouldOpportunisticallyCollectPowerup( CTFBot* me ) const;
-	bool ShouldOpportunisticallyCollectCredits( CTFBot* me ) const;
-	bool ShouldOpportunisticallyCollectCores( CTFBot* me ) const;
 
 	void AvoidBumpingEnemies( CTFBot *me );
 };

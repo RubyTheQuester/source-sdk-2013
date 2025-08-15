@@ -89,10 +89,6 @@ ConVar sv_noclipduringpause( "sv_noclipduringpause", "0", FCVAR_REPLICATED | FCV
 
 extern ConVar cl_mouselook;
 
-#ifdef TF_CLIENT_DLL
-extern ConVar tf_mirrormode;
-#endif
-
 #define UsingMouselook() cl_mouselook.GetBool()
 
 /*
@@ -850,14 +846,6 @@ void CInput::ComputeSideMove( CUserCmd *cmd )
 		cmd->sidemove -= cl_sidespeed.GetFloat() * KeyState (&in_left);
 	}
 
-#ifdef TF_CLIENT_DLL
-	if ( tf_mirrormode.GetBool() )
-	{
-		cmd->sidemove += cl_sidespeed.GetFloat() * KeyState (&in_moveleft);
-		cmd->sidemove -= cl_sidespeed.GetFloat() * KeyState (&in_moveright);
-		return;
-	}
-#endif
 	// Otherwise, check strafe keys
 	cmd->sidemove += cl_sidespeed.GetFloat() * KeyState (&in_moveright);
 	cmd->sidemove -= cl_sidespeed.GetFloat() * KeyState (&in_moveleft);

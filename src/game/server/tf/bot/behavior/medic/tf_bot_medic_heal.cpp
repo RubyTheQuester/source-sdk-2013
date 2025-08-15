@@ -13,7 +13,6 @@
 #include "bot/behavior/medic/tf_bot_medic_retreat.h"
 #include "bot/behavior/tf_bot_use_teleporter.h"
 #include "bot/behavior/scenario/capture_the_flag/tf_bot_fetch_flag.h"
-#include "bot/behavior/tf_bot_seek_and_destroy.h"
 #include "nav_mesh.h"
 #include "tier0/vprof.h"
 
@@ -486,7 +485,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 	m_patient = SelectPatient( me, m_patient );
 
 	// prevent a group of medic healing each other in a loop. always heal the top guy in the chain
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS && m_patient != NULL && m_patient->IsPlayerClass( TF_CLASS_MEDIC ) )
+	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && m_patient != NULL && m_patient->IsPlayerClass( TF_CLASS_MEDIC ) )
 	{
 		CUtlVector< CBaseEntity* > seenPatients;
 		seenPatients.AddToTail( m_patient );
@@ -503,23 +502,17 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 		}
 	}
 
-	if ( me->HasWeaponRestriction( 1 ) )
-	{
-		// can't heal reliably without a medigun
-		return ChangeTo( new CTFBotSeekAndDestroy( -1.0f, true ) );
-	}
-
 	if ( m_patient == NULL )
 	{
 		// no patients
 
-		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		if ( TFGameRules()->IsMannVsMachineMode() )
 		{
 			// no-one is left to heal - get the flag!
 			return ChangeTo( new CTFBotFetchFlag, "Everyone is gone! Going for the flag" );
 		}
 
-		if ( TFGameRules()->IsPVEModeActive() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+		if ( TFGameRules()->IsPVEModeActive() )
 		{
 			// don't retreat, just wait
 			return Continue();

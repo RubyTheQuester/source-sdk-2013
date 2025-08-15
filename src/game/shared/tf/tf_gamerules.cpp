@@ -796,13 +796,12 @@ ConVar tf_autobalance_dead_candidates_maxtime( "tf_autobalance_dead_candidates_m
 ConVar tf_autobalance_force_candidates_maxtime( "tf_autobalance_force_candidates_maxtime", "5", FCVAR_REPLICATED );
 ConVar tf_autobalance_xp_bonus( "tf_autobalance_xp_bonus", "500", FCVAR_REPLICATED );
 
-ConVar mp_humans_must_join_class("mp_humans_must_join_class", "any", FCVAR_REPLICATED, "Restricts human players to a single class {any, scout, soldier, etc.}");
+
 #ifdef GAME_DLL
 
 static const float g_flStrangeEventBatchProcessInterval = 30.0f;
 
 ConVar mp_humans_must_join_team("mp_humans_must_join_team", "any", FCVAR_REPLICATED, "Restricts human players to a single team {any, blue, red, spectator}" );
-
 
 void cc_tf_medieval_changed( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -896,10 +895,6 @@ extern ConVar mp_tournament_post_match_period;
 extern ConVar tf_flag_return_on_touch;
 extern ConVar tf_flag_return_time_credit_factor;
 ConVar tf_grapplinghook_enable( "tf_grapplinghook_enable", "0", FCVAR_REPLICATED );
-
-ConVar tf_roundstarttalk_disable("tf_roundstarttalk_disable", "0", FCVAR_REPLICATED, "Disable forced talking at the start of a round.\n");
-ConVar tf_mirrormode( "tf_mirrormode", "0", FCVAR_REPLICATED, "Flip everyone's viewmodels, world and controls.\n" );
-ConVar tf_vision_force( "tf_vision_force", "0", FCVAR_REPLICATED, "Force a specific vision mode on all players.\n" );
 
 #ifdef GAME_DLL
 CUtlString s_strNextMvMPopFile;
@@ -1071,9 +1066,6 @@ ConVar tf_gamemode_payload ( "tf_gamemode_payload", "0", FCVAR_REPLICATED | FCVA
 ConVar tf_gamemode_mvm ( "tf_gamemode_mvm", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "Prevent map gamemode logic from being automatically set up." );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 
@@ -1137,7 +1129,7 @@ void cc_powerup_mode( IConVar *pConVar, const char *pOldString, float flOldValue
 		}
 
 		TFGameRules()->SetPowerupMode( var.GetBool() );
-		//TFGameRules()->State_Transition( GR_STATE_PREROUND );
+		TFGameRules()->State_Transition( GR_STATE_PREROUND );
 		tf_flag_caps_per_round.SetValue( var.GetBool() ? 7 : 3 );	// Hack
 	}
 }
@@ -1440,7 +1432,6 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 	RecvPropBool( RECVINFO( m_bMatchEnded ) ),
 	RecvPropBool( RECVINFO( m_bPowerupMode ) ),
 	RecvPropString( RECVINFO( m_pszCustomUpgradesFile ) ),
-	RecvPropString( RECVINFO( m_pszSoloObjectivesResFile ) ),
 	RecvPropBool( RECVINFO( m_bTruceActive ) ),
 	RecvPropBool( RECVINFO( m_bShowMatchSummary ), 0, RecvProxy_MatchSummary ),
 	RecvPropBool( RECVINFO_NAME( m_bShowMatchSummary, "m_bShowCompetitiveMatchSummary" ), 0, RecvProxy_MatchSummary ),     // Renamed
@@ -1511,7 +1502,6 @@ BEGIN_NETWORK_TABLE_NOBASE( CTFGameRules, DT_TFGameRules )
 	SendPropInt( SENDINFO( m_nMatchGroupType ) ),
 	SendPropBool( SENDINFO( m_bMatchEnded ) ),
 	SendPropString( SENDINFO( m_pszCustomUpgradesFile ) ),
-	SendPropString( SENDINFO( m_pszSoloObjectivesResFile ) ),
 	SendPropBool( SENDINFO( m_bTruceActive ) ),
 	SendPropBool( SENDINFO( m_bShowMatchSummary ) ),
 	SendPropBool( SENDINFO( m_bTeamsSwitched ) ),
@@ -1593,10 +1583,6 @@ BEGIN_DATADESC( CTFGameRulesProxy )
 	DEFINE_INPUTFUNC( FIELD_STRING, "SetCustomUpgradesFile", InputSetCustomUpgradesFile ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetRoundRespawnFreezeEnabled", InputSetRoundRespawnFreezeEnabled ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetMapForcedTruceDuringBossFight", InputSetMapForcedTruceDuringBossFight ),
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloAddCredits", InputSoloAddCredits ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "SoloSaveDAta", InputSoloSaveData ),
-	DEFINE_INPUTFUNC( FIELD_STRING, "SoloUnlockItem", InputSoloUnlockItem ),
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SoloUnlockItemID", InputSoloUnlockItemID ),
 
 	DEFINE_OUTPUT( m_OnWonByTeam1,	"OnWonByTeam1" ),
 	DEFINE_OUTPUT( m_OnWonByTeam2,	"OnWonByTeam2" ),
@@ -1859,59 +1845,6 @@ void CTFGameRulesProxy::InputSetMapForcedTruceDuringBossFight( inputdata_t &inpu
 		TFGameRules()->SetMapForcedTruceDuringBossFight( inputdata.value.Bool() );
 	}
 }
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFGameRulesProxy::InputSoloAddCredits(inputdata_t& inputdata)
-{
-	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_add_credits");
-	if (pEvent)
-	{
-		pEvent->SetInt("amount", inputdata.value.Int());
-		gameeventmanager->FireEvent(pEvent);
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFGameRulesProxy::InputSoloSaveData(inputdata_t& inputdata)
-{
-	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_save_data");
-	if (pEvent)
-	{
-		gameeventmanager->FireEvent(pEvent);
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFGameRulesProxy::InputSoloUnlockItem(inputdata_t& inputdata)
-{
-	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_unlock_item");
-	if (pEvent)
-	{
-		const char* pszItem = inputdata.value.String();
-		pEvent->SetString("item", pszItem);
-		gameeventmanager->FireEvent(pEvent);
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFGameRulesProxy::InputSoloUnlockItemID(inputdata_t& inputdata)
-{
-	IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_unlock_itemid");
-	if (pEvent)
-	{
-		pEvent->SetInt("item", inputdata.value.Int());
-		gameeventmanager->FireEvent(pEvent);
-	}
-}
-
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -3483,7 +3416,6 @@ CTFGameRules::CTFGameRules()
 	m_flGravityMultiplier.Set( 1.0 );
 
 	m_pszCustomUpgradesFile.GetForModify()[0] = '\0';
-	m_pszSoloObjectivesResFile.GetForModify()[0] = '\0';
 
 	m_bShowMatchSummary.Set( false );
 	m_bMapHasMatchSummaryStage.Set( false );
@@ -4295,7 +4227,7 @@ void CTFGameRules::Activate()
 
 	m_nMapHolidayType.Set( kHoliday_None );
 
-	bool isOverriden = tf_gamemode_override.GetBool();
+	bool isOverriden = false;
 
 	CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
 
@@ -4494,6 +4426,14 @@ void CTFGameRules::Activate()
 	m_flVoteCheckThrottle = 0;
 
 
+	if ( tf_powerup_mode.GetBool()  )
+	{
+		if ( !IsPowerupMode() )
+		{
+			SetPowerupMode( true );
+		}
+	}
+
 // 	if ( !IsInTournamentMode() )
 // 	{
 // 		CExtraMapEntity::SpawnExtraModel();
@@ -4531,14 +4471,6 @@ void CTFGameRules::Activate()
 
 	CLogicMannPower *pLogicMannPower = dynamic_cast< CLogicMannPower* > ( gEntList.FindEntityByClassname( NULL, "tf_logic_mannpower" ) );
 	tf_powerup_mode.SetValue( pLogicMannPower ? 1 : 0 );
-
-	if ( tf_powerup_mode.GetBool() )
-	{
-		if ( !IsPowerupMode() )
-		{
-			SetPowerupMode( true );
-		}
-	}
 
 	if ( !IsInTraining() && IsHolidayActive( kHoliday_Soldier ) )
 	{
@@ -5401,11 +5333,7 @@ void CTFGameRules::SetupOnRoundRunning( void )
 			continue;
 
 		pPlayer->TeamFortress_SetSpeed();
-		if ( tf_roundstarttalk_disable.GetBool() )
-		{
-
-		}
-		else if ( IsHalloweenScenario( HALLOWEEN_SCENARIO_HIGHTOWER ) )
+		if ( IsHalloweenScenario( HALLOWEEN_SCENARIO_HIGHTOWER ) )
 		{
 			if ( !IsInWaitingForPlayers() )
 			{
@@ -5589,18 +5517,12 @@ void CTFGameRules::SetupOnStalemateStart( void )
 
 		if ( IsInArenaMode() == true )
 		{
-			if ( !tf_roundstarttalk_disable.GetBool() )
-			{
-				pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_ROUND_START );
-			}
+			pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_ROUND_START );
 			pPlayer->TeamFortress_SetSpeed();
 		}
 		else
 		{
-			if ( !tf_roundstarttalk_disable.GetBool() )
-			{
-				pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_SUDDENDEATH_START );
-			}
+			pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_SUDDENDEATH_START );
 		}
 	}
 
@@ -7522,48 +7444,6 @@ float CTFGameRules::ApplyOnDamageAliveModifyRules( const CTakeDamageInfo &info, 
 				}
 
 				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( info.GetWeapon(), flRealDamage, blast_dmg_to_self );
-			}
-			int iNoSelfDamage = 0;
-			CALL_ATTRIB_HOOK_INT_ON_OTHER( pVictimBaseEntity, iNoSelfDamage, no_self_dmg );
-			if ( iNoSelfDamage != 0 )
-			{
-				flRealDamage = 0;
-			}
-		}
-
-		if ( pAttacker != pVictimBaseEntity )
-		{
-			if ( info.GetInflictor() )
-			{
-				if ( info.GetInflictor()->IsBaseObject() )
-				{
-					CObjectSentrygun* pSentry = dynamic_cast<CObjectSentrygun*>( info.GetInflictor() );
-					if ( pSentry )
-					{
-						if ( pSentry->GetOwner() )
-						{
-							int iNoSelfDamage = 0;
-							CALL_ATTRIB_HOOK_INT_ON_OTHER( pSentry->GetOwner(), iNoSelfDamage, sentry_no_dmg );
-							if ( iNoSelfDamage != 0 )
-							{
-								flRealDamage = 0;
-							}
-						}
-					}
-				}
-				else
-				{
-					CTFProjectile_SentryRocket* pProjectile = dynamic_cast<CTFProjectile_SentryRocket*>( info.GetInflictor() );
-					if ( pProjectile && pProjectile->GetScorer() )
-					{
-						int iNoSelfDamage = 0;
-						CALL_ATTRIB_HOOK_INT_ON_OTHER( pProjectile->GetScorer(), iNoSelfDamage, sentry_no_dmg );
-						if ( iNoSelfDamage != 0 )
-						{
-							flRealDamage = 0;
-						}
-					}
-				}
 			}
 		}
 
@@ -10365,6 +10245,7 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetDefaultFOV( iFov );
 
 	pTFPlayer->m_bFlipViewModels = Q_strcmp( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ), "1" ) == 0;
+	pTFPlayer->m_bSpyWalkInvertedToggle = Q_strcmp(engine->GetClientConVarValue( pPlayer->entindex(), "tf_spywalk_inverted"), "1") == 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -15290,24 +15171,9 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 		{
 			if ( GameModeUsesUpgrades() )
 			{
-				CTFPlayer* upgradePlayer = pTFPlayer;
-				bool isRemote = false;
-				KeyValues* pTargetKey = pKeyValues->FindKey( "targetplayer" );
-				if ( pTargetKey && pTargetKey->GetInt("player") != -1 )
-				{
-					CTFPlayer* targetPlayer = ToTFPlayer ( UTIL_PlayerByUserId( pTargetKey->GetInt( "player" ) ) );
-					// double checking that it's a bot on the same team as sender
-					if ( targetPlayer && targetPlayer->IsBot() && targetPlayer->GetTeamNumber() == pTFPlayer->GetTeamNumber() )
-					{
-						upgradePlayer = targetPlayer;
-						isRemote = true;
-						upgradePlayer->BeginPurchasableUpgrades();
-					}
-				}
-
 				if ( IsMannVsMachineMode() )
 				{
-					if ( sv_cheats && !sv_cheats->GetBool() && !isRemote && !pTFPlayer->m_Shared.IsInUpgradeZone() )
+					if ( sv_cheats && !sv_cheats->GetBool() && !pTFPlayer->m_Shared.IsInUpgradeZone() )
 						return;
 				}
 
@@ -15317,11 +15183,6 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 					KeyValues *pSubKey = pKeyValues->GetFirstTrueSubKey();
 					while ( pSubKey )
 					{
-						if ( FStrEq( pSubKey->GetName(), "targetplayer" ) )
-						{
-							pSubKey = pSubKey->GetNextTrueSubKey();
-							continue;
-						}
 						int iCount = pSubKey->GetInt("count");
 						if ( iCount < 0 )
 						{
@@ -15334,7 +15195,7 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							bool bAllowed = true;
 							while ( bAllowed && iCount < 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, true, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, true, bFree );
 								++iCount;
 							}
 						}
@@ -15346,11 +15207,6 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 					pSubKey = pKeyValues->GetFirstTrueSubKey();
 					while ( pSubKey )
 					{
-						if ( FStrEq( pSubKey->GetName(), "targetplayer" ) )
-						{
-							pSubKey = pSubKey->GetNextTrueSubKey();
-							continue;
-						}
 						int iCount = pSubKey->GetInt("count");
 						if ( iCount > 0 )
 						{
@@ -15363,18 +15219,13 @@ void CTFGameRules::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValu
 							bool bAllowed = true;
 							while ( bAllowed && iCount > 0 )
 							{
-								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( upgradePlayer, iItemSlot, iUpgrade, false, bFree );
+								bAllowed = g_hUpgradeEntity->PlayerPurchasingUpgrade( pTFPlayer, iItemSlot, iUpgrade, false, bFree );
 								--iCount;
 							}
 						}
 
 						pSubKey = pSubKey->GetNextTrueSubKey();
 					}
-				}
-
-				if ( isRemote )
-				{
-					upgradePlayer->EndPurchasableUpgrades();
 				}
 			}
 		}
@@ -15832,25 +15683,6 @@ void CTFGameRules::SetCustomUpgradesFile( inputdata_t &inputdata )
 	if ( pEvent )
 	{
 		pEvent->SetString( "path", pszPath );
-		gameeventmanager->FireEvent( pEvent );
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CTFGameRules::SetSoloObjectivesResFile(const char* path)
-{
-	//const char* pszPath = inputdata.value.String();
-
-	// Tell future clients to load from this path
-	V_strncpy( m_pszSoloObjectivesResFile.GetForModify(), path, MAX_PATH );
-
-	// Tell connected clients to reload
-	IGameEvent* pEvent = gameeventmanager->CreateEvent( "solohud_file_changed" );
-	if ( pEvent )
-	{
-		pEvent->SetString( "path", path );
 		gameeventmanager->FireEvent( pEvent );
 	}
 }
@@ -16611,9 +16443,6 @@ int CTFGameRules::GetAssignedHumanTeam( void )
 void CTFGameRules::HandleSwitchTeams( void )
 {
 	if ( IsPVEModeActive() )
-		return;
-
-	if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
 		return;
 
 	m_bTeamsSwitched.Set( !m_bTeamsSwitched );
@@ -17547,14 +17376,14 @@ void CTFGameRules::SetUpVisionFilterKeyValues( void )
 
 	// No special vision
 	pKVFlag = new KeyValues( "0" );
-	//pKVFlag->SetString( "models/weapons/c_models/c_rainblower/c_rainblower.mdl", "models/weapons/c_models/c_flamethrower/c_flamethrower.mdl" );
-	//pKVFlag->SetString( "models/weapons/c_models/c_lollichop/c_lollichop.mdl", "models/weapons/w_models/w_fireaxe.mdl" );
+	pKVFlag->SetString( "models/weapons/c_models/c_rainblower/c_rainblower.mdl", "models/weapons/c_models/c_flamethrower/c_flamethrower.mdl" );
+	pKVFlag->SetString( "models/weapons/c_models/c_lollichop/c_lollichop.mdl", "models/weapons/w_models/w_fireaxe.mdl" );
 	pKVBlock->AddSubKey( pKVFlag );
 
 	// Pyrovision
 	pKVFlag = new KeyValues( "1" );
-	//pKVFlag->SetString( "models/weapons/c_models/c_rainblower/c_rainblower.mdl", "models/weapons/c_models/c_rainblower/c_rainblower.mdl" );		//explicit set for pyrovision
-	//pKVFlag->SetString( "models/weapons/c_models/c_lollichop/c_lollichop.mdl", "models/weapons/c_models/c_lollichop/c_lollichop.mdl" );
+	pKVFlag->SetString( "models/weapons/c_models/c_rainblower/c_rainblower.mdl", "models/weapons/c_models/c_rainblower/c_rainblower.mdl" );		//explicit set for pyrovision
+	pKVFlag->SetString( "models/weapons/c_models/c_lollichop/c_lollichop.mdl", "models/weapons/c_models/c_lollichop/c_lollichop.mdl" );
 
 	pKVFlag->SetString( "models/player/items/demo/demo_bombs.mdl", "models/player/items/all_class/mtp_bottle_demo.mdl" );
 	pKVFlag->SetString( "models/player/items/pyro/xms_pyro_bells.mdl", "models/player/items/all_class/mtp_bottle_pyro.mdl" );
@@ -17590,7 +17419,6 @@ bool CTFGameRules::AllowWeatherParticles( void )
 
 bool CTFGameRules::AllowMapVisionFilterShaders( void )
 {
-	return true;
 	if ( !m_pkvVisionFilterShadersMapWhitelist )
 		return false;
 
@@ -18877,7 +18705,34 @@ static bool BIgnoreConvarChangeInPVEMode(void)
 // tags are recalculated and uploaded to the master server when the convar is changed.
 convar_tags_t convars_to_check_for_tags[] =
 {
+	{ "mp_friendlyfire", "friendlyfire", NULL },
+	{ "tf_birthday", "birthday", NULL },
+	{ "mp_respawnwavetime", "respawntimes", NULL },
+	{ "mp_fadetoblack", "fadetoblack", NULL },
+	{ "tf_weapon_criticals", "nocrits", NULL },
+	{ "mp_disable_respawn_times", "norespawntime", NULL },
+	{ "tf_gamemode_arena", "arena", NULL },
+	{ "tf_gamemode_cp", "cp", NULL },
+	{ "tf_gamemode_ctf", "ctf", NULL },
+	{ "tf_gamemode_sd", "sd", NULL },
+	{ "tf_gamemode_mvm", "mvm", NULL },
+	{ "tf_gamemode_payload", "payload", NULL },
+	{ "tf_gamemode_rd",	"rd", NULL },
+	{ "tf_gamemode_pd",	"pd", NULL },
+	{ "tf_gamemode_tc",	"tc", NULL },
 	{ "tf_beta_content", "beta", NULL },
+	{ "tf_damage_disablespread", "dmgspread", NULL },
+	{ "mp_highlander", "highlander", NULL },
+	{ "tf_bot_count", "bots", &BIgnoreConvarChangeInPVEMode },
+	{ "tf_pve_mode", "pve" },
+	{ "sv_registration_successful", "_registered", NULL },
+	{ "tf_server_identity_disable_quickplay", "noquickplay", NULL },
+	{ "tf_mm_strict", "hidden", NULL },
+	{ "tf_medieval", "medieval", NULL },
+	{ "mp_holiday_nogifts", "nogifts" },
+	{ "tf_powerup_mode", "powerup", NULL },
+	{ "tf_gamemode_passtime", "passtime", NULL },
+	{ "tf_gamemode_misc", "misc", NULL }, // catch-all for matchmaking to identify sd, tc, and pd servers via sv_tags
 };
 
 //-----------------------------------------------------------------------------
@@ -21124,11 +20979,11 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			// find our cart!
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
-				// find the blue cart
+				// find the red cart
 				CTeamTrainWatcher* watcher = NULL;
 				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
 				{
-					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
 					{
 						m_redPayloadToBlock = watcher;
 						break;
@@ -21159,11 +21014,11 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 		{
 			if ( TFGameRules()->HasMultipleTrains() )
 			{
-				// find the red cart
+				// find the blue cart
 				CTeamTrainWatcher* watcher = NULL;
 				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
 				{
-					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_RED)
+					if (!watcher->IsDisabled() && watcher->GetTeamNumber() == TF_TEAM_BLUE)
 					{
 						m_bluePayloadToBlock = watcher;
 						break;
@@ -22573,9 +22428,6 @@ bool	ScriptGetOvertimeAllowedForCTF()							{ return TFGameRules()->GetOvertimeA
 
 void	ScriptForceEnableUpgrades( int nState )						{ TFGameRules()->ForceEnableUpgrades( nState ); }
 void	ScriptForceEscortPushLogic( int nState )					{ TFGameRules()->ForceEscortPushLogic( nState ); }
-
-void	ScriptSetBotPresetsFile( const char* path )					{ TheTFBots().SetBotPresetsFile(path); }
-void	ScriptSetSoloObjectivesResFile( const char* path )			{ TFGameRules()->SetSoloObjectivesResFile(path); }
 void	ScriptSetRoundToPlayNext( const char* name )
 { 
 	CTeamControlPointRound* pRound = dynamic_cast<CTeamControlPointRound*>(gEntList.FindEntityByName(NULL, name));
@@ -22648,33 +22500,7 @@ void CTFGameRules::RegisterScriptFunctions()
 	TF_GAMERULES_SCRIPT_FUNC( ForceEnableUpgrades,						"Whether to force on MvM-styled upgrades on/off. 0 -> default, 1 -> force off, 2 -> force on" );
 	TF_GAMERULES_SCRIPT_FUNC( ForceEscortPushLogic,						"Forces payload pushing logic. 0 -> default, 1 -> force off, 2 -> force on" );
 
-	TF_GAMERULES_SCRIPT_FUNC( SetBotPresetsFile,						"Reload bot presets file from this path" );
-	TF_GAMERULES_SCRIPT_FUNC( SetSoloObjectivesResFile,					"Reload solo HUD file from this path" );
-	TF_GAMERULES_SCRIPT_FUNC( SetRoundToPlayNext,						"Set the next round to be selected." );
-
 	g_pScriptVM->RegisterInstance( &PlayerVoiceListener(), "PlayerVoiceListener" );
 }
 
 #endif // GAME_DLL
-
-//-----------------------------------------------------------------------------
-// Purpose: Restrict class human players can join
-//-----------------------------------------------------------------------------
-int CTFGameRules::GetAssignedHumanClass(void)
-{
-	auto cvar = mp_humans_must_join_class.GetString();
-	if (!cvar)
-	{
-		return TF_CLASS_UNDEFINED;
-	}
-
-	for (int i = TF_CLASS_SCOUT; i < TF_CLASS_COUNT_ALL; ++i)
-	{
-		if (!stricmp(cvar, GetPlayerClassData(i)->m_szClassName))
-		{
-			return i;
-		}
-	}
-
-	return TF_CLASS_UNDEFINED;
-}

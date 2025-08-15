@@ -80,11 +80,6 @@ public:
 
 	void UpdateImages( int nCurrentMoney );
 
-	bool CheckInspectMode( void ) {
-		CSteamID steamID;
-		return m_bInspectMode && m_hPlayer->GetSteamID( &steamID ) != false;
-	};
-
 public:
 
 	KeyValues *m_pSkillTreeButtonKVs;	
@@ -196,11 +191,6 @@ public:
 	MESSAGE_FUNC_PTR( OnItemPanelMousePressed, "ItemPanelMousePressed", panel );
 
 	virtual GameActionSet_t GetPreferredActionSet() { return IsActive() ? GAME_ACTION_SET_MENUCONTROLS : GAME_ACTION_SET_NONE; }
-
-	bool CheckInspectMode( void ) {
-		CSteamID steamID;
-		return m_bInspectMode && m_hPlayer->GetSteamID( &steamID ) != false; 
-	};
 
 protected:
 	void			CreateItemModelPanel( int iLoadoutSlot );

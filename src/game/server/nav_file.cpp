@@ -33,12 +33,9 @@
 #endif
 
 #include "util_shared.h"
-#include "lzma/lzma.h"
 
 // NOTE: This has to be the last file included!
 #include "tier0/memdbgon.h"
-
-extern ConVar nav_save_compressed;
 
 
 //--------------------------------------------------------------------------------------------------------------
@@ -1204,57 +1201,20 @@ bool CNavMesh::Save( void ) const
 		CP4AutoEditAddFile a( szCorrectPath );
 	}
 
-	if ( nav_save_compressed.GetBool() )
+	if ( !filesystem->WriteFile( filename, "MOD", fileBuffer ) )
 	{
-		int outLength = fileBuffer.TellPut();
-		unsigned int compressedSize = 0;
-		unsigned char* pCompressedOutput = LZMA_Compress( (unsigned char*)fileBuffer.Base(), outLength, &compressedSize );
-		if ( !pCompressedOutput || compressedSize < sizeof(lzma_header_t) )
+		// XXX(JohnS): Nav bails out after analyze regardless of it failed to save work, meaning if your .nav is
+		//             read-only you're about to throw away everything.  This code is old and bad.  Just make a generous
+		//             effort to save a backup, since this is common with e.g. read-only p4 nav files.
+		CFmtStrN< MAX_PATH > sBackupFile( "%s.failedsave", filename ); // .bak voted too likely to conflict with user
+																	   // saved files
+		Warning( "Unable to save %d bytes to %s\n", fileBuffer.Size(), filename );
+
+		if ( filesystem->WriteFile( sBackupFile, "MOD", fileBuffer ) )
 		{
-			Warning( "LZMA compression failed\n" );
-			return false;
+			Warning( "NAV failed to save, saved backup copy to '%s'\n", sBackupFile.Get() );
 		}
-
-		CUtlBuffer compressionBuffer;
-		compressionBuffer.EnsureCapacity( compressedSize );
-		compressionBuffer.Put( pCompressedOutput, compressedSize );
-
-		if ( !filesystem->WriteFile( filename, "MOD", compressionBuffer ) )
-		{
-			// XXX(JohnS): Nav bails out after analyze regardless of it failed to save work, meaning if your .nav is
-			//             read-only you're about to throw away everything.  This code is old and bad.  Just make a generous
-			//             effort to save a backup, since this is common with e.g. read-only p4 nav files.
-			CFmtStrN< MAX_PATH > sBackupFile( "%s.failedsave", filename ); // .bak voted too likely to conflict with user
-			// saved files
-			Warning( "Unable to save %d bytes to %s\n", compressionBuffer.Size(), filename );
-
-			if ( filesystem->WriteFile( sBackupFile, "MOD", compressionBuffer ) )
-			{
-				Warning( "NAV failed to save, saved backup copy to '%s'\n", sBackupFile.Get() );
-			}
-			return false;
-		}
-
-		free( pCompressedOutput );
-		pCompressedOutput = NULL;
-	}
-	else
-	{
-		if ( !filesystem->WriteFile( filename, "MOD", fileBuffer ) )
-		{
-			// XXX(JohnS): Nav bails out after analyze regardless of it failed to save work, meaning if your .nav is
-			//             read-only you're about to throw away everything.  This code is old and bad.  Just make a generous
-			//             effort to save a backup, since this is common with e.g. read-only p4 nav files.
-			CFmtStrN< MAX_PATH > sBackupFile( "%s.failedsave", filename ); // .bak voted too likely to conflict with user
-			// saved files
-			Warning( "Unable to save %d bytes to %s\n", fileBuffer.Size(), filename );
-
-			if ( filesystem->WriteFile( sBackupFile, "MOD", fileBuffer ) )
-			{
-				Warning( "NAV failed to save, saved backup copy to '%s'\n", sBackupFile.Get() );
-			}
-			return false;
-		}
+		return false;
 	}
 
 	unsigned int navSize = filesystem->Size( filename );
@@ -1433,40 +1393,37 @@ NavErrorType CNavMesh::GetNavDataFromFile( CUtlBuffer &outBuffer, bool *pNavData
 {
 	char maptmp[256];
 	const char *pszMapName = GetCleanMapName( STRING( gpGlobals->mapname ), maptmp );
-	char maptmp2[256];
-	const char* pszMapName2 = STRING( gpGlobals->mapname );
 
 	// nav filename is derived from map filename
 	char filename[MAX_PATH] = { 0 };
 	Q_snprintf( filename, sizeof( filename ), FORMAT_NAVFILE, pszMapName );
-	char filename2[MAX_PATH] = { 0 };
-	Q_snprintf( filename2, sizeof( filename2 ), FORMAT_NAVFILE, pszMapName2 );
 
-	if (!filesystem->ReadFile(filename, "MOD", outBuffer))	// this ignores .nav files embedded in the .bsp ...
+	if ( !filesystem->ReadFile( filename, "MOD", outBuffer ) )	// this ignores .nav files embedded in the .bsp ...
 	{
-		if (!filesystem->ReadFile(filename2, "MOD", outBuffer)) // checks workshop generated nav file
+		if ( !filesystem->ReadFile( filename, "BSP", outBuffer ) )	// ... and this looks for one if it's the only one around.
 		{
-			if (!filesystem->ReadFile(filename, "BSP", outBuffer))	// ... and this looks for one if it's the only one around.
+			// Finally, check for the special embed name for in-BSP nav meshes only
+			if ( !filesystem->ReadFile( PATH_NAVFILE_EMBEDDED, "BSP", outBuffer ) )
 			{
-				// Finally, check for the special embed name for in-BSP nav meshes only
-				if (!filesystem->ReadFile(PATH_NAVFILE_EMBEDDED, "BSP", outBuffer))
-				{
-					return NAV_CANT_ACCESS_FILE;
-				}
+				return NAV_CANT_ACCESS_FILE;
 			}
-			if (pNavDataFromBSP)
-			{
-				*pNavDataFromBSP = true;
-			}
+		}
+		if ( pNavDataFromBSP )
+		{
+			*pNavDataFromBSP = true;
 		}
 	}
 
-	if ( CLZMA::IsCompressed( (unsigned char *)outBuffer.Base() ) )
+	if ( IsX360() )
 	{
-		int originalSize = CLZMA::GetActualSize( (unsigned char *)outBuffer.Base() );
-		unsigned char *pOriginalData = new unsigned char[originalSize];
-		CLZMA::Uncompress( (unsigned char *)outBuffer.Base(), pOriginalData );
-		outBuffer.AssumeMemory( pOriginalData, originalSize, originalSize, CUtlBuffer::READ_ONLY );
+		// 360 has compressed NAVs
+		if ( CLZMA::IsCompressed( (unsigned char *)outBuffer.Base() ) )
+		{
+			int originalSize = CLZMA::GetActualSize( (unsigned char *)outBuffer.Base() );
+			unsigned char *pOriginalData = new unsigned char[originalSize];
+			CLZMA::Uncompress( (unsigned char *)outBuffer.Base(), pOriginalData );
+			outBuffer.AssumeMemory( pOriginalData, originalSize, originalSize, CUtlBuffer::READ_ONLY );
+		}
 	}
 
 	return NAV_OK;

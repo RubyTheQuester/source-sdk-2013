@@ -17,6 +17,7 @@
 #include "viewport_panel_names.h"
 //#include "terror/TerrorShared.h"
 #include "fmtstr.h"
+
 #ifdef TF_DLL
 #include "player_vs_environment/tf_mann_vs_machine_logic.h"
 #endif
@@ -43,12 +44,8 @@ ConVar nav_displacement_test( "nav_displacement_test", "10000", FCVAR_CHEAT, "Ch
 ConVar nav_generate_fencetops( "nav_generate_fencetops", "1", FCVAR_CHEAT, "Autogenerate nav areas on fence and obstacle tops" );
 ConVar nav_generate_fixup_jump_areas( "nav_generate_fixup_jump_areas", "1", FCVAR_CHEAT, "Convert obsolete jump areas into 2-way connections" );
 ConVar nav_generate_jump_connections( "nav_generate_jump_connections", "1", FCVAR_CHEAT, "If disabled, don't generate jump connections from jump areas" );
-ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_NONE );
+ConVar nav_generate_incremental_range( "nav_generate_incremental_range", "2000", FCVAR_CHEAT );
 ConVar nav_generate_incremental_tolerance( "nav_generate_incremental_tolerance", "0", FCVAR_CHEAT, "Z tolerance for adding new nav areas." );
-ConVar nav_generate_noreload( "nav_generate_noreload", "1", FCVAR_NONE, "Reload only the navmesh after generation/analysis instead of the entire map." );
-ConVar nav_generate_auto( "nav_generate_auto", "0", FCVAR_NONE, "Automatically generate a nav mesh when there isn't any." );
-ConVar nav_generate_auto_view_distance( "nav_generate_auto_view_distance", "2500", FCVAR_NONE, "Set the auto generation view distance to optimize generation time." );
-ConVar nav_save_compressed( "nav_save_compressed", "1", FCVAR_CHEAT, "Saved nav files get compressed using LZMA." );
 ConVar nav_area_max_size( "nav_area_max_size", "50", FCVAR_CHEAT, "Max area size created in nav generation" );
 
 // Common bounding box for traces
@@ -3400,25 +3397,26 @@ void CNavMesh::CreateNavAreasFromNodes( void )
 // adds walkable positions for any/all positions a mod specifies
 void CNavMesh::AddWalkableSeeds( void )
 {
+
 #ifdef TF_DLL
 	int iFoundSpawns = 0;
 	int iFoundSpawnsNoGround = 0;
 	// Get as many spawns as possible, across all stages
-	for ( int iTFTeamSpawn = 0; iTFTeamSpawn < ITFTeamSpawnAutoList::AutoList().Count(); ++iTFTeamSpawn )
+	for (int iTFTeamSpawn = 0; iTFTeamSpawn < ITFTeamSpawnAutoList::AutoList().Count(); ++iTFTeamSpawn)
 	{
-		CTFTeamSpawn* spawnSpot = static_cast<CTFTeamSpawn*>( ITFTeamSpawnAutoList::AutoList()[iTFTeamSpawn] );
+		CTFTeamSpawn* spawnSpot = static_cast<CTFTeamSpawn*>(ITFTeamSpawnAutoList::AutoList()[iTFTeamSpawn]);
 
-		if ( spawnSpot )
+		if (spawnSpot)
 		{
 			// snap it to the sampling grid
 			Vector pos = spawnSpot->GetAbsOrigin();
-			pos.x = TheNavMesh->SnapToGrid( pos.x );
-			pos.y = TheNavMesh->SnapToGrid( pos.y );
+			pos.x = TheNavMesh->SnapToGrid(pos.x);
+			pos.y = TheNavMesh->SnapToGrid(pos.y);
 
 			Vector normal;
-			if ( FindGroundForNode( &pos, &normal ) )
+			if (FindGroundForNode(&pos, &normal))
 			{
-				AddWalkableSeed( pos, normal );
+				AddWalkableSeed(pos, normal);
 				iFoundSpawns++;
 			}
 			else
@@ -3473,7 +3471,7 @@ void CNavMesh::BeginGeneration( bool incremental )
 		}
 	}
 #else
-	engine->ServerCommand( "tf_bot_kick all\n" );
+	engine->ServerCommand( "bot_kick\n" );
 #endif
 
 	// Right now, incrementally-generated areas won't connect to existing areas automatically.
@@ -4064,51 +4062,7 @@ bool CNavMesh::UpdateGeneration( float maxTime )
 			}
 			else if ( restart )
 			{
-				if (nav_generate_noreload.GetInt() == 0)
-				{
-					engine->ChangeLevel(STRING(gpGlobals->mapname), NULL);
-				}
-				else
-				{
-					Load();
-					if (nav_generate_auto.GetBool())
-					{
-#ifdef TF_DLL
-						auto* pMVM = dynamic_cast<CMannVsMachineLogic*> (gEntList.FindEntityByClassname(NULL, "tf_logic_mann_vs_machine"));
-						if (pMVM)
-						{
-							pMVM->InitPopulationManager();
-						}
-
-						CUtlVector< CTFPlayer* > playerVector;
-						CollectPlayers(&playerVector);
-						FOR_EACH_VEC(playerVector, i)
-						{
-							if (!playerVector[i])
-								continue;
-
-							if (playerVector[i]->IsFakeClient())
-								continue;
-
-							if (playerVector[i]->IsBot())
-								continue;
-
-							if (playerVector[i]->IsHLTV())
-								continue;
-
-							if (playerVector[i]->IsReplay())
-								continue;
-
-							playerVector[i]->StateTransition( TF_STATE_WELCOME );
-						}
-#endif
-						IGameEvent* pEvent = gameeventmanager->CreateEvent("solo_nav_complete");
-						if (pEvent)
-						{
-							gameeventmanager->FireEvent(pEvent);
-						}
-					}
-				}
+				engine->ChangeLevel( STRING( gpGlobals->mapname ), NULL );
 			}
 			else
 			{
@@ -4745,18 +4699,19 @@ CNavNode *CNavMesh::GetNextWalkableSeedNode( void )
 	if ( m_seedIdx >= m_walkableSeeds.Count() )
 		return NULL;
 
-	while ( true )
+	while (true)
 	{
 		WalkableSeedSpot spot = m_walkableSeeds[m_seedIdx];
 		++m_seedIdx;
 
 		// check if a node exists at this location
 		CNavNode* node = CNavNode::GetNode(spot.pos);
-		if ( !node )
+		if (!node)
 		{
+
 			return new CNavNode(spot.pos, spot.normal, NULL, false);
 		}
-		if ( m_seedIdx >= m_walkableSeeds.Count() )
+		if (m_seedIdx >= m_walkableSeeds.Count())
 			return NULL;
 	}
 }

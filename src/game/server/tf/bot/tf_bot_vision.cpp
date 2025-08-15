@@ -20,11 +20,7 @@ ConVar tf_bot_sniper_choose_target_interval( "tf_bot_sniper_choose_target_interv
 // Update internal state
 void CTFBotVision::Update( void )
 {
-	CTFBot* me = (CTFBot*)GetBot()->GetEntity();
-	if ( !me )
-		return;
-
-	if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )
+	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
 		// Throttle vision update rate of robots in MvM for perf at the expense of reaction times
 		if ( !m_scanTimer.IsElapsed() )
@@ -36,6 +32,10 @@ void CTFBotVision::Update( void )
 	}
 
 	IVision::Update();
+
+	CTFBot *me = (CTFBot *)GetBot()->GetEntity();
+	if ( !me )
+		return;
 
 	// forget spies we have lost sight of
 	CUtlVector< CTFPlayer * > playerVector;
@@ -85,10 +85,6 @@ void CTFBotVision::CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * 
 			continue;
 
 		if ( !player->IsAlive() )
-			continue;
-
-		CTFPlayer* pPlayer = static_cast<CTFPlayer*>( player );
-		if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
 			continue;
 
 		potentiallyVisible->AddToTail( player );
@@ -392,7 +388,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			return false;
 		}
 
-		if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS )	// in MvM mode, forget spies as soon as they are fully disguised
+		if ( TFGameRules()->IsMannVsMachineMode() )	// in MvM mode, forget spies as soon as they are fully disguised
 		{
 			CTFBot::SuspectedSpyInfo_t* pSuspectInfo = me->IsSuspectedSpy( player );
 			// But only if we aren't suspecting them currently.  This happens when we bump into them.
@@ -414,7 +410,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			return true;
 		}
 
-		if ( !TFGameRules()->IsMannVsMachineMode() || me->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS )	// ignore in MvM mode
+		if ( !TFGameRules()->IsMannVsMachineMode() )	// ignore in MvM mode
 		{
 			if ( player->IsPlacingSapper() )
 			{
@@ -424,7 +420,11 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			}
 		}
 
-		if ( player->m_Shared.InCond( TF_COND_DISGUISING ) )
+		if ( 
+			player->m_Shared.InCond( TF_COND_DISGUISING ) 
+			||
+			( player->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER) /*&& player->something something speed.*/)
+			)
 		{
 			// spotted a spy!
 			me->RealizeSpy( player );

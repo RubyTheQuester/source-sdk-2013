@@ -262,22 +262,7 @@ CTeamRoundTimer::CTeamRoundTimer( void )
 //-----------------------------------------------------------------------------
 CTeamRoundTimer::~CTeamRoundTimer( void )
 {
-#ifdef GAME_DLL
-	if ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->InSetup() )
-	{
-		CTeamRoundTimer* pTimer = TeamplayRoundBasedRules()->GetActiveRoundTimer();
-		if ( pTimer )
-		{
-			if ( pTimer->entindex() == entindex() || pTimer->IsDisabled() || pTimer->IsMarkedForDeletion() )
-			{
-				if ( IsStopWatchTimer() == false )
-				{
-					TeamplayRoundBasedRules()->SetSetup( false );
-				}
-			}
-		}
-	}
-#endif // GAME_DLL
+
 }
 
 //-----------------------------------------------------------------------------
@@ -808,7 +793,7 @@ void CTeamRoundTimer::SetState( int nState, bool bFireOutput )
 
 	if ( nState == RT_STATE_SETUP )
 	{
-		if ( IsStopWatchTimer() == false && !IsDisabled() && !IsMarkedForDeletion() )
+		if ( IsStopWatchTimer() == false )
 		{
 			TeamplayRoundBasedRules()->SetSetup( true );
 		}

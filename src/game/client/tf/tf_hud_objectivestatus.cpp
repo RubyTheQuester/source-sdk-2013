@@ -34,7 +34,6 @@
 #include "tf_hud_arena_player_count.h"
 #include "c_tf_playerresource.h"
 #include "tf_hud_robot_destruction_status.h"
-#include "vgui/solo/tf_hud_solo_objectives.h"
 #include "tf_hud_passtime.h"
 #include "c_tf_passtime_logic.h"
 
@@ -61,7 +60,6 @@ CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName )
 	, m_pMultipleEscortPanel( NULL )
 	, m_pTrainingPanel( NULL )
 	, m_pRobotDestructionPanel( NULL )
-	, m_pSoloObjectivesPanel( NULL )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -73,7 +71,6 @@ CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName )
 	m_pMultipleEscortPanel = new CTFHudMultipleEscort( this, "ObjectiveStatusMultipleEscort" );
 	m_pTrainingPanel = new CTFHudTraining(this, "ObjectiveStatusTraining" );
 	m_pRobotDestructionPanel = NULL;
-	m_pSoloObjectivesPanel = NULL;
 	m_pHudPasstime = new CTFHudPasstime( this );
 
 	SetHiddenBits( 0 );
@@ -93,12 +90,6 @@ void CTFHudObjectiveStatus::ApplySchemeSettings( IScheme *pScheme )
 		m_pRobotDestructionPanel = NULL;
 	}
 	m_pRobotDestructionPanel = new CTFHUDRobotDestruction( this, "ObjectiveStatusRobotDestruction" );
-	if ( m_pSoloObjectivesPanel )
-	{
-		m_pSoloObjectivesPanel->MarkForDeletion();
-		m_pSoloObjectivesPanel = NULL;
-	}
-	m_pSoloObjectivesPanel = new CTFHUDSoloObjectives( this, "ObjectiveStatusSolo" );
 
 	// load control settings...
 	LoadControlSettings( "resource/UI/HudObjectiveStatus.res" );
@@ -145,11 +136,6 @@ void CTFHudObjectiveStatus::Reset()
 	if ( m_pRobotDestructionPanel )
 	{
 		m_pRobotDestructionPanel->Reset();
-	}
-
-	if ( m_pSoloObjectivesPanel )
-	{
-		m_pSoloObjectivesPanel->Reset();
 	}
 
 	if ( m_pHudPasstime )
@@ -202,12 +188,6 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 {
 	if ( !TFGameRules() )
 		return;
-
-	if ( m_pSoloObjectivesPanel )
-	{
-		m_pSoloObjectivesPanel->SetVisible( true );
-		m_pSoloObjectivesPanel->SetEnabled( true );
-	}
 
 	//=============================================================================
 	// HPE_BEGIN
@@ -350,11 +330,11 @@ void CTFHudObjectiveStatus::Think()
 //-----------------------------------------------------------------------------
 bool CTFHudObjectiveStatus::ShouldDraw()
 {
-	//C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	//if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
-	//{
-	//	return false;
-	//}
+	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+	{
+		return false;
+	}
 
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 		return false;

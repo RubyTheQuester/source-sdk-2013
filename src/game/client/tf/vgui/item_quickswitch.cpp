@@ -742,8 +742,6 @@ void CItemQuickSwitchPanel::OnIPMouseReleased( vgui::Panel *panel )
 	TFInventoryManager()->EquipItemInLoadout( m_iClass, m_iSlot, iIndex );
 
 	m_bLoadoutHasChanged = true;
-
-	UpdateEquippedItem();
 }
 
 //-----------------------------------------------------------------------------

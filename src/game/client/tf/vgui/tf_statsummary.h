@@ -123,7 +123,6 @@ private:
 
 	bool m_bShowingLeaderboard;
 	bool m_bLoadingCommunityMap;
-	bool m_bWasActivated;
 	int m_xStartLeaderboard;
 	int m_yStartLeaderboard;
 	CUtlVector< vgui::EditablePanel* > m_vecLeaderboardEntries;

@@ -59,7 +59,6 @@ static ISteamUGC *GetWorkshopUGC()
 	// The first time we successfully get a steam context we should call the init
 	if ( pUGC && !bInitUGC )
 	{
-
 		// For the dedicated server API, honor -ugcpath
 		int i = CommandLine()->FindParm( "-ugcpath" );
 		if ( engine->IsDedicatedServer() && i )

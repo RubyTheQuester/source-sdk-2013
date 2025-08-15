@@ -12,16 +12,8 @@ class CTFBotGetAmmo : public Action< CTFBot >
 {
 public:
 	CTFBotGetAmmo( void );
-	CTFBotGetAmmo( bool crumpkin );
-	CTFBotGetAmmo( bool crumpkin, bool powerup );
-	CTFBotGetAmmo( CTFBot* me, CBaseEntity* target );
 
 	static bool IsPossible( CTFBot *me );			// return true if this Action has what it needs to perform right now
-	static bool IsCrumpkinPossible( CTFBot *me );
-	static bool IsSpellPossible( CTFBot *me );
-	static bool IsPowerupPossible( CTFBot *me );
-	static bool IsCreditPossible( CTFBot *me );
-	static bool IsCorePossible( CTFBot *me );
 
 	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
 	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
@@ -40,13 +32,6 @@ private:
 	PathFollower m_path;
 	CHandle< CBaseEntity > m_ammo;
 	bool m_isGoalDispenser;
-	bool m_isGoalCrumpkin;
-	bool m_isGoalSpell;
-	bool m_isGoalPowerup;
-	bool m_isGoalGeneric;
-	bool m_isGoalMerasmus;
-	bool m_isGoalCredits;
-	bool m_isGoalCores;
 };
 
 

@@ -87,7 +87,6 @@
 #include "ihudlcd.h"
 #include "toolframework_client.h"
 #include "hltvcamera.h"
-
 #if defined( REPLAY_ENABLED )
 #include "replay/replaycamera.h"
 #include "replay/replay_ragdoll.h"
@@ -130,8 +129,6 @@
 #include "vgui_controls/BuildGroup.h"
 
 #include "secure_command_line.h"
-
-#include "vscript_client.h"
 
 // NVNT includes
 #include "hud_macros.h"
@@ -211,7 +208,6 @@ IXboxSystem *xboxsystem = NULL;	// Xbox 360 only
 IMatchmaking *matchmaking = NULL;
 IUploadGameStats *gamestatsuploader = NULL;
 IClientReplayContext *g_pClientReplayContext = NULL;
-IScriptManager* scriptmanager = NULL;
 #if defined( REPLAY_ENABLED )
 IReplayManager *g_pReplayManager = NULL;
 IReplayMovieManager *g_pReplayMovieManager = NULL;
@@ -967,10 +963,6 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory, CreateInterfaceFn physi
 	if (!g_pMatSystemSurface)
 		return false;
 
-	if (!CommandLine()->CheckParm("-noscripting"))
-	{
-		scriptmanager = (IScriptManager*)appSystemFactory(VSCRIPT_INTERFACE_VERSION, NULL);
-	}
 
 	// it's ok if this is NULL. That just means the sourcevr.dll wasn't found
 	if ( CommandLine()->CheckParm( "-vr" ) )
@@ -1713,17 +1705,6 @@ void CHLClient::ResetStringTablePointers()
 #endif
 }
 
-static void ClearClientDynamicModelList()
-{
-	// engine bugfix: clear out client dynamic model list for listen servers
-	// TODO remove this when the engine is updated
-	struct CModelInfo : IVModelInfoClient
-	{
-		CUtlVector< model_t* > m_vecDynamicModels;
-	};
-	static_cast<CModelInfo*>(modelinfo)->m_vecDynamicModels.Purge();
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: Per level de-init
 //-----------------------------------------------------------------------------
@@ -1774,8 +1755,6 @@ void CHLClient::LevelShutdown( void )
 	internalCenterPrint->Clear();
 
 	messagechars->Clear();
-
-	ClearClientDynamicModelList();
 
 #ifndef TF_CLIENT_DLL
 	// don't want to do this for TF2 because we have particle systems in our

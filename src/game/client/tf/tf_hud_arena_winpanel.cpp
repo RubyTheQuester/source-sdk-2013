@@ -96,9 +96,7 @@ void CTFArenaWinPanel::SetVisible( bool state )
 
 	int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "mid" );
 
-	ConVarRef tf_gamemode_solo("tf_gamemode_solo");
-	ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
-	if ( !tf_gamemode_solo.GetBool() && !tf_gamemode_campaign.GetBool() && state )
+	if ( state )
 	{
 		gHUD.LockRenderGroup( iRenderGroup );
 	}
@@ -323,16 +321,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 			}
 
 			// only show team scores if round is complete
-			ConVarRef tf_gamemode_solo("tf_gamemode_solo");
-			ConVarRef tf_gamemode_campaign("tf_gamemode_campaign");
-			if ( tf_gamemode_solo.GetBool() || tf_gamemode_campaign.GetBool() )
-			{
-				m_pTeamScorePanel->SetVisible( false );
-			}
-			else
-			{
-				m_pTeamScorePanel->SetVisible( true );
-			}
+			m_pTeamScorePanel->SetVisible( true );
 		}
 
 		if ( !g_TF_PR )

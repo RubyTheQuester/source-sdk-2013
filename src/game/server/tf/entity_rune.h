@@ -51,7 +51,6 @@ public:
 	static CTFRune*	CreateRune( const Vector &vecOrigin, RuneTypes_t nType, int nTeam, bool bShouldReposition, bool bApplyForce, Vector vecSpawnDirection = vec3_origin );
 	static bool		RepositionRune( RuneTypes_t nType, int nTeamNumber );
 	float			GetRuneRepositionTime( void );
-	int				GetRuneTeam( void ) { return m_nTeam; }
 
 	virtual const char *GetDefaultPowerupModel( void )
 	{

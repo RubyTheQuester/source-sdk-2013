@@ -94,7 +94,7 @@ static void WriteAchievementGlobalState( KeyValues *pKV, bool bPersistToSteamClo
 	}
 	else
 	{
-		Q_snprintf( szFilename, sizeof( szFilename ), "GameStateSolo.txt" );
+		Q_snprintf( szFilename, sizeof( szFilename ), "GameState.txt" );
 	}
 
 	// Never call pKV->SaveToFile!!!!
@@ -270,8 +270,7 @@ m_CallbackUserStatsStored( this, &CAchievementMgr::Steam_OnUserStatsStored )
     // [dwenger] Steam Cloud Support
     //=============================================================================
 
-    //if ( ePersistToSteamCloud == SteamCloudPersist_Off )
-	if ( true )
+    if ( ePersistToSteamCloud == SteamCloudPersist_Off )
     {
         m_bPersistToSteamCloud = false;
     }
@@ -350,12 +349,6 @@ void CAchievementMgr::PostInit()
 	{
 		// create and initialize all achievements and insert them in our map
 		CBaseAchievement *pAchievement = pAchievementHelper->m_pfnCreate();
-		if ( pAchievement->GetAchievementID() < ACHIEVEMENT_START_TFSOLO )
-		{
-			delete pAchievement;
-			pAchievementHelper = pAchievementHelper->m_pNext;
-			continue;
-		}
 		pAchievement->m_pAchievementMgr = this;
 		pAchievement->Init();
 		pAchievement->CalcProgressMsgIncrement();
@@ -379,27 +372,6 @@ void CAchievementMgr::PostInit()
 		}
 
 		pAchievementHelper = pAchievementHelper->m_pNext;
-	}
-
-	KeyValuesAD pKV( "achievements" );
-	if ( pKV->LoadFromFile( filesystem, "cfg/solo/achievements.txt", "GAME" ) )
-	{
-		KeyValues* pNode = pKV->GetFirstSubKey();
-		while ( pNode )
-		{
-			CCustomAchievement* pAchievement = new CCustomAchievement();
-			pAchievement->m_pAchievementMgr = this;
-			pAchievement->Init();
-			pAchievement->InitFromKV( pNode );
-			pAchievement->CalcProgressMsgIncrement();
-			m_mapAchievement.Insert( pAchievement->GetAchievementID(), pAchievement );
-			if ( pAchievement->IsMetaAchievement() )
-			{
-				m_mapMetaAchievement.Insert( pAchievement->GetAchievementID(), dynamic_cast<CAchievement_AchievedCount*>(pAchievement) );
-			}
-
-			pNode = pNode->GetNextKey();
-		}
 	}
 
 	FOR_EACH_MAP( m_mapAchievement, iter )
@@ -774,7 +746,7 @@ void CAchievementMgr::LoadGlobalState()
 	}
 	else
 	{
-		Q_snprintf( szFilename, sizeof( szFilename ), "GameStateSolo.txt" );
+		Q_snprintf( szFilename, sizeof( szFilename ), "GameState.txt" );
 	}
 
     //=============================================================================
@@ -921,7 +893,7 @@ void CAchievementMgr::AwardAchievement( int iAchievementID )
 
 	if ( !pAchievement->AlwaysEnabled() && !CheckAchievementsEnabled() )
 	{
-		//Msg( "Achievements disabled, ignoring achievement unlock for %s\n", pAchievement->GetName() );
+		Msg( "Achievements disabled, ignoring achievement unlock for %s\n", pAchievement->GetName() );
 		return;
 	}
 
@@ -1056,7 +1028,7 @@ bool CAchievementMgr::CheckAchievementsEnabled()
 	// if PC, Steam must be running and user logged in
 	if ( IsPC() && !LoggedIntoSteam() )
 	{
-		//Msg( "Achievements disabled: Steam not running.\n" );
+		Msg( "Achievements disabled: Steam not running.\n" );
 		return false;
 	}
 
@@ -1856,16 +1828,12 @@ void CAchievementMgr::SetAchievementThink( CBaseAchievement *pAchievement, float
 
 	// Otherwise, add it to the list
 	int iIdx = m_vecThinkListeners.AddToTail();
-	if ( m_vecThinkListeners.IsValidIndex( iIdx ) )
-	{
-		m_vecThinkListeners[iIdx].pAchievement = pAchievement;
-		m_vecThinkListeners[iIdx].m_flThinkTime = gpGlobals->curtime + flThinkTime;
-	}
+	m_vecThinkListeners[iIdx].pAchievement = pAchievement;
+	m_vecThinkListeners[iIdx].m_flThinkTime = gpGlobals->curtime + flThinkTime;
 }
 
 void CAchievementMgr::UpdateStateFromSteam_Internal()
 {
-	return;
 #ifndef NO_STEAM
 	// run through the achievements and set their achieved state according to Steam data
 	FOR_EACH_MAP( m_mapAchievement, i )

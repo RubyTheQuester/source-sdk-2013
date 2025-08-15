@@ -135,7 +135,7 @@ void CTFMapInfoMenu::ShowPanel( bool bShow )
 
 	m_KeyRepeat.Reset();
 
-	if ( false )
+	if ( bShow )
 	{
 		InvalidateLayout( true, true );		// Force scheme reload since the steam controller state may have changed.
 		Activate();
@@ -144,14 +144,6 @@ void CTFMapInfoMenu::ShowPanel( bool bShow )
 	else
 	{
 		SetVisible( false );
-		if (TFGameRules()->IsInArenaMode() == true && tf_arena_use_queue.GetBool() == true)
-		{
-			m_pViewPort->ShowPanel(PANEL_ARENA_TEAM, true);
-		}
-		else
-		{
-			engine->ClientCmd("team_ui_setup");
-		}
 	}
 }
 
