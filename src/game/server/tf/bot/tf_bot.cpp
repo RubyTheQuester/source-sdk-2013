@@ -4532,6 +4532,32 @@ bool CTFBot::IsAttentionFocusedOn( CBaseEntity *who ) const
 	return false;
 }
 
+//---------------------------------------------------------------------------------------------
+const char* CTFBot::GiveRandomItemName(loadout_positions_t loadoutPosition)
+{
+	CUtlVector< const CEconItemDefinition* > itemVector;
+
+	const CEconItemSchema::ItemDefinitionMap_t& mapItemDefs = ItemSystem()->GetItemSchema()->GetItemDefinitionMap();
+	FOR_EACH_MAP_FAST(mapItemDefs, i)
+	{
+		const CTFItemDefinition* pItemDef = dynamic_cast<const CTFItemDefinition*>(mapItemDefs[i]);
+
+		if (pItemDef && pItemDef->CanBePlacedInSlot(loadoutPosition) && pItemDef->CanBeUsedByClass(this->GetPlayerClass()->GetClassIndex()))
+		{
+			itemVector.AddToTail(pItemDef);
+		}
+	}
+
+	if (itemVector.Count() > 0)
+	{
+		int which = RandomInt(0, itemVector.Count() - 1);
+
+		const char* itemName = itemVector[which]->GetDefinitionName();
+		return itemName;
+	}
+
+	return NULL;
+}
 
 //---------------------------------------------------------------------------------------------
 // Notice the given threat after the given number of seconds have elapsed
@@ -4611,12 +4637,6 @@ void CTFBot::GiveRandomItem( loadout_positions_t loadoutPosition )
 	if ( itemVector.Count() > 0 )
 	{
 		int which = RandomInt( 0, itemVector.Count()-1 );
-
-/*
-		CBaseCombatWeapon *myMelee = me->Weapon_GetSlot( TF_WPN_TYPE_MELEE );
-		me->Weapon_Detach( myMelee );
-		UTIL_Remove( myMelee );
-*/
 
 		const char *itemName = itemVector[ which ]->GetDefinitionName();
 		BotGenerateAndWearItem( this, itemName );

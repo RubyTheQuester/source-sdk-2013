@@ -280,6 +280,9 @@ extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
 
+ConVar tf_bot_random_weapons("tf_bot_random_weapons", "1", FCVAR_GAMEDLL, "Gives bots random weapon items.");
+ConVar tf_bot_random_weapons_chance("tf_bot_random_weapons_chance", "85", FCVAR_GAMEDLL, "Percent chance a bot will get a weapon.");//what
+
 extern ConVar tf_voice_command_suspension_mode;
 extern ConVar tf_feign_death_duration;
 extern ConVar spec_freeze_time;
@@ -14959,6 +14962,31 @@ void CTFPlayer::ForceRespawn( void )
 
 		GetPlayerClass()->Init( iDesiredClass );
 
+		// Are we a bot?
+		if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+		{
+			CTFBot* pBot = ToTFBot(this);
+
+			// This is a new class, so start it all null
+			pBot->SetRandomPrimary(NULL);
+			pBot->SetRandomSecondary(NULL);
+			pBot->SetRandomMelee(NULL);
+			//pBot->SetRandomHat(NULL);
+			//pBot->SetRandomArmor(NULL);
+
+			// Set random weapons for this class
+			if (RandomInt(0, 100) < tf_bot_random_weapons_chance.GetInt())
+			{
+				pBot->SetRandomPrimary(pBot->GiveRandomItemName(LOADOUT_POSITION_PRIMARY));
+
+				// Sandvich is broken right now
+				//if (GetPlayerClass()->GetClassIndex() != TF_CLASS_HEAVYWEAPONS)
+				pBot->SetRandomSecondary(pBot->GiveRandomItemName(LOADOUT_POSITION_SECONDARY));
+
+				pBot->SetRandomMelee(pBot->GiveRandomItemName(LOADOUT_POSITION_MELEE));
+			}
+		}
+
 		// Don't report class changes if we're random, because it's not a player choice
 		if ( !bRandom )
 		{
@@ -15042,6 +15070,54 @@ void CTFPlayer::ForceRespawn( void )
 	}
 
 	m_bSwitchedClass = false;
+	if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+	{
+		CTFBot* pBot = ToTFBot(this);
+
+		// Should we equip a random weapon?
+		if (tf_bot_random_weapons.GetBool() == true)
+		{
+			const char* primaryName = pBot->GetRandomPrimary();
+			const char* secondaryName = pBot->GetRandomSecondary();
+			const char* meleeName = pBot->GetRandomMelee();
+
+			if (primaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_PRIMARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)primaryName);
+			}
+
+			if (secondaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)secondaryName);
+			}
+
+			if (meleeName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_MELEE);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, meleeName);
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------

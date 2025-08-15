@@ -342,6 +342,23 @@ public:
 	bool FindSplashTarget( CBaseEntity *target, float maxSplashRadius, Vector *splashTarget ) const;
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
+	const char* GiveRandomItemName(loadout_positions_t loadoutPosition);
+	void ScriptGenerateAndWearItem(const char* pszItemName) { if (pszItemName) BotGenerateAndWearItem(this, pszItemName); }
+
+	const char* GetRandomPrimary(void) { return m_strRandomPrimary; }
+	const char* GetRandomSecondary(void) { return m_strRandomSecondary; }
+	const char* GetRandomMelee(void) { return m_strRandomMelee; }
+
+	//const char* GetRandomHat(void) { return m_strRandomHat; }
+	//const char* GetRandomArmor(void) { return m_strRandomArmor; }
+
+	void SetRandomPrimary(const char* pszItemName) { m_strRandomPrimary = pszItemName; }
+	void SetRandomSecondary(const char* pszItemName) { m_strRandomSecondary = pszItemName; }
+	void SetRandomMelee(const char* pszItemName) { m_strRandomMelee = pszItemName; }
+
+	//void SetRandomHat(const char* pszItemName) { m_strRandomHat = pszItemName; }
+	//void SetRandomArmor(const char* pszItemName) { m_strRandomArmor = pszItemName; }
+
 
 	enum MissionType
 	{
@@ -594,6 +611,12 @@ private:
 	CHandle< CCaptureFlag > m_hFollowingFlagTarget;
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
+
+	const char* m_strRandomPrimary;
+	const char* m_strRandomSecondary;
+	const char* m_strRandomMelee;
+	//const char* m_strRandomHat;
+	//const char* m_strRandomArmor;
 
 	CUtlString m_preset;
 	CountdownTimer m_lastUsedCanteenTimer;

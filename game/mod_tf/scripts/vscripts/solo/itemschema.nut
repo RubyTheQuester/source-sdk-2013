@@ -1,24 +1,80 @@
 ::TFSOLO.BalancingFuncs <- []
-//IncludeScript("solo/balancing/shortstop.nut")
+//==========================//
+//========Rebalances========//
+//==========================//
 
-IncludeScript("solo/balancing/ambassador.nut")
+//-Scout-//
+IncludeScript("solo/balancing/shortstop.nut")
+IncludeScript("solo/balancing/sandman.nut")
+
+//-Soldier-//
+IncludeScript("solo/balancing/libertylauncher.nut")
+
+//-Pyro-//
+IncludeScript("solo/balancing/gaspasser.nut")
+
+//-Demoman-//
 IncludeScript("solo/balancing/caber.nut")
+
+//-Heavy-//
+IncludeScript("solo/balancing/natascha.nut") //Design Stats
+IncludeScript("solo/balancing/steak.nut")
 IncludeScript("solo/balancing/dalokohsbar.nut")
 IncludeScript("solo/balancing/evictionnotice.nut")
-IncludeScript("solo/balancing/hothand.nut")
-IncludeScript("solo/balancing/pomson.nut")
-IncludeScript("solo/balancing/sandman.nut")
-IncludeScript("solo/balancing/sunonastick.nut")
-IncludeScript("solo/balancing/volcanofragment.nut")
 IncludeScript("solo/balancing/warriorsspirit.nut")
-IncludeScript("solo/balancing/yer.nut")
-IncludeScript("solo/balancing/steak.nut")
 
+//-Engineer-//
+IncludeScript("solo/balancing/southernhospitality.nut") //Design Stats
+IncludeScript("solo/balancing/pomson.nut")
+
+//-Medic-//
 IncludeScript("solo/balancing/ubersaw.nut")
-IncludeScript("solo/balancing/shortstop.nut")
 
-IncludeScript("solo/balancing/pipboy.nut")
-IncludeScript("solo/balancing/blackrose.nut")
+//-Sniper-//
+
+//-Spy-//
+IncludeScript("solo/balancing/ambassador.nut") 
+IncludeScript("solo/balancing/enforcer.nut") //Design Stats
+IncludeScript("solo/balancing/yer.nut")
+
+//===========================//
+//========Not reskins========//
+//===========================//
+
+//-Scout-//
+IncludeScript("solo/balancing/reskin/threeruneblade.nut") 		//Design stats
+
+//-Pyro-//
+IncludeScript("solo/balancing/reskin/maul.nut") 				//Design stats
+IncludeScript("solo/balancing/reskin/nineiron.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/postalpummeler.nut") 		//Design stats
+
+//-Demoman-//
+IncludeScript("solo/balancing/reskin/bootlegger.nut") 			//Design stats
+
+//-Heavy-//
+IncludeScript("solo/balancing/reskin/ironcurtain.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/fishcake.nut")				//Design stats
+IncludeScript("solo/balancing/reskin/robosandvich.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/apocofists.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/breadbite.nut") 			//Design stats
+
+//-Engineer-//
+IncludeScript("solo/balancing/reskin/pipboy.nut") 				//Design stats
+
+//-Sniper-//
+IncludeScript("solo/balancing/reskin/shootingstar.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/fortifiedcompound.nut") 
+IncludeScript("solo/balancing/reskin/awperhand.nut") 			//Design stats
+
+//-Spy-//
+IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/wangaprick.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/blackrose.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/apsap.nut") 				//Design stats
+IncludeScript("solo/balancing/reskin/timepiece.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/quackenbirdt.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/snackattack.nut") 			
 
 ::TFSOLO.SetupItemSchema <- function()
 {
