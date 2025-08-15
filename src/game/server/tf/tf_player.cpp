@@ -278,7 +278,9 @@ extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
 
-extern ConVar tf_voice_command_suspension_mode;
+ConVar tf_bot_random_weapons("tf_bot_random_weapons", "1", FCVAR_GAMEDLL, "Gives bots random weapon items.");
+ConVar tf_bot_random_weapons_chance("tf_bot_random_weapons_chance", "85", FCVAR_GAMEDLL, "Percent chance a bot will get a weapon.");
+
 extern ConVar tf_feign_death_duration;
 extern ConVar spec_freeze_time;
 extern ConVar spec_freeze_traveltime;
@@ -293,6 +295,8 @@ extern ConVar tf_tournament_classchange_allowed;
 extern ConVar tf_tournament_classchange_ready_allowed;
 extern ConVar tf_rocketpack_impact_push_min;
 extern ConVar tf_rocketpack_impact_push_max;
+
+extern ConVar tf_voice_command_suspension_mode;
 #if defined( _DEBUG ) || defined( STAGING_ONLY )
 extern ConVar mp_developer;
 extern ConVar bot_mimic;
@@ -14834,6 +14838,29 @@ void CTFPlayer::ForceRespawn( void )
 
 		GetPlayerClass()->Init( iDesiredClass );
 
+		// Are we a bot?
+		if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+		{
+			CTFBot* pBot = ToTFBot(this);
+
+			// This is a new class, so start it all null
+			pBot->SetRandomPrimary(NULL);
+			pBot->SetRandomSecondary(NULL);
+			pBot->SetRandomMelee(NULL);
+
+			// Set random weapons for this class
+			if (RandomInt(0, 100) < tf_bot_random_weapons_chance.GetInt())
+			{
+				pBot->SetRandomPrimary(pBot->GiveRandomItemName(LOADOUT_POSITION_PRIMARY));
+
+				// Sandvich is broken right now
+				if (GetPlayerClass()->GetClassIndex() != TF_CLASS_HEAVYWEAPONS)
+					pBot->SetRandomSecondary(pBot->GiveRandomItemName(LOADOUT_POSITION_SECONDARY));
+
+				pBot->SetRandomMelee(pBot->GiveRandomItemName(LOADOUT_POSITION_MELEE));
+			}
+		}
+
 		// Don't report class changes if we're random, because it's not a player choice
 		if ( !bRandom )
 		{
@@ -14917,6 +14944,54 @@ void CTFPlayer::ForceRespawn( void )
 	}
 
 	m_bSwitchedClass = false;
+	if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
+	{
+		CTFBot* pBot = ToTFBot(this);
+
+		// Should we equip a random weapon?
+		if (tf_bot_random_weapons.GetBool() == true)
+		{
+			const char* primaryName = pBot->GetRandomPrimary();
+			const char* secondaryName = pBot->GetRandomSecondary();
+			const char* meleeName = pBot->GetRandomMelee();
+
+			if (primaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_PRIMARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)primaryName);
+			}
+
+			if (secondaryName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, (const char*)secondaryName);
+			}
+
+			if (meleeName != NULL)
+			{
+				CBaseCombatWeapon* myWeapon = this->Weapon_GetSlot(TF_WPN_TYPE_MELEE);
+				if (myWeapon)
+				{
+					this->Weapon_Detach(myWeapon);
+					UTIL_Remove(myWeapon);
+				}
+
+				BotGenerateAndWearItem(this, meleeName);
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -17705,6 +17780,21 @@ bool CTFPlayer::PlayTauntSceneFromItem( const CEconItemView *pEconItemView )
 		{
 			int iForceWeaponSlot = StringFieldToInt( pszTauntForceWeaponSlotName, GetItemSchema()->GetWeaponTypeSubstrings() );
 			Weapon_Switch( Weapon_GetSlot( iForceWeaponSlot ) );
+		}
+
+		static CSchemaAttributeDefHandle pAttrDef_TauntForceWeaponSlotAlt( "taunt force signature weapon" );
+		if ( FindAttribute_UnsafeBitwiseCast<CAttribute_String>(pItemDef, pAttrDef_TauntForceWeaponSlotAlt, &pszTauntForceWeaponSlotName) )
+		{
+			int iForceSignatureSlot = 0;
+			if (iClass == TF_CLASS_MEDIC)
+			{
+				iForceSignatureSlot = 1;
+			}
+			else if (iClass == TF_CLASS_SPY || iClass == TF_CLASS_ENGINEER)
+			{
+				iForceSignatureSlot = 2;
+			}
+			Weapon_Switch( Weapon_GetSlot( iForceSignatureSlot ) );
 		}
 
 		m_bInitTaunt = true;

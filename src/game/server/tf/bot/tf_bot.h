@@ -341,7 +341,16 @@ public:
 	bool FindSplashTarget( CBaseEntity *target, float maxSplashRadius, Vector *splashTarget ) const;
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
-	void ScriptGenerateAndWearItem( const char *pszItemName ) { if ( pszItemName ) BotGenerateAndWearItem( this, pszItemName ); }
+	const char* GiveRandomItemName(loadout_positions_t loadoutPosition);
+	void ScriptGenerateAndWearItem(const char* pszItemName) { if (pszItemName) BotGenerateAndWearItem(this, pszItemName); }
+
+	const char* GetRandomPrimary(void) { return m_strRandomPrimary; }
+	const char* GetRandomSecondary(void) { return m_strRandomSecondary; }
+	const char* GetRandomMelee(void) { return m_strRandomMelee; }
+
+	void SetRandomPrimary(const char* pszItemName) { m_strRandomPrimary = pszItemName; }
+	void SetRandomSecondary(const char* pszItemName) { m_strRandomSecondary = pszItemName; }
+	void SetRandomMelee(const char* pszItemName) { m_strRandomMelee = pszItemName; }
 
 	enum MissionType
 	{
@@ -495,6 +504,12 @@ public:
 	bool ShouldReEvaluateCurrentClass( void ) const;
 	void ReEvaluateCurrentClass( void );
 
+	void SpawnCustom( void );
+	CUtlString GetPreset() { return m_preset; }
+	void SetPreset(CUtlString preset) { m_preset = preset; }
+	CUtlString ScriptGetPreset() { return GetPreset(); }
+	void ScriptSetPreset(const char* preset) { SetPreset(preset); }
+
 private:
 	CTFBotLocomotion	*m_locomotor;
 	CTFBotBody			*m_body;
@@ -585,6 +600,10 @@ private:
 	CHandle< CCaptureFlag > m_hFollowingFlagTarget;
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
+
+	const char* m_strRandomPrimary;
+	const char* m_strRandomSecondary;
+	const char* m_strRandomMelee;
 };
 
 

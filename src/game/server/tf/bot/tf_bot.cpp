@@ -4465,6 +4465,36 @@ void CTFBot::GiveRandomItem( loadout_positions_t loadoutPosition )
 	}
 }
 
+//---------------------------------------------------------------------------------------------
+const char* CTFBot::GiveRandomItemName(loadout_positions_t loadoutPosition)
+{
+	CUtlVector< const CEconItemDefinition* > itemVector;
+
+	const CEconItemSchema::ItemDefinitionMap_t& mapItemDefs = ItemSystem()->GetItemSchema()->GetItemDefinitionMap();
+	FOR_EACH_MAP_FAST(mapItemDefs, i)
+	{
+		const CTFItemDefinition* pItemDef = dynamic_cast<const CTFItemDefinition*>(mapItemDefs[i]);
+
+		// No base items
+		if (pItemDef->IsBaseItem())
+			continue;
+
+		if (pItemDef && pItemDef->CanBePlacedInSlot(loadoutPosition) && pItemDef->CanBeUsedByClass(this->GetPlayerClass()->GetClassIndex()))
+		{
+			itemVector.AddToTail(pItemDef);
+		}
+	}
+
+	if (itemVector.Count() > 0)
+	{
+		int which = RandomInt(0, itemVector.Count() - 1);
+
+		const char* itemName = itemVector[which]->GetDefinitionName();
+		return itemName;
+	}
+
+	return NULL;
+}
 
 //---------------------------------------------------------------------------------------------
 bool CTFBot::IsSquadmate( CTFPlayer *who ) const
@@ -5030,6 +5060,7 @@ void CTFBot::AddItem( const char* pszItemName )
 		if ( pszItemName && pszItemName[0] )
 		{
 			DevMsg( "CTFBotSpawner::AddItemToBot: Invalid item %s.\n", pszItemName );
+			// Susie's idea, come back here
 		}
 	}
 }
