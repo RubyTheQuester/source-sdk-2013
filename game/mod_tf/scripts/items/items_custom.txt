@@ -126,7 +126,6 @@
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
 			"effect_type"	"positive"
-			"stored_as_integer"	"1"
 		}
 		"3511"
 		{
@@ -635,6 +634,25 @@
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
 			"effect_type"	"negative"
+		}
+		"4005"
+		{
+			"name"				"no hauling"
+			"attribute_class"	"building_no_pickup"
+			"description_string"	"#Attrib_NoHauling"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"stored_as_integer"	"1"
+			"effect_type"	"negative"
+		}
+		"4006"
+		{
+			"name"				"buff on backstab"
+			"attribute_class"	"backstab_buff"
+			"description_string"	"#Attrib_BuffBackstab"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"stored_as_integer"	"1"
 		}
 	}
 	"armory_data"

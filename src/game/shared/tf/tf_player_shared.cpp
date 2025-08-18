@@ -12389,6 +12389,12 @@ bool CTFPlayer::CanPickupBuilding( CBaseObject *pPickupObject )
 	if ( pPickupObject->IsPlasmaDisabled() )
 		return false;
 
+	int iCanNotHaul = 0;
+	CALL_ATTRIB_HOOK_INT(iCanNotHaul, building_no_pickup);
+
+	if (iCanNotHaul != 0)
+		return false;
+
 	// If we were recently carried & placed we may still be upgrading up to our old level.
 	if ( pPickupObject->GetUpgradeLevel() != pPickupObject->GetHighestUpgradeLevel() )
 		return false;

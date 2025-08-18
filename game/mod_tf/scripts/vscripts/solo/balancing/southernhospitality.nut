@@ -12,4 +12,8 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("damage penalty", true)
 	a1.SetString("attribute_class","mult_dmg")
 	a1.SetFloat("value", 0.5)
+	
+	local a2 = attrib.GetKey("bleeding duration", true)
+	a2.SetString("bleeding_duration","mult_dmg")
+	a2.SetInt("value", 6)
 })

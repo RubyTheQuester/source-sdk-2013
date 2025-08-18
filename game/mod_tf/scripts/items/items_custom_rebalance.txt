@@ -2,18 +2,6 @@
 {
 	"prefabs"
 	{
-		"weapon_syringegun"
-		{
-			"attributes"
-			{
-				"Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"	"10"
-				}
-			}
-		}
-		
 		"weapon_sniperrifle_alt1"
 		{
 			"attributes"

@@ -26,4 +26,9 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a3 = attrib.GetKey("spread penalty", true)
 	a3.SetString("attribute_class","mult_spread_scale")
 	a3.SetFloat("value", 1.5)
+	
+	// 10% less damage
+	local a4 = attrib.GetKey("damage penalty", true)
+	a4.SetString("attribute_class","mult_dmg")
+	a4.SetFloat("value", 0.9)
 })
