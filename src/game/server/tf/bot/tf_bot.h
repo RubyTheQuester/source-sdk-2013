@@ -169,6 +169,8 @@ public:
 	CTFNavArea *FindVantagePoint( float maxTravelDistance = 2000.0f ) const;	// return a nearby area where we can see a member of the enemy team
 	HSCRIPT ScriptFindVantagePoint( float maxTravelDistance ) { return ToHScript( this->FindVantagePoint( maxTravelDistance ) ); }
 
+	CTFNavArea *FindUnderworldExitPoint( float maxTravelDistance = 2000.0f ) const;
+
 	bool GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpawn ) const;	// return true if class in the output vector is required
 	ETFClass GetPresetClassToSpawn() const;	// return next class from preset table to spawn
 	bool CanChangeClass() const;
@@ -342,23 +344,6 @@ public:
 	bool FindSplashTarget( CBaseEntity *target, float maxSplashRadius, Vector *splashTarget ) const;
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
-	const char* GiveRandomItemName(loadout_positions_t loadoutPosition);
-	void ScriptGenerateAndWearItem(const char* pszItemName) { if (pszItemName) BotGenerateAndWearItem(this, pszItemName); }
-
-	const char* GetRandomPrimary(void) { return m_strRandomPrimary; }
-	const char* GetRandomSecondary(void) { return m_strRandomSecondary; }
-	const char* GetRandomMelee(void) { return m_strRandomMelee; }
-
-	//const char* GetRandomHat(void) { return m_strRandomHat; }
-	//const char* GetRandomArmor(void) { return m_strRandomArmor; }
-
-	void SetRandomPrimary(const char* pszItemName) { m_strRandomPrimary = pszItemName; }
-	void SetRandomSecondary(const char* pszItemName) { m_strRandomSecondary = pszItemName; }
-	void SetRandomMelee(const char* pszItemName) { m_strRandomMelee = pszItemName; }
-
-	//void SetRandomHat(const char* pszItemName) { m_strRandomHat = pszItemName; }
-	//void SetRandomArmor(const char* pszItemName) { m_strRandomArmor = pszItemName; }
-
 
 	enum MissionType
 	{
@@ -612,15 +597,11 @@ private:
 
 	CUtlVector< const EventChangeAttributes_t* > m_eventChangeAttributes;
 
-	const char* m_strRandomPrimary;
-	const char* m_strRandomSecondary;
-	const char* m_strRandomMelee;
-	//const char* m_strRandomHat;
-	//const char* m_strRandomArmor;
-
 	CUtlString m_preset;
 	CountdownTimer m_lastUsedCanteenTimer;
 	CountdownTimer m_lastUsedHaleChargeTimer;
+	CountdownTimer m_checkUpgradesTimer;
+	bool m_bHasUpgradedAfterSpawn;
 };
 
 

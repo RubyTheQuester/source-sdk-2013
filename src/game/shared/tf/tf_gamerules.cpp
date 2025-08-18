@@ -127,6 +127,7 @@
 	#include "tf_party.h"
 	#include "tf_autobalance.h"
 	#include "player_voice_listener.h"
+	#include "eventqueue.h"
 #endif
 
 #include "tf_mann_vs_machine_stats.h"
@@ -1073,7 +1074,7 @@ ConVar tf_gamemode_passtime ( "tf_gamemode_passtime", "0", FCVAR_REPLICATED | FC
 ConVar tf_gamemode_misc ( "tf_gamemode_misc", "0", FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_campaign ( "tf_gamemode_campaign", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 ConVar tf_gamemode_solo ( "tf_gamemode_solo", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
-ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "Prevent map gamemode logic from being automatically set up." );
+ConVar tf_gamemode_override ( "tf_gamemode_override", "0", FCVAR_REPLICATED, "1 - Prevent map gamemode logic from being automatically set up.\n2 - Force Arena\n3 - Force KOTH\n4 - Force CTF\n5 - Force PD" );
 
 ConVar tf_bot_count( "tf_bot_count", "0", FCVAR_NOTIFY | FCVAR_DEVELOPMENTONLY );
 
@@ -4295,7 +4296,8 @@ void CTFGameRules::Activate()
 
 	m_nMapHolidayType.Set( kHoliday_None );
 
-	bool isOverriden = tf_gamemode_override.GetBool();
+	int overrideMode = tf_gamemode_override.GetInt();
+	bool isOverriden = overrideMode != TF_GAMEMODEOVERRIDE_OFF;
 
 	CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
 
@@ -4530,7 +4532,7 @@ void CTFGameRules::Activate()
 	}
 
 	CLogicMannPower *pLogicMannPower = dynamic_cast< CLogicMannPower* > ( gEntList.FindEntityByClassname( NULL, "tf_logic_mannpower" ) );
-	tf_powerup_mode.SetValue( pLogicMannPower ? 1 : 0 );
+	tf_powerup_mode.SetValue( ( pLogicMannPower && !isOverriden ) ? 1 : 0 );
 
 	if ( tf_powerup_mode.GetBool() )
 	{
@@ -4553,6 +4555,34 @@ void CTFGameRules::Activate()
 		mp_tournament.SetValue( false );
 		mp_tournament_readymode.SetValue( false );
 		SetAllowBetweenRounds( false );
+	}
+
+	if ( overrideMode == TF_GAMEMODEOVERRIDE_ARENA )
+	{
+		// Arena
+		m_nGameType.Set( TF_GAMETYPE_ARENA );
+		tf_gamemode_arena.SetValue( 1 );
+		Msg( "Executing server arena config file\n" );
+		engine->ServerCommand( "exec config_arena.cfg\n" );
+	}
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_KOTH )
+	{
+		// KOTH
+		m_nGameType.Set( TF_GAMETYPE_CP );
+		m_bPlayingKoth.Set( true );
+		tf_gamemode_cp.SetValue( 1 );
+	}
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		// CTF
+		m_nGameType.Set( TF_GAMETYPE_CTF );
+		tf_gamemode_ctf.SetValue( 1 );
+	}
+	else if ( overrideMode == TF_GAMEMODEOVERRIDE_PD )
+	{
+		m_bPlayingRobotDestructionMode.Set( true );
+		tf_gamemode_pd.SetValue( 1 );
+		m_nGameType.Set( TF_GAMETYPE_PD );
 	}
 }
 
@@ -4769,6 +4799,17 @@ void CTFGameRules::CleanUpMap( void )
 #endif
 }
 
+int ControlPointOrderSortOverride( CTeamControlPoint* const* p1, CTeamControlPoint* const* p2 )
+{
+	// check the priority
+	if ( (*p2)->GetPointIndex() > (*p1)->GetPointIndex() )
+	{
+		return 1;
+	}
+
+	return -1;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -4781,6 +4822,77 @@ void CTFGameRules::RecalculateControlPointState( void )
 
 	if ( g_pObjectiveResource && g_pObjectiveResource->PlayingMiniRounds() )
 		return;
+
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
+	{
+		// Taking advantage of forward spawns if possible
+		for ( int iTeam = LAST_SHARED_TEAM + 1; iTeam < GetNumberOfTeams(); iTeam++ )
+		{
+			for ( int i = 0; i < ITFTeamSpawnAutoList::AutoList().Count(); ++i )
+			{
+				CTFTeamSpawn *pTFSpawn = static_cast<CTFTeamSpawn *>( ITFTeamSpawnAutoList::AutoList()[i] );
+				if ( pTFSpawn->m_iszControlPointName != NULL_STRING && pTFSpawn->GetTeamNumber() == iTeam )
+				{
+					if ( pTFSpawn->GetControlPoint() )
+					{
+						pTFSpawn->SetDisabled( false );
+					}
+					else
+					{
+						pTFSpawn->SetDisabled( true );
+					}
+				}
+			}
+		}
+
+		return;
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD )
+	{
+		// Taking advantage of forward spawns if possible
+		CUtlVector<CTeamControlPoint*> AllPointsVec;
+		int numFound = 0;
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>( pEnt );
+
+			if ( !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
+				AllPointsVec.AddToTail( pPoint );
+				numFound++;
+			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		AllPointsVec.Sort( ControlPointOrderSortOverride );
+		int pos = numFound / 2;
+		int targetIndex = AllPointsVec[pos]->GetPointIndex();
+
+		for ( int iTeam = LAST_SHARED_TEAM + 1; iTeam < GetNumberOfTeams(); iTeam++ )
+		{
+			for ( int i = 0; i < ITFTeamSpawnAutoList::AutoList().Count(); ++i )
+			{
+				CTFTeamSpawn* pTFSpawn = static_cast<CTFTeamSpawn*>( ITFTeamSpawnAutoList::AutoList()[i] );
+				if ( pTFSpawn->m_iszControlPointName != NULL_STRING && pTFSpawn->GetTeamNumber() == iTeam )
+				{
+					if ( !pTFSpawn->GetControlPoint() || pTFSpawn->GetControlPoint()->GetPointIndex() != targetIndex )
+					{
+						pTFSpawn->SetDisabled( true );
+					}
+					else
+					{
+						pTFSpawn->SetDisabled( false );
+					}
+				}
+			}
+		}
+
+		return;
+	}
 
 	for ( int iTeam = LAST_SHARED_TEAM+1; iTeam < GetNumberOfTeams(); iTeam++ )
 	{
@@ -4888,6 +5000,214 @@ void CTFGameRules::SetupOnRoundStart( void )
 	m_hRedKothTimer.Set( NULL );
 	m_hBlueKothTimer.Set( NULL );
 
+	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF )
+	{
+		CBaseEntity* pEntity = NULL;
+		while ( ( pEntity = gEntList.FindEntityByClassname( pEntity, "team_round_timer" ) ) != NULL )
+		{
+			CTeamRoundTimer* pTimer = assert_cast<CTeamRoundTimer *>( pEntity );
+			if ( !pTimer->IsDisabled() )
+			{
+				pTimer->m_OnSetupFinished.FireOutput( pTimer, pTimer );
+				UTIL_Remove( pTimer );
+			}
+		}
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_ARENA )
+	{
+		tf_arena_override_cap_enable_time.SetValue( 30 );
+		CBaseEntity* pKit = gEntList.FindEntityByClassname( NULL, "item_healthkit*" );
+		while ( pKit )
+		{
+			UTIL_Remove( pKit );
+			pKit = gEntList.FindEntityByClassname( pKit, "item_healthkit*" );
+		}
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
+	{
+		CKothLogic* pKoth = dynamic_cast<CKothLogic *>( CreateEntityByName( "tf_logic_koth" ) );
+		SetTeamGoalString( TF_TEAM_BLUE, "#koth_setup_goal" );
+		SetTeamGoalString( TF_TEAM_RED, "#koth_setup_goal" );
+		SetTeamRespawnWaveTime( TF_TEAM_BLUE, 6 );
+		SetTeamRespawnWaveTime( TF_TEAM_RED, 6 );
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF )
+	{
+		int nPoints = 0;
+		int iLowestPoint = 90;
+		int iHighestPoint = -90;
+		CTeamControlPoint* pLowestPoint = NULL;
+		CTeamControlPoint* pHighestPoint = NULL;
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint *pPoint = assert_cast<CTeamControlPoint *>( pEnt );
+			if ( pPoint->GetPointIndex() < iLowestPoint )
+			{
+				iLowestPoint = pPoint->GetPointIndex();
+				pLowestPoint = pPoint;
+			}
+			if ( pPoint->GetPointIndex() > iHighestPoint )
+			{
+				iHighestPoint = pPoint->GetPointIndex();
+				pHighestPoint = pPoint;
+			}
+			nPoints++;
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		if ( pHighestPoint->GetDefaultOwner() == TF_TEAM_BLUE )
+		{
+			CTeamControlPoint* pTemp = pLowestPoint;
+			pLowestPoint = pHighestPoint;
+			pHighestPoint = pTemp;
+		}
+
+		if ( nPoints > 2 && pLowestPoint && pHighestPoint )
+		{
+			CCaptureFlag* redFlag = CCaptureFlag::Create( pHighestPoint->GetAbsOrigin() + Vector( 0, 0, 16.0f ), TF_FLAG_MODEL, TF_FLAGTYPE_CTF );
+			CCaptureFlag* blueFlag = CCaptureFlag::Create( pLowestPoint->GetAbsOrigin() + Vector( 0, 0, 16.0f ), TF_FLAG_MODEL, TF_FLAGTYPE_CTF );
+			redFlag->ChangeTeam( TF_TEAM_RED );
+			blueFlag->ChangeTeam( TF_TEAM_BLUE );
+			redFlag->Activate();
+			blueFlag->Activate();
+
+			for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+			{
+				CTriggerAreaCapture *pArea = static_cast< CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+				if ( pArea )
+				{
+					if ( pArea->PointIsWithin( redFlag->GetAbsOrigin() ) )
+					{
+						CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", redFlag->GetAbsOrigin(), vec3_angle, NULL ) );
+						pZone->ChangeTeam( TF_TEAM_RED );
+						DispatchSpawn( pZone );
+						pZone->SetSize( Vector( -128, -128, -32 ), Vector( 128, 128, 256 ) );
+						pZone->SetSolid( SOLID_OBB );
+					}
+					else if ( pArea->PointIsWithin( blueFlag->GetAbsOrigin() ) )
+					{
+						CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", blueFlag->GetAbsOrigin(), vec3_angle, NULL ) );
+						pZone->ChangeTeam( TF_TEAM_BLUE );
+						DispatchSpawn( pZone );
+						pZone->SetSize( Vector ( -128, -128, -32 ), Vector( 128, 128, 256 ) );
+						pZone->SetSolid( SOLID_OBB );
+					}
+					pArea->Disable();
+				}
+			}
+		}
+	}
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD )
+	{
+		CUtlVector<CTeamControlPoint*> AllPointsVec;
+		int numFound = 0;
+
+		CBaseEntity* pFlag = gEntList.FindEntityByClassname( NULL, "item_teamflag" );
+		while ( pFlag )
+		{
+			UTIL_Remove( pFlag );
+			pFlag = gEntList.FindEntityByClassname( pFlag, "item_teamflag" );
+		}
+		CBaseEntity* pFlagZone = gEntList.FindEntityByClassname( NULL, "func_capturezone" );
+		while ( pFlagZone )
+		{
+			UTIL_Remove( pFlagZone );
+			pFlagZone = gEntList.FindEntityByClassname( pFlagZone, "func_capturezone" );
+		}
+
+		CBaseEntity* pEnt = gEntList.FindEntityByClassname( NULL, "team_control_point" );
+		while ( pEnt )
+		{
+			CTeamControlPoint* pPoint = assert_cast<CTeamControlPoint*>(pEnt);
+
+			if ( !pPoint->IsMarkedForDeletion() )
+			{
+				int index = pPoint->GetPointIndex();
+				AllPointsVec.AddToTail( pPoint );
+				numFound++;
+			}
+
+			pEnt = gEntList.FindEntityByClassname( pEnt, "team_control_point" );
+		}
+
+		AllPointsVec.Sort( ControlPointOrderSortOverride );
+		int pos = numFound / 2;
+		int targetIndex = 0;
+		if ( numFound != 0 )
+		{
+			targetIndex = AllPointsVec[pos]->GetPointIndex();
+		}
+
+		CTFPlayerDestructionLogic* pPDLogic = dynamic_cast<CTFPlayerDestructionLogic *>( CreateEntityByName( "tf_logic_player_destruction" ) );
+		pPDLogic->KeyValueFromInt( "points_per_player", 5 );
+		pPDLogic->KeyValueFromInt( "min_points", 10 );
+		pPDLogic->KeyValueFromString( "prop_model_name", "models/items/currencypack_small.mdl" );
+		pPDLogic->KeyValueFromString( "res_file", "resource/UI/HudObjectivePlayerDestruction.res" );
+		pPDLogic->KeyValueFromInt( "flag_reset_delay", 60 );
+		pPDLogic->KeyValueFromInt( "heal_distance", 450 );
+		pPDLogic->KeyValueFromInt( "finale_length", 5 );
+		pPDLogic->KeyValueFromFloat( "red_respawn_time", 10.0f );
+		pPDLogic->KeyValueFromFloat( "blue_respawn_time", 10.0f );
+		DispatchSpawn( pPDLogic );
+		pPDLogic->SetName( AllocPooledString( "pd_logic" ) );
+		pPDLogic->InputEnableMaxScoreUpdating( inputdata_t() );
+		g_EventQueue.AddEvent( pPDLogic, "DisableMaxScoreUpdating", variant_t(), 30.0f, NULL, NULL );
+
+		Vector capZoneOrigin = vec3_origin;
+		if ( numFound != 0 )
+		{
+			capZoneOrigin = AllPointsVec[pos]->GetAbsOrigin();
+		}
+
+		CCaptureZone *pZone = static_cast<CCaptureZone *>( CBaseEntity::CreateNoSpawn( "func_capturezone", capZoneOrigin, vec3_angle, NULL ) );
+		pZone->KeyValueFromFloat( "capture_delay", 1.1f );
+		pZone->KeyValueFromFloat( "capture_delay_offset", 0.025f );
+		if ( numFound != 0 )
+		{
+			pZone->KeyValueFromInt( "shouldBlock", 1 );
+		}
+		else
+		{
+			pZone->KeyValueFromInt( "shouldBlock", 0 );
+		}
+		DispatchSpawn( pZone );
+		if ( numFound != 0 )
+		{
+			pZone->SetSize( Vector( -256, -256, -32 ), Vector( 256, 256, 256 ) );
+		}
+		else
+		{
+			// No points found - fallback to instant capture
+			pZone->SetSize( Vector( MIN_COORD_FLOAT, MIN_COORD_FLOAT, MIN_COORD_FLOAT ), Vector( MAX_COORD_FLOAT, MAX_COORD_FLOAT, MAX_COORD_FLOAT ) );
+		}
+		pZone->SetSolid( SOLID_OBB );
+		pZone->SetName( AllocPooledString( "capzone" ) );
+		inputdata_t InCapRed;
+		InCapRed.pActivator = NULL;
+		InCapRed.pCaller = NULL;
+		InCapRed.value.SetString( AllocPooledString( "OnCapTeam1_PD pd_logic,ScoreRedPoints,,0,-1" ) );
+		InCapRed.nOutputID = 0;
+		inputdata_t InCapBlue;
+		InCapBlue.pActivator = NULL;
+		InCapBlue.pCaller = NULL;
+		InCapBlue.value.SetString( AllocPooledString( "OnCapTeam2_PD pd_logic,ScoreBluePoints,,0,-1" ) );
+		InCapBlue.nOutputID = 1;
+		pZone->InputAddOutput( InCapRed );
+		pZone->InputAddOutput( InCapBlue );
+		pZone->Activate();
+
+		for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+		{
+			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+			if ( pArea )
+			{
+				pArea->Disable();
+			}
+		}
+	}
+
 	// Let all entities know that a new round is starting
 	CBaseEntity *pEnt = gEntList.FirstEnt();
 	while( pEnt )
@@ -4910,6 +5230,64 @@ void CTFGameRules::SetupOnRoundStart( void )
 		pEnt->AcceptInput( "RoundActivate", NULL, NULL, emptyVariant, 0 );
 
 		pEnt = gEntList.NextEnt( pEnt );
+	}
+
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_KOTH )
+	{
+		for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
+		{
+			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+			if ( pArea )
+			{
+				inputdata_t InRed;
+				InRed.pActivator = NULL;
+				InRed.pCaller = NULL;
+				InRed.value.SetString( AllocPooledString( "OnCapTeam1 tf_gamerules,SetRedKothClockActive,,0,-1" ) );
+				InRed.nOutputID = 0;
+				inputdata_t InRedSpawn1;
+				InRedSpawn1.pActivator = NULL;
+				InRedSpawn1.pCaller = NULL;
+				InRedSpawn1.value.SetString( AllocPooledString( "OnCapTeam1 tf_gamerules,SetRedTeamRespawnWaveTime,8,0,-1" ) );
+				InRedSpawn1.nOutputID = 1;
+				inputdata_t InRedSpawn2;
+				InRedSpawn2.pActivator = NULL;
+				InRedSpawn2.pCaller = NULL;
+				InRedSpawn2.value.SetString( AllocPooledString( "OnCapTeam1 tf_gamerules,SetBlueTeamRespawnWaveTime,4,0,-1" ) );
+				InRedSpawn2.nOutputID = 2;
+				inputdata_t InBlue;
+				InBlue.pActivator = NULL;
+				InBlue.pCaller = NULL;
+				InBlue.value.SetString( AllocPooledString ( "OnCapTeam2 tf_gamerules,SetBlueKothClockActive,,0,-1" ) );
+				InBlue.nOutputID = 3;
+				inputdata_t InBlueSpawn1;
+				InBlueSpawn1.pActivator = NULL;
+				InBlueSpawn1.pCaller = NULL;
+				InBlueSpawn1.value.SetString( AllocPooledString( "OnCapTeam2 tf_gamerules,SetRedTeamRespawnWaveTime,4,0,-1" ) );
+				InBlueSpawn1.nOutputID = 4;
+				inputdata_t InBlueSpawn2;
+				InBlueSpawn2.pActivator = NULL;
+				InBlueSpawn2.pCaller = NULL;
+				InBlueSpawn2.value.SetString( AllocPooledString( "OnCapTeam2 tf_gamerules,SetBlueTeamRespawnWaveTime,8,0,-1" ) );
+				InBlueSpawn2.nOutputID = 5;
+				pArea->InputAddOutput( InRed );
+				pArea->InputAddOutput( InRedSpawn1 );
+				pArea->InputAddOutput( InRedSpawn2 );
+				pArea->InputAddOutput( InBlue );
+				pArea->InputAddOutput( InBlueSpawn1 );
+				pArea->InputAddOutput( InBlueSpawn2 );
+			}
+		}
+		SetTeamRespawnWaveTime( TF_TEAM_BLUE, 6 );
+		SetTeamRespawnWaveTime( TF_TEAM_RED, 6 );
+	}
+	if ( tf_gamemode_override.GetInt() != TF_GAMEMODEOVERRIDE_OFF )
+	{
+		CArenaLogic *pArenaLogic = dynamic_cast<CArenaLogic *> ( gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
+
+		if ( pArenaLogic )
+		{
+			pArenaLogic->m_OnArenaRoundStart.FireOutput( pArenaLogic, pArenaLogic );
+		}
 	}
 
 	if ( g_pObjectiveResource && !g_pObjectiveResource->PlayingMiniRounds() )
@@ -5555,18 +5933,30 @@ void CTFGameRules::SetupOnStalemateStart( void )
 	else
 	{
 		CArenaLogic *pArenaLogic = dynamic_cast< CArenaLogic * > (gEntList.FindEntityByClassname( NULL, "tf_logic_arena" ) );
+		CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
 
-		if ( pArenaLogic )
+		if ( m_nGameType == TF_GAMETYPE_ARENA )
 		{
-			pArenaLogic->m_OnArenaRoundStart.FireOutput( pArenaLogic, pArenaLogic );
+			if ( pArenaLogic )
+			{
+				pArenaLogic->m_OnArenaRoundStart.FireOutput( pArenaLogic, pArenaLogic );
+			}
 
-			if ( tf_arena_override_cap_enable_time.GetFloat() > 0 )
+			if ( !pMaster )
+			{
+				m_flCapturePointEnableTime = gpGlobals->curtime;
+			}
+			else if ( tf_arena_override_cap_enable_time.GetFloat() > 0 )
 			{
 				m_flCapturePointEnableTime = gpGlobals->curtime + tf_arena_override_cap_enable_time.GetFloat();
 			}
-			else
+			else if ( pArenaLogic )
 			{
 				m_flCapturePointEnableTime = gpGlobals->curtime + pArenaLogic->m_flTimeToEnableCapPoint;
+			}
+			else
+			{
+				m_flCapturePointEnableTime = gpGlobals->curtime;
 			}
 
 			IGameEvent *event = gameeventmanager->CreateEvent( "arena_round_start" );
@@ -8714,6 +9104,9 @@ void CTFGameRules::Think()
 void CTFGameRules::PeriodicHalloweenUpdate()
 {
 	// DEBUG
+	
+	// Not using these at the moment
+	return;
 
 	// Are we on a Halloween Map?
 	// Do we have Halloween Contracts?
@@ -9712,11 +10105,17 @@ void CTFGameRules::SetWinningTeam( int team, int iWinReason, bool bForceMapReset
 	{
 		// Increment BLUE KOTH cap time
 		CTeamRoundTimer *pKOTHTimer = TFGameRules()->GetBlueKothRoundTimer();
-		GetGlobalTFTeam( TF_TEAM_BLUE )->AddKOTHTime( pKOTHTimer->GetTimerMaxLength() - pKOTHTimer->GetTimeRemaining() );
+		if ( pKOTHTimer )
+		{
+			GetGlobalTFTeam( TF_TEAM_BLUE )->AddKOTHTime( pKOTHTimer->GetTimerMaxLength() - pKOTHTimer->GetTimeRemaining() );
+		}
 
 		// Increment RED KOTH cap time
 		pKOTHTimer = TFGameRules()->GetRedKothRoundTimer();
-		GetGlobalTFTeam( TF_TEAM_RED )->AddKOTHTime( pKOTHTimer->GetTimerMaxLength() - pKOTHTimer->GetTimeRemaining() );
+		if ( pKOTHTimer )
+		{
+			GetGlobalTFTeam( TF_TEAM_RED )->AddKOTHTime( pKOTHTimer->GetTimerMaxLength() - pKOTHTimer->GetTimeRemaining() );
+		}
 	}
 	else if ( HasMultipleTrains() )
 	{
@@ -11028,6 +11427,9 @@ void CTFGameRules::DropHalloweenSoulPackToTeam( int nAmount, const Vector& vecPo
 //-----------------------------------------------------------------------------
 void CTFGameRules::DropHalloweenSoulPack( int nAmount, const Vector& vecSource, CBaseEntity *pTarget, int nSourceTeam )
 {
+	// Not using these at the moment
+	return;
+
 	QAngle angles(0,0,0);
 	CHalloweenSoulPack *pSoulsPack = assert_cast<CHalloweenSoulPack*>( CBaseEntity::CreateNoSpawn( "halloween_souls_pack", vecSource, angles, NULL ) );
 
@@ -16920,7 +17322,7 @@ bool CTFGameRules::TeamMayCapturePoint( int iTeam, int iPointIndex )
 		return false;
 
 	// Is the point locked?
-	if ( ObjectiveResource()->GetCPLocked( iPointIndex ) )
+	if ( ObjectiveResource()->GetCPLocked( iPointIndex ) && !IsInArenaMode() )
 		return false;
 
 	// No required points specified? Require all previous points.
@@ -20195,6 +20597,8 @@ void CCPTimerLogic::Think( void )
 						m_bFire15SecRemain = m_bFire10SecRemain = m_bFire5SecRemain = true;
 
 						ObjectiveResource()->SetCPTimerTime( m_hControlPoint->GetPointIndex(), -1.0f );
+
+						TheTFNavMesh()->ScheduleRecomputationOfInternalData( CTFNavMesh::RESET, 5.0f );
 					}
 				}
 				else 
