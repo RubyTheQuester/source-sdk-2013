@@ -6,7 +6,7 @@
 		"BaseGameTaunts"		"0"
 		"BaseGameCosmetics"		"0"
 	}
-	"Credits"		"7600"
+	"Credits"		"7350"
 	"UnlockedItems"
 	{
 		"The Ubersaw"		"1"
@@ -56,5 +56,10 @@
 		"Darwin's Danger Shield"		"1"
 		"The Conscientious Objector"		"1"
 		"Prinny Machete"		"1"
+		"The Rescue Ranger"		"1"
+		"The Jag"		"1"
+		"The Wrangler"		"1"
+		"The Gunslinger"		"1"
+		"The Phlogistinator"		"1"
 	}
 }
