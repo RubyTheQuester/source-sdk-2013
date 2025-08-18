@@ -280,9 +280,6 @@ extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );
 ConVar sv_vote_late_join_cooldown( "sv_vote_late_join_cooldown", "300", FCVAR_NONE, "Length of the vote-creation cooldown when joining the server after the grace period has expired" );
 
-ConVar tf_bot_random_weapons("tf_bot_random_weapons", "1", FCVAR_GAMEDLL, "Gives bots random weapon items.");
-ConVar tf_bot_random_weapons_chance("tf_bot_random_weapons_chance", "85", FCVAR_GAMEDLL, "Percent chance a bot will get a weapon.");//what
-
 extern ConVar tf_voice_command_suspension_mode;
 extern ConVar tf_feign_death_duration;
 extern ConVar spec_freeze_time;
@@ -14962,6 +14959,8 @@ void CTFPlayer::ForceRespawn( void )
 
 		GetPlayerClass()->Init( iDesiredClass );
 
+		/*
+		* 
 		// Are we a bot?
 		if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
 		{
@@ -14986,6 +14985,8 @@ void CTFPlayer::ForceRespawn( void )
 				pBot->SetRandomMelee(pBot->GiveRandomItemName(LOADOUT_POSITION_MELEE));
 			}
 		}
+
+		*/
 
 		// Don't report class changes if we're random, because it's not a player choice
 		if ( !bRandom )
@@ -15070,6 +15071,8 @@ void CTFPlayer::ForceRespawn( void )
 	}
 
 	m_bSwitchedClass = false;
+
+	/*
 	if (m_bIsABot && IsBotOfType(TF_BOT_TYPE))
 	{
 		CTFBot* pBot = ToTFBot(this);
@@ -15118,6 +15121,7 @@ void CTFPlayer::ForceRespawn( void )
 			}
 		}
 	}
+	*/
 }
 
 //-----------------------------------------------------------------------------
