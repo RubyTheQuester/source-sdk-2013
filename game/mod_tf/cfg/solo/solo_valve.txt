@@ -15,6 +15,7 @@ solo_config
 				symm 1
 				theme_desert 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		arena_granary
@@ -30,6 +31,7 @@ solo_config
 				symm 1
 				theme_farm 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		arena_lumberyard
@@ -45,6 +47,8 @@ solo_config
 				symm 1
 				theme_alpine 1
 				valve 1
+				allow_koth 1
+				allow_pd 1
 			}
 		}
 		arena_nucleus
@@ -60,6 +64,7 @@ solo_config
 				symm 1
 				theme_spytech 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		arena_ravine
@@ -75,6 +80,8 @@ solo_config
 				symm 1
 				theme_desert 1
 				valve 1
+				allow_koth 1
+				allow_pd 1
 			}
 		}
 		arena_sawmill
@@ -90,6 +97,7 @@ solo_config
 				symm 1
 				theme_swamp 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		arena_well
@@ -105,11 +113,12 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		cp_5gorge
 		{
-			name "5Gorge"
+			name "Gorge"
 			modename "#Gametype_CP"
 			thumbArt "maps/menu_thumb_cp_5gorge"
 			photosArt "maps/menu_photos_cp_5gorge"
@@ -120,12 +129,20 @@ solo_config
 				symm 1
 				theme_alpine 1
 				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				cp_gorge 1
+				ctf_gorge 1
 			}
 		}
 		cp_degrootkeep
 		{
 			name "DeGroot Keep"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_degrootkeep"
 			photosArt "maps/menu_photos_cp_degrootkeep"
 			tags
@@ -141,7 +158,7 @@ solo_config
 		cp_gravelpit
 		{
 			name "Gravelpit"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gravelpit"
 			photosArt "maps/menu_photos_cp_gravelpit"
 			tags
@@ -166,6 +183,14 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_well 1
+				ctF_well 1
 			}
 		}
 		cp_badlands
@@ -181,12 +206,19 @@ solo_config
 				symm 1
 				theme_desert 1
 				valve 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_badlands 1
+				koth_badlands 1
 			}
 		}
 		cp_dustbowl
 		{
 			name "Dustbowl"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_dustbowl"
 			photosArt "maps/menu_photos_cp_dustbowl"
 			tags
@@ -212,12 +244,19 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
+			}
+			alts
+			{
+				ctf_foundry 1
 			}
 		}
 		cp_gorge
 		{
 			name "Gorge"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gorge"
 			photosArt "maps/menu_photos_cp_gorge"
 			tags
@@ -227,6 +266,7 @@ solo_config
 				cp_count 2
 				theme_alpine 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		cp_granary
@@ -242,12 +282,19 @@ solo_config
 				symm 1
 				theme_farm 1
 				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_granary 1
 			}
 		}
 		cp_mercenarypark
 		{
 			name "Mercenary Park"
-			modename "#Gametype_CP"
+			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_mercenarypark"
 			photosArt "maps/menu_photos_cp_mercenarypark"
 			tags
@@ -272,6 +319,10 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				allow_koth 1
+				allow_ctf 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		ctf_2fort
@@ -317,6 +368,7 @@ solo_config
 				symm 1
 				theme_swamp 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		ctf_well
@@ -332,6 +384,7 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		ctf_hellfire
@@ -365,6 +418,7 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		ctf_gorge
@@ -381,6 +435,7 @@ solo_config
 				symm 1
 				theme_alpine 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		ctf_thundermountain
@@ -396,6 +451,7 @@ solo_config
 				symm 1
 				theme_alpine 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		koth_badlands
@@ -411,11 +467,12 @@ solo_config
 				symm 1
 				theme_desert 1
 				valve 1
+				custom_hide 1
 			}
 		}
 		koth_nucleus
 		{
-			name "Nucleus (KOTH)"
+			name "Nucleus"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_nucleus"
 			photosArt "maps/menu_photos_koth_nucleus"
@@ -426,11 +483,17 @@ solo_config
 				symm 1
 				theme_industrial 1
 				valve 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_nucleus 1
+				vsh_nucleus 1
 			}
 		}
 		koth_sawmill
 		{
-			name "Sawmill (KOTH)"
+			name "Sawmill"
 			modename "#Gametype_Koth"
 			thumbArt "maps/menu_thumb_koth_sawmill"
 			photosArt "maps/menu_photos_koth_sawmill"
@@ -441,6 +504,12 @@ solo_config
 				symm 1
 				theme_swamp 1
 				valve 1
+				allow_pd 1
+			}
+			alts
+			{
+				arena_sawmill 1
+				ctf_sawmill 1
 			}
 		}
 		koth_viaduct
@@ -456,6 +525,8 @@ solo_config
 				symm 1
 				theme_snow 1
 				valve 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_harvest_event
@@ -472,6 +543,8 @@ solo_config
 				theme_farm 1
 				theme_hallow 1
 				valve 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_viaduct_event
@@ -487,6 +560,8 @@ solo_config
 				symm 1
 				theme_hallow 1
 				valve 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		koth_lakeside_event
@@ -502,6 +577,8 @@ solo_config
 				symm 1
 				theme_hallow 1
 				valve 1
+				allow_arena 1
+				allow_pd 1
 			}
 		}
 		pass_brickyard

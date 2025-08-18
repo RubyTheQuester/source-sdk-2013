@@ -838,7 +838,6 @@
 			"dulltext"		"0"
 			"brighttext"	"0"
 			"Command"		"find_game"
-
 			"proportionaltoparent"	"1"
 			"labeltext"		"#TFSOLO_JoinButton"
 			"mouseinputenabled"	"1"
