@@ -12,7 +12,7 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	attrib.RemoveSubKey("minigun spinup time increased")
 	attrib.RemoveSubKey("spunup_damage_resistance")
 	
-	// 15% faster fire rate
+	// 15% bullets
 	local a1 = attrib.GetKey("fire rate bonus", true)
 	a1.SetString("attribute_class","mult_postfiredelay")
 	a1.SetFloat("value", 0.85)
@@ -28,7 +28,7 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a3.SetFloat("value", 1.5)
 	
 	// 10% less damage
-	local a4 = attrib.GetKey("damage penalty", true)
-	a4.SetString("attribute_class","mult_dmg")
-	a4.SetFloat("value", 0.9)
+	//local a4 = attrib.GetKey("damage penalty", true)
+	//a4.SetString("attribute_class","mult_dmg")
+	//a4.SetFloat("value", 0.9)
 })
