@@ -224,7 +224,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 
 	auto lambdaAddItemEffectMeter = [&]( const char* pszItemClass, bool bBeep )
 	{
-		for ( int iLoadout = FIRST_LOADOUT_SLOT_WITH_CHARGE_METER; iLoadout<=LAST_LOADOUT_SLOT_WITH_CHARGE_METER; ++iLoadout )
+		for ( int iLoadout = FIRST_LOADOUT_SLOT_WITH_CHARGE_METER; iLoadout <= LAST_LOADOUT_SLOT_WITH_CHARGE_METER; ++iLoadout )
 		{
 			CEconEntity *pEconItem = dynamic_cast<CEconEntity *>( pPlayer->GetEntityForLoadoutSlot( iLoadout, true ) );
 			if ( !pEconItem )
@@ -284,6 +284,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 	{
 		lambdaAddItemEffectMeter( "tf_weapon_lunchbox", true );
 		DECLARE_ITEM_EFFECT_METER( CTFMinigun, TF_WEAPON_MINIGUN, true, "resource/UI/HudItemEffectMeter_Heavy.res" );
+		lambdaAddItemEffectMeter( "tf_wearable_razorback", true );
 		break;
 	}
 

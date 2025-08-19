@@ -264,17 +264,5 @@
 				}
 			}
 		}
-		
-		"34449"
-		{
-			"name"			"What The Fuck"
-			"item_name"		"SHUT THE FUCK UP"
-			
-			"prefab"	"valve weapon_sandvich"
-			
-			"item_slot"	"equipment"
-			
-			"customitem"	"1"
-		}
 	}
 }

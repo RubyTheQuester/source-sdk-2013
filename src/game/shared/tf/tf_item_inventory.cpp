@@ -287,6 +287,7 @@ bool CTFInventoryManager::CheckAllowItemEquip( int iClass, int iSlot )
 		case LOADOUT_POSITION_PDA:
 		case LOADOUT_POSITION_PDA2:
 		case LOADOUT_POSITION_ACTION:
+		case LOADOUT_POSITION_EQUIPMENT:
 			if ( genericKV->GetInt("BaseGameWeapons") == 0 )
 			{
 				return false;

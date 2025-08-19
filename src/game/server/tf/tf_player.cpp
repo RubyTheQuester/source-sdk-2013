@@ -4497,6 +4497,7 @@ bool CTFPlayer::ItemIsAllowed( CEconItemView *pItem )
 		case LOADOUT_POSITION_TAUNT6:
 		case LOADOUT_POSITION_TAUNT7:
 		case LOADOUT_POSITION_TAUNT8:
+		case LOADOUT_POSITION_EQUIPMENT:
 			bMedievalModeAllowed = true;
 			break;
 
