@@ -19786,6 +19786,8 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet )
 			"loadout_slot_taunt6",		// LOADOUT_POSITION_TAUNT6
 			"loadout_slot_taunt7",		// LOADOUT_POSITION_TAUNT7
 			"loadout_slot_taunt8",		// LOADOUT_POSITION_TAUNT8
+
+			"loadout_slot_equipment",	// LOADOUT_POSITION_EQUIPMENT,
 		};
 		COMPILE_TIME_ASSERT( ARRAYSIZE(kSlotCriteriaName) == CLASS_LOADOUT_POSITION_COUNT );
 		CEconItemView *pItem = NULL;

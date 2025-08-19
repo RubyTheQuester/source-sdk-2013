@@ -83,7 +83,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 			{
 				bSuccess = true;
 				bPerformPickup = true;
-				pTFPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_SECONDARY, 100.f );
+				pTFPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_EQUIPMENT, 100.f );
 			}
 		}
 		else
@@ -153,7 +153,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 
 						if ( pOwner->Weapon_OwnsThisID( TF_WEAPON_LUNCHBOX ) && pOwner->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
 						{
-							CEconEntity *pEconItem = dynamic_cast<CEconEntity *>( pOwner->GetEntityForLoadoutSlot( LOADOUT_POSITION_SECONDARY ) );
+							CEconEntity *pEconItem = dynamic_cast<CEconEntity *>( pOwner->GetEntityForLoadoutSlot( LOADOUT_POSITION_EQUIPMENT ) );
 							if ( pEconItem )
 							{
 								EconEntity_OnOwnerKillEaterEvent( pEconItem, pOwner, pTFPlayer, kKillEaterEvent_AllyHealingDone, nHealthGiven );
@@ -187,7 +187,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 					{
 						if ( pTFPlayer )
 						{
-							pTFPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_SECONDARY, 100.f );
+							pTFPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_EQUIPMENT, 100.f );
 						}
 						bPerformPickup = true;
 						bSuccess = true;

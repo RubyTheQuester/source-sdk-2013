@@ -44,12 +44,12 @@ IncludeScript("solo/balancing/yer.nut")
 //===========================//
 
 //-Scout-//
-IncludeScript("solo/balancing/reskin/threeruneblade.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/threeruneblade.nut") 		// Design stats
 
 //-Pyro-//
-IncludeScript("solo/balancing/reskin/maul.nut") 				//Design stats
-IncludeScript("solo/balancing/reskin/nineiron.nut") 			//Design stats
-IncludeScript("solo/balancing/reskin/postalpummeler.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/maul.nut") 				// Design stats
+IncludeScript("solo/balancing/reskin/nineiron.nut") 			// Design stats
+IncludeScript("solo/balancing/reskin/postalpummeler.nut") 		// Design stats
 
 //-Demoman-//
 IncludeScript("solo/balancing/reskin/bootlegger.nut") 			//Design stats
@@ -65,17 +65,17 @@ IncludeScript("solo/balancing/reskin/breadbite.nut")
 IncludeScript("solo/balancing/reskin/pipboy.nut") 				// Unsure
 
 //-Sniper-//
-IncludeScript("solo/balancing/reskin/shootingstar.nut") 		//Design stats
+IncludeScript("solo/balancing/reskin/shootingstar.nut") 		// Design stats
 IncludeScript("solo/balancing/reskin/fortifiedcompound.nut") 	// Unsure
-IncludeScript("solo/balancing/reskin/awperhand.nut") 			//Design stats
+IncludeScript("solo/balancing/reskin/awperhand.nut") 			// Design stats
 
 //-Spy-//
-IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		//Design stats
-IncludeScript("solo/balancing/reskin/wangaprick.nut") 			//Design stats
-IncludeScript("solo/balancing/reskin/blackrose.nut") 			//Design stats
-IncludeScript("solo/balancing/reskin/apsap.nut") 				//Design stats
-IncludeScript("solo/balancing/reskin/timepiece.nut") 			//Design stats
-IncludeScript("solo/balancing/reskin/quackenbirdt.nut") 		/// Unsure
+IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		// Design stats
+IncludeScript("solo/balancing/reskin/wangaprick.nut") 			// Unsure
+IncludeScript("solo/balancing/reskin/blackrose.nut") 			// Design stats
+IncludeScript("solo/balancing/reskin/apsap.nut") 				// Design stats
+IncludeScript("solo/balancing/reskin/timepiece.nut") 			// Design stats
+IncludeScript("solo/balancing/reskin/quackenbirdt.nut") 		// Unsure
 IncludeScript("solo/balancing/reskin/snackattack.nut") 			// Unsure
 
 ::TFSOLO.SetupItemSchema <- function()

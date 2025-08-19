@@ -291,7 +291,7 @@ void CTFLunchBox::SecondaryAttack( void )
 	pPlayer->RemoveAmmo( m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_iAmmoPerShot, m_iPrimaryAmmoType );
 	g_pGameRules->SwitchToNextBestWeapon( pPlayer, this );
 
-	pPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_SECONDARY, 0.f );
+	pPlayer->m_Shared.SetItemChargeMeter(LOADOUT_POSITION_EQUIPMENT, 0.f );
 }
 
 //-----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ void CTFLunchBox::DrainAmmo( bool bForceCooldown )
 	{
 		if ( pOwner->GetHealth() < pOwner->GetMaxHealth() || GetLunchboxType() == LUNCHBOX_ADDS_MINICRITS || iLunchboxType == LUNCHBOX_CHOCOLATE_BAR || iLunchboxType == LUNCHBOX_FISHCAKE || bForceCooldown )
 		{
-			pOwner->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_SECONDARY, 0.f );
+			pOwner->m_Shared.SetItemChargeMeter(LOADOUT_POSITION_EQUIPMENT, 0.f );
 		}
 		else	// Full health regular sandwhich, I can eat forever
 		{	

@@ -2522,6 +2522,14 @@ Activity CTFWeaponBase::GetInspectActivity( TFWeaponInspectStage inspectStage )
 				ACT_BUILDING_VM_INSPECT_END
 			}
 		},
+		{
+			LOADOUT_POSITION_EQUIPMENT,
+			{
+				ACT_SECONDARY_VM_INSPECT_START,
+				ACT_SECONDARY_VM_INSPECT_IDLE,
+				ACT_SECONDARY_VM_INSPECT_END
+			}
+		},
 	};
 
 	loadout_positions_t iLoadoutSlot = LOADOUT_POSITION_INVALID;

@@ -55,6 +55,9 @@ static const char *GetDefaultMeterTextForLoadoutPosition( int iLoadout )
 	case LOADOUT_POSITION_MELEE:
 		pszRetVal = "#TF_MeleeMeter";
 		break;
+	case LOADOUT_POSITION_EQUIPMENT:
+		pszRetVal = "#MODTF_EquipmentMeter";
+		break;
 	}
 
 	return pszRetVal;
@@ -1474,7 +1477,7 @@ template <>
 float CHudItemEffectMeter_Weapon< CTFLunchBox >::GetProgress( void )
 {
 	if ( m_pPlayer )
-		return m_pPlayer->m_Shared.GetItemChargeMeter( LOADOUT_POSITION_SECONDARY ) / 100.f;
+		return m_pPlayer->m_Shared.GetItemChargeMeter( LOADOUT_POSITION_EQUIPMENT ) / 100.f;
 	
 	return 0.f;
 }
