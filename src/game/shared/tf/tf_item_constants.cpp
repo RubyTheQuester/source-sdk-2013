@@ -38,6 +38,7 @@ static const char *s_loadout_position_names[] =
 	"LOADOUT_POSITION_TAUNT7",
 	"LOADOUT_POSITION_TAUNT8",
 	
+	"LOADOUT_POSITION_EQUIPMENT",
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( s_loadout_position_names ) == CLASS_LOADOUT_POSITION_COUNT );
 

@@ -1,12 +1,9 @@
 TFSOLO.BalancingFuncs.push(function(kv)
 {
-	// Buffalo Steak Sandvich
-	//local key1 = kv.FindKey("items")
-	//local prefab = key1.FindKey("311")
-	//local attrib = prefab.FindKey("attributes")
+	// All lunchboxes are now a new equipment
+	local key1 = kv.FindKey("prefabs")
+	local prefab = key1.FindKey("weapon_lunchbox")
+	local attrib = prefab.FindKey("attributes")
 	
-	// Remove +20% damage vulnerability
-	//attrib.RemoveSubKey("energy buff dmg taken multiplier")
-	
-	//prefab.SetString("prefab","weapon_pda")
+	prefab.SetString("item_slot","equipment")
 })
