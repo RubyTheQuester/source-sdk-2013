@@ -23,6 +23,8 @@ IncludeScript("solo/balancing/dalokohsbar.nut")
 IncludeScript("solo/balancing/evictionnotice.nut")
 IncludeScript("solo/balancing/warriorsspirit.nut")
 
+IncludeScript("solo/balancing/test/sandwich.nut")
+
 //-Engineer-//
 IncludeScript("solo/balancing/southernhospitality.nut")
 IncludeScript("solo/balancing/pomson.nut")
