@@ -96,8 +96,8 @@
 			"description_string"	"#Attrib_GiveHealthToTeamOnHit"
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
-			"effect_type"	"positive"
-			"stored_as_integer"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
 		}
 		"3508"
 		{
@@ -653,6 +653,16 @@
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
 			"stored_as_integer"	"1"
+		}
+		"4007"
+		{
+			"name"				"syringe heal"
+			"attribute_class"	"syringe_heal"
+			"description_string"	"#Attrib_SyringeHeal"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
 		}
 	}
 	"armory_data"

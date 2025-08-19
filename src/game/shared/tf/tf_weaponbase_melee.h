@@ -67,6 +67,7 @@ public:
 #ifndef CLIENT_DLL
 	virtual float	GetForceScale( void );
 	virtual int		GetDamageCustom( void ) { return TF_DMG_CUSTOM_NONE; }
+	virtual void	HealTeammate( CTFPlayer* pOther, float flHealth, bool bTakeAwayHealth);
 #endif
 
 	// Call when we hit an entity. Use for special weapon effects on hit.
@@ -77,6 +78,7 @@ public:
 	bool			ConnectedHit( void ) { return m_bConnected; }
 
 	virtual char const		*GetShootSound( int iIndex ) const;
+
 
 public:	
 

@@ -6,7 +6,7 @@
 		"BaseGameTaunts"		"0"
 		"BaseGameCosmetics"		"0"
 	}
-	"Credits"		"7350"
+	"Credits"		"6900"
 	"UnlockedItems"
 	{
 		"The Ubersaw"		"1"
@@ -61,5 +61,13 @@
 		"The Wrangler"		"1"
 		"The Gunslinger"		"1"
 		"The Phlogistinator"		"1"
+		"The Crusader's Crossbow"		"1"
+		"The Quick-Fix"		"1"
+		"The Kritzkrieg"		"1"
+		"The Vaccinator"		"1"
+		"The Disciplinary Action"		"1"
+		"The Machina"		"1"
+		"Taunt: Straight Shooter Tutor"		"1"
+		"The Sandvich"		"1"
 	}
 }

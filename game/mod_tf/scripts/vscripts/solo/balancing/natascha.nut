@@ -13,9 +13,9 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	attrib.RemoveSubKey("spunup_damage_resistance")
 	
 	// 15% bullets
-	local a1 = attrib.GetKey("fire rate bonus", true)
-	a1.SetString("attribute_class","mult_postfiredelay")
-	a1.SetFloat("value", 0.85)
+	local a1 = attrib.GetKey("bullets per shot bonus", true)
+	a1.SetString("attribute_class","mult_bullets_per_shot")
+	a1.SetFloat("value", 1.15)
 	
 	// 100% more max primary ammo
 	local a2 = attrib.GetKey("maxammo primary increased", true)

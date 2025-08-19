@@ -233,5 +233,41 @@
 				}
 			}
 		}
+		
+		"60004"
+		{
+			"name"				"Syringe"
+			"prefab"			"valve weapon_bonesaw"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_Syringe"
+			"item_description"	"#TF_Syringe_Desc"
+			
+			"attributes"
+			{
+				"syringe heal"
+				{
+					"attribute_class"	"syringe_heal"
+					"value" "65"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+			}
+		}
 	}
 }

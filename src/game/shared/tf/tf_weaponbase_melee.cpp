@@ -15,6 +15,7 @@
 #include "tf_gamestats.h"
 #include "ilagcompensationmanager.h"
 #include "tf_passtime_logic.h"
+#include "tf_weapon_medigun.h"
 // Client specific.
 #else
 #include "c_tf_gamestats.h"
@@ -660,8 +661,9 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 			CALL_ATTRIB_HOOK_INT( nGiveHealthOnHit, add_give_health_to_teammate_on_hit );
 			if ( nGiveHealthOnHit != 0 )
 			{
+				
 				// Always keep at least 1 health for ourselves
-				nGiveHealthOnHit = Min( pPlayer->GetHealth() - 1, nGiveHealthOnHit );
+				nGiveHealthOnHit = Min( pPlayer->GetHealth() - 1, nGiveHealthOnHit);
 				int nHealthGiven = pTargetPlayer->TakeHealth( nGiveHealthOnHit, DMG_GENERIC );
 
 				if ( nHealthGiven > 0 )
@@ -670,6 +672,16 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 					CTakeDamageInfo info( pPlayer, pPlayer, this, nHealthGiven, DMG_GENERIC | DMG_PREVENT_PHYSICS_FORCE );
 					pPlayer->TakeDamage( info );
 				}
+
+				HealTeammate(pTargetPlayer, nHealthGiven, true);
+			}
+
+			// Syringe_heal
+			int nGiveHealthOnHitMedic = 0;
+			CALL_ATTRIB_HOOK_INT(nGiveHealthOnHitMedic, syringe_heal);
+			if (nGiveHealthOnHitMedic != 0)
+			{
+				HealTeammate(pTargetPlayer, nGiveHealthOnHitMedic, false);
 			}
 		}
 		else
@@ -1150,3 +1162,100 @@ char const *CTFWeaponBaseMelee::GetShootSound( int iIndex ) const
 
 	return BaseClass::GetShootSound(iIndex);
 }
+
+#ifndef CLIENT_DLL
+//-----------------------------------------------------------------------------
+// Purpose: Healing bolt heal.
+//-----------------------------------------------------------------------------
+void CTFWeaponBaseMelee::HealTeammate( CTFPlayer* pOther, float flHealth, bool bTakeAwayHealth )
+{
+	if (!pOther)
+		return;
+
+
+	CTFPlayer* pOwner = ToTFPlayer(GetOwnerEntity());
+	if (!pOwner)
+		return;
+
+	// Don't heal players using a weapon that blocks healing
+	CTFWeaponBase* pWeapon = pOther->GetActiveTFWeapon();
+	if (pWeapon)
+	{
+		int iBlockHealing = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pWeapon, iBlockHealing, weapon_blocks_healing);
+		if (iBlockHealing)
+			return;
+	}
+
+	// Scale this if needed
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pOther, flHealth, mult_healing_from_medics);
+
+	CTFWeaponBase* pActiveWeapon = pOther->GetActiveTFWeapon();
+	if (pActiveWeapon)
+	{
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pActiveWeapon, flHealth, mult_health_fromhealers_penalty_active);
+	}
+
+	int iActualHealed = pOther->TakeHealth(flHealth, DMG_GENERIC);
+	if (iActualHealed <= 0)
+		return;
+
+	// Play an impact sound.
+	// ImpactSound("Weapon_Arrow.ImpactFleshCrossbowHeal");
+
+	CTF_GameStats.Event_PlayerHealedOther(pOwner, flHealth);
+
+	IGameEvent* event = gameeventmanager->CreateEvent("player_healed");
+	if (event)
+	{
+		// HLTV event priority, not transmitted
+		event->SetInt("priority", 1);
+
+		// Healed by another player.
+		event->SetInt("patient", pOther->GetUserID());
+		event->SetInt("healer", pOwner->GetUserID());
+		event->SetInt("amount", flHealth);
+		gameeventmanager->FireEvent(event);
+	}
+
+	event = gameeventmanager->CreateEvent("player_healonhit");
+	if (event)
+	{
+		event->SetInt("amount", flHealth);
+		event->SetInt("entindex", pOther->entindex());
+		item_definition_index_t healingItemDef = INVALID_ITEM_DEF_INDEX;
+		if (pWeapon && pWeapon->GetAttributeContainer() && pWeapon->GetAttributeContainer()->GetItem())
+		{
+			healingItemDef = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
+		}
+		event->SetInt("weapon_def_index", healingItemDef);
+		gameeventmanager->FireEvent(event);
+	}
+
+	event = gameeventmanager->CreateEvent("crossbow_heal");
+	if (event)
+	{
+		event->SetInt("healer", pOwner->GetUserID());
+		event->SetInt("target", pOther->GetUserID());
+		event->SetInt("amount", flHealth);
+		gameeventmanager->FireEvent(event);
+	}
+
+	if ( bTakeAwayHealth != true )
+	{
+		// Add ubercharge based on amount healed
+		CWeaponMedigun* pMedigun = static_cast<CWeaponMedigun*>(pOwner->Weapon_OwnsThisID(TF_WEAPON_MEDIGUN));
+		if (pMedigun)
+		{
+			float flTimeSinceDamage = gpGlobals->curtime - pOther->GetLastDamageReceivedTime();
+			float flScale = RemapValClamped(flTimeSinceDamage, 10.f, 15.f, 3.f, 1.f); /*healingbolt_uber_scale.GetFloat()*/
+			const float flGainRate = 24.f * flScale;
+
+			// Ubercharge rate is based on the medigun's heal rate, then scaled based on last combat time (same rule as the medigun's heal rate)
+			pMedigun->AddCharge((iActualHealed / flGainRate) * gpGlobals->frametime);
+		}
+
+		pOther->m_Shared.AddCond(TF_COND_HEALTH_OVERHEALED, 1.2f);
+	}
+}
+#endif
