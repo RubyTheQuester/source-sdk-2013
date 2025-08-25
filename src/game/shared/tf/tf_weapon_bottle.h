@@ -97,12 +97,24 @@ public:
 	virtual void		WeaponRegenerate( void ) OVERRIDE;
 	virtual void		SwitchBodyGroups( void ) OVERRIDE;
 	virtual const char*	GetWorldModel( void ) const OVERRIDE;
+
+	const char*			GetEffectLabelText(void) { return "#TF_CABER"; }
+	virtual float		InternalGetEffectBarRechargeTime(void) { return 10.0; }
+	virtual int			GetEffectBarAmmo(void) { return TF_AMMO_GRENADES2; }
+	float				GetProgress(void) { return GetEffectBarProgress(); }
+	//virtual bool		EffectMeterShouldFlash(void);
+
 #ifdef CLIENT_DLL
 	virtual int			GetWorldModelIndex( void ) OVERRIDE;
 #endif
 
 	void				SetDetonated( int iVal ) { m_iDetonated = iVal; }
 	int					GetDetonated( void ) { return m_iDetonated; }
+
+#ifdef GAME_DLL
+	//virtual void		EffectBarRegenFinished(void) ;
+	virtual	void		OnResourceMeterFilled() OVERRIDE;
+#endif
 
 private:
 

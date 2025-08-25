@@ -749,6 +749,10 @@ void CHudUpgradePanel::UpdateModelPanels( void )
 		{
 			CreateItemModelPanel( LOADOUT_POSITION_PDA );
 		}
+		else if (m_hPlayer->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
+		{
+			CreateItemModelPanel( LOADOUT_POSITION_EQUIPMENT );
+		}
 
 		Panel *pSentryIcon = m_pSelectWeaponPanel->FindChildByName( "SentryIcon" );
 		if ( pSentryIcon )

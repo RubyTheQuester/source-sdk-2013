@@ -106,56 +106,6 @@
 			}
 		}
 		
-		"60001"
-		{
-			"name"	"The Gentle End"
-			"prefab" "weapon_revolver"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"item_name"			"#TF_Gentle_End"
-			"item_description"	"#TF_Gentle_End_desc"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
-			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
-			
-			"static_attrs"
-			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
-			}
-			
-			"attributes"
-			{
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.2"
-				}
-				"extra_damage_on_hit"
-				{
-					"attribute_class"	"extra_damage_on_hit"
-					"value"	"10"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.5"
-				}
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-			}
-		}
-		
 		"60002"
 		{
 			"name"				"Heavy Backstab Shield"
@@ -198,44 +148,6 @@
 		
 		"60003"
 		{
-			"name"				"Healer Sapper"
-			"prefab"			"valve weapon_sapper"
-			
-			"item_class"	"tf_weapon_sapper"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"item_name"			"#TF_Healer_Sapper"
-			"item_description"	"#TF_Healer_Sapper_Desc"
-			
-			"attributes"
-			{
-				"sapper damage leaches health"
-				{
-					"attribute_class"	"sapper_damage_leaches_health"
-					"value" "5"
-				}
-				"sapper health penalty"
-				{
-					"attribute_class"	"mult_sapper_health"
-					"value" "0.5"
-				}
-				"sapper damage penalty"
-				{
-					"attribute_class"	"mult_sapper_damage"
-					"value" "0.5"
-				}
-			}
-		}
-		
-		"60004"
-		{
 			"name"				"Syringe"
 			"prefab"			"valve weapon_bonesaw"
 			
@@ -266,6 +178,64 @@
 				{
 					"attribute_class"	"mult_dmg"
 					"value"	"0.8"
+				}
+			}
+		}
+		
+		"60004"
+		{
+			"name"				"Mortar Launcher"
+			"prefab"			"valve weapon_rocketlauncher"
+			
+			"item_class"	"tf_weapon_rocketlauncher_mortar"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_MortarLauncher"
+			"item_description"	"#TF_MortarLauncher_Desc"
+			
+			"attributes"
+			{
+				"MORTAR single redirect"
+				{
+					"attribute_class"	"mortar_single_redirect"
+					"value"	"1"
+				}
+				"MORTAR redirect DISPLAY"
+				{
+					"attribute_class"	"mortar_redirect_display"
+					"value"	"1"
+				}
+				"Blast radius decreased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"	"0.90"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.85"
+				}
+				"faster reload rate"
+				{
+					"attribute_class"	"fast_reload"
+					"value"	"0.85"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "0.5"
+				}
+				"disable fancy class select anim"
+				{
+					"attribute_class"	"disable_fancy_class_select_anim"
+					"value"	"1"
 				}
 			}
 		}

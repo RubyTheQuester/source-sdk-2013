@@ -264,5 +264,55 @@
 				}
 			}
 		}
+		
+		"34449"
+		{
+			"name"	"The Gentle End"
+			"prefab" "weapon_revolver"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_Gentle_End"
+			"item_description"	"#TF_Gentle_End_desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
+			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"attributes"
+			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"extra_damage_on_hit"
+				{
+					"attribute_class"	"extra_damage_on_hit"
+					"value"	"10"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.5"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
 	}
 }

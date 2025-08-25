@@ -35,6 +35,7 @@
 #include "tf_weapon_rocketpack.h"
 #include "tf_weapon_bonesaw.h"
 #include "tf_weapon_slap.h"
+#include "tf_weapon_bottle.h"
 
 #include <vgui_controls/ImagePanel.h>
 
@@ -301,7 +302,9 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 		break;
 	}
 	case TF_CLASS_DEMOMAN:
+		DECLARE_ITEM_EFFECT_METER( CTFStickBomb, TF_WEAPON_STICKBOMB, true, "resource/UI/HudItemEffectMeter_Caber.res" );
 		DECLARE_ITEM_EFFECT_METER( CTFSword, TF_WEAPON_SWORD, false, "resource/UI/HudItemEffectMeter_Demoman.res" );
+		//lambdaAddItemEffectMeter( "tf_weapon_stickbomb", true );
 		break;
 
 	case TF_CLASS_SOLDIER:
@@ -309,6 +312,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 		DECLARE_ITEM_EFFECT_METER( CTFParticleCannon, TF_WEAPON_PARTICLE_CANNON, false, "resource/UI/HUDItemEffectMeter_ParticleCannon.res" );
 		DECLARE_ITEM_EFFECT_METER( CTFRaygun, TF_WEAPON_RAYGUN, false, "resource/UI/HUDItemEffectMeter_Raygun.res" );
 		DECLARE_ITEM_EFFECT_METER( CTFRocketLauncher_AirStrike, TF_WEAPON_ROCKETLAUNCHER, false, "resource/UI/HudItemEffectMeter_Demoman.res" );
+		DECLARE_ITEM_EFFECT_METER( CTFStickBomb, TF_WEAPON_STICKBOMB, true, "resource/UI/HudItemEffectMeter_Caber.res" );
 		break;
 
 	case TF_CLASS_SPY:

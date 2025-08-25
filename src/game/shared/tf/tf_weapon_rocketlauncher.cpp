@@ -31,6 +31,7 @@
 //
 // Weapon Rocket Launcher tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher, DT_WeaponRocketLauncher )
 
 BEGIN_NETWORK_TABLE( CTFRocketLauncher, DT_WeaponRocketLauncher )
@@ -57,6 +58,7 @@ END_DATADESC()
 //
 // Direct Hit tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit )
 
 BEGIN_NETWORK_TABLE( CTFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit )
@@ -77,6 +79,8 @@ END_DATADESC()
 //=============================================================================
 //
 // AIRSTRIKE BEGIN
+//
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike )
 
 BEGIN_NETWORK_TABLE( CTFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike )
@@ -100,12 +104,11 @@ END_DATADESC()
 #endif
 // AIRSTRIKE END
 
-//CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_AirStrike, tf_weapon_rocketlauncher_airstrike )
-//CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_Mortar, tf_weapon_rocketlauncher_mortar )
 //=============================================================================
 //
 // Mortar tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar )
 
 BEGIN_NETWORK_TABLE( CTFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar )
@@ -113,6 +116,9 @@ END_NETWORK_TABLE()
 
 BEGIN_PREDICTION_DATA( CTFRocketLauncher_Mortar )
 END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher_mortar, CTFRocketLauncher_Mortar);
+PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher_mortar);
 
 
 // Server specific.
@@ -568,13 +574,14 @@ int CTFRocketLauncher_AirStrike::GetCount( void )
 //#endif
 //}
 
+/*
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 // CTFRocketLauncher_Mortar BEGIN
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-//CTFRocketLauncher_Mortar::CTFRocketLauncher_Mortar()
-//{
-//	
-//}
+CTFRocketLauncher_Mortar::CTFRocketLauncher_Mortar()
+{
+}
+*/
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 CBaseEntity *CTFRocketLauncher_Mortar::FireProjectile( CTFPlayer *pPlayer )
 {
@@ -662,7 +669,13 @@ void CTFRocketLauncher_Mortar::RedirectRockets( void )
 		VectorAngles( -vecDir, newAngles );
 		pRocket->SetAbsAngles( newAngles );
 
-		m_vecRockets.Remove( i );
+		bool iSingleRedirect = 0;
+		CALL_ATTRIB_HOOK_INT(iSingleRedirect, mortar_single_redirect);
+
+		if (iSingleRedirect)
+		{
+			m_vecRockets.Remove(i);
+		}
 	}
 #endif
 }

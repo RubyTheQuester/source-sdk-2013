@@ -606,6 +606,7 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
+		
 		"4002"
 		{
 			"name"				"airblast turn projectile to ammo"
@@ -616,6 +617,7 @@
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
+		
 		"4003"
 		{
 			"name"				"airblast give teammate speed boost"
@@ -626,6 +628,7 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		
 		"4004"
 		{
 			"name"				"extra_damage_on_hit_penalty"
@@ -635,6 +638,7 @@
 			"hidden"			"0"
 			"effect_type"	"negative"
 		}
+		
 		"4005"
 		{
 			"name"				"no hauling"
@@ -645,6 +649,7 @@
 			"stored_as_integer"	"1"
 			"effect_type"	"negative"
 		}
+		
 		"4006"
 		{
 			"name"				"buff on backstab"
@@ -654,6 +659,7 @@
 			"hidden"			"0"
 			"stored_as_integer"	"1"
 		}
+		
 		"4007"
 		{
 			"name"				"syringe heal"
@@ -662,6 +668,28 @@
 			"description_format"	"value_is_additive"
 			"hidden"			"0"
 			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"4008"
+		{
+			"name"				"MORTAR single redirect"
+			"attribute_class"	"mortar_single_redirect"
+			"description_string"	"#Attrib_Mortar_Redirect_Single"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		
+		"4009"
+		{
+			"name"				"MORTAR redirect DISPLAY"
+			"attribute_class"	"mortar_redirect_display"
+			"description_string"	"#Attrib_Mortar_Redirect"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
 	}

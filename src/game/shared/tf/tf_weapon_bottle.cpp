@@ -109,7 +109,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_stickbomb );
 //
 // Weapon Breakable Melee functions.
 //
-
+//=============================================================================
 CTFBreakableMelee::CTFBreakableMelee()
 {
 	m_bBroken = false;
@@ -305,10 +305,32 @@ void CTFStickBomb::Smack( void )
 			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 100.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
 			CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
 			TFGameRules()->RadiusDamage( radiusinfo );
+
+			CTFPlayer* pPlayer = ToTFPlayer(GetPlayerOwner());
+			if (!pPlayer)
+				return;
+
+			pPlayer->m_Shared.SetItemChargeMeter(LOADOUT_POSITION_MELEE, 0.f);
+			pPlayer->RemoveAmmo(1, TF_AMMO_GRENADES2);
+			StartEffectBarRegen();
+			//StartEffectBarRegen();
 		}
 #endif
 	}
 }
+#ifdef GAME_DLL
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFStickBomb::OnResourceMeterFilled()
+{
+	CTFPlayer* pOwner = GetTFPlayerOwner();
+	if (!pOwner)
+		return;
+
+	WeaponRegenerate();
+}
+#endif
 
 void CTFStickBomb::WeaponReset( void )
 {

@@ -52,6 +52,16 @@
 				}
 			}
 		}
+		
+		"307"
+		{
+			"static_attrs"
+			{
+				"item_meter_charge_type"				"1"
+				"item_meter_charge_rate"				"10"
+				"meter_label"							"#TF_Caber"
+			}
+		}
 	}
 	
 }

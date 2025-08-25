@@ -165,5 +165,43 @@
 			"mouse_pressed_sound" 	"ui/item_boxing_gloves_pickup.wav"
 			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
 		}
+		
+		"50004"
+		{
+			"name"				"Healer Sapper"
+			"prefab"			"valve weapon_sapper"
+			
+			"item_class"	"tf_weapon_sapper"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_name"			"#TF_Healer_Sapper"
+			"item_description"	"#TF_Healer_Sapper_Desc"
+			
+			"attributes"
+			{
+				"sapper damage leaches health"
+				{
+					"attribute_class"	"sapper_damage_leaches_health"
+					"value" "5"
+				}
+				"sapper health penalty"
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value" "0.5"
+				}
+				"sapper damage penalty"
+				{
+					"attribute_class"	"mult_sapper_damage"
+					"value" "0.5"
+				}
+			}
+		}
 	}
 }
