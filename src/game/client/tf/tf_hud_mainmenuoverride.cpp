@@ -63,6 +63,7 @@
 #include "ienginevgui.h"
 #include "vscript_client.h"
 #include "vgui/solo/tf_solo_panel.h"
+#include "tf_vgui_video.h"
 
 
 #include "c_tf_gamestats.h"
@@ -253,6 +254,8 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 
 	//m_pWatchStreamsPanel = new CTFStreamListPanel( this, "StreamListPanel" );
 	m_pCharacterImagePanel = new ImagePanel( this, "TFCharacterImage" );
+
+	m_pTFBackgroundVideo = new CTFVideoPanel( this, "VideoPanel" );
 
 	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
 }
@@ -631,6 +634,14 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 			pPanelToAddTooltipTipTo->SetVisible(false);
 		}
 	};
+	auto lambdaAddTooltipSolo = [&]( const char* pszPanelName, const char* pszTooltipText )
+	{
+		Panel* pPanelToAddTooltipTipTo = FindChildByName( pszPanelName );
+		if ( pPanelToAddTooltipTipTo)
+		{
+			pPanelToAddTooltipTipTo->SetTooltip( m_pToolTip, pszTooltipText );
+		}
+	};
 
 	lambdaAddTooltip( "CommentaryButton", "#MMenu_Tooltip_Commentary" );
 	lambdaAddTooltip( "CoachPlayersButton", "#MMenu_Tooltip_Coach" );
@@ -642,6 +653,11 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	lambdaAddTooltip( "SettingsButton", "#MMenu_Tooltip_Options" );
 	lambdaAddTooltip( "TF2SettingsButton", "#MMenu_Tooltip_AdvOptions" );
 
+	lambdaAddTooltipSolo( "AchievementsButtonSolo", "#MMenu_Tooltip_Achievements" );
+	lambdaAddTooltipSolo( "ResetModProgressButton", "#TFSOLO_ResetProgress_Title" );
+	lambdaAddTooltipSolo( "ModCreditsButton", "#TFSOLO_ModCredits_Title" );
+	lambdaAddTooltipSolo( "SettingsButtonSDK", "#MMenu_Tooltip_Options" );
+	lambdaAddTooltipSolo( "TF2SettingsButtonSDK", "#MMenu_Tooltip_AdvOptions" );
 
 	LoadCharacterImageFile();
 
@@ -973,6 +989,16 @@ void CHudMainMenuOverride::PerformLayout( void )
 	m_pEventPromoContainer->SetVisible(false);
 
 	UpdateRankPanelVisibility();
+
+	ConVarRef r_drawfriendslist("r_drawfriendslist");
+	if ( !r_drawfriendslist.GetBool() )
+	{
+		SetControlVisible( "ToggleChatButton", false, true );
+	}
+	if ( m_pTFBackgroundVideo && !engine->IsInGame() )
+	{
+		m_pTFBackgroundVideo->BeginPlaybackRand();
+	}
 }
 
 
@@ -1017,12 +1043,27 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 		{
 			m_pCharacterImagePanel->SetVisible( false );
 		}
+		if ( m_pTFBackgroundVideo && m_pTFBackgroundVideo->IsVisible() )
+		{
+			m_pTFBackgroundVideo->SetVisible( false );
+			m_pTFBackgroundVideo->SetEnabled( false );
+			m_pTFBackgroundVideo->EndRand();
+			m_pTFBackgroundVideo->OnClose();
+
+		}
 	}
 	else if ( !bInGame && !bInReplay )
 	{
 		if ( !m_pCharacterImagePanel->IsVisible() )
 		{
 			m_pCharacterImagePanel->SetVisible( m_bBackgroundUsesCharacterImages );
+		}
+		if ( m_pTFBackgroundVideo && !m_pTFBackgroundVideo->IsVisible() )
+		{
+			m_pTFBackgroundVideo->m_iLastClip = -1;
+			m_pTFBackgroundVideo->BeginPlaybackRand();
+			m_pTFBackgroundVideo->SetVisible( true );
+			m_pTFBackgroundVideo->SetEnabled( true );
 		}
 	}
 

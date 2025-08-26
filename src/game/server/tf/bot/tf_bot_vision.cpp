@@ -315,9 +315,7 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
 			return false;
 		}
 		
-		if ( 
-			(enemy->m_Shared.InCond( TF_COND_DISGUISED )  || enemy->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER) )
-			&& enemy->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
+		if ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) && enemy->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team
 			return true;
@@ -410,9 +408,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			// But only if we aren't suspecting them currently.  This happens when we bump into them.
 			if( !pSuspectInfo || !pSuspectInfo->IsCurrentlySuspected() )
 			{
-				if (
-					(player->m_Shared.InCond(TF_COND_DISGUISED) || player->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER))
-					&& player->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
+				if ( player->m_Shared.InCond( TF_COND_DISGUISED ) && player->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 				{
 					me->ForgetSpy( player );
 					return false;
@@ -443,9 +439,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			return true;
 		}
 
-		if ( 
-			(player->m_Shared.InCond(TF_COND_DISGUISED) || player->m_Shared.InCond(TF_COND_DISGUISED_AS_DISPENSER))
-			&& player->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
+		if ( player->m_Shared.InCond( TF_COND_DISGUISED ) && player->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team, don't notice him
 			return false;

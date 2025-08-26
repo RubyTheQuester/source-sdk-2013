@@ -17,6 +17,11 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				cp_badlands 1
+				koth_badlands 1
+			}
 		}
 		arena_granary
 		{
@@ -32,6 +37,10 @@ solo_config
 				theme_farm 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				cp_granary 1
 			}
 		}
 		arena_lumberyard
@@ -66,6 +75,11 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				koth_nucleus 1
+				vsh_nucleus 1
+			}
 		}
 		arena_ravine
 		{
@@ -99,6 +113,11 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				koth_sawmill 1
+				ctf_sawmill 1
+			}
 		}
 		arena_well
 		{
@@ -114,6 +133,11 @@ solo_config
 				theme_industrial 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				cp_well 1
+				ctF_well 1
 			}
 		}
 		cp_5gorge
@@ -184,7 +208,6 @@ solo_config
 				theme_industrial 1
 				valve 1
 				allow_koth 1
-				allow_ctf 1
 				allow_pd 1
 			}
 			alts
@@ -255,7 +278,7 @@ solo_config
 		}
 		cp_gorge
 		{
-			name "Gorge"
+			name "Gorge (A/D)"
 			modename "#Gametype_AttackDefense"
 			thumbArt "maps/menu_thumb_cp_gorge"
 			photosArt "maps/menu_photos_cp_gorge"
@@ -267,6 +290,11 @@ solo_config
 				theme_alpine 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				cp_5gorge 1
+				ctf_gorge 1
 			}
 		}
 		cp_granary
@@ -370,6 +398,11 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				koth_sawmill 1
+				arena_sawmill 1
+			}
 		}
 		ctf_well
 		{
@@ -385,6 +418,11 @@ solo_config
 				theme_industrial 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				arena_well 1
+				cp_well 1
 			}
 		}
 		ctf_hellfire
@@ -420,6 +458,10 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				cp_foundry 1
+			}
 		}
 		ctf_gorge
 		{
@@ -437,9 +479,15 @@ solo_config
 				valve 1
 				custom_hide 1
 			}
+			alts
+			{
+				cp_gorge 1
+				cp_5gorge 1
+			}
 		}
 		ctf_thundermountain
 		{
+			disabled 1
 			name "Thunder Mountain (CTF)"
 			modename "#Gametype_Powerup"
 			thumbArt "maps/menu_thumb_ctf_thundermountain"
@@ -447,11 +495,16 @@ solo_config
 			tags
 			{
 				ctf 1
+				mannpower 1
 				flag_count 2
 				symm 1
 				theme_alpine 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				pl_thundermountain 1
 			}
 		}
 		koth_badlands
@@ -468,6 +521,11 @@ solo_config
 				theme_desert 1
 				valve 1
 				custom_hide 1
+			}
+			alts
+			{
+				arena_badlands 1
+				koth_badlands 1
 			}
 		}
 		koth_nucleus
@@ -583,6 +641,7 @@ solo_config
 		}
 		pass_brickyard
 		{
+			disabled 1
 			name "Brickyard"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_brickyard"
@@ -597,6 +656,7 @@ solo_config
 		}
 		pass_district
 		{
+			disabled 1
 			name "District"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_district"
@@ -611,6 +671,7 @@ solo_config
 		}
 		pass_timbertown
 		{
+			disabled 1
 			name "Timbertown"
 			modename "#Gametype_Passtime"
 			thumbArt "maps/menu_thumb_pass_timbertown"
@@ -675,6 +736,10 @@ solo_config
 				stages 3
 				theme_alpine 1
 				valve 1
+			}
+			alts
+			{
+				ctf_thundermountain 1
 			}
 		}
 		pl_upward
@@ -748,6 +813,7 @@ solo_config
 		}
 		sd_doomsday_event
 		{
+			disabled 1
 			name "Carnival of Carnage"
 			modename "#Gametype_SD"
 			thumbArt "maps/menu_thumb_sd_doomsday_event"
@@ -777,6 +843,7 @@ solo_config
 		}
 		mvm_bigrock
 		{
+			disabled 1
 			name "Bigrock"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_bigrock"
@@ -791,6 +858,7 @@ solo_config
 		}
 		mvm_coaltown
 		{
+			disabled 1
 			name "Coaltown"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_coaltown"
@@ -805,6 +873,7 @@ solo_config
 		}
 		mvm_decoy
 		{
+			disabled 1
 			name "Decoy"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_decoy"
@@ -819,6 +888,7 @@ solo_config
 		}
 		mvm_ghost_town
 		{
+			disabled 1
 			name "Ghost Town"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_ghost_town"
@@ -834,6 +904,7 @@ solo_config
 		}
 		mvm_mannhattan
 		{
+			disabled 1
 			name "Mannhattan"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannhattan"
@@ -849,6 +920,7 @@ solo_config
 		}
 		mvm_mannworks
 		{
+			disabled 1
 			name "Mannworks"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_mannworks"
@@ -863,6 +935,7 @@ solo_config
 		}
 		mvm_rottenburg
 		{
+			disabled 1
 			name "Rottenburg"
 			modename "#Gametype_MVM"
 			thumbArt "maps/menu_thumb_mvm_rottenburg"

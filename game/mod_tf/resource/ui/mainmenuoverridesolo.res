@@ -188,42 +188,6 @@
 			"tall"			"f0"
 		}
 		
-		if_halloween_0
-		{
-			"image"		"../console/title_team_halloween2011_widescreen"
-		}
-		if_halloween_1
-		{
-			"image"		"../console/title_team_halloween2012_widescreen"
-		}
-		if_halloween_2
-		{
-			"image"		"../console/title_team_halloween2013_widescreen"
-		}
-		if_halloween_3
-		{
-			"image"		"../console/title_team_halloween2014_widescreen"
-		}
-		if_halloween_4
-		{	
-			"image"		"../console/title_team_halloween2015_widescreen"
-		}
-		if_halloween_5
-		{	
-			"image"		"../console/title_scream_fortress_2017_widescreen"
-		}
-		if_fullmoon
-		{
-			"image"		"../console/title_fullmoon_widescreen"
-		}
-		if_christmas_0
-		{
-			"image"		"../console/background_xmas2020_widescreen"
-		}
-		if_christmas_1
-		{
-			"image"		"../console/background_xmas2023_widescreen"
-		}
 	}
 					
 	"TFLogoImage"
@@ -248,12 +212,38 @@
 		"fieldName"		"TFCharacterImage"
 		"xpos"			"c-300"
 		"ypos"			"-80"
-		"zpos"			"-99"
+		"zpos"			"-98"
 		"wide"			"600"
 		"tall"			"600"
 		"visible"		"1"
 		"enabled"		"1"
 		"scaleImage"	"1"
+		"mouseinputenabled"	"0"
+		"keyboardinputenabled" "0"
+	}
+	"VideoPanel"
+	{
+		"ControlName"	"CTFVideoPanel"
+		"fieldName"		"VideoPanel"
+		"xpos"			"cs-0.5"
+		"ypos"			"26"
+		"zpos"			"-99"
+		"wide"			"f0"
+		"tall"			"f84"
+		"proportionaltoparent"	"1"
+		"loop"			"1"
+		"visible"		"1"
+		"enabled"		"1"
+		"mouseinputenabled"	"0"
+		"keyboardinputenabled" "0"
+		//"blackbg"		"1"
+		"ignoreaudio"	"1"
+		"stretchvideo"	"1"
+		"forceloop"		"1"
+		"clips"
+		{
+			"media/tfsolo_menu_test1" "1"
+		}
 	}
 
 	"RankModelPanel"
@@ -2500,22 +2490,22 @@
 		"xpos"			"c-0+273"
 		"ypos"			"437"
 		"zpos"			"5"
-		"wide"			"25"
+		"wide"			"26"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
 		"visible"		"1"
 		"enabled"		"1"
 		"tabPosition"	"0"
-		"labelText"		""
+		"labelText"		"+"
 		"font"			"HudFontSmallBold"
-		"textAlignment"	"east"
+		"textAlignment"	"north-west"
+		"textinsetx"	"18"
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
 		"Command"		"opentf2options"
 		"use_proportional_insets"	"1"
-		"textinsetx"	"25"
 
 		"navUp"			"SettingsButtonSDK"
 		"navLeft"		"SettingsButtonSDK"
@@ -3047,17 +3037,17 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"ModCreditsButton"
-		"xpos"			"c-34+150"
+		"xpos"			"c-34+239"
 		"ypos"			"437"
 		"zpos"			"4"
-		"wide"			"110"
+		"wide"			"26"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
 		"visible"		"1"
 		"enabled"		"1"
 		"tabPosition"	"0"
-		"labelText"		"#TFSOLO_ModCredits_Title"
+		"labelText"		"?"
 		"font"			"HudFontSmallBold"
 		"textAlignment"	"center"
 		"textinsetx"	"5"
@@ -3079,17 +3069,17 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"ResetModProgressButton"
-		"xpos"			"c-34"
+		"xpos"			"c-34+171"
 		"ypos"			"437"
 		"zpos"			"4"
-		"wide"			"125"
+		"wide"			"25"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
 		"visible"		"1"
 		"enabled"		"1"
 		"tabPosition"	"0"
-		"labelText"		"#TFSOLO_ResetProgress_Title"
+		"labelText"		""
 		"font"			"HudFontSmallBold"
 		"textAlignment"	"center"
 		"textinsetx"	"5"
@@ -3105,13 +3095,28 @@
 
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
+		
+		"SubImage"
+		{
+			"ControlName"	"ImagePanel"
+			"fieldName"		"SubImage"
+			"xpos"			"5"
+			"ypos"			"6"
+			"zpos"			"1"
+			"wide"			"15"
+			"tall"			"15"
+			"visible"		"1"
+			"enabled"		"1"
+			"image"			"glyph_disconnect"
+			"scaleImage"	"1"
+		}	
 	}
 	
 	"AchievementsButtonSolo"
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"AchievementsButtonSolo"
-		"xpos"			"c-150"
+		"xpos"			"c-34+205"
 		"ypos"			"437"
 		"zpos"			"3"
 		"wide"			"25"

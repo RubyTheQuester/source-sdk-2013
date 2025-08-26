@@ -483,7 +483,6 @@ void CArmoryPanel::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 void CArmoryPanel::ShowCustomList(const char* listname, KeyValues* kvItems)
 {
-	///
 	bool CustomArmory = false;
 	auto kvSave = TFInventoryManager()->GetSaveData();
 	CUtlVector<int> ArmoryList;

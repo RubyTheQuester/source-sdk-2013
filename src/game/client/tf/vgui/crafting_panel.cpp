@@ -561,7 +561,6 @@ void CCraftingPanel::JumpToArmory(void)
 		return;
 	EconUI()->OpenEconUI(ECONUI_ARMORY);
 	EconUI()->GetArmoryPanel()->ShowCustomList(key->GetString("Name","Bot"), kItems);
-	//
 }
 
 //-----------------------------------------------------------------------------
