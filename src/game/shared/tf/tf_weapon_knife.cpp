@@ -55,6 +55,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_knife );
 //
 // Weapon Knife functions.
 //
+//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -299,34 +300,22 @@ void CTFKnife::PrimaryAttack( void )
 	CALL_ATTRIB_HOOK_INT(iBackstabBuff, backstab_buff);
 	if (bSuccessfulBackstab && iBackstabBuff > 0)
 	{
-
 		switch ( m_hBackstabVictim->m_Shared.GetDesiredPlayerClassIndex() )
 		{
 			default:
-			{
-				DevMsg("What?\n");
-			}
-
 			case TF_CLASS_SCOUT:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_SPEED_BOOST, 3.0f);
-
-				DevMsg("Scout Speed Boost Backstab Buff\n");
 				break;
 			}
 			case TF_CLASS_SOLDIER:
 			{
 				//pPlayer->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
-
-				DevMsg("Soldier ??? Backstab Buff\n");
 				break;
 			}
 			case TF_CLASS_PYRO:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_FIRE_IMMUNE, 3.0f);
-				// Possibly OP
-
-				DevMsg("Pyro Flame Immunity Backstab Buff\n");
 				break;
 			}
 
@@ -334,25 +323,18 @@ void CTFKnife::PrimaryAttack( void )
 			case TF_CLASS_DEMOMAN:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
-
-				DevMsg("Demoman ???? Backstab Buff\n");
 				break;
 			}
 			case TF_CLASS_HEAVYWEAPONS:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
-
-				DevMsg("Heavy Defense Banner Buff\n");
 				break;
 			}
 			case TF_CLASS_ENGINEER:
 			{
-
 				pPlayer->GiveAmmo(pPlayer->GetMaxAmmo(TF_AMMO_PRIMARY), TF_AMMO_PRIMARY);
 				pPlayer->GiveAmmo(pPlayer->GetMaxAmmo(TF_AMMO_SECONDARY), TF_AMMO_SECONDARY);
 				pPlayer->m_Shared.SetSpyCloakMeter(100.0f);
-
-				DevMsg("Engineer Ammo Backstab Buff.\n");
 				break;
 			}
 
@@ -376,22 +358,16 @@ void CTFKnife::PrimaryAttack( void )
 					pPlayer->TakeHealth(iDeltaHealth, DMG_IGNORE_MAXHEALTH);
 					pPlayer->m_Shared.HealthKitPickupEffects(iDeltaHealth);
 				}
-
-				DevMsg("Medic Health Overheal Backstab Buff\n");
 				break;
 			}
 			case TF_CLASS_SNIPER:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_OFFENSEBUFF, 3.0f);
-
-				DevMsg("Sniper Minicrits Banner Backstab Buff\n");
 				break;
 			}
 			case TF_CLASS_SPY:
 			{
 				pPlayer->m_Shared.AddCond(TF_COND_STEALTHED_USER_BUFF, 3.0f);
-
-				DevMsg("Spy Cloak Backstab Buff\n");
 				break;
 			}
 		}

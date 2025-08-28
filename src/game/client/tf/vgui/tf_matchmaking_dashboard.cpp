@@ -1318,6 +1318,7 @@ void CTFMatchmakingDashboard::UpdateFindAGameButton()
 
 void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 {
+	//Email
 	bool bInGame = engine->IsInGame();
 
 	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() );
@@ -1325,6 +1326,12 @@ void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 
 	m_pTopBar->SetControlVisible( "DisconnectButton", bInGame );
 	m_pTopBar->SetControlVisible( "QuitButton", !bInGame );
+
+
+	m_pPlayButton->SetVisible(!bInGame && !BInEndOfMatch());
+
+	m_pTopBar->SetControlVisible( "PlayGameButton", !bInGame );
+	m_pTopBar->SetControlVisible( "HostGameButton", !bInGame );
 
 	//Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
 
