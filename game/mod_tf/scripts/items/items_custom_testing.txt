@@ -162,6 +162,11 @@
 			"item_name"			"#TF_Syringe"
 			"item_description"	"#TF_Syringe_Desc"
 			
+			"image_inventory"				"backpack\weapons\c_models\c_syringe/c_syringe"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_syringe/c_syringe.mdl"
+			
 			"attributes"
 			{
 				"syringe heal"
@@ -200,6 +205,11 @@
 			"item_name"			"#TF_MortarLauncher"
 			"item_description"	"#TF_MortarLauncher_Desc"
 			
+			"image_inventory"				"backpack\weapons\c_models\c_domebreaker/w_rocketlauncher"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_dome_breaker/c_dome_breaker.mdl"
+			
 			"attributes"
 			{
 				"MORTAR single redirect"
@@ -212,10 +222,15 @@
 					"attribute_class"	"mortar_redirect_display"
 					"value"	"1"
 				}
+				"Projectile speed decreased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value" "0.75"
+				}
 				"Blast radius decreased"
 				{
 					"attribute_class"	"mult_explosion_radius"
-					"value"	"0.90"
+					"value"	"0.75"
 				}
 				"damage penalty"
 				{
