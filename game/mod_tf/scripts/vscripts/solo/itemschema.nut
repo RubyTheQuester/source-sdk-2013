@@ -17,13 +17,12 @@ IncludeScript("solo/balancing/gaspasser.nut")
 IncludeScript("solo/balancing/caber.nut")
 
 //-Heavy-//
-IncludeScript("solo/balancing/natascha.nut")
+//IncludeScript("solo/balancing/natascha.nut") // Better redesign needed
 IncludeScript("solo/balancing/steak.nut")
 IncludeScript("solo/balancing/dalokohsbar.nut")
 IncludeScript("solo/balancing/evictionnotice.nut")
 IncludeScript("solo/balancing/warriorsspirit.nut")
-
-IncludeScript("solo/balancing/test/sandwich.nut")
+IncludeScript("solo/balancing/sandwich.nut")
 
 //-Engineer-//
 IncludeScript("solo/balancing/southernhospitality.nut")
@@ -39,9 +38,9 @@ IncludeScript("solo/balancing/ambassador.nut")
 IncludeScript("solo/balancing/enforcer.nut")
 IncludeScript("solo/balancing/yer.nut")
 
-//===========================//
-//========Not reskins========//
-//===========================//
+//=======================//
+//========Reskins========//
+//=======================//
 
 //-Scout-//
 IncludeScript("solo/balancing/reskin/threeruneblade.nut") 		// Design stats
@@ -61,9 +60,6 @@ IncludeScript("solo/balancing/reskin/robosandvich.nut") 		// Design stats
 IncludeScript("solo/balancing/reskin/apocofists.nut") 			// Design stats
 IncludeScript("solo/balancing/reskin/breadbite.nut") 			
 
-//-Engineer-//
-IncludeScript("solo/balancing/reskin/pipboy.nut") 				// Unsure
-
 //-Sniper-//
 IncludeScript("solo/balancing/reskin/shootingstar.nut") 		// Design stats
 IncludeScript("solo/balancing/reskin/fortifiedcompound.nut") 	// Unsure
@@ -77,6 +73,14 @@ IncludeScript("solo/balancing/reskin/apsap.nut") 				// Design stats
 IncludeScript("solo/balancing/reskin/timepiece.nut") 			// Design stats
 IncludeScript("solo/balancing/reskin/quackenbirdt.nut") 		// Unsure
 IncludeScript("solo/balancing/reskin/snackattack.nut") 			// Unsure
+
+//=======================//
+//======New Weapons======//
+//=======================//
+
+//-Engineer-//
+IncludeScript("solo/balancing/new/pipboy.nut") 					// Unsure
+
 
 ::TFSOLO.SetupItemSchema <- function()
 {

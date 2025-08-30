@@ -2,6 +2,47 @@
 {
 	"prefabs"
 	{
+		"weapon_melee_crowbar"
+		{
+			"base_item_name"	"Crowbar"
+			
+			"item_logname"	"crowbar"
+			"item_iconname"	"crowbar"
+			
+			"item_slot"	"melee"
+			
+			"image_inventory"				"backpack/player/items/all_class/crowbar"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_crowbar/c_crowbar.mdl"
+			
+			"attach_to_hands"		"1"
+			"inspect_panel_dist" 	"40"
+			
+			"item_type_name"	"#TF_Weapon_Crowbar"
+			"item_name"			"#TF_Weapon_Crowbar"
+			
+			"anim_slot" "MELEE_ALLCLASS"
+			
+			"xifier_class_remap"	"Frying Pan"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+			
+			"visuals"
+			{
+				"sound_melee_hit"			"Crowbar.HitFlesh"
+				"sound_melee_hit_world"		"Crowbar.HitWorld"
+				"sound_melee_miss"			"Weapon_Machete.Miss"
+				"sound_burst"				"Weapon_Machete.MissCrit"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
+		
 		"weapon_heavy_wearable"
 		{
 			"enabled"		"1"
@@ -53,8 +94,10 @@
 	{
 		"60000"
 		{
-			"name"				"Fat Scout"
+			"name"				"Resistant Vest"
 			"prefab"			"valve weapon_heavy_wearable"
+			
+			"equip_region"		"shirt"
 			
 			"show_in_armory"	"1"
 			"propername"		"1"
@@ -64,14 +107,14 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"			"#TF_Fatscout_Primary"
-			"item_description"	"#TF_Fatscout_desc"
+			"item_name"			"#TF_ResistantVest_Heavy"
+			"item_description"	"#TF_ResistantVest_Heavy_desc"
 			
-			"image_inventory"	"backpack/workshop/player/items/sniper/croc_shield/croc_shield"
+			"image_inventory"	"backpack/player/items/heavy/Bullet_Resistant_Vest/Bullet_Resistant_Vest"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"	"models/workshop/player/items/sniper/croc_shield/croc_shield.mdl"
-			"extra_wearable" "models/workshop/player/items/sniper/croc_shield/croc_shield.mdl"
+			"model_player"	"models/player/items/heavy/Bullet_Resistant_Vest/Bullet_Resistant_Vest.mdl"
+			"extra_wearable" "models/player/items/heavy/Bullet_Resistant_Vest/Bullet_Resistant_Vest.mdl"
 			
 			"visuals"
 			{
@@ -83,70 +126,20 @@
 			
 			"attributes"
 			{
-				"max health additive bonus"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" "50"
-				}
 				"dmg taken from fire reduced"
 				{
 					"attribute_class"	"mult_dmgtaken_from_fire"
-					"value"			"0.5"
+					"value"			"0.75"
 				}
 				"dmg taken from blast reduced"
 				{
 					"attribute_class"	"mult_dmgtaken_from_explosions"
-					"value"			"0.5"
-				}
-				"maxammo secondary increased"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"	"2"
+					"value"			"0.80"
 				}
 			}
 		}
 		
 		"60002"
-		{
-			"name"				"Heavy Backstab Shield"
-			"prefab"			"valve weapon_heavy_wearable"
-			"item_class"		"tf_wearable_razorback"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"item_name"			"#TF_Heavy_Back_Shield"
-			"item_description"	"#TF_Heavy_Back_Shield_Desc"
-			
-			"image_inventory"	"backpack/player/items/sniper/knife_shield"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"	"models/player/items/sniper/knife_shield.mdl"
-			"extra_wearable" "models/player/items/sniper/knife_shield.mdl"
-
-			"static_attrs"
-			{
-				"item_meter_charge_type"				"1"
-				"item_meter_charge_rate"				"10"
-				"meter_label"							"#TF_Heavy_Shield"
-			}
-			
-			"attributes"
-			{
-				"backstab shield"
-				{
-					"attribute_class"	"set_blockbackstab_once"
-					"value" "1"
-				}
-			}
-		}
-		
-		"60003"
 		{
 			"name"				"Syringe"
 			"prefab"			"valve weapon_bonesaw"
@@ -174,20 +167,20 @@
 					"attribute_class"	"syringe_heal"
 					"value" "65"
 				}
-				"fire rate penalty"
+				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.2"
+					"value"	"0.5"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.8"
+					"value"	"0.75"
 				}
 			}
 		}
 		
-		"60004"
+		"60003"
 		{
 			"name"				"Mortar Launcher"
 			"prefab"			"valve weapon_rocketlauncher"
@@ -252,6 +245,37 @@
 					"attribute_class"	"disable_fancy_class_select_anim"
 					"value"	"1"
 				}
+			}
+		}
+		
+		"60004"
+		{
+			"name"			"Crowbar"
+			"item_class"	"saxxy"
+			"prefab"		"weapon_melee_allclass weapon_melee_crowbar"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_description"	"#TF_Crowbar_Desc"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"pyro" 		"1"
+				
+				"spy" 		"1"
+				"engineer" 	"1"
 			}
 		}
 	}

@@ -102,12 +102,12 @@
 	{
 		"34446"
 		{
-			"name"	"The Foxhound"
+			"name"	"Foxhound"
 			"prefab" "weapon_revolver"
 			
 			"show_in_armory"	"1"
-			"propername"	"1"
-			"customitem" "1"
+			"propername"		"0"
+			"customitem" 		"1"
 			
 			"item_name"	"#TF_Foxhound"
 			"item_description"	"#TF_Foxhound_desc"
@@ -159,11 +159,11 @@
 		
 		"34447"
 		{
-			"name"	"The Deputy"
+			"name"	"Deputy"
 			"prefab" "weapon_revolver_engineer"
 			
 			"show_in_armory"	"1"
-			"propername"		"1"
+			"propername"		"0"
 			"customitem" 		"1"
 
 			"item_quality"	"rarity2"
@@ -210,7 +210,7 @@
 			"prefab" "weapon_pistol"
 			
 			"show_in_armory"	"1"
-			"propername"		"1"
+			"propername"		"0"
 			"customitem" 		"1"
 			
 			"item_quality"	"rarity2"
@@ -271,7 +271,7 @@
 			"prefab" "weapon_revolver"
 			
 			"show_in_armory"	"1"
-			"propername"		"1"
+			"propername"		"0"
 			"customitem"		"1"
 			
 			"item_quality"	"rarity2"

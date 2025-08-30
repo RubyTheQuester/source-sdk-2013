@@ -131,6 +131,20 @@ void CTFWeaponInvis::SetWeaponVisible( bool visible )
 //-----------------------------------------------------------------------------
 bool CTFWeaponInvis::Deploy( void )
 {
+	int iResetCloak = 0;
+	CALL_ATTRIB_HOOK_INT(iResetCloak, invis_reset_meter_holster);
+	if (iResetCloak != 0)
+	{
+		CTFPlayer* pOwner = ToTFPlayer(GetOwner());
+		if (pOwner)
+		{
+			if (pOwner->m_Shared.GetSpyCloakMeter() != 100)
+			{
+				return false;
+			}
+		}
+	}
+
 	bool b = BaseClass::Deploy();
 
 	SetWeaponIdleTime( gpGlobals->curtime + 1.5 );
