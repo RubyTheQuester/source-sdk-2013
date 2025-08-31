@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_items/c_crowbar/c_crowbar_large"
+	$translucent 1
+}
