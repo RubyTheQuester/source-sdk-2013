@@ -78,3 +78,30 @@
 		"wave"		"weapons/crowbar/pan_impact_world3.wav"
 	}
 }
+
+// ------------------------------------------------------------------------------------ //
+// TRANQ NEW
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Tranq_New.Single"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave"		"weapons/tranq_shot.wav"
+	}
+}
+
+"Weapon_Tranq_New.SingleCrit"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave"		"weapons/tranq_shot_crit.wav"
+	}
+}
+
