@@ -18,7 +18,7 @@
 			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
 			
 			"item_type_name"	"#TF_Weapon_Revolver"
-			"item_name"			"#TF_Weapon_Revolver"
+			"item_name"	"#TF_Weapon_Revolver"
 			
 			"item_slot"		"secondary"
 			"item_iconname"	"revolver_engineer"
@@ -109,17 +109,15 @@
 			"propername"		"0"
 			"customitem" 		"1"
 			
-			"item_name"	"#TF_Foxhound"
-			"item_description"	"#TF_Foxhound_desc"
+			"item_name"	"#TF_Weapon_Foxhound"
+			"item_description"	"#TF_Weapon_Foxhound_desc"
 			
 			"item_quality"	"rarity2"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_foxhound/c_foxhound"
-			
 			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
-			//"engineer"	"models/weapons/c_models/c_foxhound/c_foxhound_engineer.mdl"
 			
 			"static_attrs"
 			{
@@ -170,8 +168,8 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"		"#TF_Deputy"
-			"item_description"	"#TF_Deputy_desc"
+			"item_name"		"#TF_Weapon_Deputy"
+			"item_description"	"#TF_Weapon_Deputy_desc"
 			
 			"static_attrs"
 			{
@@ -184,7 +182,7 @@
 				"mult_dmg_vs_same_class"
 				{
 					"attribute_class"	"mult_dmg_vs_same_class"
-					"value"	"1.25"
+					"value"	"1.35"
 				}
 				"damage penalty"
 				{
@@ -217,11 +215,11 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"	"#TF_Ballestar"
-			"item_description"	"#TF_Ballestar_desc"
+			"item_name"	"#TF_Weapon_Ballestar"
+			"item_description"	"#TF_Weapon_Ballestar_desc"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_ballestar/c_ballestar"
-			"model_player"		"models/weapons/c_models/c_ballestar/c_ballestar.mdl"
+			"model_player"	"models/weapons/c_models/c_ballestar/c_ballestar.mdl"
 			
 			"used_by_classes"
 			{
@@ -267,7 +265,7 @@
 		
 		"34449"
 		{
-			"name"	"The Gentle End"
+			"name"	"Gentle End"
 			"prefab" "weapon_revolver"
 			
 			"show_in_armory"	"1"
@@ -278,11 +276,11 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"item_name"			"#TF_Gentle_End"
-			"item_description"	"#TF_Gentle_End_desc"
+			"item_name"	"#TF_Weapon_GentleEnd"
+			"item_description"	"#TF_Weapon_GentleEnd_desc"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_tyranny/c_tyranny"
-			"model_player"		"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
+			"model_player"	"models/weapons/c_models/c_tyranny/c_tyranny.mdl"
 			
 			"static_attrs"
 			{
@@ -312,6 +310,73 @@
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
 				}
+			}
+		}
+		
+		"34450"
+		{
+			"name"				"Crowbar"
+			"base_item_name"	"Crowbar"
+			"item_class"	"saxxy"
+			"prefab"		"weapon_melee_allclass"
+			
+			"show_in_armory"	"1"
+			"propername"		"1"
+			"customitem"		"1"
+			
+			"item_name"	"#TF_Mod_Crowbar"
+			"item_type_name"	"#TF_Weapon_Crowbar"
+			"item_description"	"#TF_Weapon_Crowbar_Desc"
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"item_logname"	"crowbar"
+			"item_iconname"	"crowbar"
+			
+			"item_slot"	"melee"
+			
+			"image_inventory"				"backpack/player/items/all_class/crowbar"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_crowbar/c_crowbar.mdl"
+			
+			"attach_to_hands"		"1"
+			"inspect_panel_dist" 	"40"
+			
+			"anim_slot" "MELEE_ALLCLASS"
+			
+			"xifier_class_remap"	"Frying Pan"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+			
+			"visuals"
+			{
+				"sound_melee_hit"			"Crowbar.HitFlesh"
+				"sound_melee_hit_world"		"Crowbar.HitWorld"
+				"sound_melee_miss"			"Weapon_Machete.Miss"
+				"sound_burst"				"Weapon_Machete.MissCrit"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"pyro" 		"1"
+				
+				"spy" 		"1"
+				"engineer" 	"1"
 			}
 		}
 	}

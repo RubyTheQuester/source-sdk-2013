@@ -22,6 +22,11 @@
 					"attribute_class"	"disguise_as_dispenser_on_crouch"
 					"value"	"1"
 				}
+				"knife_no_backstab"
+				{
+					"attribute_class"	"knife_no_backstab"
+					"value"	"1"
+				}
 			}
 		}
 		
@@ -54,7 +59,7 @@
 				"airblast cost increased"
 				{
 					"attribute_class"	"mult_airblast_cost"
-					"value"	"1.50"
+					"value"	"2"
 				}
 			}
 			
@@ -65,7 +70,7 @@
 			"name"	"Sniper Rifle Aim Charge"
 			"prefab" "weapon_sniperrifle"
 			
-			"item_name"	"#TF_AimCharge"
+			"item_name"	"#TF_AimAssist"
 			
 			"customitem" "1"
 			
@@ -85,20 +90,22 @@
 				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
 				//	"value"	"1"
 				//}
-				"sniper fires tracer"
-				{
-					"attribute_class"	"sniper_fires_tracer"
-					"value"	"1"
-				}
+				
 				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"2"
+					"value"	"4"
 				}
-				"SRifle Charge rate decreased"
+				"sniper no headshot without full charge"
 				{
-					"attribute_class"	"mult_sniper_charge_per_sec"
-					"value"	"0.5"
+					"attribute_class"	"sniper_no_headshot_without_full_charge"
+					"value" "1"
+				}
+				
+				"decapitate type"
+				{
+					"attribute_class"	"decapitate_type"
+					"value"	"1"
 				}
 			}
 		}
@@ -147,14 +154,16 @@
 			"hide_bodygroups_deployed_only"	"1"
 			"visuals"
 			{
-				"player_bodygroups"
-				{
-					"hands"		"1"
-				}
 				"sound_melee_miss"	"Weapon_BoxingGloves.Miss"
 				"sound_melee_hit"	"Weapon_BoxingGloves.HitFlesh"
 				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
 				"sound_burst"	"Weapon_BoxingGloves.MissCrit"
+				
+				"player_bodygroups"
+				{
+					"hands"		"1"
+				}
+				
 				"animation_replacement"
 				{
 					"ACT_MELEE_VM_INSPECT_START"	"ACT_MELEE_ALT1_VM_INSPECT_START"
@@ -162,6 +171,7 @@
 					"ACT_MELEE_VM_INSPECT_END"		"ACT_MELEE_ALT1_VM_INSPECT_END"
 				}
 			}
+			
 			"mouse_pressed_sound" 	"ui/item_boxing_gloves_pickup.wav"
 			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
 		}
@@ -177,7 +187,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"rarity4"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -200,6 +210,11 @@
 				{
 					"attribute_class"	"mult_sapper_damage"
 					"value" "0.5"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-25"
 				}
 			}
 		}

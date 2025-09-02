@@ -1,6 +1,6 @@
 "GameInfo"
 {
-	game					"Team Fortress: Gamma"
+	game					"Shlormby Fortress"
 	type 					multiplayer_only
 	nomodels				1
 	nohimodel 				1

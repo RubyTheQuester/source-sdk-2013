@@ -9,7 +9,8 @@
 #base items_solo_tools.txt
 
 #base items_custom_rebalance.txt //REPLACE ME WITH VSCRIPT
-//#base items_custom_oddity.txt
+#base items_custom_oddity.txt
+
 "items_game"
 {
 	"qualities"

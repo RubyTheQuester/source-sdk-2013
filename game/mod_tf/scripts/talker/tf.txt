@@ -1319,11 +1319,8 @@
 	
 	Response "SpyTauntSpycicle"
 	{
-		scene "scenes/player/spy/low/taunt01_v1.vcd"
-		scene "scenes/player/spy/low/taunt01_v2.vcd"
-		scene "scenes/player/spy/low/taunt01_v3.vcd"
-		scene "scenes/player/spy/low/taunt01_v4.vcd"
-		scene "scenes/player/spy/low/taunt01_v5.vcd"
+		scene "scenes/player/spy/low/taunt03_v1.vcd"
+		scene "scenes/player/spy/low/taunt03_v2.vcd"
 	}
 	Rule SpyTauntSpycicle
 	{
@@ -2034,4 +2031,10 @@
 	{
 		criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverSecondary
 		response EngineerTauntRevolverTrickshot
+	}
+	
+	rule HeavyTauntPlayerMeleeAllClass
+	{
+		criteria ConceptPlayerTaunt IsHeavy WeaponIsAxe
+		response HeavyTauntMelee
 	}

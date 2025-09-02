@@ -6,12 +6,14 @@
 //-Scout-//
 IncludeScript("solo/balancing/shortstop.nut")
 IncludeScript("solo/balancing/sandman.nut")
+IncludeScript("solo/balancing/bfb.nut")
 
 //-Soldier-//
 IncludeScript("solo/balancing/libertylauncher.nut")
 
 //-Pyro-//
 IncludeScript("solo/balancing/gaspasser.nut")
+IncludeScript("solo/balancing/axtinguisher.nut")
 
 //-Demoman-//
 IncludeScript("solo/balancing/caber.nut")
@@ -66,7 +68,7 @@ IncludeScript("solo/balancing/reskin/fortifiedcompound.nut") 	// Unsure
 IncludeScript("solo/balancing/reskin/awperhand.nut") 			// Design stats
 
 //-Spy-//
-IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		// Design stats
+IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		// Unsure
 IncludeScript("solo/balancing/reskin/wangaprick.nut") 			// Unsure
 IncludeScript("solo/balancing/reskin/blackrose.nut") 			// Design stats
 IncludeScript("solo/balancing/reskin/apsap.nut") 				// Design stats
