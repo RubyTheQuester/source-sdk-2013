@@ -170,6 +170,7 @@ extern ConVar	tf_bot_quota_mode;
 extern ConVar	tf_bot_quota;
 extern ConVar	halloween_starting_souls;
 extern ConVar	nav_generate_auto;
+extern ConVar	tf_revives_enable;
 
 extern ConVar tf_powerup_mode_killcount_timer_length;
 
@@ -2839,6 +2840,15 @@ void CTFPlayer::PrecacheMvM()
 	PrecacheScriptSound( "MVM.MoneyPickup" );
 
 	PrecacheMaterial( "effects/circle_nocull" );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayer::PrecacheMadDash()
+{
+	PrecacheScriptSound( "TFPlayer.InvulnerableOn" );
+	PrecacheScriptSound( "TFPlayer.InvulnerableOff" );
 }
 
 //-----------------------------------------------------------------------------
@@ -12367,6 +12377,11 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 		{
 			m_hReviveMarker = CTFReviveMarker::Create( this );
 		}
+	}
+
+	if ( !m_hReviveMarker && tf_revives_enable.GetInt() != 0 )
+	{
+		m_hReviveMarker = CTFReviveMarker::CreateNearby( this );
 	}
 
 	// This system is designed to coarsely measure a player's skill in public pvp games.

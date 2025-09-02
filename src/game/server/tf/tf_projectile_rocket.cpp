@@ -60,12 +60,21 @@ void CTFProjectile_Rocket::Spawn()
 void CTFProjectile_Rocket::Precache()
 {
 	int iModel = PrecacheModel( ROCKET_MODEL );
+
 	PrecacheGibsForModel( iModel );
 	PrecacheParticleSystem( "critical_rocket_blue" );
 	PrecacheParticleSystem( "critical_rocket_red" );
 	PrecacheParticleSystem( "eyeboss_projectile" );
 	PrecacheParticleSystem( "rockettrail" );
 	PrecacheParticleSystem( "rockettrail_RocketJumper" );
+
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_blackbox.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_directhit.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_original.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_libertylauncher.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_rocketjumper.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_beggarsbazookab.mdl");
+
 	BaseClass::Precache();
 }
 

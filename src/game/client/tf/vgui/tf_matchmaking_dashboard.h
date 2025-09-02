@@ -182,6 +182,10 @@ private:
 	CExImageButton* m_pPlayButton;
 	CExImageButton* m_pResumeButton;
 	CExImageButton* m_pRestartButton;
+
+	CExImageButton* m_pSoloCampaignsButton;
+	CExImageButton* m_pSoloMissonsButton;
+	CExImageButton* m_pSoloCustomButton;
 	vgui::Menu* m_pContextMenu = NULL;
 	CUtlVector< vgui::DHANDLE< CInviteNotification > > m_vecInviteHandles;
 

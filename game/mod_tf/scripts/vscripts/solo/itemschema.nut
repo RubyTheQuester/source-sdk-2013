@@ -87,13 +87,6 @@ IncludeScript("solo/weapons/new/pipboy.nut") 					// Unsure
 //================================//
 //=======Enchacements/Fixes=======//
 //================================//
-//-Soldier-//
-IncludeScript("solo/weapons/enchantment/libertylauncher.nut") 			// Unsure
-IncludeScript("solo/weapons/enchantment/directhit.nut") 		// Unsure
-IncludeScript("solo/weapons/enchantment/original.nut") 			// Unsure
-IncludeScript("solo/weapons/enchantment/beggers.nut") 			// Unsure
-IncludeScript("solo/weapons/enchantment/blackbox.nut") 			// Unsure
-IncludeScript("solo/weapons/enchantment/rocketjump.nut") 			// Unsure
 
 //-Spy-//
 IncludeScript("solo/weapons/fixes/spycicle.nut") 			// Unsure

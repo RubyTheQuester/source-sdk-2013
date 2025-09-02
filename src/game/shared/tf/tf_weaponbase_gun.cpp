@@ -1055,7 +1055,7 @@ void CTFWeaponBaseGun::ZoomIn( void )
 	float fBaseZoom = TF_WEAPON_ZOOM_FOV;
 
 	// Disabled this for now, because we have no attributes using it
-	//CALL_ATTRIB_HOOK_FLOAT( fBaseZoom, mult_zoom_fov );
+	CALL_ATTRIB_HOOK_FLOAT( fBaseZoom, mult_zoom_fov );
 
 	pPlayer->SetFOV( pPlayer, fBaseZoom, 0.1f );
 	pPlayer->m_Shared.AddCond( TF_COND_ZOOMED );

@@ -136,6 +136,17 @@ void CTFBaseRocket::Spawn( void )
 		{
 			SetModel( MINI_ROCKETS_MODEL );
 		}
+
+		const char* pszValue = "DEBUG";
+		CAttribute_String customModel;
+		CALL_ATTRIB_HOOK_STRING_ON_OTHER(GetLauncher(), customModel, custom_projectile_model);
+		pszValue = customModel.value().c_str();
+
+		if ( !FStrEq(customModel.value().c_str(), "") )
+		{
+			DevMsg("Custom Rocket Model: (%s).\n", pszValue);
+			SetModel(pszValue);
+		}
 	}
 
 // Client specific.

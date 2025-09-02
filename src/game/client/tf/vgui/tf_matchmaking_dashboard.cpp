@@ -279,7 +279,13 @@ CTFMatchmakingDashboard::CTFMatchmakingDashboard()
 	m_pResumeButton = new CExImageButton( m_pTopBar, "ResumeButton", (const char*)NULL );
 	m_pQuitButton = new CExImageButton( m_pTopBar, "QuitButton", (const char*)NULL );
 	m_pDisconnectButton = new CExImageButton( m_pTopBar, "DisconnectButton", (const char*)NULL );
+
 	m_pRestartButton = new CExImageButton(m_pTopBar, "RestartButton", (const char*)NULL);
+
+	m_pSoloMissonsButton = new CExImageButton(m_pTopBar, "SoloMissonsButton", (const char*)NULL);
+	m_pSoloCustomButton = new CExImageButton(m_pTopBar, "SoloCustomButton", (const char*)NULL);
+	m_pSoloCampaignsButton = new CExImageButton(m_pTopBar, "SoloCampaignsButton", (const char*)NULL);
+
 
 	ListenForGameEvent( "gameui_hidden" );
 	ListenForGameEvent( "gameui_activated" );
@@ -1318,20 +1324,19 @@ void CTFMatchmakingDashboard::UpdateFindAGameButton()
 
 void CTFMatchmakingDashboard::UpdateDisconnectAndResume()
 {
-	//Email
 	bool bInGame = engine->IsInGame();
 
 	m_pResumeButton->SetVisible( bInGame && !BInEndOfMatch() );
 	m_pRestartButton->SetVisible( bInGame && !BInEndOfMatch() );
 
+	m_pSoloCampaignsButton->SetVisible( !bInGame  );
+	m_pSoloMissonsButton->SetVisible( !bInGame );
+	m_pSoloCustomButton->SetVisible( !bInGame );
+
+
+
 	m_pTopBar->SetControlVisible( "DisconnectButton", bInGame );
 	m_pTopBar->SetControlVisible( "QuitButton", !bInGame );
-
-
-	m_pPlayButton->SetVisible(!bInGame && !BInEndOfMatch());
-
-	m_pTopBar->SetControlVisible( "PlayGameButton", !bInGame );
-	m_pTopBar->SetControlVisible( "HostGameButton", !bInGame );
 
 	//Panel* pOffsetPanel = bInGame ? m_pDisconnectButton : m_pQuitButton;
 

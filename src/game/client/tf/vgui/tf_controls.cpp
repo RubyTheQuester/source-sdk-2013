@@ -2510,6 +2510,7 @@ void CreateSwoop( int nX, int nY, int nWide, int nTall, float flDelay, bool bDow
 #define MOD_CREDITS_FILE "cfg/solo/mod_credits.txt"
 #define TFSOLO_CUSTOM_MATCH_CONFIG_FILE "cfg/solo/custom_match_config.txt"
 #define TFSOLO_CUSTOM_MATCH_MAPS_FILE "cfg/solo/solo_config.txt"
+#define TFSOLO_WORKSHOP_CACHE_FILE "workshop_localcache.txt"
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -3398,12 +3399,18 @@ void CTFCustomMatchSettingsDialog::StartMatch(void)
 		m_pDescription->WriteToConfig();
 	}
 
+	char* mapFile = V_strdup( m_iszRequestedMap );
+	if ( !V_strnicmp( mapFile, "workshop_", 9 ) )
+	{
+		mapFile[8] = '/';
+	}
+
 	CFmtStr1024 fmtModeCommand(
 		"tf_gamemode_override %u\n", m_iRequestedMode
 	);
 	engine->ClientCmd_Unrestricted( fmtModeCommand.Access() );
 	CFmtStr1024 fmtMapCommand(
-		"wait\nwait\nmaxplayers 33\n\nprogress_enable\nmap %s\n", m_iszRequestedMap
+		"wait\nwait\nmaxplayers 33\n\nprogress_enable\nmap %s\n", mapFile
 	);
 	engine->ClientCmd_Unrestricted( fmtMapCommand.Access() );
 	//GetMMDashboard()->OnCommand("dimmer_hide");
@@ -3902,6 +3909,8 @@ enum CustomMatchMapCategory
 	MapCategory_Hallow,
 	MapCategory_Xmas,
 
+	MapCategory_Workshop,
+
 	MapCategory_MAX,
 
 	MapCategory_MVM,
@@ -3920,7 +3929,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	SetProportional(true);
 
 	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
-	m_iSelectedCategory = MapCategory_Default;
+	m_iSelectedCategory = MapCategory_CP;
 
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
@@ -3932,7 +3941,7 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 	m_iszRequestedMap = "";
 
 	m_pCategoryList = new vgui::ComboBox( this, "MapCategoryList", MapCategory_MAX, false );
-	m_pCategoryList->AddItem("All", NULL);
+	m_pCategoryList->AddItem("#Store_Filter_All", NULL);
 
 	m_pCategoryList->AddItem("#Gametype_CP", NULL);
 	m_pCategoryList->AddItem("#Gametype_Koth", NULL);
@@ -3949,6 +3958,8 @@ CTFCustomMatchMapDialog::CTFCustomMatchMapDialog(vgui::Panel* parent) : BaseClas
 
 	m_pCategoryList->AddItem("#Gametype_Halloween", NULL);
 	m_pCategoryList->AddItem("#Gametype_Smissmas", NULL);
+
+	m_pCategoryList->AddItem("TF2 Workshop", NULL);
 	m_pCategoryList->SilentActivateItemByRow( m_iSelectedCategory );
 	m_pCategoryList->AddActionSignalTarget( this );
 
@@ -4085,6 +4096,7 @@ struct CTFCustomMatchMapInfo
 	const char* m_ModeName;
 	const char* m_ThumbArt;
 	const char* m_MapFile;
+	bool m_IsWorkshop;
 };
 
 int TFCustomMatchMapSort( CTFCustomMatchMapInfo const* p1, CTFCustomMatchMapInfo const* p2 )
@@ -4108,6 +4120,13 @@ void CTFCustomMatchMapDialog::CreateControls()
 	Color textColor = Color(255, 255, 255, 255);
 	Color textShadowColor = Color(0, 0, 0, 255);
 
+	bool bShowDisabled = false;
+	ConVarRef cl_show_disabled_maps( "cl_show_disabled_maps" );
+	if ( cl_show_disabled_maps.GetBool() )
+	{
+		bShowDisabled = true;
+	}
+
 	CUtlVector<CTFCustomMatchMapInfo> mapSort;
 
 	KeyValuesAD config("solo_config");
@@ -4116,23 +4135,39 @@ void CTFCustomMatchMapDialog::CreateControls()
 		Msg("Unable to parse solo_config.txt into keyvalues.\n");
 		return;
 	}
+	KeyValuesAD workshopConfig("workshop");
+	if ( !workshopConfig->LoadFromFile( g_pFullFileSystem, TFSOLO_WORKSHOP_CACHE_FILE, "GAME" ) )
+	{
+		DevMsg( "Unable to parse workshop_localcache.txt into keyvalues.\n" );
+	}
 	KeyValues* maps = config->FindKey("maps");
-	if (!maps)
+	if ( !maps )
 	{
 		return;
 	}
 	KeyValues* key = maps->GetFirstSubKey();
-	while (key)
+	while ( key )
 	{
-		if ( key->GetInt("disabled") == 1 )
+		bool isWorkshop = false;
+		if ( key->GetInt("disabled") == 1 && !bShowDisabled )
 		{
 			key = key->GetNextKey();
 			continue;
 		}
-		if ( !V_strnicmp( key->GetName(), "workshop_", 9 ) && engine->GetAppID() != 440 )
+		if ( !V_strnicmp( key->GetName(), "workshop_", 9 ) )
 		{
-			key = key->GetNextKey();
-			continue;
+			isWorkshop = true;
+			if ( engine->GetAppID() != 440 && workshopConfig )
+			{
+				char mapIDstr[MAX_PATH] = { 0 };
+				V_StrSlice( key->GetName(), 9, 0, mapIDstr, sizeof( mapIDstr ) );
+				PublishedFileId_t mapID = V_atoui64( mapIDstr );
+				if ( !workshopConfig->FindKey( mapIDstr ) )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+			}
 		}
 		KeyValues* tags = key->FindKey("tags");
 		if ( tags )
@@ -4271,6 +4306,15 @@ void CTFCustomMatchMapDialog::CreateControls()
 				}
 				break;
 			}
+			case MapCategory_Workshop:
+			{
+				if ( !isWorkshop )
+				{
+					key = key->GetNextKey();
+					continue;
+				}
+				break;
+			}
 			default:
 			{
 				break;
@@ -4288,6 +4332,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		info.m_Name = key->GetString("name");
 		info.m_ModeName = key->GetString("modename");
 		info.m_ThumbArt = key->GetString("thumbArt");
+		info.m_IsWorkshop = isWorkshop;
 
 		mapSort.AddToTail( info );
 		key = key->GetNextKey();
@@ -4306,14 +4351,28 @@ void CTFCustomMatchMapDialog::CreateControls()
 		holder->SetSize(256, 192);
 
 		ScalableImagePanel* mapIcon = new ScalableImagePanel(holder, "MapImage");
-		mapIcon->SetImage(map.m_ThumbArt);
+		if ( map.m_ThumbArt && map.m_ThumbArt[0] )
+		{
+			mapIcon->SetImage( map.m_ThumbArt );
+		}
+		else
+		{
+			if ( map.m_IsWorkshop )
+			{
+				mapIcon->SetImage( "maps/menu_thumb_default_download" );
+			}
+			else
+			{
+				mapIcon->SetImage( "maps/menu_thumb_default" );
+			}
+		}
 		mapIcon->SetSize(256, 256);
 		mapIcon->SetZPos(5);
 		mapIcon->SetMouseInputEnabled(false);
 		mapIcon->SetKeyBoardInputEnabled(false);
 
 		CExLabel* label = new CExLabel(holder, "DescLabel", map.m_Name);
-		label->SetContentAlignment(vgui::Label::a_southwest);
+		label->SetContentAlignment(vgui::Label::a_south);
 		label->SetTextInset(5, 0);
 		label->SetFont(hTextFont);
 		label->InvalidateLayout(true, true);
@@ -4325,7 +4384,7 @@ void CTFCustomMatchMapDialog::CreateControls()
 		//label->SetWrap(true);
 
 		CExLabel* labelShadow = new CExLabel(holder, "DescLabelShadow", map.m_Name);
-		labelShadow->SetContentAlignment(vgui::Label::a_southwest);
+		labelShadow->SetContentAlignment(vgui::Label::a_south);
 		labelShadow->SetTextInset(8, 3);
 		labelShadow->SetFont(hTextFont);
 		labelShadow->InvalidateLayout(true, true);
