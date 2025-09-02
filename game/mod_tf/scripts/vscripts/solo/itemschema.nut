@@ -4,85 +4,99 @@
 //==========================//
 
 //-Scout-//
-IncludeScript("solo/balancing/shortstop.nut")
-IncludeScript("solo/balancing/sandman.nut")
-IncludeScript("solo/balancing/bfb.nut")
+IncludeScript("solo/weapons/balancing/shortstop.nut")
+IncludeScript("solo/weapons/balancing/sandman.nut")
+IncludeScript("solo/weapons/balancing/bfb.nut")
 
 //-Soldier-//
-IncludeScript("solo/balancing/libertylauncher.nut")
+IncludeScript("solo/weapons/balancing/libertylauncher.nut")
 
 //-Pyro-//
-IncludeScript("solo/balancing/gaspasser.nut")
-IncludeScript("solo/balancing/axtinguisher.nut")
+IncludeScript("solo/weapons/balancing/gaspasser.nut")
+IncludeScript("solo/weapons/balancing/axtinguisher.nut")
 
 //-Demoman-//
-IncludeScript("solo/balancing/caber.nut")
+IncludeScript("solo/weapons/balancing/caber.nut")
 
 //-Heavy-//
-//IncludeScript("solo/balancing/natascha.nut") // Better redesign needed
-IncludeScript("solo/balancing/steak.nut")
-IncludeScript("solo/balancing/dalokohsbar.nut")
-IncludeScript("solo/balancing/evictionnotice.nut")
-IncludeScript("solo/balancing/warriorsspirit.nut")
-IncludeScript("solo/balancing/sandwich.nut")
+//IncludeScript("solo/weapons/balancing/natascha.nut") // Better redesign needed
+IncludeScript("solo/weapons/balancing/steak.nut")
+IncludeScript("solo/weapons/balancing/dalokohsbar.nut")
+IncludeScript("solo/weapons/balancing/evictionnotice.nut")
+IncludeScript("solo/weapons/balancing/warriorsspirit.nut")
+IncludeScript("solo/weapons/balancing/sandwich.nut")
 
 //-Engineer-//
-IncludeScript("solo/balancing/southernhospitality.nut")
-IncludeScript("solo/balancing/pomson.nut")
+IncludeScript("solo/weapons/balancing/southernhospitality.nut")
+IncludeScript("solo/weapons/balancing/pomson.nut")
 
 //-Medic-//
-IncludeScript("solo/balancing/ubersaw.nut")
+IncludeScript("solo/weapons/balancing/ubersaw.nut")
 
 //-Sniper-//
 
 //-Spy-//
-IncludeScript("solo/balancing/ambassador.nut") 
-IncludeScript("solo/balancing/enforcer.nut")
-IncludeScript("solo/balancing/yer.nut")
+IncludeScript("solo/weapons/balancing/ambassador.nut") 
+IncludeScript("solo/weapons/balancing/enforcer.nut")
+IncludeScript("solo/weapons/balancing/yer.nut")
 
 //=======================//
 //========Reskins========//
 //=======================//
 
 //-Scout-//
-IncludeScript("solo/balancing/reskin/threeruneblade.nut") 		// Design stats
+IncludeScript("solo/weapons/reskin/threeruneblade.nut") 		// Design stats
 
 //-Pyro-//
-IncludeScript("solo/balancing/reskin/maul.nut") 				// Design stats
-IncludeScript("solo/balancing/reskin/nineiron.nut") 			// Design stats
-IncludeScript("solo/balancing/reskin/postalpummeler.nut") 		// Design stats
+IncludeScript("solo/weapons/reskin/maul.nut") 				// Design stats
+IncludeScript("solo/weapons/reskin/nineiron.nut") 			// Design stats
+IncludeScript("solo/weapons/reskin/postalpummeler.nut") 		// Design stats
 
 //-Demoman-//
-IncludeScript("solo/balancing/reskin/bootlegger.nut") 			//Design stats
+IncludeScript("solo/weapons/reskin/bootlegger.nut") 			//Design stats
 
 //-Heavy-//
-IncludeScript("solo/balancing/reskin/ironcurtain.nut") 			// Unsure
-IncludeScript("solo/balancing/reskin/fishcake.nut")				// Design stats
-IncludeScript("solo/balancing/reskin/robosandvich.nut") 		// Design stats
-IncludeScript("solo/balancing/reskin/apocofists.nut") 			// Design stats
-IncludeScript("solo/balancing/reskin/breadbite.nut") 			
+IncludeScript("solo/weapons/reskin/ironcurtain.nut") 			// Unsure
+IncludeScript("solo/weapons/reskin/fishcake.nut")				// Design stats
+IncludeScript("solo/weapons/reskin/robosandvich.nut") 		// Design stats
+IncludeScript("solo/weapons/reskin/apocofists.nut") 			// Design stats
+IncludeScript("solo/weapons/reskin/breadbite.nut") 			
 
 //-Sniper-//
-IncludeScript("solo/balancing/reskin/shootingstar.nut") 		// Design stats
-IncludeScript("solo/balancing/reskin/fortifiedcompound.nut") 	// Unsure
-IncludeScript("solo/balancing/reskin/awperhand.nut") 			// Design stats
+IncludeScript("solo/weapons/reskin/shootingstar.nut") 		// Design stats
+IncludeScript("solo/weapons/reskin/fortifiedcompound.nut") 	// Unsure
+IncludeScript("solo/weapons/reskin/awperhand.nut") 			// Design stats
 
 //-Spy-//
-IncludeScript("solo/balancing/reskin/sharpdresser.nut") 		// Unsure
-IncludeScript("solo/balancing/reskin/wangaprick.nut") 			// Unsure
-IncludeScript("solo/balancing/reskin/blackrose.nut") 			// Design stats
-IncludeScript("solo/balancing/reskin/apsap.nut") 				// Design stats
-IncludeScript("solo/balancing/reskin/timepiece.nut") 			// Design stats
-IncludeScript("solo/balancing/reskin/quackenbirdt.nut") 		// Unsure
-IncludeScript("solo/balancing/reskin/snackattack.nut") 			// Unsure
+IncludeScript("solo/weapons/reskin/sharpdresser.nut") 		// Unsure
+IncludeScript("solo/weapons/reskin/wangaprick.nut") 			// Unsure
+IncludeScript("solo/weapons/reskin/blackrose.nut") 			// Design stats
+IncludeScript("solo/weapons/reskin/apsap.nut") 				// Design stats
+IncludeScript("solo/weapons/reskin/timepiece.nut") 			// Design stats
+IncludeScript("solo/weapons/reskin/quackenbirdt.nut") 		// Unsure
+IncludeScript("solo/weapons/reskin/snackattack.nut") 			// Unsure
 
 //=======================//
 //======New Weapons======//
 //=======================//
 
 //-Engineer-//
-IncludeScript("solo/balancing/new/pipboy.nut") 					// Unsure
+IncludeScript("solo/weapons/new/pipboy.nut") 					// Unsure
 
+
+//================================//
+//=======Enchacements/Fixes=======//
+//================================//
+//-Soldier-//
+IncludeScript("solo/weapons/enchantment/libertylauncher.nut") 			// Unsure
+IncludeScript("solo/weapons/enchantment/directhit.nut") 		// Unsure
+IncludeScript("solo/weapons/enchantment/original.nut") 			// Unsure
+IncludeScript("solo/weapons/enchantment/beggers.nut") 			// Unsure
+IncludeScript("solo/weapons/enchantment/blackbox.nut") 			// Unsure
+IncludeScript("solo/weapons/enchantment/rocketjump.nut") 			// Unsure
+
+//-Spy-//
+IncludeScript("solo/weapons/fixes/spycicle.nut") 			// Unsure
 
 ::TFSOLO.SetupItemSchema <- function()
 {

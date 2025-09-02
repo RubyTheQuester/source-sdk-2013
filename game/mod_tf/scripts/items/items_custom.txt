@@ -694,6 +694,17 @@
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
+		
+		"4010"
+		{
+			"name"				"sniper zoom bonus"
+			"attribute_class"	"mult_zoom_fov"
+			"description_string"	"#Attrib_SniperZoom_Bonus"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
 	}
 	"armory_data"
 	{

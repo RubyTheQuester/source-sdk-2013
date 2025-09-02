@@ -70,7 +70,7 @@
 			"name"	"Sniper Rifle Aim Charge"
 			"prefab" "weapon_sniperrifle"
 			
-			"item_name"	"#TF_AimAssist"
+			"item_name"	"#TF_AimCharge"
 			
 			"customitem" "1"
 			
@@ -94,7 +94,7 @@
 				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"4"
+					"value"	"6"
 				}
 				"sniper no headshot without full charge"
 				{
@@ -214,7 +214,40 @@
 				"max health additive penalty"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value" "-25"
+					"value" "-15"
+				}
+			}
+		}
+		
+		"50005"
+		{
+			"name"	"Tranquilizer"
+			"prefab" "weapon_revolver"
+		
+			"show_in_armory"	"1"
+			"propername"		"0"
+			"customitem" 		"1"
+		
+			"item_name"	"#TF_Weapon_Tranq"
+			"item_description"	"#TF_DO_NOT_USE"
+			
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.1"
+				}
+			}
+			
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"						"ACT_PRIMARY_VM_IDLE"
+					"ACT_VM_DRAW"						"ACT_PRIMARY_VM_DRAW"
+					"ACT_VM_PRIMARYATTACK"				"ACT_PRIMARY_VM_PRIMARYATTACK"
+					"ACT_VM_RELOAD"						"ACT_PRIMARY_VM_RELOAD"
 				}
 			}
 		}

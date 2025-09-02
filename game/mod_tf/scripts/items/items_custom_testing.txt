@@ -208,7 +208,7 @@
 			}
 		}
 		
-		"60005"
+		"60004"
 		{
 			"name"				"Speedpad PDA"
 			"prefab"			"weapon_pda"
@@ -240,6 +240,49 @@
 				{
 					"attribute_class"	"mod_teleporter_speed_boost"
 					"value" 	"1" 
+				}
+			}
+		}
+		
+		"60005"
+		{
+			"name"	"Walkabout"
+			"prefab" "weapon_sniperrifle"
+			
+			"item_name"	"#TF_Walkabout"
+			
+			"customitem" "1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.50"
+				}
+				"sniper zoom penalty"
+				{
+					"attribute_class"	"mult_zoom_fov"
+					"value"	"2"
+				}
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"	"2"
+				}
+				"sniper crit no scope"
+				{
+					"attribute_class"	"sniper_crit_no_scope"
+					"value" "1"
 				}
 			}
 		}
