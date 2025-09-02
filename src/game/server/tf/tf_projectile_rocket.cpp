@@ -73,7 +73,7 @@ void CTFProjectile_Rocket::Precache()
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_original.mdl");
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_libertylauncher.mdl");
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_rocketjumper.mdl");
-	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_beggarsbazookab.mdl");
+	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_beggarsbazooka.mdl");
 
 	BaseClass::Precache();
 }
