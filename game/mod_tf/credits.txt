@@ -1,4 +1,16 @@
 == CODE ==
-- TFSOLO
+Nearly everything I didn't do myself - https://github.com/TheBetaM/tf-solo / TheBetaM
+
 == Weapons Models ==
+The Gentle End - https://gamebanana.com/mods/500375 / GRIEFYN
+The Deputy - https://steamcommunity.com/sharedfiles/filedetails/?id=1228793823 / NeoDement / Square / Netmuck
+The Foxhound - https://gamebanana.com/mods/200647 / catmilk_
+Major Mortar (Dome Breaker) - https://gamebanana.com/mods/504995 / GRIEFYN
+Classic Crowbar - https://gamebanana.com/mods/198771 / SilentFox3 / SFM LEAK
+The Ballestar - https://gamebanana.com/mods/511322 / Haau
+
+Rocket Models - https://www.deviantart.com/elbagast/art/TF2-Rocket-Models-269142041 / https://forums.alliedmods.net/showthread.php?t=294325 / Elbagast / N-Cognito
+Syringe Port - https://gamebanana.com/mods/199470 / PF2
+
+Pig Protector - https://gamebanana.com/mods/201902 / http://steamcommunity.com/sharedfiles/filedetails/?id=313583108 / TheJukebox
 == Misc Models ==
