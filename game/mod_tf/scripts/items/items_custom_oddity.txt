@@ -221,50 +221,36 @@
 		
 		"50005"
 		{
-			"name"	"Tranquilizer"
-			"prefab" "weapon_revolver"
-			"item_class"	"tf_weapon_tranq"
-		
+			"name"				"Speedpad PDA"
+			"prefab"			"weapon_pda"
+			
 			"show_in_armory"	"1"
-			"propername"		"0"
-			"customitem" 		"1"
-		
-			"item_name"	"#TF_Weapon_Tranq"
+			"propername"		"1"
+			"customitem"		"1"
 			
 			"item_quality"	"rarity4"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"image_inventory"				"backpack\weapons\w_models\w_tranq"
+			"item_name"			"#TF_Speedpad_PDA"
+			"item_description"	"#TF_Speedpad_PDA_Desc"
+			
+			"image_inventory"	"backpack/weapons/w_models/w_builder"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"					"models/weapons/c_models/c_tranq/c_tranq.mdl"
+			"model_player"	"models/weapons/c_models/c_builder/c_builder.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
 			
 			"attributes"
 			{
-				"keep_disguise_on_attack"
+				"mod_teleporter_speed_boost"
 				{
-					"attribute_class"	"keep_disguise_on_attack"
-					"value" "1"
-				}
-				"tranq slowdown"
-				{
-					"attribute_class"	"fires_slow_tranq"
-					"value" "1"
-				}
-			}
-			
-			"visuals"
-			{
-				"sound_single_shot"			"Weapon_Tranq_New.Single"
-				"sound_burst" 				"Weapon_Tranq_New.SingleCrit"
-			
-				"animation_replacement"
-				{
-					"ACT_VM_IDLE"						"ACT_ITEM4_VM_IDLE"
-					"ACT_VM_DRAW"						"ACT_ITEM4_VM_DRAW"
-					"ACT_VM_PRIMARYATTACK"				"ACT_ITEM4_VM_PRIMARYATTACK"
-					"ACT_VM_RELOAD"						"ACT_ITEM4_VM_RELOAD"
+					"attribute_class"	"mod_teleporter_speed_boost"
+					"value" 	"1" 
 				}
 			}
 		}

@@ -12,20 +12,21 @@ WeaponData
 	"Range"			"0"
 	"BulletsPerShot"	"1"
 	"Spread"		"0.0"
-	"PunchAngle"		"0.0"
 	"TimeFireDelay"		"0.23"
+	"HasTeamSkins_Viewmodel"	"1"
+	"ProjectileType"	"projectile_tranq"
+
+	// Ammo & Clip.
+	"primary_ammo"		"TF_AMMO_SECONDARY"
+	"secondary_ammo"	"None"
+	clip_size		1
+	default_clip		1
+
+	// Reload Attributes.
 	"TimeIdle"		"0.0"
 	"TimeIdleEmpty"		"0.0"
 	"TimeReloadStart"	"0.0"
 	"TimeReload"		"1.5"
-	"primary_ammo"		"TF_AMMO_PRIMARY"
-	clip_size		1
-	default_clip		1
-	"ProjectileType"	"projectile_tranq"
-	"HasTeamSkins_Viewmodel"	"1"
-
-	// Secondary Attributes.
-	"secondary_ammo"	"None"
 
 	// Buckets.
 	"bucket"		"0"

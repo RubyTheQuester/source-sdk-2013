@@ -208,42 +208,6 @@
 			}
 		}
 		
-		"60004"
-		{
-			"name"				"Speedpad PDA"
-			"prefab"			"weapon_pda"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"rarity3"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"item_name"			"#TF_Speedpad_PDA"
-			"item_description"	"#TF_Speedpad_PDA_Desc"
-			
-			"image_inventory"	"backpack/weapons/w_models/w_builder"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"	"models/weapons/c_models/c_builder/c_builder.mdl"
-			
-			"used_by_classes"
-			{
-				"engineer"	"1"
-			}
-			
-			"attributes"
-			{
-				"mod_teleporter_speed_boost"
-				{
-					"attribute_class"	"mod_teleporter_speed_boost"
-					"value" 	"1" 
-				}
-			}
-		}
-		
 		"60005"
 		{
 			"name"	"Walkabout"
@@ -283,6 +247,67 @@
 				{
 					"attribute_class"	"sniper_crit_no_scope"
 					"value" "1"
+				}
+			}
+		}
+		
+		"60006"
+		{
+			"name"	"Tranquilizer"
+			"prefab" "weapon_revolver"
+			"item_class"	"tf_weapon_tranq"
+			
+			"item_name"	"#TF_Weapon_Tranq"
+			"item_type_name"	"#TF_Weapon_Tranq"
+		
+			"show_in_armory"	"1"
+			"propername"		"0"
+			"customitem" 		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"image_inventory"				"backpack\weapons\w_models\w_tranq"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_tranq/c_tranq.mdl"
+			
+			"attributes"
+			{
+				"keep_disguise_on_attack"
+				{
+					"attribute_class"	"keep_disguise_on_attack"
+					"value" "1"
+				}
+				//"damage penalty"
+				//{
+				//	"attribute_class"	"mult_dmg"
+				//	"value"	"0.5"
+				//}
+				//"clip size penalty"
+				//{
+				//	"attribute_class"	"mult_clipsize"
+				//	"value" "0.1"
+				//}
+				"tranq slowdown"
+				{
+					"attribute_class"	"fires_slow_tranq"
+					"value" "1"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"			"Weapon_Tranq_New.Single"
+				"sound_burst" 				"Weapon_Tranq_New.SingleCrit"
+			
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"						"ACT_ITEM4_VM_IDLE"
+					"ACT_VM_DRAW"						"ACT_ITEM4_VM_DRAW"
+					"ACT_VM_PRIMARYATTACK"				"ACT_ITEM4_VM_PRIMARYATTACK"
+					"ACT_VM_RELOAD"						"ACT_ITEM4_VM_RELOAD"
 				}
 			}
 		}
