@@ -912,9 +912,14 @@ float CTFSniperRifle::GetProjectileDamage( void )
 int	CTFSniperRifle::GetDamageType( void ) const
 {
 	// Only do hit location damage if we're zoomed
+	int iCanCritNoScope = 0;
+	CALL_ATTRIB_HOOK_INT(iCanCritNoScope, sniper_crit_no_scope);
+
 	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-	if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) )
+	if ( pPlayer && ( pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) || iCanCritNoScope == 1 ) )
+	{
 		return BaseClass::GetDamageType();
+	}
 
 	int nDamageType = BaseClass::GetDamageType() & ~DMG_USE_HITLOCATIONS;
 

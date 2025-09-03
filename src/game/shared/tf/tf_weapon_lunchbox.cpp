@@ -310,7 +310,12 @@ void CTFLunchBox::DrainAmmo( bool bForceCooldown )
 	// If we're damaged while eating/taunting, bForceCooldown will be true
 	if ( pOwner->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
 	{
-		if ( pOwner->GetHealth() < pOwner->GetMaxHealth() || GetLunchboxType() == LUNCHBOX_ADDS_MINICRITS || iLunchboxType == LUNCHBOX_CHOCOLATE_BAR || iLunchboxType == LUNCHBOX_FISHCAKE || bForceCooldown )
+		if ( pOwner->GetHealth() < pOwner->GetMaxHealth() 
+			|| GetLunchboxType() == LUNCHBOX_ADDS_MINICRITS 
+			|| iLunchboxType == LUNCHBOX_CHOCOLATE_BAR 
+			|| iLunchboxType == LUNCHBOX_FISHCAKE 
+			//|| iLunchboxType == LUNCHBOX_ADDS_AMMO
+			|| bForceCooldown )
 		{
 			pOwner->m_Shared.SetItemChargeMeter(LOADOUT_POSITION_EQUIPMENT, 0.f );
 		}
@@ -424,11 +429,18 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 		CTF_GameStats.Event_PlayerHealedOther( pPlayer, iHealed );
 	}
 
+	float flAmmoScale = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT(flAmmoScale, lunchbox_ammogain_scale);
+	float flAmmoRatio = 0.125 * flAmmoScale;
+
 	// Restore ammo if applicable
-	if ( nLunchBoxType == LUNCHBOX_ADDS_AMMO )
+	if ( nLunchBoxType == LUNCHBOX_ADDS_AMMO  )
 	{
 		int maxPrimary = pPlayer->GetMaxAmmo( TF_AMMO_PRIMARY );
-		pPlayer->GiveAmmo( maxPrimary * 0.25, TF_AMMO_PRIMARY, true );
+		pPlayer->GiveAmmo( ceil(maxPrimary * flAmmoRatio), TF_AMMO_PRIMARY, true );
+
+		int maxSecondary = pPlayer->GetMaxAmmo( TF_AMMO_SECONDARY );
+		pPlayer->GiveAmmo( ceil(maxSecondary * flAmmoRatio), TF_AMMO_SECONDARY, true );
 	}
 }
 

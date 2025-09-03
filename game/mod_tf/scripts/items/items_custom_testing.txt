@@ -231,7 +231,7 @@
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.50"
+					"value"	"0.75"
 				}
 				"sniper zoom penalty"
 				{
@@ -243,7 +243,7 @@
 					"attribute_class"	"mult_player_aiming_movespeed"
 					"value"	"2"
 				}
-				"sniper crit no scope"
+				"sniper crit no scope true"
 				{
 					"attribute_class"	"sniper_crit_no_scope"
 					"value" "1"
@@ -280,16 +280,6 @@
 					"attribute_class"	"keep_disguise_on_attack"
 					"value" "1"
 				}
-				//"damage penalty"
-				//{
-				//	"attribute_class"	"mult_dmg"
-				//	"value"	"0.5"
-				//}
-				//"clip size penalty"
-				//{
-				//	"attribute_class"	"mult_clipsize"
-				//	"value" "0.1"
-				//}
 				"tranq slowdown"
 				{
 					"attribute_class"	"fires_slow_tranq"
@@ -309,6 +299,56 @@
 					"ACT_VM_PRIMARYATTACK"				"ACT_ITEM4_VM_PRIMARYATTACK"
 					"ACT_VM_RELOAD"						"ACT_ITEM4_VM_RELOAD"
 				}
+			}
+		}
+		
+		"60007"
+		{
+			"name"			"Ammopack Sandvich"
+			"prefab"		"weapon_sandvich"
+			
+			"item_name"		"#TF_Unique_Lunchbox_Ammo"
+			"item_description"		"#TF_Lunchbox_Ammo_desc"
+			
+			"show_in_armory"	"1"
+			"propername"		"0"
+			"customitem" 		"1"
+			
+			"item_quality"	"rarity3"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"image_inventory"		"backpack/weapons/c_models/c_banana/c_banana"
+			"model_player"		"models/weapons/c_models/c_banana/c_banana.mdl"
+		
+			"static_attrs"
+			{
+				"item_meter_charge_rate"	"10"
+			}
+			
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"5"
+				}
+				"lunchbox healing decreased"
+				{
+					"attribute_class" "lunchbox_healing_scale"
+					"value" "0.25"
+				}
+				"charge recharge rate increased"
+				{
+					"attribute_class"	"charge_recharge_rate"
+					"value"	"1.5"
+				}
+				//"lunchbox ammo gain increased"
+				//{
+				//	"attribute_class"	"lunchbox_ammogain_scale"
+				//	"value"	"1"
+				//}
+				"
 			}
 		}
 	}

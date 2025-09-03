@@ -716,7 +716,38 @@
 			"effect_type"	"neutral"
 			"stored_as_integer"	"1"
 		}
+		
+		"4012"
+		{
+			"name"	"sniper crit no scope true"
+			"attribute_class"	"sniper_crit_no_scope"
+			"description_string"	"#Attrib_SniperCritNoScopeTrue"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+		}
+		
+		"4013"
+		{
+			"name"	"lunchbox ammo gain increased"
+			"attribute_class"	"lunchbox_ammogain_scale"
+			"description_string"	"#Attrib_LunchboxAmmo"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+		}
+		
+		"4014"
+		{
+			"name"	"lunchbox ammo gain decreased"
+			"attribute_class"	"lunchbox_ammogain_scale"
+			"description_string"	"#Attrib_LunchboxAmmo"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+		}
 	}
+	
 	"armory_data"
 	{
 		"armory_items"
