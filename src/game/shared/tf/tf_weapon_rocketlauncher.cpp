@@ -131,6 +131,7 @@ END_DATADESC()
 //
 // Crossbow tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFCrossbow, DT_Crossbow )
 
 BEGIN_NETWORK_TABLE( CTFCrossbow, DT_Crossbow )
@@ -152,6 +153,36 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_crossbow );
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC( CTFCrossbow )
+END_DATADESC()
+#endif
+
+
+//=============================================================================
+//
+// Tranq tables.
+//
+//=============================================================================
+IMPLEMENT_NETWORKCLASS_ALIASED(TFTranq, DT_Tranq)
+
+BEGIN_NETWORK_TABLE( CTFTranq, DT_Tranq )
+#ifdef CLIENT_DLL
+	RecvPropFloat( RECVINFO( m_flRegenerateDuration ) ),
+	RecvPropFloat( RECVINFO( m_flLastUsedTimestamp ) ),
+#else
+	SendPropFloat( SENDINFO( m_flRegenerateDuration ), 0, SPROP_NOSCALE),
+	SendPropFloat( SENDINFO( m_flLastUsedTimestamp ), 0, SPROP_NOSCALE),
+#endif
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFTranq )
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_tranq, CTFTranq );
+PRECACHE_WEAPON_REGISTER( tf_weapon_tranq );
+
+// Server specific.
+#ifndef CLIENT_DLL
+BEGIN_DATADESC( CTFTranq )
 END_DATADESC()
 #endif
 
@@ -798,4 +829,81 @@ inline float CTFCrossbow::GetProgress( void )
 	float meltedTime = gpGlobals->curtime - m_flLastUsedTimestamp;
 	return meltedTime / m_flRegenerateDuration;
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
+// Tranq BEGIN
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
+bool CTFTranq::Holster(CBaseCombatWeapon* pSwitchingTo)
+{
+	// Allow Crossbow to silently reload like the flaregun
+	if (m_iClip1 == 0)
+	{
+		// These Values need to match the anim times since all this stuff is actually driven by animation sequence time in the base code
+		float flFireDelay = ApplyFireDelay(m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_flTimeFireDelay);
 
+		float flReloadTime = m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_flTimeReload;
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, mult_reload_time);
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, mult_reload_time_hidden);
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, fast_reload);
+
+		float flIdleTime = GetLastPrimaryAttackTime() + flFireDelay + flReloadTime;
+		if (GetWeaponIdleTime() < flIdleTime)
+		{
+			SetWeaponIdleTime(flIdleTime);
+			m_flNextPrimaryAttack = flIdleTime;
+		}
+
+		IncrementAmmo();
+	}
+
+	return BaseClass::Holster(pSwitchingTo);
+}
+//-----------------------------------------------------------------------------
+void CTFTranq::ItemPostFrame(void)
+{
+	BaseClass::ItemPostFrame();
+}
+//-----------------------------------------------------------------------------
+float CTFTranq::GetProjectileSpeed(void)
+{
+	return RemapValClamped(0.75f, 0.0f, 1.f, 2000, 3000); // Temp, if we want to ramp.
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+float CTFTranq::GetProjectileGravity(void)
+{
+	return RemapValClamped(0.75f, 0.0f, 1.f, 0.75, 0.1); // Temp, if we want to ramp.
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CTFTranq::IsViewModelFlipped(void)
+{
+	return !BaseClass::IsViewModelFlipped(); // Invert because arrows are backwards by default.
+}
+//-----------------------------------------------------------------------------
+void CTFTranq::WeaponRegenerate(void)
+{
+	BaseClass::WeaponRegenerate();
+	m_flLastUsedTimestamp = 0;
+}
+
+//-----------------------------------------------------------------------------
+void CTFTranq::ModifyProjectile(CBaseEntity* pProj)
+{
+#ifdef GAME_DLL
+	int iTranqSlowdown = 0;
+	CALL_ATTRIB_HOOK_INT(iTranqSlowdown, fires_slow_tranq);
+
+	if (iTranqSlowdown == 1)
+	{
+		CTFProjectile_Arrow* pMainArrow = assert_cast<CTFProjectile_Arrow*>(pProj);
+		if (pMainArrow)
+		{
+			pMainArrow->SetApplyTranqOnHit();
+		}
+	}
+#endif
+}

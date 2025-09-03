@@ -736,7 +736,7 @@ int g_aWeaponDamageTypes[] =
 	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_MINIGUN,
 	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_SMG,
 	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE,		// TF_WEAPON_SYRINGEGUN_MEDIC,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE | DMG_PARALYZE,		// TF_WEAPON_TRANQ,
+	DMG_BULLET | DMG_USE_HITLOCATIONS,						// TF_WEAPON_TRANQ,
 	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_ROCKETLAUNCHER,
 	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_GRENADELAUNCHER,
 	DMG_BLAST | DMG_HALF_FALLOFF | DMG_NOCLOSEDISTANCEMOD,		// TF_WEAPON_PIPEBOMBLAUNCHER,
@@ -975,6 +975,7 @@ const char *g_szProjectileNames[] =
 	"projectile_bread_monster",
 	"projectile_jar_gas",
 	"tf_projectile_balloffire",
+	"projectile_tranq",
 
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == TF_NUM_PROJECTILES );
@@ -1013,6 +1014,7 @@ int g_iProjectileWeapons[] =
 	TF_WEAPON_THROWABLE,
 	TF_WEAPON_JAR_GAS,
 	TF_WEAPON_FLAME_BALL,
+	TF_WEAPON_TRANQ,
 
 };
 
@@ -1150,8 +1152,13 @@ const char *g_pszArrowModels[] =
 	"models/workshop/weapons/c_models/c_crusaders_crossbow/c_crusaders_crossbow_xmas_proj.mdl",
 	"models/weapons/w_models/w_breadmonster/w_breadmonster.mdl",
 	"models/weapons/c_models/c_grapple_proj/c_grapple_proj.mdl",
-	"models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
+	//"models/weapons/c_models/c_dart.mdl",
+	"models/weapons/w_models/w_syringe_proj.mdl",
+
+	//Staging
+	"models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl",
 };
+
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszArrowModels ) == TF_ARROW_MODEL_COUNT );
 
 const char *g_pszCampaignMedalIcons[] =

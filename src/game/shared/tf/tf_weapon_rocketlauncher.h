@@ -26,6 +26,7 @@
 #define CTFRocketLauncher_AirStrike C_TFRocketLauncher_AirStrike
 #define CTFRocketLauncher_Mortar C_TFRocketLauncher_Mortar
 #define CTFCrossbow C_TFCrossbow
+#define CTFTranq C_TFTranq
 #endif // CLIENT_DLL
 
 //=============================================================================
@@ -196,4 +197,31 @@ private:
 	bool m_bMilkNextAttack;
 };
 
+// ------------------------------------------------------------------------------------------------------------------------
+class CTFTranq : public CTFRocketLauncher
+{
+public:
+	DECLARE_CLASS(CTFTranq, CTFRocketLauncher);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	virtual bool	Holster(CBaseCombatWeapon* pSwitchingTo) OVERRIDE;
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_TRANQ; }
+	virtual float	GetProjectileSpeed(void);
+	virtual float	GetProjectileGravity(void);
+	virtual bool	IsViewModelFlipped(void);
+
+	virtual void	ItemPostFrame(void);
+	virtual void	WeaponRegenerate(void);
+
+	virtual void	ModifyProjectile(CBaseEntity* pProj);
+
+	CNetworkVar(float, m_flRegenerateDuration);
+	CNetworkVar(float, m_flLastUsedTimestamp);
+};
 #endif // TF_WEAPON_ROCKETLAUNCHER_H

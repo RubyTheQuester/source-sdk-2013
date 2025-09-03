@@ -705,6 +705,17 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
+		
+		"4011"
+		{
+			"name"				"tranq slowdown"
+			"attribute_class"	"fires_slow_tranq"
+			"description_string"	"#Attrib_Tranq_Slow"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
 	}
 	"armory_data"
 	{

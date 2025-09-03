@@ -13116,6 +13116,10 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 	{
 		killer_weapon_name = "crusaders_crossbow";
 	}
+	else if (0 == Q_strcmp(killer_weapon_name, "tf_projectile_tranq"))
+	{
+		killer_weapon_name = "tranq_dart";
+	}
 	else if ( 0 == Q_strcmp( killer_weapon_name, "tf_projectile_pipe" ) )
 	{
 		// let's look-up the primary weapon to see what type of grenade launcher it is

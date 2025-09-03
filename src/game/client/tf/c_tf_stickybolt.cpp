@@ -81,6 +81,10 @@ void CreateCrossbowBoltTF( const Vector &vecOrigin, const Vector &vecDirection, 
 		flDirOffset = 0.0f;
 		flLifeTime = 0.1f;
 		break;
+	case TF_PROJECTILE_TRANQ:
+		pszModelName = g_pszArrowModels[MODEL_TRANQ];
+		flDirOffset = 0.0f;
+		break;
 	default:
 		// Unsupported Model
 		Assert( 0 );

@@ -86,4 +86,18 @@ private:
 	CHandle< C_RopeKeyframe > m_hRope;
 };
 
+//-----------------------------------------------------------------------------
+// Purpose: Arrow projectile.
+//-----------------------------------------------------------------------------
+class C_TFProjectile_Tranq : public C_TFProjectile_Arrow
+{
+	DECLARE_CLASS( C_TFProjectile_Tranq, C_TFProjectile_Arrow );
+
+	//virtual void	OnDataChanged( DataUpdateType_t updateType );
+
+public:
+
+	DECLARE_NETWORKCLASS();
+};
+
 #endif // C_TF_PROJECTILE_ARROW_H

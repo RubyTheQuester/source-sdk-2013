@@ -90,6 +90,17 @@ BEGIN_DATADESC( CTFProjectile_GrapplingHook )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
+LINK_ENTITY_TO_CLASS( tf_projectile_tranq, CTFProjectile_Tranq );
+PRECACHE_WEAPON_REGISTER( tf_projectile_tranq );
+
+IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_Tranq, DT_TFProjectile_Tranq )
+
+BEGIN_NETWORK_TABLE( CTFProjectile_Tranq, DT_TFProjectile_Tranq )
+END_NETWORK_TABLE()
+
+BEGIN_DATADESC( CTFProjectile_Tranq )
+END_DATADESC()
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 CTFProjectile_Arrow::CTFProjectile_Arrow()
@@ -119,6 +130,8 @@ static const char* GetArrowEntityName( ProjectileType_t projectileType )
 {
 	switch ( projectileType )
 	{
+	case TF_PROJECTILE_TRANQ:
+		return "tf_projectile_tranq";
 	case TF_PROJECTILE_HEALING_BOLT:
 	case TF_PROJECTILE_FESTIVE_HEALING_BOLT:
 		return "tf_projectile_healing_bolt";
@@ -210,8 +223,8 @@ void CTFProjectile_Arrow::Spawn()
 	{
 		SetModel( g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR] );
 	}
-	else if ( m_iProjectileType == TF_PROJECTILE_HEALING_BOLT 
-	) {
+	else if ( m_iProjectileType == TF_PROJECTILE_HEALING_BOLT ) 
+	{
 		SetModel( g_pszArrowModels[MODEL_SYRINGE] );
 		SetModelScale( 3.0f );
 	}
@@ -223,6 +236,10 @@ void CTFProjectile_Arrow::Spawn()
 	else if ( m_iProjectileType == TF_PROJECTILE_GRAPPLINGHOOK )
 	{
 		SetModel( g_pszArrowModels[MODEL_GRAPPLINGHOOK] );
+	}
+	else if (m_iProjectileType == TF_PROJECTILE_TRANQ)
+	{
+		SetModel(g_pszArrowModels[MODEL_TRANQ]);
 	}
 	else
 	{
@@ -252,6 +269,7 @@ void CTFProjectile_Arrow::Precache()
 	int claw_model = PrecacheModel( g_pszArrowModels[MODEL_ARROW_BUILDING_REPAIR] );
 	int festive_arrow_model = PrecacheModel( g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR] );
 	PrecacheModel( g_pszArrowModels[MODEL_FESTIVE_HEALING_BOLT] );
+	PrecacheModel( g_pszArrowModels[MODEL_TRANQ]);
 
 	PrecacheGibsForModel( arrow_model );
 	PrecacheGibsForModel( claw_model );
@@ -301,6 +319,7 @@ bool CTFProjectile_Arrow::CanHeadshot()
 	if ( m_iProjectileType == TF_PROJECTILE_BUILDING_REPAIR_BOLT 
 		|| m_iProjectileType == TF_PROJECTILE_HEALING_BOLT 
 		|| m_iProjectileType == TF_PROJECTILE_FESTIVE_HEALING_BOLT 
+		|| m_iProjectileType == TF_PROJECTILE_TRANQ
 	) {
 		return false;
 	}
@@ -316,6 +335,7 @@ float CTFProjectile_Arrow::GetDamage()
 {
 	if ( m_iProjectileType == TF_PROJECTILE_HEALING_BOLT
 		|| m_iProjectileType == TF_PROJECTILE_FESTIVE_HEALING_BOLT
+		|| m_iProjectileType == TF_PROJECTILE_TRANQ
 	) {
 		float lifeTimeScale = RemapValClamped( gpGlobals->curtime - m_flInitTime, 0.0f, 0.6f, 0.5f, 1.0f );	
 		return m_flDamage * lifeTimeScale;
@@ -528,6 +548,26 @@ bool CTFProjectile_Arrow::StrikeTarget( mstudiobbox_t *pBox, CBaseEntity *pOther
 					}
 				}
 
+
+				if ( m_bApplyTranqOnHit && pOther->IsPlayer() )
+				{
+					CTFPlayer *pVictim = ToTFPlayer( pOther );
+					if ( pVictim && pVictim->m_Shared.CanBeDebuffed() )
+					{
+						// Stun amount is based off range
+						Vector vecDistance = pVictim->GetAbsOrigin() - pAttacker->GetAbsOrigin();
+						float flStunAmount = RemapValClamped( vecDistance.LengthSqr(), (512.0f * 512.0f), (1536.0f * 1536.0f), 0.65f, 0.15f);
+
+						// duration is based on damage
+						float flDuration = RemapValClamped( GetDamage(), 13.0f, 25.0f, 1.0f, 6.0f );
+
+						int iStunFlags = TF_STUN_MOVEMENT;
+						pVictim->m_Shared.StunPlayer( flDuration, flStunAmount, iStunFlags, ToTFPlayer( pAttacker ) );
+
+						pVictim->SpeakConceptIfAllowed( MP_CONCEPT_JARATE_HIT );
+					}
+				}
+
 				CTakeDamageInfo info( this, pAttacker, m_hLauncher, vecVelocity, vecOrigin, GetDamage(), nDamageType, nDamageCustom );
 				pOther->TakeDamage( info );
 
@@ -694,14 +734,21 @@ void CTFProjectile_Arrow::BuildingHealingArrow( CBaseEntity *pOther )
 int	CTFProjectile_Arrow::GetArrowSkin() const
 {
 	int nTeam = GetTeamNumber();
+
 	if ( GetOwnerEntity() && GetOwnerEntity()->IsPlayer() )
 	{
-		CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-		if ( pOwner && pOwner->IsPlayerClass( TF_CLASS_SPY ) && pOwner->m_Shared.InCond( TF_COND_DISGUISED ) )
-		{
-			nTeam = pOwner->m_Shared.GetDisguiseTeam();
+		CTFPlayer* pOwner = ToTFPlayer( GetOwnerEntity() );
+
+		int iDisguiseProjectile = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iDisguiseProjectile, disguised_projectile );
+		if (iDisguiseProjectile == 1) {
+			if (pOwner && pOwner->IsPlayerClass(TF_CLASS_SPY) && pOwner->m_Shared.InCond(TF_COND_DISGUISED))
+			{
+				nTeam = pOwner->m_Shared.GetDisguiseTeam();
+			}
 		}
 	}
+
 	return ( nTeam == TF_TEAM_BLUE ) ? 1 : 0;
 }
 
@@ -1052,16 +1099,36 @@ void CTFProjectile_Arrow::RemoveThink( void )
 //-----------------------------------------------------------------------------
 const char *CTFProjectile_Arrow::GetTrailParticleName( void )
 {
+	int nTeam = GetTeamNumber();
+
+	CTFPlayer* pTFAttacker = ToTFPlayer( GetScorer() );
+	if (pTFAttacker)
+	{
+		int iDisguiseProjectile = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pTFAttacker, iDisguiseProjectile, disguised_projectile);
+
+		if ( iDisguiseProjectile == 1 )
+		{
+			if (GetOwnerEntity() && GetOwnerEntity()->IsPlayer())
+			{
+				if (pTFAttacker && pTFAttacker->IsPlayerClass(TF_CLASS_SPY) && pTFAttacker->m_Shared.InCond(TF_COND_DISGUISED))
+				{
+					nTeam = pTFAttacker->m_Shared.GetDisguiseTeam();
+				}
+			}
+		}
+	}
+
 	if ( m_iProjectileType == TF_PROJECTILE_BUILDING_REPAIR_BOLT )
 	{	
-		return ( GetTeamNumber() == TF_TEAM_RED ) ? CLAW_TRAIL_RED : CLAW_TRAIL_BLU;
+		return ( nTeam == TF_TEAM_RED ) ? CLAW_TRAIL_RED : CLAW_TRAIL_BLU;
 	}
 	else if ( m_iProjectileType == TF_PROJECTILE_HEALING_BOLT || m_iProjectileType == TF_PROJECTILE_FESTIVE_HEALING_BOLT )
 	{
-		return ( GetTeamNumber() == TF_TEAM_RED ) ? "effects/healingtrail_red.vmt" : "effects/healingtrail_blu.vmt";
+		return ( nTeam == TF_TEAM_RED ) ? "effects/healingtrail_red.vmt" : "effects/healingtrail_blu.vmt";
 	}
 
-	return ( GetTeamNumber() == TF_TEAM_RED ) ? "effects/arrowtrail_red.vmt" : "effects/arrowtrail_blu.vmt";
+	return (nTeam == TF_TEAM_RED ) ? "effects/arrowtrail_red.vmt" : "effects/arrowtrail_blu.vmt";
 }
 
 //-----------------------------------------------------------------------------
@@ -1077,6 +1144,7 @@ void CTFProjectile_Arrow::CreateTrail( void )
 		int width = 3;
 		switch ( m_iProjectileType )
 		{
+			case TF_PROJECTILE_TRANQ:
 			case TF_PROJECTILE_BUILDING_REPAIR_BOLT:
 				width = 5;
 				break;
@@ -1307,7 +1375,6 @@ void CTFProjectile_HealingBolt::ImpactTeamPlayer( CTFPlayer *pOther )
 	EconEntity_OnOwnerKillEaterEvent_Batched( dynamic_cast<CEconEntity *>( GetLauncher() ), pOwner, pOther, kKillEaterEvent_AllyHealingDone, flHealth );
 }
 
-
 CTFProjectile_GrapplingHook::CTFProjectile_GrapplingHook()
 	: m_pImpactFleshSoundLoop( NULL )
 {
@@ -1510,4 +1577,12 @@ void CTFProjectile_GrapplingHook::StopImpactFleshSoundLoop()
 		controller.SoundDestroy( m_pImpactFleshSoundLoop );
 		m_pImpactFleshSoundLoop = NULL;
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Setup function.
+//-----------------------------------------------------------------------------
+void CTFProjectile_Tranq::InitArrow(const QAngle& vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity* pOwner, CBaseEntity* pScorer)
+{
+	BaseClass::InitArrow(vecAngles, fSpeed, fGravity, projectileType, pOwner, pScorer);
 }

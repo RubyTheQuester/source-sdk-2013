@@ -223,13 +223,17 @@
 		{
 			"name"	"Tranquilizer"
 			"prefab" "weapon_revolver"
+			"item_class"	"tf_weapon_tranq"
 		
 			"show_in_armory"	"1"
 			"propername"		"0"
 			"customitem" 		"1"
 		
 			"item_name"	"#TF_Weapon_Tranq"
-			"item_description"	"#TF_DO_NOT_USE"
+			
+			"item_quality"	"rarity4"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
 			
 			"image_inventory"				"backpack\weapons\w_models\w_tranq"
 			"image_inventory_size_w"		"128"
@@ -238,10 +242,15 @@
 			
 			"attributes"
 			{
-				"clip size penalty"
+				"keep_disguise_on_attack"
 				{
-					"attribute_class"	"mult_clipsize"
-					"value" "0.1"
+					"attribute_class"	"keep_disguise_on_attack"
+					"value" "1"
+				}
+				"tranq slowdown"
+				{
+					"attribute_class"	"fires_slow_tranq"
+					"value" "1"
 				}
 			}
 			

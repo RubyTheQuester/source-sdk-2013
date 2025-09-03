@@ -83,6 +83,7 @@ public:
 	virtual bool	IsBreakable( void ) const { return true; }
 	
 	void SetApplyMilkOnHit() { m_bApplyMilkOnHit = true; }
+	void SetApplyTranqOnHit() { m_bApplyTranqOnHit = true; }
 
 private:
 
@@ -111,6 +112,7 @@ protected:
 	float			m_flInitTime;
 
 	bool			m_bApplyMilkOnHit;		// For Apothacary's Arrow which can sometimes be special
+	bool			m_bApplyTranqOnHit;		// Tranq
 };
 
 class CTFProjectile_HealingBolt : public CTFProjectile_Arrow
@@ -167,4 +169,16 @@ private:
 	CSoundPatch *m_pImpactFleshSoundLoop;
 };
 
+class CTFProjectile_Tranq : public CTFProjectile_Arrow
+{
+public:
+
+	DECLARE_CLASS( CTFProjectile_Tranq, CTFProjectile_Arrow );
+	DECLARE_NETWORKCLASS();
+	DECLARE_DATADESC();
+
+	virtual void	InitArrow( const QAngle &vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL ) OVERRIDE;
+
+	virtual bool CanHeadshot() { return false; }
+};
 #endif	//TF_PROJECTILE_ARROW_H

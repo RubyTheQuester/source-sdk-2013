@@ -169,6 +169,15 @@ void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
 				}
 				break;
 			}
+		case TF_PROJECTILE_TRANQ:
+			{
+				pszModelName = g_pszArrowModels[MODEL_TRANQ];
+				// pull the syringe back slightly
+				Vector vForward;
+				AngleVectors( boneAngles, &vForward );
+				bonePosition = bonePosition - (vForward * 6.0f);
+			}
+			break;
 		default:
 			Warning( " Unsupported Projectile type on event arrow_impact - %d", type );
 			return;

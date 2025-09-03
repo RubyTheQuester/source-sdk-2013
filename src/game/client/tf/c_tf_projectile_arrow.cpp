@@ -33,6 +33,11 @@ IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_GrapplingHook, DT_TFProjectile_Grap
 BEGIN_NETWORK_TABLE( C_TFProjectile_GrapplingHook, DT_TFProjectile_GrapplingHook )
 END_NETWORK_TABLE()
 
+IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_Tranq, DT_TFProjectile_Tranq )
+
+BEGIN_NETWORK_TABLE( C_TFProjectile_Tranq, DT_TFProjectile_Tranq )
+END_NETWORK_TABLE()
+
 #define NEAR_MISS_THRESHOLD 120
 
 //-----------------------------------------------------------------------------
@@ -313,3 +318,24 @@ void C_TFProjectile_GrapplingHook::RemoveRope()
 		m_hRope = NULL;
 	}
 }
+
+/*
+//-----------------------------------------------------------------------------
+void C_TFProjectile_Tranq::OnDataChanged(DataUpdateType_t updateType)
+{
+	if (updateType == DATA_UPDATE_CREATED)
+	{
+		SetNextClientThink(CLIENT_THINK_ALWAYS);
+	}
+	if (m_bCritical)
+	{
+		if (updateType == DATA_UPDATE_CREATED || m_iCachedDeflect != GetDeflected())
+		{
+			CreateCritTrail();
+		}
+	}
+	m_iCachedDeflect = GetDeflected();
+
+	BaseClass::OnDataChanged(updateType);
+}
+*/
