@@ -32,6 +32,7 @@
 #include "tf_projectile_energy_ball.h"
 #include "player_vs_environment/tf_upgrades.h"
 #include "tf_upgrades_shared.h"
+#include "tf_weapon_pistol.h"
 
 #include "econ_entity_creation.h"
 
@@ -48,6 +49,7 @@ ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a
 ConVar tf_bot_notice_gunfire_range( "tf_bot_notice_gunfire_range", "3000", FCVAR_GAMEDLL );
 ConVar tf_bot_notice_quiet_gunfire_range( "tf_bot_notice_quiet_gunfire_range", "500", FCVAR_GAMEDLL );
 ConVar tf_bot_sniper_personal_space_range( "tf_bot_sniper_personal_space_range", "1000", FCVAR_CHEAT, "Enemies beyond this range don't worry the Sniper" );
+ConVar tf_bot_pyro_deflect_tolerance( "tf_bot_pyro_deflect_tolerance", "0.5", FCVAR_CHEAT );
 ConVar tf_bot_keep_class_after_death( "tf_bot_keep_class_after_death", "0", FCVAR_GAMEDLL );
 ConVar tf_bot_prefix_name_with_difficulty( "tf_bot_prefix_name_with_difficulty", "0", FCVAR_GAMEDLL, "Append the skill level of the bot to the bot's name" );
 ConVar tf_bot_near_point_travel_distance( "tf_bot_near_point_travel_distance", "750", FCVAR_CHEAT, "If within this travel distance to the current point, bot is 'near' it" );
@@ -72,6 +74,9 @@ ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FC
 ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
 ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
 
+ConVar tf_bot_give_items("tf_bot_give_items", "1", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_skip_reskins("tf_bot_give_items_skip_reskins", "0", FCVAR_GAMEDLL);
+
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
 extern ConVar tf_bot_sniper_misfire_chance;
@@ -86,7 +91,7 @@ extern ConVar tf_mvm_miniboss_scale;
 extern ConVar tf_bot_health_critical_ratio;
 extern ConVar tf_bot_health_ok_ratio;
 
-
+extern ConVar tf_bot_quota_use_presets;
 //-----------------------------------------------------------------------------------------------------
 bool IsPlayerClassname( const char *string )
 {
@@ -148,7 +153,36 @@ const char *DifficultyLevelToString( CTFBot::DifficultyType skill )
 	return "Undefined ";
 }
 
+#ifdef BDSBASE
+const char *GetRandomBotName(void)
+{
+	CUtlVector<string_t> m_botScriptNames;
 
+	m_botScriptNames.RemoveAll();
+
+	KeyValues* pKV = new KeyValues("BotNames");
+	if (pKV->LoadFromFile(filesystem, "scripts/bot_names.txt", "GAME"))
+	{
+		FOR_EACH_VALUE(pKV, pSubData)
+		{
+			if (FStrEq(pSubData->GetString(), ""))
+				continue;
+
+			string_t iName = AllocPooledString(pSubData->GetString());
+			if (m_botScriptNames.Find(iName) == m_botScriptNames.InvalidIndex())
+				m_botScriptNames[m_botScriptNames.AddToTail()] = iName;
+		}
+	}
+
+	pKV->deleteThis();
+
+	if (m_botScriptNames.Count() == 0)
+		return "Bot Name";
+
+	string_t iszName = m_botScriptNames.Random();
+	return STRING(iszName);
+}
+#else
 //-----------------------------------------------------------------------------------------------------
 const char *GetRandomBotName( void )
 {
@@ -267,6 +301,7 @@ const char *GetRandomBotName( void )
 }
 
 
+#endif
 //-----------------------------------------------------------------------------------------------------
 void CreateBotName( int iTeam, int iClassIndex, CTFBot::DifficultyType skill, char* pBuffer, int iBufferSize )
 {
@@ -342,8 +377,18 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	const char *classname = NULL;
 	const char *teamname = "auto";
 	const char *pszBotNameViaArg = NULL;
+#ifdef BDSBASE
+	// -1 is random.
+	CTFBot::DifficultyType skill = CTFBot::UNDEFINED;
+
+	if (tf_bot_difficulty.GetInt() != CTFBot::UNDEFINED && tf_bot_difficulty.GetInt() <= CTFBot::EXPERT)
+	{
+		skill = clamp((CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT);
+	}
+#else
 	CTFBot::DifficultyType skill = clamp( (CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT );
 	const char *preset = NULL;
+#endif
 
 	int i;
 	for( i=1; i<args.ArgC(); ++i )
@@ -715,6 +760,9 @@ DEFINE_SCRIPTFUNC( ShouldQuickBuild, "Returns if the bot should build instantly"
 DEFINE_SCRIPTFUNC( SetShouldQuickBuild, "Sets if the bot should build instantly" )
 
 DEFINE_SCRIPTFUNC_WRAPPED( GetNearestKnownSappableTarget, "Gets the nearest known sappable target" )
+DEFINE_SCRIPTFUNC_WRAPPED( GenerateAndWearItem, "Give me an item!" )
+
+DEFINE_SCRIPTFUNC_WRAPPED(HandleLoadout, "Give a bot a randomized loadout.")
 
 DEFINE_SCRIPTFUNC( IsInASquad, "Checks if we are in a squad" )
 DEFINE_SCRIPTFUNC( LeaveSquad, "Makes us leave the current squad (if any)" )
@@ -988,7 +1036,7 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 	}
 
 	float maxLimitScale = 1.0f;
-	if ( currentRoster.m_teamSize > 12 )
+	if (currentRoster.m_teamSize > 12)
 	{
 		maxLimitScale = currentRoster.m_teamSize / 12.0f;
 	}
@@ -1043,9 +1091,10 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 			continue;
 		}
 
-		int maxLimit = desiredClassInfo->m_maxLimit[ (int)clamp( GetDifficulty(), CTFBot::EASY, CTFBot::EXPERT ) ];
-		if ( ( maxLimit > NoLimit && currentRoster.m_count[ desiredClassInfo->m_class ] >= maxLimit * maxLimitScale ) ||
-			currentRoster.m_count[desiredClassInfo->m_class] >= classLimitHardCap )
+		int maxLimit = desiredClassInfo->m_maxLimit[(int)clamp(GetDifficulty(), CTFBot::EASY, CTFBot::EXPERT)];
+
+		if ((maxLimit > NoLimit && currentRoster.m_count[desiredClassInfo->m_class] >= maxLimit * maxLimitScale) ||
+			currentRoster.m_count[desiredClassInfo->m_class] >= classLimitHardCap)
 		{
 			// at or above limit for this class
 			continue;
@@ -1359,7 +1408,17 @@ CTFBot::CTFBot()
 	}
 	else
 	{
+#ifdef BDSBASE
+		// -1 is random.
+		m_difficulty = CTFBot::UNDEFINED;
+
+		if (tf_bot_difficulty.GetInt() != CTFBot::UNDEFINED && tf_bot_difficulty.GetInt() <= CTFBot::EXPERT)
+		{
+			m_difficulty = clamp((CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT);
+		}
+#else
 		m_difficulty = clamp( (CTFBot::DifficultyType)tf_bot_difficulty.GetInt(), CTFBot::EASY, CTFBot::EXPERT );
+#endif
 	}
 
 	m_actionPoint = NULL;
@@ -1408,6 +1467,11 @@ CTFBot::~CTFBot()
 		delete m_vision;
 
 	m_suspectedSpyVector.PurgeAndDeleteElements();
+
+	if (!vecSavedRandomLoadout.IsEmpty())
+	{
+		vecSavedRandomLoadout.RemoveAll();
+	}
 }
 
 
@@ -1415,6 +1479,15 @@ CTFBot::~CTFBot()
 void CTFBot::Spawn()
 {
 	BaseClass::Spawn();
+
+	int newClass = GetPlayerClass()->GetClassIndex();
+
+	if (newClass != iOldClassIndex && !tf_bot_keep_class_after_death.GetBool())
+	{
+		ResetLoadout();
+	}
+
+	m_InitialLoadoutLoadTimer.Start(RandomFloat(TFBOT_MIN_LOADOUT_WAIT, TFBOT_MAX_LOADOUT_WAIT));
 
 	m_spawnArea = NULL;
 	m_justLostPointTimer.Invalidate();
@@ -1446,9 +1519,92 @@ void CTFBot::Spawn()
 	m_lastUsedHaleChargeTimer.Invalidate();
 	m_bHasUpgradedAfterSpawn = false;
 	m_checkUpgradesTimer.Start( RandomFloat( 0.5f, 1.2f ) );
+	if ((tf_bot_difficulty.GetInt() == CTFBot::UNDEFINED || tf_bot_difficulty.GetInt() > CTFBot::EXPERT) && m_difficulty == CTFBot::UNDEFINED)
+	{
+		int m_nRandomSeed = RandomInt(0, 9999);
+		CUniformRandomStream randomize;
+		randomize.SetSeed(m_nRandomSeed);
+
+		SetDifficulty((CTFBot::DifficultyType)randomize.RandomInt(CTFBot::EASY, CTFBot::EXPERT));
+	}
+
+	DevMsg("%s chooses skill %s\n", GetPlayerName(), DifficultyLevelToString(m_difficulty));
 }
 
+#ifdef BDSBASE
+extern ConVar tf_forced_holiday;
 
+void CTFBot::ManageModelOverride(void)
+{
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		return;
+
+	int nClassIndex = (GetPlayerClass() ? GetPlayerClass()->GetClassIndex() : TF_CLASS_UNDEFINED);
+
+	if (IsServerUsingTheFunnyMVMCvar())
+	{
+		// use the nifty new robot model
+		if (nClassIndex >= TF_CLASS_SCOUT && nClassIndex <= TF_CLASS_ENGINEER)
+		{
+			if (g_pFullFileSystem->FileExists(g_szBotModels[nClassIndex]))
+			{
+				GetPlayerClass()->SetCustomModel(g_szBotModels[nClassIndex], USE_CLASS_ANIMATIONS);
+				UpdateModel();
+				SetBloodColor(DONT_BLEED);
+			}
+		}
+	}
+	else if (DoesServerWantBrainz())
+	{
+		//set to old model if needed
+		if (GetPlayerClass()->HasCustomModel())
+		{
+			GetPlayerClass()->SetCustomModel(NULL);
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+
+		bool bHalloween = (TFGameRules() ? TFGameRules()->IsHolidayActive(kHoliday_HalloweenOrFullMoon) : TF_IsHolidayActive(kHoliday_HalloweenOrFullMoon));
+
+		if (!bHalloween)
+		{
+			Warning("Bot %s is trying to spawn with the Zombie item, but it isn't Halloween/Full Moon. Turning the holiday on.", GetPlayerName());
+
+			tf_forced_holiday.SetValue(kHoliday_Halloween);
+			UTIL_CalculateHolidays();
+		}
+
+		// zombies use the original player models
+		const char* name = g_aRawPlayerClassNamesShort[nClassIndex];
+		AddItem(CFmtStr("Zombie %s", name));
+	}
+	else
+	{
+		if (GetPlayerClass()->HasCustomModel())
+		{
+			GetPlayerClass()->SetCustomModel(NULL);
+			UpdateModel();
+			SetBloodColor(BLOOD_COLOR_RED);
+		}
+	}
+}
+
+void CTFBot::Regenerate(bool bRefillHealthAndAmmo)
+{
+	BaseClass::Regenerate(bRefillHealthAndAmmo);
+
+	m_InitialLoadoutLoadTimer.Start(RandomFloat(TFBOT_MIN_LOADOUT_WAIT, TFBOT_MAX_LOADOUT_WAIT));
+}
+
+void CTFBot::HandleCommand_JoinClass(const char* pClassName, bool bAllowSpawn)
+{
+	iOldClassIndex = GetPlayerClass()->GetClassIndex();
+
+	BaseClass::HandleCommand_JoinClass(pClassName, bAllowSpawn);
+
+	m_InitialLoadoutLoadTimer.Start(RandomFloat(TFBOT_MIN_LOADOUT_WAIT, TFBOT_MAX_LOADOUT_WAIT) + TFBOT_CLASSSWITCH_LOADOUT_DELAY);
+}
+#endif
 //-----------------------------------------------------------------------------------------------------
 void CTFBot::SetMission( MissionType mission, bool resetBehaviorSystem )
 {
@@ -1515,6 +1671,13 @@ void CTFBot::PhysicsSimulate( void )
 		}
 	}
 
+	if (IsAlive())
+	{
+		if (m_InitialLoadoutLoadTimer.IsElapsed() && !m_InitialLoadoutLoadTimer.HasStopped())
+		{
+			HandleLoadout();
+		}
+	}
 
 	// If we're dead, choose a new class.
 	// We need to do this outside of the behavior system, since changing class can
@@ -2481,7 +2644,9 @@ float CTFBot::GetTimeLeftToCapture( void ) const
 		return TFGameRules()->GetActiveRoundTimer()->GetTimeRemaining();
 	}
 
-	return 0.0f;
+	// Instead of returning 0.0, return FLT_MAX to prevent any other bugs related to this check.
+	return FLT_MAX;
+
 }
 
 
@@ -4303,6 +4468,16 @@ bool CTFBot::ScriptIsWeaponRestricted( HSCRIPT script ) const
 //
 bool CTFBot::ShouldFireCompressionBlast( void )
 {
+	if (!m_CompressionBlastTimer.IsElapsed())
+	{
+		return false;
+	}
+	else
+	{
+		// invalidate the timer when we go for another blast.
+		m_CompressionBlastTimer.Invalidate();
+	}
+
 	if ( TFGameRules()->IsInTraining() )
 	{
 		// no reflection in training mode
@@ -4345,7 +4520,22 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		{
 			CTFPlayer *pushVictim = ToTFPlayer( threat->GetEntity() );
 
-			if ( IsRangeLessThan( pushVictim, tf_bot_pyro_shove_away_range.GetFloat() ) )
+			CTFWeaponBase* myWeapon = m_Shared.GetActiveTFWeapon();
+			bool isAtRange = false;
+
+			if (myWeapon)
+			{
+				if (myWeapon->IsWeapon(TF_WEAPON_HANDGUN_SCOUT_PRIMARY))
+				{
+					isAtRange = IsRangeLessThan(pushVictim, 125);
+				}
+				else
+				{
+					isAtRange = IsRangeLessThan(pushVictim, tf_bot_pyro_shove_away_range.GetFloat());
+				}
+			}
+
+			if (isAtRange)
 			{
 				// our threat is very close - shove them!
 
@@ -4670,7 +4860,251 @@ void CTFBot::GiveRandomItem( loadout_positions_t loadoutPosition )
 */
 
 		const char *itemName = itemVector[ which ]->GetDefinitionName();
-		BotGenerateAndWearItem( this, itemName );
+		BotGenerateAndWearItem(this, itemName);
+	}
+}
+
+
+bool CanEquipOnClass(CTFItemDefinition* pItemDef, int iClassIndex)
+{
+	if (pItemDef)
+	{
+		if (pItemDef->CanBeUsedByAllClasses())
+			return true;
+
+		if (pItemDef->GetClassUsability())
+		{
+			for (int i = 0; i < pItemDef->GetClassUsability()->GetNumBits(); i++)
+			{
+				if (pItemDef->GetClassUsability()->IsBitSet(i))
+				{
+					if (i == iClassIndex)
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+const CEconItemDefinition* CTFBot::GiveRandomItemEx(loadout_positions_t loadoutPosition)
+{
+	CUtlVector< const CEconItemDefinition* > itemVector;
+
+	const CEconItemSchema::ItemDefinitionMap_t& mapItemDefs = ItemSystem()->GetItemSchema()->GetItemDefinitionMap();
+	FOR_EACH_MAP_FAST(mapItemDefs, iItem)
+	{
+		CTFItemDefinition* pItemDef = dynamic_cast<CTFItemDefinition*>(mapItemDefs[iItem]);
+
+		if (!pItemDef->CanBeUsedByBots())
+		{
+			// if we can't use this item, don't even consider it.
+			continue;
+		}
+
+		if (pItemDef->GetEconTool())
+		{
+			// no tools plz
+			continue;
+		}
+
+		if (pItemDef->IsTool())
+		{
+			// no tools plz
+			continue;
+		}
+
+		bool bCanBeUsedByClass = (CanEquipOnClass(pItemDef, GetPlayerClass()->GetClassIndex()) && pItemDef->GetDefaultLoadoutSlot() == loadoutPosition);
+
+		if (!bCanBeUsedByClass)
+		{
+			// if you can't create it for this class, don't SPAWN it, dumbass!
+			continue;
+		}
+
+		if (pItemDef->IsReskin() && tf_bot_give_items_skip_reskins.GetBool())
+		{
+			// if reskins aren't allowed, skip it.
+			continue;
+		}
+
+		if (pItemDef)
+		{
+			itemVector.AddToTail(pItemDef);
+		}
+	}
+
+	if (itemVector.Count() > 0)
+	{
+		// randomize the vector.
+		int m_nRandomSeed = RandomInt(0, 9999);
+		CUniformRandomStream randomize;
+		randomize.SetSeed(m_nRandomSeed);
+		itemVector.Shuffle(&randomize);
+
+		int which = randomize.RandomInt(0, itemVector.Count() - 1);
+		return itemVector[which];
+	}
+
+	return NULL;
+}
+
+void CTFBot::SelectRandomizedLoadout(void)
+{
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		return;
+
+	// roll weapons first
+	for (int iSlot = LOADOUT_POSITION_PRIMARY; iSlot <= LOADOUT_POSITION_PDA2; ++iSlot)
+	{
+		if (iSlot == LOADOUT_POSITION_UTILITY)
+			continue;
+
+		const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iSlot);
+
+		if (pItem)
+		{
+			vecSavedRandomLoadout.AddToTail(pItem);
+		}
+	}
+
+	int iChosenSlotVal = RandomInt(0, 2);
+	int iCosmeticSlot = LOADOUT_POSITION_HEAD;
+
+	switch (iChosenSlotVal)
+	{
+		// 0 is default values above.
+		case 1:
+		{
+			iCosmeticSlot = LOADOUT_POSITION_MISC;
+			DevMsg("BOT %s CHOSE SLOT LOADOUT_POSITION_MISC\n", GetPlayerName());
+			break;
+		}
+
+		case 2:
+		{
+			iCosmeticSlot = LOADOUT_POSITION_MISC2;
+			DevMsg("BOT %s CHOSE SLOT LOADOUT_POSITION_MISC2\n", GetPlayerName());
+			break;
+		}
+
+		default:
+		{
+			DevMsg("BOT %s CHOSE SLOT LOADOUT_POSITION_HEAD\n", GetPlayerName());
+			break;
+		}
+	}
+
+	// then cosmetics
+	const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iCosmeticSlot);
+
+	if (pItem)
+	{
+		vecSavedRandomLoadout.AddToTail(pItem);
+	}
+}
+
+// modified version that calls AddItem
+void TFBotGenerateAndWearItem(CTFBot* pBot, CEconItemView* pItem)
+{
+	int iClass = pBot->GetPlayerClass()->GetClassIndex();
+	int iItemSlot = pItem->GetStaticData()->GetLoadoutSlot(iClass);
+	CTFWeaponBase* pWeapon = dynamic_cast<CTFWeaponBase*>(pBot->GetEntityForLoadoutSlot(iItemSlot));
+
+	// we need to force translating the name here.
+	// GiveNamedItem will not translate if we force creating the item
+	const char* pTranslatedWeaponName = TranslateWeaponEntForClass(pItem->GetStaticData()->GetItemClass(), iClass);
+	CTFWeaponBase* pNewItem = dynamic_cast<CTFWeaponBase*>(pBot->GiveNamedItem(pTranslatedWeaponName, 0, pItem, true));
+	if (pNewItem)
+	{
+		CTFWeaponBuilder* pBuilder = dynamic_cast<CTFWeaponBuilder*>((CBaseEntity*)pNewItem);
+		if (pBuilder)
+		{
+			pBuilder->SetSubType(pBot->GetPlayerClass()->GetData()->m_aBuildable[0]);
+		}
+
+		// make sure we removed our current weapon				
+		if (pWeapon)
+		{
+			pBot->Weapon_Detach(pWeapon);
+			UTIL_Remove(pWeapon);
+		}
+
+		pNewItem->MarkAttachedEntityAsValidated();
+		pNewItem->GiveTo(pBot);
+
+		pBot->PostInventoryApplication();
+	}
+	else
+	{
+		pBot->AddItem(pItem->GetItemDefinition()->GetDefinitionName());
+	}
+}
+
+void CTFBot::GiveSavedLoadout(void)
+{
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		return;
+
+	for (int i = 0; i < vecSavedRandomLoadout.Count(); ++i)
+	{
+		if (vecSavedRandomLoadout[i])
+		{
+			CEconItemView* pItemData = new CEconItemView();
+			CSteamID ownerSteamID;
+			GetSteamID(&ownerSteamID);
+			pItemData->Init(vecSavedRandomLoadout[i]->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, ownerSteamID.GetAccountID());
+			if (pItemData && pItemData->IsValid())
+			{
+				const char* itemName = pItemData->GetItemDefinition()->GetItemDefinitionName();
+				DevMsg("GIVING %s TO BOT %s [%i]\n", itemName, GetPlayerName(), ownerSteamID.GetAccountID());
+				TFBotGenerateAndWearItem(this, pItemData);
+			}
+		}
+	}
+}
+
+void CTFBot::HandleLoadout(void)
+{
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		return;
+
+	if (!m_InitialLoadoutLoadTimer.IsElapsed())
+		return;
+
+	bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
+
+	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && tf_bot_quota_use_presets.GetInt() != 1)
+	{
+		if (vecSavedRandomLoadout.Count() > 0)
+		{
+			GiveSavedLoadout();
+		}
+		else
+		{
+			SelectRandomizedLoadout();
+			GiveSavedLoadout();
+		}
+	}
+
+	//ManageModelOverride();
+
+	m_InitialLoadoutLoadTimer.Invalidate();
+}
+
+void CTFBot::ResetLoadout(void)
+{
+	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		return;
+
+	bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
+	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && !(TFGameRules() && TFGameRules()->IsMannVsMachineMode()))
+	{
+		vecSavedRandomLoadout.RemoveAll();
+		SelectRandomizedLoadout();
 	}
 }
 

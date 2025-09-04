@@ -30,6 +30,7 @@ class CObjectSentrygun;
 class CTFBotGenerator;
 
 extern void BotGenerateAndWearItem( CTFPlayer *pBot, const char *itemName );
+extern void BotGenerateAndWearItem(CTFPlayer* pBot, CEconItemView* pItem);
 
 //----------------------------------------------------------------------------
 // These must remain in sync with the bot_generator's spawnflags in tf.fgd:
@@ -48,6 +49,10 @@ extern void BotGenerateAndWearItem( CTFPlayer *pBot, const char *itemName );
 #define TFBOT_ALL_BEHAVIOR_FLAGS		0xFFFF
 
 #define TFBOT_MVM_MAX_PATH_LENGTH		0.0f // 7000.0f			// in MvM, all pathfinds are limited to this (0 == no limit)
+
+#define TFBOT_MIN_LOADOUT_WAIT 0.1f
+#define TFBOT_MAX_LOADOUT_WAIT 0.3f
+#define TFBOT_CLASSSWITCH_LOADOUT_DELAY 0.1f
 
 
 //----------------------------------------------------------------------------
@@ -345,6 +350,18 @@ public:
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
 
+	const CEconItemDefinition *GiveRandomItemEx(loadout_positions_t loadoutPosition);
+	void SelectRandomizedLoadout(void);
+	void GiveSavedLoadout(void);
+	void ResetLoadout(void);
+	void HandleLoadout(void);
+	void ScriptHandleLoadout(void) { HandleLoadout(); }
+	//void Regenerate(bool bRefillHealthAndAmmo) OVERRIDE;
+	//void HandleCommand_JoinClass(const char* pClassName, bool bAllowSpawn = true) OVERRIDE;
+	void ManageModelOverride(void);
+
+	void ScriptGenerateAndWearItem( const char *pszItemName ) { if ( pszItemName ) BotGenerateAndWearItem( this, pszItemName ); }
+
 	enum MissionType
 	{
 		NO_MISSION = 0,
@@ -506,10 +523,16 @@ public:
 	CUtlString ScriptGetPreset() { return GetPreset(); }
 	void ScriptSetPreset(const char* preset) { SetPreset(preset); }
 
+public:
+	CountdownTimer m_CompressionBlastTimer;
 private:
 	CTFBotLocomotion	*m_locomotor;
 	CTFBotBody			*m_body;
 	CTFBotVision		*m_vision;
+
+	CUtlVector< const CEconItemDefinition* > vecSavedRandomLoadout;
+	CountdownTimer m_InitialLoadoutLoadTimer;
+	int iOldClassIndex;
 
 	CountdownTimer m_lookAtEnemyInvasionAreasTimer;
 

@@ -2306,7 +2306,11 @@ m_bIsPackBundle( false ),
 m_pOwningPackBundle( NULL ),
 m_bIsPackItem( false ),
 m_bBaseItem( false ),
+
 m_bSoloItem( false ),
+m_bIsReskin(false),
+m_bUsableByBots(false),
+
 m_pszItemLogClassname( NULL ),
 m_pszItemIconClassname( NULL ),
 m_pszDatabaseAuditTable( NULL ),
@@ -3178,7 +3182,11 @@ bool CEconItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString
 	m_bHidden = m_pKVItem->GetInt( "hidden", 0 ) != 0;
 	m_bShouldShowInArmory = m_pKVItem->GetInt( "show_in_armory", 0 ) != 0;
 	m_bBaseItem = m_pKVItem->GetInt( "baseitem", 0 ) != 0;
+
 	m_bSoloItem = m_pKVItem->GetInt( "customitem", 0 ) != 0;
+	m_bIsReskin = m_pKVItem->GetInt( "reskin", 0 ) != 0;
+	m_bUsableByBots = m_pKVItem->GetInt( "usable_by_bots", 1 ) != 0;
+
 	m_pszItemLogClassname = m_pKVItem->GetString( "item_logname", NULL );
 	m_pszItemIconClassname = m_pKVItem->GetString( "item_iconname", NULL );
 	m_pszDatabaseAuditTable = m_pKVItem->GetString( "database_audit_table", NULL );
