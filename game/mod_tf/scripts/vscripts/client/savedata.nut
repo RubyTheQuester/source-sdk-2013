@@ -8,12 +8,12 @@ TFSOLO.InitSaveData <- function()
 	local mapsKV = kv.GetKey("Maps", true)
 	local genericKV = kv.GetKey("Generic", true)
 	
-	// Start with 100 credits.
-	kv.SetInt("Credits", 100)
+	// Start with 1000 credits.
+	kv.SetInt("Credits", 1000)
 	// Start without base game weapons, taunts and cosmetics. Unlock the ability to equip them in the Armory.
 	genericKV.SetInt("BaseGameWeapons", 0)
-	genericKV.SetInt("BaseGameTaunts", 1)
-	genericKV.SetInt("BaseGameCosmetics", 1)
+	genericKV.SetInt("BaseGameTaunts", 0)
+	genericKV.SetInt("BaseGameCosmetics", 0)
 }
 
 TFSOLO.AddCredits <- function(amount)
