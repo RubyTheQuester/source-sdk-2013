@@ -348,7 +348,6 @@
 				//	"attribute_class"	"lunchbox_ammogain_scale"
 				//	"value"	"1"
 				//}
-				"
 			}
 		}
 	}
