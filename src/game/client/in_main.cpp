@@ -150,9 +150,11 @@ static	kbutton_t	in_zoom;
 static  kbutton_t   in_grenade1;
 static  kbutton_t   in_grenade2;
 static	kbutton_t	in_attack3;
-kbutton_t	in_ducktoggle;
+
 static kbutton_t	in_spywalk;
 
+kbutton_t	in_ducktoggle;
+kbutton_t	in_spywalktoggle;
 /*
 ===========
 IN_CenterView_f
@@ -501,18 +503,6 @@ void IN_XboxStub( const CCommand &args ) { /*do nothing*/ }
 void IN_Attack3Down( const CCommand &args ) { KeyDown(&in_attack3, args[1] );}
 void IN_Attack3Up( const CCommand &args ) { KeyUp(&in_attack3, args[1] );}
 
-void IN_DuckToggle( const CCommand &args ) 
-{ 
-	if ( ::input->KeyState(&in_ducktoggle) )
-	{
-		KeyUp( &in_ducktoggle, args[1] ); 
-	}
-	else
-	{
-		KeyDown( &in_ducktoggle, args[1] ); 
-	}
-}
-
 void IN_AttackDown( const CCommand &args )
 {
 	KeyDown( &in_attack, args[1] );
@@ -563,6 +553,30 @@ void IN_SpyWalkUp(const CCommand& args)
 {
 	KeyUp(&in_spywalk, args[1]);
 	in_cancel = 0;
+}
+
+void IN_DuckToggle(const CCommand& args)
+{
+	if (::input->KeyState(&in_ducktoggle))
+	{
+		KeyUp(&in_ducktoggle, args[1]);
+	}
+	else
+	{
+		KeyDown(&in_ducktoggle, args[1]);
+	}
+}
+
+void IN_SpyWalkToggle(const CCommand& args)
+{
+	if (::input->KeyState(&in_spywalk))
+	{
+		KeyUp(&in_spywalk, args[1]);
+	}
+	else
+	{
+		KeyDown(&in_spywalk, args[1]);
+	}
 }
 
 /*
@@ -1663,6 +1677,7 @@ static ConCommand endspywalk("-spywalk", IN_SpyWalkUp);
 
 #ifdef TF_CLIENT_DLL
 static ConCommand toggle_duck( "toggle_duck", IN_DuckToggle );
+static ConCommand toggle_spywalk( "toggle_spywalk", IN_SpyWalkToggle );
 #endif
 
 // Xbox 360 stub commands
