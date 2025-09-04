@@ -243,6 +243,9 @@ public:
 	void				SetRememberLastWeapon( bool bRememberLastWeapon ) { m_bRememberLastWeapon = bRememberLastWeapon; }
 	void				SetRememberActiveWeapon( bool bRememberActiveWeapon ) { m_bRememberActiveWeapon = bRememberActiveWeapon; }
 
+	void				SetRespawnOnLoadoutChanges(bool bRespawnOnLoadoutChange) { m_bRespawnOnLoadoutChange = bRespawnOnLoadoutChange; }
+	bool				GetRespawnOnLoadoutChanges() const { return m_bRespawnOnLoadoutChange; }
+
 	void				Regenerate( bool bRefillHealthAndAmmo = true );
 	float				GetNextRegenTime( void ){ return m_flNextRegenerateTime; }
 	void				SetNextRegenTime( float flTime ){ m_flNextRegenerateTime = flTime; }
@@ -626,7 +629,7 @@ public:
 	CEconItemView *GetEquippedItemForLoadoutSlot( int iLoadoutSlot ){ 
 		auto itemID = m_EquippedLoadoutItemIndices[iLoadoutSlot];
 		CEconItemView* pItem;
-		if (itemID < 65536)
+		if (itemID < TF_CUSTOM_ITEMS_ID_LIMIT)
 		{
 			int count = TFInventoryManager()->GetSoloItemCount();
 			for (int i = 0; i < count; i++)
@@ -1264,6 +1267,7 @@ private:
 	bool				m_bSwitchedClass;
 	bool				m_bRememberLastWeapon;
 	bool				m_bRememberActiveWeapon;
+	bool				m_bRespawnOnLoadoutChange;
 	int					m_iActiveWeaponTypePriorToDeath;
 
 	CHandle< CTFWeaponBuilder > m_hWeaponBuilder;

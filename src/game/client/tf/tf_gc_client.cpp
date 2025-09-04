@@ -307,15 +307,17 @@ void CTFGCClientSystem::InvalidatePingData()
 }
 
 
-/* Backoff api
+// Backoff api
 void CTFGCClientSystem::WebapiInventoryState_t::Backoff()
 {
-	if ( m_nBackoffSec == 0 )
+	if (m_nBackoffSec == 0)
 		m_nBackoffSec = 20;
 	else
 		m_nBackoffSec = (m_nBackoffSec * 12 + 9) / 10; // exponential backoff @ 1.2x factor, round up
 
 	m_rtNextRequest = CRTime::RTime32TimeCur() + m_nBackoffSec;
+
+	DevWarning("Backing off for an additional %i seconds.\n", m_nBackoffSec);
 }
 
 void CTFGCClientSystem::WebapiInventoryState_t::RequestSucceeded()
@@ -328,14 +330,14 @@ bool CTFGCClientSystem::WebapiInventoryState_t::IsBackingOff()
 {
 	return m_rtNextRequest != 0 && CRTime::RTime32TimeCur() <= m_rtNextRequest;
 }
-*/
+
 void CTFGCClientSystem::WebapiInventoryThink()
 {
 	WebapiInventoryState_t &state = m_WebapiInventory;
 
 	// Early out if we are waiting backoff timer
-	//if ( state.IsBackingOff() )
-	//	return;
+	if ( state.IsBackingOff() )
+		return;
 
 	switch ( state.m_eState )
 	{
@@ -356,7 +358,8 @@ void CTFGCClientSystem::WebapiInventoryThink()
 		state.m_hSteamAuthTicket = SteamUser()->GetAuthTicketForWebApi( "tf2sdk" );
 		if ( state.m_hSteamAuthTicket == k_HAuthTicketInvalid )
 		{
-			//state.Backoff();
+			DevWarning("Steam auth ticket request invalid.\n");
+			state.Backoff();
 			return;
 		}
 
@@ -419,7 +422,8 @@ void CTFGCClientSystem::WebapiInventoryThink()
 		SteamAPICall_t callResult;
 		if ( !SteamHTTP()->SendHTTPRequest( state.m_hInventoryRequest, &callResult ) )
 		{
-			//state.Backoff();
+			DevWarning("Steam inventory request failed.\n");
+			state.Backoff();
 			return;
 		}
 
@@ -488,6 +492,7 @@ void CTFGCClientSystem::WebapiInventoryThink()
 
 		// We now have encoded the latest state of the SO cache into our message -- if that changes, we need to re-build
 		// our message to the server.
+		state.m_bDidApplyLocalChanges = state.m_bLocalChangesApplied;
 		state.m_bLocalChangesApplied = false;
 
 		state.m_eState = kWebapiInventoryState_RequestServerAuthToken;
@@ -562,6 +567,7 @@ void CTFGCClientSystem::WebapiInventoryThink()
 		KeyValues *kv = new KeyValues( "sdk_inventory" );
 		kv->SetString( "msg", state.m_strMsgItems.Base() );
 		kv->SetString( "ticket", strHexToken.Base() );
+		kv->SetBool("changed", state.m_bDidApplyLocalChanges);
 
 		// Add any server-specific fields so it knows what to do with the given inventory items (per-mod loadout may not match the user's real tf2 loadout)
 		SDK_AddServerInventoryInfo( kv, GetSOCache( SteamUser()->GetSteamID() ) );
@@ -628,23 +634,28 @@ void CTFGCClientSystem::OnWebapiAuthTicketReceived( GetTicketForWebApiResponse_t
 		return;
 
 	// This is our ticket.  Assume failure for now, we'll correct this if we find it worked.
-	//state.Backoff();
+	state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestAuthToken;
 
 	// Check that the request succeeded
-	if ( pInfo->m_eResult != k_EResultOK )
+	if (pInfo->m_eResult != k_EResultOK)
+	{
+		DevWarning("Steam auth ticket failed.\n");
 		return;
+	}
 
-	// Validate the token makes sense
-	if ( pInfo->m_cubTicket < 0 || pInfo->m_cubTicket > pInfo->k_nCubTicketMaxLength )
+	if (pInfo->m_cubTicket < 0 || pInfo->m_cubTicket > pInfo->k_nCubTicketMaxLength)
+	{
+		DevWarning("Steam auth ticket invalid.\n");
 		return;
+	}
 
 	// Copy the token
 	state.m_bufAuthToken.SetCount( pInfo->m_cubTicket );
 	memcpy( state.m_bufAuthToken.Base(), pInfo->m_rgubTicket, pInfo->m_cubTicket );
 
 	// Success
-	//state.RequestSucceeded();
+	state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_AuthTokenReceived;
 }
 
@@ -659,23 +670,27 @@ void CTFGCClientSystem::OnWebapiServerAuthTicketReceived( GetTicketForWebApiResp
 		return;
 
 	// This is our ticket.  Assume failure for now, we'll correct this if we find it worked.
-	//state.Backoff();
+	state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestServerAuthToken;
 
-	// Check that the request succeeded
-	if ( pInfo->m_eResult != k_EResultOK )
+	if (pInfo->m_eResult != k_EResultOK)
+	{
+		DevWarning("Steam server auth ticket failed.\n");
 		return;
+	}
 
-	// Validate the token makes sense
-	if ( pInfo->m_cubTicket < 0 || pInfo->m_cubTicket > pInfo->k_nCubTicketMaxLength )
+	if (pInfo->m_cubTicket < 0 || pInfo->m_cubTicket > pInfo->k_nCubTicketMaxLength)
+	{
+		DevWarning("Steam server auth ticket invalid.\n");
 		return;
+	}
 
 	// Copy the token
 	state.m_bufServerAuthToken.SetCount( pInfo->m_cubTicket );
 	memcpy( state.m_bufServerAuthToken.Base(), pInfo->m_rgubTicket, pInfo->m_cubTicket );
 
 	// Success
-	//state.RequestSucceeded();
+	state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_ServerAuthTokenReceived;
 }
 
@@ -709,7 +724,7 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	}
 
 	// Assume failure -- we'll correct this if this isn't the case
-	//state.Backoff();
+	state.Backoff();
 	state.m_eState = kWebapiInventoryState_RequestInventory;
 
 	// This is our handle -- we'll free it by the end of this.
@@ -717,6 +732,7 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 
 	if ( !pInfo->m_bRequestSuccessful || pInfo->m_eStatusCode != k_EHTTPStatusCode200OK )
 	{
+		DevWarning("Steam inventory request failed.\n");
 		SteamHTTP()->ReleaseHTTPRequest( pInfo->m_hRequest );
 		return;
 	}
@@ -753,12 +769,18 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 		break;
 
 	case k_EResultFail:
+	{
+		DevWarning("Steam inventory response failed.\n");
 		return; // will retry after backoff timer expires
+	}
 
 	case k_EResultNotLoggedOn:
+	{
 		// re-request authentication after backoff time
+		DevWarning("Steam inventory authentication failed.\n");
 		state.m_eState = kWebapiInventoryState_RequestAuthToken;
 		return;
+	}
 
 	default:
 	{
@@ -808,7 +830,7 @@ void CTFGCClientSystem::OnWebapiInventoryReceived( HTTPRequestCompleted_t* pInfo
 	}
 
 	// We were successful, clear backoff timers
-	//state.RequestSucceeded();
+	state.RequestSucceeded();
 	state.m_eState = kWebapiInventoryState_InventoryReceived;
 }
 

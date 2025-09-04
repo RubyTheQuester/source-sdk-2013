@@ -2000,6 +2000,9 @@ bool CHudUpgradePanel::QuickEquipBottle( void )
 	TFInventoryManager()->EquipItemInLoadout( nClass, LOADOUT_POSITION_ACTION, iItemId );
 
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
+#ifdef INVENTORY_VIA_WEBAPI
+	TFInventoryManager()->QueueGCInventoryChangeNotification();
+#endif
 
 	return true;
 }
