@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_classic_force/c_classic_force_large"
+	"$translucent" 1
+	"$vertexcolor" 1
+}
