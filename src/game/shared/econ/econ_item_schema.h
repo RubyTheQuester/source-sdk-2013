@@ -2634,6 +2634,12 @@ public:
 	typedef CUtlMap<int, CEconItemDefinition*, int>	SoloItemDefinitionMap_t;
 	const SoloItemDefinitionMap_t& GetSoloItemDefinitionMap() const { return m_mapSoloItems; }
 
+	typedef CUtlMap<int, CEconItemDefinition*, int>	BaseAndSoloItemDefinitionMap_t;
+	const BaseAndSoloItemDefinitionMap_t& GetBaseAndSoloItemDefinitionMap() const { return m_mapBaseAndSoloItems; }
+
+	typedef CUtlMap<int, CEconItemDefinition*, int>	WhitelistedItemDefinitionMap_t;
+	const WhitelistedItemDefinitionMap_t& GetWhitelistedItemDefinitionMap() const { return m_mapWhitelistedItems; }
+
 	typedef CUtlDict<CEconLootListDefinition *>	LootListDefinitionMap_t;
 	const LootListDefinitionMap_t &GetLootLists() const { return m_dictLootLists; }
 
@@ -2866,6 +2872,7 @@ private:
 	bool BInitCollectionReferences( CUtlVector<CUtlString> *pVecErrors );
 	bool BInitOperationDefinitions( KeyValues *pKVGameInfo, KeyValues *pOperations, CUtlVector<CUtlString> *pVecErrors );
 
+
 #ifdef TF_CLIENT_DLL
 	bool BInitConcreteItemCounts( CUtlVector<CUtlString> *pVecErrors );
 	bool BInitSteamPackageLocalizationToken( KeyValues *pKVSteamPackages, CUtlVector<CUtlString> *pVecErrors );
@@ -2954,6 +2961,8 @@ private:
 
 	// List of all solo items, is a sublist of mapItems
 	SoloItemDefinitionMap_t								m_mapSoloItems;
+	BaseAndSoloItemDefinitionMap_t						m_mapBaseAndSoloItems;
+	WhitelistedItemDefinitionMap_t						m_mapWhitelistedItems;
 
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 	// What is the default item definition we'll return in the client code if we can't find the correct one?

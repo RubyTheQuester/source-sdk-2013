@@ -116,7 +116,7 @@ bool IEconItemInterface::IsPermanentlyUntradable() const
 	case kEconItemOrigin_PreviewItem:
 	case kEconItemOrigin_SteamWorkshopContribution:
 	case kEconItemOrigin_UntradableFreeContractReward:
-		return true;
+		return false;
 	}
 
 	// temporary items (items that will expire for any reason) cannot be traded

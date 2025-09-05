@@ -237,8 +237,8 @@ public:
 		MarkDescriptionDirty();
 	}
 
+	void					EnsureDescriptionIsBuilt(void) const;
 private:
-	void					EnsureDescriptionIsBuilt( void ) const;
 	void					MarkDescriptionDirty( void );
 public:
 	void					SetGrayedOutReason( const char *pszGrayedOutReason );

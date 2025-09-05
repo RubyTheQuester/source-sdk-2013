@@ -2307,9 +2307,9 @@ m_pOwningPackBundle( NULL ),
 m_bIsPackItem( false ),
 m_bBaseItem( false ),
 
-m_bSoloItem( false ),
+m_bSoloItem(false),
 m_bIsReskin(false),
-m_bUsableByBots(false),
+m_bUsableByBots(true),
 
 m_pszItemLogClassname( NULL ),
 m_pszItemIconClassname( NULL ),
@@ -3815,7 +3815,8 @@ CEconItemSchema::CEconItemSchema( )
 ,	m_mapToolsItems( DefLessFunc(int) )
 ,	m_mapPaintKitTools( DefLessFunc(uint32) )
 ,	m_mapBaseItems( DefLessFunc(int) )
-,	m_mapSoloItems( DefLessFunc(int) )
+,	m_mapSoloItems(DefLessFunc(int))
+,	m_mapBaseAndSoloItems(DefLessFunc(int))
 ,	m_unVersion( 0 )
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 ,	m_pDefaultItemDefinition( NULL )
@@ -4312,6 +4313,7 @@ void CEconItemSchema::Reset( void )
 	m_mapPaintKitTools.Purge();
 	m_mapBaseItems.Purge();
 	m_mapSoloItems.Purge();
+	m_mapBaseAndSoloItems.Purge();
 	m_mapRecipes.PurgeAndDeleteElements();
 	m_vecTimedRewards.Purge();
 	m_dictItemSets.PurgeAndDeleteElements();
@@ -4431,8 +4433,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString
 
 	Reset();
 	m_pKVRawDefinition = new KeyValues( "CEconItemSchema" );
-	//if ( m_pKVRawDefinition->LoadFromBuffer( NULL, buffer ) )
-	if ( m_pKVRawDefinition->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom.txt","GAME"))
+	if (m_pKVRawDefinition->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom.txt", "GAME"))
 	{
 		return BInitSchema( m_pKVRawDefinition, pVecErrors )
 			&& BPostSchemaInit( pVecErrors );
@@ -4866,8 +4867,7 @@ bool CEconItemSchema::BInitGameInfo( KeyValues *pKVGameInfo, CUtlVector<CUtlStri
 	m_unFirstValidClassItemSlot = pKVGameInfo->GetInt( "first_valid_item_slot", INVALID_EQUIPPED_SLOT );
 	m_unLastValidClassItemSlot = pKVGameInfo->GetInt( "last_valid_item_slot", INVALID_EQUIPPED_SLOT );
 	SCHEMA_INIT_CHECK( INVALID_EQUIPPED_SLOT != m_unFirstValidClassItemSlot, "first_valid_item_slot not set!" );
-	SCHEMA_INIT_CHECK( INVALID_EQUIPPED_SLOT != m_unFirstValidClassItemSlot, "last_valid_item_slot not set!" );
-	SCHEMA_INIT_CHECK( m_unFirstValidClassItemSlot <= m_unLastValidClassItemSlot, "First valid item slot must be less than or equal to last valid item slot." );
+	SCHEMA_INIT_CHECK(INVALID_EQUIPPED_SLOT != m_unLastValidClassItemSlot, "last_valid_item_slot not set!");
 
 	m_unFirstValidAccountItemSlot = pKVGameInfo->GetInt( "account_first_valid_item_slot", INVALID_EQUIPPED_SLOT );
 	m_unLastValidAccountItemSlot  = pKVGameInfo->GetInt( "account_last_valid_item_slot", INVALID_EQUIPPED_SLOT );
@@ -5297,6 +5297,7 @@ bool CEconItemSchema::BInitItems( KeyValues *pKVItems, CUtlVector<CUtlString> *p
 	m_mapPaintKitTools.Purge();
 	m_mapBaseItems.Purge();
 	m_mapSoloItems.Purge();
+	m_mapBaseAndSoloItems.Purge();
 	m_vecBundles.Purge();
 	m_mapQuestObjectives.PurgeAndDeleteElements();
 
@@ -5343,7 +5344,7 @@ bool CEconItemSchema::BInitItems( KeyValues *pKVItems, CUtlVector<CUtlString> *p
 				nMapIndex = m_mapItems.Insert( nItemIndex, pItemDef );
 				m_mapItemsSorted.Insert( nItemIndex, pItemDef );
 				SCHEMA_INIT_SUBSTEP( m_mapItems[nMapIndex]->BInitFromKV( pKVItem, pVecErrors ) );
-				m_mapItemsName.Insert( pItemDef->GetDefinitionName(), pItemDef );
+				m_mapItemsName.Insert(pItemDef->GetDefinitionName(), pItemDef);
 
 				// Cache off Tools references
 				if ( pItemDef->IsTool() )
@@ -5366,10 +5367,12 @@ bool CEconItemSchema::BInitItems( KeyValues *pKVItems, CUtlVector<CUtlString> *p
 				if ( pItemDef->IsBaseItem() )
 				{
 					m_mapBaseItems.Insert( nItemIndex, pItemDef );
+					m_mapBaseAndSoloItems.Insert(nItemIndex, pItemDef);
 				}
 				if (pItemDef->IsSoloItem())
 				{
 					m_mapSoloItems.Insert(nItemIndex, pItemDef);
+					m_mapBaseAndSoloItems.Insert(nItemIndex, pItemDef);
 				}
 
 				// Cache off bundles for the link phase below.
@@ -5475,7 +5478,7 @@ bool CEconItemSchema::DeleteItemDefinition( int iDefIndex )
 		CEconItemDefinition* pItemDef = m_mapItems[nMapIndex];
 		if ( pItemDef )
 		{
-			m_mapItemsName.Remove( pItemDef->GetDefinitionName() );
+			m_mapItemsName.Remove(pItemDef->GetDefinitionName());
 			m_mapItems.RemoveAt( nMapIndex );
 			delete pItemDef;
 			return true;
@@ -6442,9 +6445,9 @@ void CEconItemSchema::ItemTesting_CreateTestDefinition( int iCloneFromItemDef, i
 	if ( !m_mapItems.IsValidIndex( nMapIndex ) )
 	{
 		CEconItemDefinition* pItemDef = CreateEconItemDefinition();
-		nMapIndex = m_mapItems.Insert( iNewDef, pItemDef );
+		nMapIndex = m_mapItems.Insert(iNewDef, pItemDef);
 		m_mapItemsSorted.Insert( iNewDef, m_mapItems[nMapIndex] );
-		m_mapItemsName.Insert( pItemDef->GetDefinitionName(), pItemDef );
+		m_mapItemsName.Insert(pItemDef->GetDefinitionName(), pItemDef);
 	}
 
 	// Find & copy the clone item def's data in
@@ -6462,11 +6465,11 @@ void CEconItemSchema::ItemTesting_CreateTestDefinition( int iCloneFromItemDef, i
 //-----------------------------------------------------------------------------
 void CEconItemSchema::ItemTesting_DiscardTestDefinition( int iDef )
 {
-	int nIndex = m_mapItems.Find( iDef );
-	if ( nIndex != m_mapItems.InvalidIndex() )
+	int nIndex = m_mapItems.Find(iDef);
+	if (nIndex != m_mapItems.InvalidIndex())
 	{
-		m_mapItemsName.Remove( m_mapItems[nIndex]->GetDefinitionName() );
-		m_mapItems.RemoveAt( nIndex );
+		m_mapItemsName.Remove(m_mapItems[nIndex]->GetDefinitionName());
+		m_mapItems.RemoveAt(nIndex);
 	}
 	m_mapItemsSorted.Remove( iDef );
 }
@@ -6755,7 +6758,7 @@ const CEconItemDefinition *CEconItemSchema::GetItemDefinition( int iItemIndex ) 
 //-----------------------------------------------------------------------------
 CEconItemDefinition *CEconItemSchema::GetItemDefinitionByName( const char *pszDefName )
 {
-	int nIndex = m_mapItemsName.Find( pszDefName );
+	int nIndex = m_mapItemsName.Find(pszDefName);
 	if (nIndex != m_mapItemsName.InvalidIndex())
 		return m_mapItemsName[nIndex];
 	return NULL;
@@ -6920,13 +6923,14 @@ bool CEconItemSchema::SetupPreviewItemDefinition( KeyValues *pKV )
 	if ( !m_mapItems.IsValidIndex( nMapIndex ) )
 	{
 		pItemDef = CreateEconItemDefinition();
-		nMapIndex = m_mapItems.Insert( PREVIEW_ITEM_DEFINITION_INDEX, pItemDef );
-		m_mapItemsName.Insert( pItemDef->GetDefinitionName(), pItemDef );
+		nMapIndex = m_mapItems.Insert(PREVIEW_ITEM_DEFINITION_INDEX, pItemDef);
+		m_mapItemsName.Insert(pItemDef->GetDefinitionName(), pItemDef);
 	}
 	else
 	{
 		pItemDef = m_mapItems[nMapIndex];
 	}
+	//CEconItemDefinition* pItemDef = m_mapItems[nMapIndex];
 	return pItemDef->BInitFromKV( pKV );
 }
 #endif // defined(CLIENT_DLL) || defined(GAME_DLL)

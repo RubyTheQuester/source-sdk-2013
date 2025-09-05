@@ -1102,19 +1102,19 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 	{
 		const CEconItemDefinition* pItemDef = NULL;
 
-		const CEconItemSchema::BaseItemDefinitionMap_t& mapItems = GetItemSchema()->GetBaseItemDefinitionMap();
+		const CEconItemSchema::BaseAndSoloItemDefinitionMap_t& mapItems = GetItemSchema()->GetBaseAndSoloItemDefinitionMap();
 		int iStart = iIndex == 0 ? mapItems.FirstInorder() : mapItems.NextInorder( iLastMapItem );
 		for ( int it = iStart; it != mapItems.InvalidIndex(); it = mapItems.NextInorder( it ) )
 		{
 			iLastMapItem = it;
 
-			if ( mapItems[it]->IsBaseItem() && !mapItems[it]->IsHidden() )
+			if ( (mapItems[it]->IsBaseItem() || mapItems[it]->IsSoloItem()) && !mapItems[it]->IsHidden() )
 			{
 				// Instead of linking to this base item definition, link to the definition of what it will become
 				// when we customize it.
-				CFmtStr fmtStrCustomizedDefName( "Upgradeable %s", mapItems[it]->GetDefinitionName() );
-				pItemDef = GetItemSchema()->GetItemDefinitionByName( fmtStrCustomizedDefName.Access() );
-				
+				CFmtStr fmtStrCustomizedDefName("Upgradeable %s", mapItems[it]->GetDefinitionName());
+				pItemDef = GetItemSchema()->GetItemDefinitionByName(fmtStrCustomizedDefName.Access());
+
 				// If we don't have an upgradeable version, we assume that we can't upgrade it and link to the base
 				// definition instead. We expect this to only happen if the item won't actually be useable for whatever
 				// purpose (name tags, etc.). We sanity-check this on the GC.
@@ -1122,8 +1122,14 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 				{
 					pItemDef = mapItems[it];
 				}
-
-				tempItem.Init( pItemDef->GetDefinitionIndex(), AE_UNIQUE, AE_USE_SCRIPT_VALUE, true );
+				if (mapItems[it]->IsSoloItem())
+				{
+					tempItem.Init(pItemDef->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, true);
+				}
+				else
+				{
+					tempItem.Init(pItemDef->GetDefinitionIndex(), AE_UNIQUE, AE_USE_SCRIPT_VALUE, true);
+				}
 
 				// skip this item if the tool cannot be applied to it
 				if ( bInToolSelection && !CEconSharedToolSupport::ToolCanApplyTo( &m_ToolSelectionItem, &tempItem ) )

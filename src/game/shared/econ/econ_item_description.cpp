@@ -2664,7 +2664,7 @@ static bool IsItemEquipped( uint32 unAccountID, const CEconItemDefinition *pSear
 	Assert( pSearchItemDef );
 	Assert( ppFoundSetItemDef );
 
-	CPlayerInventory *pInv = InventoryManager()->GetInventoryForAccount( unAccountID );
+	CPlayerInventory* pInv = TFInventoryManager()->GetLocalInventory();
 	if ( !pInv )
 		return false;
 
@@ -2817,6 +2817,10 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 	if ( !pItemDef )
 		return;
 
+	// Adding a check for if the collection we are browsing contains cosmetics or decorated weapons.
+	// We can handle decorated weapons the same as cosmetics, since they have proper schema entries
+	bool bIsHatOrDecorated = false;
+
 	// For War Painted items (not War Paints themselves) we want highlight the row of the
 	// War Paint itself in the collection.  Look up our corresponding War Paint's item def
 	// and use that as our own if there is one.
@@ -2824,6 +2828,10 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 	if ( GetPaintKitDefIndex( pEconItem, &nPaintkitDefindex ) )
 	{
 		auto pPaintkitItemDef = GetItemSchema()->GetPaintKitItemDefinition( nPaintkitDefindex );
+
+		if (pPaintkitItemDef == NULL)
+			bIsHatOrDecorated = true;
+
 		pItemDef = pPaintkitItemDef ? pPaintkitItemDef : pItemDef;
 	}
 
@@ -2885,7 +2893,7 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 							return &vecItemsWithDefindex;
 
 						uint32 unPaintkitDefidnex = 0;
-						if ( GetPaintKitDefIndex( pItemDef, &unPaintkitDefidnex ) )
+						if (GetPaintKitDefIndex(pItemDef, &unPaintkitDefidnex) && !bIsHatOrDecorated)
 						{
 							auto& vecItemsWithPaintkit = pLocalInv->GetItemsWithPaintkitDefindex( unPaintkitDefidnex );
 							if ( !vecItemsWithPaintkit.IsEmpty() )
@@ -3284,6 +3292,10 @@ void CEconItemDescription::Generate_FlagsAttributes( const CLocalizationProvider
 		else if ( eOrigin == kEconItemOrigin_QuestLoanerItem )
 		{
 			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_LoanerItem", ATTRIB_COL_NEUTRAL ) );
+		}
+		else if (eOrigin == kEconItemOrigin_CustomItem)
+		{
+			vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CustomItem", ATTRIB_COL_NEUTRAL));
 		}
 		else if ( eOrigin == kEconItemOrigin_Invalid )
 		{

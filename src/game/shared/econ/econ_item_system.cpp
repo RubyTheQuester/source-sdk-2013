@@ -176,15 +176,11 @@ void CEconItemSystem::ReloadWhitelist( void )
 	}
 
 	// If we didn't find a file, we're done.
-	if ( !bFoundWhitelist )
-	{
-		pWhitelistKV->deleteThis();
+	if (!bFoundWhitelist)
 		return;
-	}
 
 	// Otherwise, go through the KVs and turn on the matching items.
 	Msg("Parsing item whitelist (default: %s)\n", bDefault ? "allowed" : "disallowed" );
-	KeyValues* ownerWhitelistKV = pWhitelistKV;
 	pWhitelistKV = pWhitelistKV->GetFirstSubKey();
 	while ( pWhitelistKV )
 	{
@@ -208,8 +204,6 @@ void CEconItemSystem::ReloadWhitelist( void )
 		pWhitelistKV = pWhitelistKV->GetNextKey();
 	}
 	Msg("Finished.\n");
-
-	ownerWhitelistKV->deleteThis();
 }
 
 #ifdef GAME_DLL
@@ -703,4 +697,35 @@ CON_COMMAND_F( econ_show_items_with_tag, "Lists the item definitions that have a
 	}
 }
 #endif // CLIENT_DLL
+
+
+#ifdef CLIENT_DLL
+CON_COMMAND_F(econ_refreshschema_cl, "Refreshes the item schema on the client.", FCVAR_NONE)
+#else
+CON_COMMAND_F(econ_refreshschema_sv, "Refreshes the item schema on the server.", FCVAR_CHEAT)
+#endif
+{
+#ifdef CLIENT_DLL
+	if ((engine->IsInGame() || engine->IsConnected()) && !engine->IsLevelMainMenuBackground())
+	{
+		Msg("This command is not available for use in-game.\n");
+		return;
+	}
+#endif
+
+	CEconItemSystem* pItemSystem = ItemSystem();
+
+	if (!pItemSystem)
+	{
+		Msg("No item system available.\n");
+		return;
+	}
+
+	Msg("Restarting the item system...\n");
+
+	pItemSystem->Shutdown();
+	pItemSystem->Init();
+
+	Msg("Item system restarted.\n");
+}
 

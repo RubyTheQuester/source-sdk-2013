@@ -353,6 +353,11 @@ CTFWearableItem::CTFWearableItem()
 //-----------------------------------------------------------------------------
 ShadowType_t CEconWearable::ShadowCastType()
 {
+	if (IsEffectActive(EF_NODRAW | EF_NOSHADOW))
+	{
+		return SHADOWS_NONE;
+	}
+
 	if ( ShouldDraw() )
 	{
 		return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC;
@@ -459,6 +464,8 @@ RenderGroup_t CEconWearable::GetRenderGroup()
 	return BaseClass::GetRenderGroup();
 }
 
+ConVar econ_allow_paint_tint("econ_allow_paint_tint", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
+
 //-----------------------------------------------------------------------------
 // Purpose: Wearable tint colors
 //-----------------------------------------------------------------------------
@@ -468,6 +475,13 @@ public:
 	void OnBind( void *pC_BaseEntity )
 	{
 		Assert( m_pResult );
+
+		if (!econ_allow_paint_tint.GetBool())
+		{
+			m_pResult->SetVecValue(0, 0, 0);
+			return;
+		}
+
 		Vector vResult = Vector( 0, 0, 0 );
 
 		if ( pC_BaseEntity )

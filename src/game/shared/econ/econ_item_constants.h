@@ -421,6 +421,7 @@ enum eEconItemOrigin
 	kEconItemOrigin_CYOABloodMoneyPurchase,
 	kEconItemOrigin_Paintkit,
 	kEconItemOrigin_UntradableFreeContractReward,
+	kEconItemOrigin_CustomItem,
 
 	kEconItemOrigin_Max,
 };
@@ -542,6 +543,7 @@ enum EEconItemQuality
 	AE_DEPRECATED_UNIQUE = 3,
 };
 
+#define GIVEN_ITEM_QUALITY AE_PAINTKITWEAPON
 
 //-----------------------------------------------------------------------------
 // Purpose: colors used in the display of attributes
