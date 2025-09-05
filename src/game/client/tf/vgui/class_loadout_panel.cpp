@@ -1001,6 +1001,12 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 		// ulIndex implies do nothing (escape key)
 		if ( ulIndex != 0 )
 		{
+			C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+			if (pPlayer)
+			{
+				pPlayer->Inventory()->InvalidateOffline();
+			}
+
 			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
 
 			OnLoadoutUpdate();
