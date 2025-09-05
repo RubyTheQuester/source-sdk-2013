@@ -112,7 +112,7 @@
 			"item_name"	"#TF_Weapon_Foxhound"
 			"item_description"	"#TF_Weapon_Foxhound_desc"
 			
-			"item_quality"	"rarity2"
+			"item_quality"	"moditem"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -164,7 +164,7 @@
 			"propername"		"0"
 			"customitem" 		"1"
 
-			"item_quality"	"rarity2"
+			"item_quality"	"moditem"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -211,7 +211,7 @@
 			"propername"		"0"
 			"customitem" 		"1"
 			
-			"item_quality"	"rarity2"
+			"item_quality"	"moditem"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -272,7 +272,7 @@
 			"propername"		"0"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity2"
+			"item_quality"	"moditem"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -328,7 +328,7 @@
 			"item_type_name"	"#TF_Weapon_Crowbar"
 			"item_description"	"#TF_Weapon_Crowbar_Desc"
 			
-			"item_quality"	"rarity2"
+			"item_quality"	"moditem"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			

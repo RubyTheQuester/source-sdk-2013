@@ -1711,7 +1711,11 @@ void CTFBot::Touch( CBaseEntity *pOther )
 			}
 			else
 			{
-				RealizeSpy( them );
+				if ( !m_Shared.InCond(TF_COND_SAPPED) )
+				{
+					RealizeSpy(them);
+				}
+
 			}
 		}
 

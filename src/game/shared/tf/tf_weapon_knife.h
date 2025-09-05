@@ -77,6 +77,7 @@ public:
 #ifdef GAME_DLL
 	virtual void		ApplyOnInjuredAttributes( CTFPlayer *pVictim, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;	// when owner of this weapon is hit
 	bool				DecreaseRegenerationTime( float value, bool bForce );
+	virtual void		BackstabBuff( CTFPlayer *pVictim, CTFPlayer * pAttacker, int iVictimHealth, int iVictimRuneType);
 #endif
 
 	float				GetProgress( void );

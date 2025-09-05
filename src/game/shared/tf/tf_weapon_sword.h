@@ -130,9 +130,14 @@ public:
 	virtual float	GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage );
 	virtual void	OnDecapitation( CTFPlayer *pDeadPlayer );
 
+	virtual void		Precache(void);
 	virtual void		Smack(void);
 	bool				CanUsePush();
 	void				Push(void);
+
+#if defined( GAME_DLL )
+	virtual void	PlayDeflectionSound(bool bPlayer) OVERRIDE;
+#endif
 
 	virtual int		GetActivityWeaponRole() const OVERRIDE;
 

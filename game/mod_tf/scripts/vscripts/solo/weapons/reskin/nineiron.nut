@@ -5,12 +5,15 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local prefab = key1.FindKey("482")
 	local attrib = prefab.GetKey("attributes", true)
 	
+	local visuals = prefab.FindKey("visuals")
+	
+	visuals.SetString("sound_melee_hit","Weapon_GolfClub.PushImpact")
+	
 	prefab.SetString("prefab","weapon_sword")
 	prefab.SetString("item_class","tf_weapon_katana")
 	
 	prefab.RemoveSubKey("item_description")
 	
-	// TODO: New design
 	local a1 = attrib.GetKey("sword deflect", true)
 	a1.SetString("attribute_class","sword_deflect")
 	a1.SetInt("value", 1)

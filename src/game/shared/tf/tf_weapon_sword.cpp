@@ -606,6 +606,16 @@ bool CTFKatana::CanUsePush()
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFKatana::Precache(void)
+{
+	PrecacheScriptSound("Weapon_GolfClub.PushImpact");
+
+	BaseClass::Precache();
+}
+
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTFKatana::Smack(void)
@@ -616,7 +626,7 @@ void CTFKatana::Smack(void)
 	int iCanDeflect = 0;
 	CALL_ATTRIB_HOOK_INT(iCanDeflect, sword_deflect);
 
-	if (iCanDeflect == true)
+	if (iCanDeflect == 1)
 	{
 		DeflectProjectiles();
 	}
@@ -624,12 +634,25 @@ void CTFKatana::Smack(void)
 	int iCanPush = 0;
 	CALL_ATTRIB_HOOK_INT(iCanPush, sword_deflect);
 
-	if (iCanPush == true)
+	if (iCanPush == 1)
 	{
 		Push();
 	}
 #endif
 }
+
+#ifdef GAME_DLL
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFKatana::PlayDeflectionSound(bool bPlayer)
+{
+	if (!bPlayer)
+	{
+		EmitSound("Weapon_GolfClub.PushImpact");
+	}
+}
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

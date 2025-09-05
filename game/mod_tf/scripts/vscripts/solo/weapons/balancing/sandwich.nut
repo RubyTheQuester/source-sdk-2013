@@ -6,4 +6,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local attrib = prefab.FindKey("attributes")
 	
 	prefab.SetString("item_slot","equipment")
+	
+	prefab.SetString("usable_by_bots","0")
 })

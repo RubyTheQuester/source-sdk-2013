@@ -300,80 +300,87 @@ void CTFKnife::PrimaryAttack( void )
 	CALL_ATTRIB_HOOK_INT(iBackstabBuff, backstab_buff);
 	if (bSuccessfulBackstab && iBackstabBuff > 0)
 	{
-		switch ( m_hBackstabVictim->m_Shared.GetDesiredPlayerClassIndex() )
-		{
-			default:
-			case TF_CLASS_SCOUT:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_SPEED_BOOST, 3.0f);
-				break;
-			}
-			case TF_CLASS_SOLDIER:
-			{
-				//pPlayer->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
-				break;
-			}
-			case TF_CLASS_PYRO:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_FIRE_IMMUNE, 3.0f);
-				break;
-			}
-
-
-			case TF_CLASS_DEMOMAN:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
-				break;
-			}
-			case TF_CLASS_HEAVYWEAPONS:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
-				break;
-			}
-			case TF_CLASS_ENGINEER:
-			{
-				pPlayer->GiveAmmo(pPlayer->GetMaxAmmo(TF_AMMO_PRIMARY), TF_AMMO_PRIMARY);
-				pPlayer->GiveAmmo(pPlayer->GetMaxAmmo(TF_AMMO_SECONDARY), TF_AMMO_SECONDARY);
-				pPlayer->m_Shared.SetSpyCloakMeter(100.0f);
-				break;
-			}
-
-			case TF_CLASS_MEDIC:
-			{
-				/*
-				This is kinda stupid way of doing it.
-				*/
-
-				int iBaseMaxHealth = (pPlayer->GetMaxHealth() - pPlayer->GetRuneHealthBonus()) * 2,
-					iNewHealth = MIN(pPlayer->GetHealth() + iBackstabVictimHealth, iBaseMaxHealth),
-					iDeltaHealth = iNewHealth - pPlayer->GetHealth();
-
-				if (TFGameRules() && TFGameRules()->IsPowerupMode() && (nBackStabVictimRuneType == RUNE_REFLECT))
-				{
-					iDeltaHealth = 0;
-				}
-
-				if (iDeltaHealth > 0)
-				{
-					pPlayer->TakeHealth(iDeltaHealth, DMG_IGNORE_MAXHEALTH);
-					pPlayer->m_Shared.HealthKitPickupEffects(iDeltaHealth);
-				}
-				break;
-			}
-			case TF_CLASS_SNIPER:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_OFFENSEBUFF, 3.0f);
-				break;
-			}
-			case TF_CLASS_SPY:
-			{
-				pPlayer->m_Shared.AddCond(TF_COND_STEALTHED_USER_BUFF, 3.0f);
-				break;
-			}
-		}
+		BackstabBuff(m_hBackstabVictim, pPlayer, iBackstabVictimHealth, nBackStabVictimRuneType);
 	}
 #endif // GAME_DLL
 }
+
+#ifdef GAME_DLL
+//-----------------------------------------------------------------------------
+// Purpose: Set stealth attack bool
+//-----------------------------------------------------------------------------
+void CTFKnife::BackstabBuff(CTFPlayer* pVictim, CTFPlayer *pAttacker, int iVictimHealth, int iVictimRuneType)
+{
+	switch (m_hBackstabVictim->m_Shared.GetDesiredPlayerClassIndex())
+	{
+		default:
+		case TF_CLASS_SCOUT:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_SPEED_BOOST, 3.0f);
+			break;
+		}
+		case TF_CLASS_SOLDIER:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
+			break;
+		}
+		case TF_CLASS_PYRO:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_FIRE_IMMUNE, 3.0f);
+			break;
+		}
+
+
+		case TF_CLASS_DEMOMAN:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
+			break;
+		}
+		case TF_CLASS_HEAVYWEAPONS:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
+			break;
+		}
+		case TF_CLASS_ENGINEER:
+		{
+			pAttacker->GiveAmmo(pAttacker->GetMaxAmmo(TF_AMMO_PRIMARY), TF_AMMO_PRIMARY);
+			pAttacker->GiveAmmo(pAttacker->GetMaxAmmo(TF_AMMO_SECONDARY), TF_AMMO_SECONDARY);
+			pAttacker->m_Shared.SetSpyCloakMeter(100.0f);
+			break;
+		}
+
+		case TF_CLASS_MEDIC:
+		{
+			int iBaseMaxHealth = (pAttacker->GetMaxHealth() - pAttacker->GetRuneHealthBonus()) * 2,
+				iNewHealth = MIN(pAttacker->GetHealth() + iVictimHealth, iBaseMaxHealth),
+				iDeltaHealth = iNewHealth - pAttacker->GetHealth();
+
+			if (TFGameRules() && TFGameRules()->IsPowerupMode() && (iVictimRuneType == RUNE_REFLECT))
+			{
+				iDeltaHealth = 0;
+			}
+
+			if (iDeltaHealth > 0)
+			{
+				pAttacker->TakeHealth(iDeltaHealth, DMG_IGNORE_MAXHEALTH);
+				pAttacker->m_Shared.HealthKitPickupEffects(iDeltaHealth);
+			}
+			break;
+		}
+		case TF_CLASS_SNIPER:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_OFFENSEBUFF, 3.0f);
+			break;
+		}
+		case TF_CLASS_SPY:
+		{
+			pAttacker->m_Shared.AddCond(TF_COND_STEALTHED_USER_BUFF, 3.0f);
+			break;
+		}
+	}
+
+}
+#endif // GAME_DLL
 
 // -----------------------------------------------------------------------------
 // Purpose:
@@ -515,7 +522,7 @@ bool CTFKnife::CanPerformBackstabAgainstTarget( CTFPlayer *pTarget )
 		return true;
 
 	// Is target (bot) disabled via a sapper?
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pTarget->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+	if ( TFGameRules() /* && TFGameRules()->IsMannVsMachineMode() && pTarget->GetTeamNumber() == TF_TEAM_PVE_INVADERS */)
 	{
 		if ( pTarget->m_Shared.InCond( TF_COND_MVM_BOT_STUN_RADIOWAVE ) )
 			return true;

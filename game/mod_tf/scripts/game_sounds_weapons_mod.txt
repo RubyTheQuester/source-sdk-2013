@@ -59,10 +59,10 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/crowbar/melee_frying_pan_01.wav"
-		"wave"		"weapons/crowbar/melee_frying_pan_02.wav"
-		"wave"		"weapons/crowbar/melee_frying_pan_03.wav"
-		"wave"		"weapons/crowbar/melee_frying_pan_04.wav"
+		"wave"		"weapons/crowbar/melee_crowbar_01.wav"
+		"wave"		"weapons/crowbar/melee_crowbar_02.wav"
+		"wave"		"weapons/crowbar/melee_crowbar_03.wav"
+		"wave"		"weapons/crowbar/melee_crowbar_04.wav"
 	}
 }
 
@@ -73,9 +73,9 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/crowbar/pan_impact_world1.wav"
-		"wave"		"weapons/crowbar/pan_impact_world2.wav"
-		"wave"		"weapons/crowbar/pan_impact_world3.wav"
+		"wave"		"weapons/crowbar/crowbar_impact_world1.wav"
+		"wave"		"weapons/crowbar/crowbar_impact_world2.wav"
+		"wave"		"weapons/crowbar/crowbar_impact_world3.wav"
 	}
 }
 
@@ -105,3 +105,17 @@
 	}
 }
 
+// ------------------------------------------------------------------------------------ //
+// Golf Hit
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_GolfClub.PushImpact"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"rndwave"
+	{
+		"wave"		"weapons/golfclub/golfclub_hit.wav"
+	}
+}

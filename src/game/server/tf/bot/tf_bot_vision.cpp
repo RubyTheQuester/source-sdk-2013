@@ -366,6 +366,13 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 	{
 		CTFPlayer *player = static_cast< CTFPlayer * >( subject );
 
+		// A spy sapped me so I forgot who it was and can't notice anything
+		if ( me->m_Shared.InCond( TF_COND_SAPPED ) )
+		{
+			me->ForgetSpy( player );
+			return false;
+		}
+
 		if ( player->m_Shared.InCond( TF_COND_BURNING ) ||
 			 player->m_Shared.InCond( TF_COND_URINE ) ||
 			 player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
@@ -427,7 +434,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			if ( player->IsPlacingSapper() )
 			{
 				// spotted a spy!
-				me->RealizeSpy( player );
+				me->RealizeSpy(player);
 				return true;
 			}
 		}

@@ -1240,8 +1240,15 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 				CollectPlayers( &playerVector, pPlayer->GetOpposingTFTeam()->GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
 				FOR_EACH_VEC( playerVector, i )
 				{
-					//if ( !playerVector[i]->IsBot() )
-						//continue;
+					int iBuildOnPlayers = 0;
+					CTFPlayer* pTFBuilder = GetBuilder();
+					if (pTFBuilder)
+					{
+						CALL_ATTRIB_HOOK_INT_ON_OTHER(pTFBuilder, iBuildOnPlayers, sapper_on_players);
+					}
+
+					if ( !playerVector[i]->IsBot() && !iBuildOnPlayers)
+						continue;
 
 					if ( FindBuildPointOnPlayer( playerVector[i], pPlayer, flNearestPoint, vecNearestBuildPoint ) )
 					{

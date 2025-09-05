@@ -5,6 +5,8 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local prefab = key1.FindKey("1102")
 	local attrib = prefab.GetKey("attributes", true)
 	
+	prefab.SetString("usable_by_bots","0")
+	
 	// Add sapping players
 	local a1 = attrib.GetKey("sapper_on_players", true)
 	a1.SetString("attribute_class","sapper_on_players")
@@ -24,4 +26,9 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a4 = attrib.GetKey("sapper_recharge_time", true)
 	a4.SetString("attribute_class","sapper_recharge_time")
 	a4.SetInt("value", 15)
+	
+	// Add recharge time
+	//local a5 = attrib.GetKey("robo sapper", true)
+	//a5.SetString("attribute_class","robo_sapper")
+	//a5.SetInt("value", 1)
 })
