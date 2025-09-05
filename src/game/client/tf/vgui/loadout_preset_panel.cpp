@@ -154,7 +154,7 @@ void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 
 	if (m_pClassLoadoutPanel)
 	{
-		m_pClassLoadoutPanel->OnLoadoutUpdate();
+		m_pClassLoadoutPanel->UpdateModelPanels();
 	}
 }
 
@@ -236,28 +236,10 @@ void CLoadoutPresetPanel::UpdatePresetButtonStates()
 {
 	equipped_preset_t unEquippedPresetID = GetSelectedPresetID();
 
-	ISteamUser *pSteamUser = steamapicontext->SteamUser();
-	CSteamID localSteamID; 
+	if (!steamapicontext->SteamUser())
+		return;
 
-	if (pSteamUser)
-	{
-		localSteamID = pSteamUser->GetSteamID();
-	}
-	else
-	{
-		//can we use the local ID?
-		CSteamID localCheckSteamID = ClientSteamContext().GetLocalPlayerSteamID();
-		if (localCheckSteamID.IsValid())
-		{
-			localSteamID = localCheckSteamID;
-		}
-		else
-		{
-			//failure.
-			return;
-		}
-	}
-
+	CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 	CTFPlayerInventory *pInv = TFInventoryManager()->GetInventoryForPlayer(localSteamID);
 	if (pInv) {
 		unEquippedPresetID = pInv->GetActiveLocalPreset(m_iClass);

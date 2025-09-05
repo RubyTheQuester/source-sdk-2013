@@ -77,8 +77,6 @@ public:
 	virtual void OnNavigateTo( const char* panelName ) OVERRIDE;
 	virtual void OnNavigateFrom( const char* panelName ) OVERRIDE;
 
-	void OnLoadoutUpdate(void);
-
 	void		 SetClass( int iClass );
 	void		 SetTeam( int iTeam );
 

@@ -464,8 +464,6 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 
 	m_bInTauntLoadoutMode = false;
 
-	m_bLoadoutHasChanged = false;
-
 	g_pClassLoadoutPanel = this;
 
 	m_pItemOptionPanel = new CLoadoutItemOptionsPanel( this, "ItemOptionsPanel" );
@@ -779,12 +777,12 @@ void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 
 		m_bLoadoutHasChanged = false;
 
-		if ( tf_show_preset_explanation_in_class_loadout.GetBool() && m_pPresetsExplanationPopup )
+		if ( false )
 		{
 			m_pPresetsExplanationPopup->Popup();
 			tf_show_preset_explanation_in_class_loadout.SetValue( 0 );
 		}
-		else if ( tf_show_taunt_explanation_in_class_loadout.GetBool() && m_pTauntsExplanationPopup )
+		else if ( false )
 		{
 			m_pTauntsExplanationPopup->Popup();
 			tf_show_taunt_explanation_in_class_loadout.SetValue( 0 );
@@ -945,15 +943,6 @@ void CClassLoadoutPanel::UpdateModelPanels( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnLoadoutUpdate(void)
-{
-	m_bLoadoutHasChanged = true;
-	UpdateModelPanels();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
 	CItemModelPanel *pItemPanel = dynamic_cast < CItemModelPanel * > ( panel );
@@ -971,24 +960,6 @@ void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 	}
 }
 
-/*
-void CClassLoadoutPanel::OnItemPanelMouseRightRelease(vgui::Panel* panel)
-{
-	CItemModelPanel* pItemPanel = dynamic_cast <CItemModelPanel*> (panel);
-
-	if (pItemPanel && IsVisible())
-	{
-		for (int i = 0; i < m_pItemModelPanels.Count(); i++)
-		{
-			if (m_pItemModelPanels[i] == pItemPanel)
-			{
-				OnCommand(VarArgs("preview%d", i));
-				return;
-			}
-		}
-	}
-}
-*/
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -1001,15 +972,16 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 		// ulIndex implies do nothing (escape key)
 		if ( ulIndex != 0 )
 		{
+			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
 			C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
 			if (pPlayer)
 			{
 				pPlayer->Inventory()->InvalidateOffline();
 			}
 
-			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
+			m_bLoadoutHasChanged = true;
 
-			OnLoadoutUpdate();
+			UpdateModelPanels();
 
 			// Send the preset panel a msg so it can save the change
 			KeyValues *pLoadoutChangedMsg = new KeyValues( "LoadoutChanged" );
@@ -1059,16 +1031,12 @@ void CClassLoadoutPanel::OnCancelSelection( void )
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::RespawnPlayer()
 {
-#ifdef INVENTORY_VIA_WEBAPI
-	TFInventoryManager()->QueueGCInventoryChangeNotification();
-#else
-	if (tf_respawn_on_loadoutchanges.GetBool())
+	if ( tf_respawn_on_loadoutchanges.GetBool() )
 	{
 		// Tell the GC to tell server that we should respawn if we're in a respawn room
-		GCSDK::CGCMsg< MsgGCEmpty_t > msg(k_EMsgGCRespawnPostLoadoutChange);
-		GCClientSystem()->BSendMessage(msg);
+		GCSDK::CGCMsg< MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
+		GCClientSystem()->BSendMessage( msg );
 	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1281,26 +1249,6 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 		}
 
 		return;
-	}
-	else if (!V_strnicmp(command, "preview", 7))
-	{
-		const char* pszNum = command + 7;
-		if (pszNum && pszNum[0])
-		{
-			int iSlot = atoi(pszNum);
-			if (iSlot >= 0 && iSlot < CLASS_LOADOUT_POSITION_COUNT && m_iCurrentClassIndex != TF_CLASS_UNDEFINED)
-			{
-				if (m_iCurrentSlotIndex != iSlot)
-				{
-					m_iCurrentSlotIndex = iSlot;
-					//UpdateModelPanels();
-					if (m_pPlayerModelPanel)
-					{
-						m_pPlayerModelPanel->HoldItemInSlot(m_iCurrentSlotIndex);
-					}
-				}
-			}
-		}
 	}
 	else if ( !V_strnicmp( command, "options", 7 ) )
 	{

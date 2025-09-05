@@ -1213,8 +1213,12 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 			if ( !pTeam )
 				continue;
 
-			bool bPlayerSapper = TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
-				GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot();
+			bool bPlayerSapper = (
+				TFGameRules() 
+				&& TFGameRules()->GameModeUsesMiniBosses() 
+				&& GetType() == OBJ_ATTACHMENT_SAPPER 
+				&& !pPlayer->IsBot() );
+
 			if ( !bPlayerSapper )
 			{
 				CTFPlayer* pTFBuilder = GetBuilder();
@@ -1236,8 +1240,8 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 				CollectPlayers( &playerVector, pPlayer->GetOpposingTFTeam()->GetTeamNumber(), COLLECT_ONLY_LIVING_PLAYERS );
 				FOR_EACH_VEC( playerVector, i )
 				{
-					if ( !playerVector[i]->IsBot() )
-						continue;
+					//if ( !playerVector[i]->IsBot() )
+						//continue;
 
 					if ( FindBuildPointOnPlayer( playerVector[i], pPlayer, flNearestPoint, vecNearestBuildPoint ) )
 					{

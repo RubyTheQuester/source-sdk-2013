@@ -5060,7 +5060,7 @@ void CTFBot::GiveSavedLoadout(void)
 			if (pItemData && pItemData->IsValid())
 			{
 				const char* itemName = pItemData->GetItemDefinition()->GetItemDefinitionName();
-				DevMsg("GIVING %s TO BOT %s [%i]\n", itemName, GetPlayerName(), ownerSteamID.GetAccountID());
+				//DevMsg("GIVING %s TO BOT %s [%i]\n", itemName, GetPlayerName(), ownerSteamID.GetAccountID());
 				TFBotGenerateAndWearItem(this, pItemData);
 			}
 		}

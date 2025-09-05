@@ -22,8 +22,6 @@
 
 #define LOADOUT_SLOT_USE_BASE_ITEM		0
 
-#define TF_CUSTOM_ITEMS_ID_LIMIT 65536
-
 namespace vgui
 {
 	class Panel;
@@ -254,8 +252,6 @@ public:
 	CPlayerInventory	*GetLocalInventory( void ) { return &m_LocalInventory; }
 	CTFPlayerInventory	*GetLocalTFInventory( void );
 
-	void				QueueGCInventoryChangeNotification();
-
 	// Try and equip the specified item in the specified class's loadout slot
 	bool				EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID );
 
@@ -265,8 +261,6 @@ public:
 	virtual int			GetBackpackPositionFromBackend( uint32 iBackendPosition ) { return ExtractBackpackPositionFromBackend(iBackendPosition); }
 
 	virtual void		UpdateInventoryEquippedState(CPlayerInventory *pInventory, uint64 ulItemID, equipped_class_t unClass, equipped_slot_t unSlot);
-
-	float				m_flQueuedGCNotificationTime;
 
 private:
 	CTFPlayerInventory	m_LocalInventory;
