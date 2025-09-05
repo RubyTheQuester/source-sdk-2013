@@ -62,7 +62,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -107,7 +107,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -151,7 +151,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -217,9 +217,14 @@
 			
 			"customitem" "1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_classic_force/c_classic_force"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_classic_force/c_classic_force.mdl"
 			
 			"used_by_classes"
 			{
@@ -231,17 +236,17 @@
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.75"
+					"value"	"0.8"
 				}
 				"sniper zoom penalty"
 				{
 					"attribute_class"	"mult_zoom_fov"
-					"value"	"2"
+					"value"	"1.5"
 				}
 				"aiming movespeed increased"
 				{
 					"attribute_class"	"mult_player_aiming_movespeed"
-					"value"	"2"
+					"value"	"1.25"
 				}
 				"sniper crit no scope true"
 				{
@@ -264,7 +269,7 @@
 			"propername"		"0"
 			"customitem" 		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -314,7 +319,7 @@
 			"propername"		"0"
 			"customitem" 		"1"
 			
-			"item_quality"	"rarity3"
+			"item_quality"	"moditem_testing"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -348,6 +353,51 @@
 				//	"attribute_class"	"lunchbox_ammogain_scale"
 				//	"value"	"1"
 				//}
+			}
+		}
+		
+		"60008"
+		{
+			"name"	"Sniper Rifle Aim Charge"
+			"prefab" "weapon_sniperrifle"
+			
+			"item_name"	"#TF_AimCharge"
+			
+			"customitem" "1"
+			
+			"item_quality"	"moditem_testing"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				//"sniper beep"
+				//{
+				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+				//	"value"	"1"
+				//}
+				
+				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+					"value"	"6"
+				}
+				"sniper no headshot without full charge"
+				{
+					"attribute_class"	"sniper_no_headshot_without_full_charge"
+					"value" "1"
+				}
+				
+				"decapitate type"
+				{
+					"attribute_class"	"decapitate_type"
+					"value"	"1"
+				}
 			}
 		}
 	}

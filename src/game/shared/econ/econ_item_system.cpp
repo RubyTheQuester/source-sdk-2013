@@ -705,13 +705,15 @@ CON_COMMAND_F(econ_refreshschema_cl, "Refreshes the item schema on the client.",
 CON_COMMAND_F(econ_refreshschema_sv, "Refreshes the item schema on the server.", FCVAR_CHEAT)
 #endif
 {
-#ifdef CLIENT_DLL
+/*
+#ifdef 0
 	if ((engine->IsInGame() || engine->IsConnected()) && !engine->IsLevelMainMenuBackground())
 	{
 		Msg("This command is not available for use in-game.\n");
 		return;
 	}
 #endif
+*/
 
 	CEconItemSystem* pItemSystem = ItemSystem();
 

@@ -9,7 +9,7 @@
 			
 			"customitem" "1"
 
-			"item_quality"	"rarity4"
+			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -37,7 +37,7 @@
 
 			"customitem" "1"
 			
-			"item_quality"	"rarity4"
+			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -67,51 +67,6 @@
 		
 		"50002"
 		{
-			"name"	"Sniper Rifle Aim Charge"
-			"prefab" "weapon_sniperrifle"
-			
-			"item_name"	"#TF_AimCharge"
-			
-			"customitem" "1"
-			
-			"item_quality"	"rarity4"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
-			"used_by_classes"
-			{
-				"sniper"		"1"
-			}
-			
-			"attributes"
-			{
-				//"sniper beep"
-				//{
-				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
-				//	"value"	"1"
-				//}
-				
-				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-				{
-					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"6"
-				}
-				"sniper no headshot without full charge"
-				{
-					"attribute_class"	"sniper_no_headshot_without_full_charge"
-					"value" "1"
-				}
-				
-				"decapitate type"
-				{
-					"attribute_class"	"decapitate_type"
-					"value"	"1"
-				}
-			}
-		}
-		
-		"50003"
-		{
 			"name"				"Radial Buff Killing Gloves of Boxing"
 			"prefab"			"valve weapon_fists"
 			
@@ -134,7 +89,7 @@
 			"model_player"	"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves.mdl"
 			"attach_to_hands"	"1"
 			
-			"item_quality"	"rarity4"
+			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 		
@@ -176,7 +131,7 @@
 			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
 		}
 		
-		"50004"
+		"50003"
 		{
 			"name"				"Healer Sapper"
 			"prefab"			"valve weapon_sapper"
@@ -187,7 +142,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity4"
+			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
@@ -219,7 +174,7 @@
 			}
 		}
 		
-		"50005"
+		"50004"
 		{
 			"name"				"Speedpad PDA"
 			"prefab"			"weapon_pda"
@@ -228,7 +183,7 @@
 			"propername"		"1"
 			"customitem"		"1"
 			
-			"item_quality"	"rarity4"
+			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			

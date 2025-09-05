@@ -17,7 +17,15 @@
 	{
 		"moditem"
 		{
-			"value" 	"16"
+			"value" 	"17"
+		}
+		"moditem_testing"
+		{
+			"value" 	"18"
+		}
+		"moditem_oddity"
+		{
+			"value" 	"22"
 		}
 	}
 	

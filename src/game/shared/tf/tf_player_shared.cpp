@@ -10054,7 +10054,7 @@ void CTFPlayer::MaybeDrawRailgunBeam( IRecipientFilter *pFilter, CTFWeaponBase *
 			}
 			else if (pRifle->GetRifleType() != RIFLE_MACHINA)
 			{
-				pParticleSystemName = pWeapon->GetTeamNumber() == TF_TEAM_BLUE ? "bullet_tracer_sniper_blue" : "bullet_tracer_sniper_red";
+				pParticleSystemName = pWeapon->GetTeamNumber() == TF_TEAM_BLUE ? "sniper_tracer_full_blue" : "sniper_tracer_full_red";
 			}
 		}
 
