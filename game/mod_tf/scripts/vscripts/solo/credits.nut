@@ -1,12 +1,12 @@
 TFSOLO.CreditPool <- 0
 TFSOLO.CreditLines <- []
 TFSOLO.Rewards <- {
-	CampaignMain = 100
-	CampaignBonus = 150
-	CampaignReplay = 20
-	Victory = 50	
-	Point = 1
-	UniqueKill = 10
+	CampaignMain = 200
+	CampaignBonus = 300
+	CampaignReplay = 40
+	Victory = 100	
+	Point = 2
+	UniqueKill = 20
 	
 }
 
