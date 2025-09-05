@@ -746,6 +746,28 @@
 			"hidden"	"0"
 			"effect_type"	"negative"
 		}
+		
+		"4015"
+		{
+			"name"				"sword deflect"
+			"attribute_class"	"sword_deflect"
+			"description_string"	"#Attrib_Sword_Deflect"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"stored_as_integer"	"1"
+			"effect_type"	"positive"
+		}
+		
+		"4016"
+		{
+			"name"				"sword push"
+			"attribute_class"	"sword_push"
+			"description_string"	"#Attrib_Sword_Push"
+			"description_format"	"value_is_additive"
+			"hidden"			"0"
+			"stored_as_integer"	"1"
+			"effect_type"	"positive"
+		}
 	}
 	
 	"armory_data"

@@ -6,14 +6,20 @@
 
 #include "cbase.h"
 #include "tf_weapon_sword.h"
+#include "tf_fx_shared.h"
+#include "in_buttons.h"
+#include "tf_gamerules.h"
 
 // Client specific.
 #ifdef CLIENT_DLL
 #include "c_tf_player.h"
+#include "c_tf_gamestats.h"
 #include "econ_entity.h"
 // Server specific.
 #else
 #include "tf_player.h"
+#include "tf_gamestats.h"
+#include "ilagcompensationmanager.h"
 #endif
 
 //=============================================================================
@@ -511,9 +517,120 @@ void CTFSword::WeaponIdle( void )
 }
 
 #endif
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFKatana::Push(void)
+{
+	CTFPlayer* pOwner = ToTFPlayer(GetPlayerOwner());
+	if (!pOwner)
+		return;
 
+#ifdef GAME_DLL
+	lagcompensation->StartLagCompensation(pOwner, pOwner->GetCurrentCommand());
+
+	CUtlVector< CTFPlayer* > enemyVector;
+	CollectPlayers(&enemyVector, GetEnemyTeam(pOwner->GetTeamNumber()), COLLECT_ONLY_LIVING_PLAYERS);
+
+	for (int i = 0; i < enemyVector.Count(); ++i)
+	{
+		CTFPlayer* pVictim = enemyVector[i];
+
+		if (!pVictim->IsAlive())
+			continue;
+
+		if (pVictim == pOwner)
+			continue;
+
+		if (pVictim->InSameTeam(pOwner))
+			continue;
+
+		if (TFGameRules() && TFGameRules()->IsTruceActive() && pOwner->IsTruceValidForEnt())
+			continue;
+
+		if ((pOwner->GetAbsOrigin() - pVictim->GetAbsOrigin()).LengthSqr() > (128.f * 128.f))
+			continue;
+
+		if (!pOwner->FVisible(pVictim, MASK_SOLID))
+			continue;
+
+		Vector vecEyes = pOwner->EyePosition();
+		Vector vecForward;
+		AngleVectors(pOwner->EyeAngles(), &vecForward);
+		CTraceFilterSimple traceFilter(this, COLLISION_GROUP_NONE);
+		const Vector vHull = Vector(16.f, 16.f, 16.f);
+		trace_t trace;
+
+		float flDist = 50.f;
+		UTIL_TraceHull(vecEyes, vecEyes + vecForward * flDist, -vHull, vHull, MASK_SOLID, &traceFilter, &trace);
+
+		bool bDebug = false;
+		if (bDebug)
+		{
+			NDebugOverlay::SweptBox(vecEyes, vecEyes + vecForward * flDist, -vHull, vHull, pOwner->EyeAngles(), 255, 0, 0, 40, 5);
+		}
+
+		if (trace.m_pEnt && trace.m_pEnt == pVictim && trace.fraction < 1.f)
+		{
+			Vector vecToVictim = pVictim->GetAbsOrigin() - pOwner->GetAbsOrigin();
+			VectorNormalize(vecToVictim);
+			pVictim->ApplyGenericPushbackImpulse(vecToVictim * 400.f, pOwner);
+			float flDamage = 1.f;
+			CTakeDamageInfo info(pVictim, pOwner, this, flDamage, DMG_MELEE | DMG_NEVERGIB | DMG_CLUB, TF_DMG_CUSTOM_NONE);
+			CalculateMeleeDamageForce(&info, vecForward, GetAbsOrigin() + vecForward * flDist, 1.f / flDamage * 80.f);
+			pVictim->DispatchTraceAttack(info, vecForward, &trace);
+			ApplyMultiDamage();
+
+			CPVSFilter filter(vecToVictim);
+			EmitSound("Weapon_Hands.PushImpact");
+
+			// Make sure we get credit for the push if the target falls to its death
+			pVictim->m_AchievementData.AddDamagerToHistory(pOwner);
+
+			break;
+		}
+	}
+
+	pOwner->SpeakWeaponFire();
+	CTF_GameStats.Event_PlayerFiredWeapon(pOwner, IsCurrentAttackACrit());
+
+	lagcompensation->FinishLagCompensation(pOwner);
+#else
+	C_CTF_GameStats.Event_PlayerFiredWeapon(pOwner, IsCurrentAttackACrit());
+#endif
+}
+
+bool CTFKatana::CanUsePush()
+{
+	return (m_flPushTime > -1.f && gpGlobals->curtime > m_flPushTime);
+}
 
 //-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFKatana::Smack(void)
+{
+	BaseClass::Smack();
+
+#ifdef GAME_DLL
+	int iCanDeflect = 0;
+	CALL_ATTRIB_HOOK_INT(iCanDeflect, sword_deflect);
+
+	if (iCanDeflect == true)
+	{
+		DeflectProjectiles();
+	}
+
+	int iCanPush = 0;
+	CALL_ATTRIB_HOOK_INT(iCanPush, sword_deflect);
+
+	if (iCanPush == true)
+	{
+		Push();
+	}
+#endif
+}
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 // Purpose:

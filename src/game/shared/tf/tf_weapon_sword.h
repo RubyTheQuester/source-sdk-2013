@@ -90,7 +90,7 @@ public:
 	virtual int			GetSwordHealthMod();
 	virtual int			GetSwingRange( void );
 	virtual void		OnDecapitation( CTFPlayer *pDeadPlayer );
-	
+
 	virtual bool		Deploy( void );
 
 	float				GetProgress( void ) { return 0.f; }
@@ -130,6 +130,10 @@ public:
 	virtual float	GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage );
 	virtual void	OnDecapitation( CTFPlayer *pDeadPlayer );
 
+	virtual void		Smack(void);
+	bool				CanUsePush();
+	void				Push(void);
+
 	virtual int		GetActivityWeaponRole() const OVERRIDE;
 
 protected:
@@ -137,6 +141,7 @@ protected:
 	
 private:
 	CNetworkVar( bool, m_bIsBloody );
+	float				m_flPushTime;
 };
 
 
