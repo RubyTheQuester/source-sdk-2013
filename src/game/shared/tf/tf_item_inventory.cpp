@@ -262,6 +262,12 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	pItem->m_unLevel = 1;
 	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
 	pItemView->SetItemID(id);
+
+	if (pItemView->GetItemQuality() == AE_UNIQUE)
+	{
+		pItemView->SetItemQuality(AE_RARITY_DEFAULT);
+	}
+
 #if CLIENT_DLL
 	pItemView->SetNonSOEconItem(pItem);
 #endif
