@@ -128,7 +128,15 @@ CHudScopeCharge::~CHudScopeCharge( void )
 //-----------------------------------------------------------------------------
 void CHudScopeCharge::Init( void )
 {
-	if ( m_iChargeupTexture == -1 )
+	C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+
+	int iCanNotCharge = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iCanNotCharge, mod_sniper_no_charge);
+
+	if (iCanNotCharge)
+		return;
+
+	if (m_iChargeupTexture == -1)
 	{
 		m_iChargeupTexture = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile(m_iChargeupTexture, "HUD/sniperscope_numbers", true, false);
@@ -173,10 +181,16 @@ void CHudScopeCharge::Paint( void )
 
 	if ( !pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) )
 		return;
-
+	
 	// Make sure the current weapon is a sniper rifle
 	CTFSniperRifle *pWeapon = assert_cast<CTFSniperRifle*>(pPlayer->GetActiveTFWeapon());
 	if ( !pWeapon )
+		return;
+
+	int iCanNotCharge = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iCanNotCharge, mod_sniper_no_charge);
+
+	if (iCanNotCharge)
 		return;
 
 	if ( pWeapon->IsJarateRifle() && !m_bJarateMode )

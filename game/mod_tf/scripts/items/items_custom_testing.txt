@@ -230,6 +230,11 @@
 					"attribute_class"	"sniper_crit_no_scope"
 					"value" "1"
 				}
+				"sniper no charge real"
+				{
+					"attribute_class"	"mod_sniper_no_charge"
+					"value" "1"
+				}
 			}
 		}
 		

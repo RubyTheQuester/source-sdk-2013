@@ -807,6 +807,17 @@
 			"stored_as_integer"	"1"
 			"effect_type"	"positive"
 		}
+		
+		"4017"
+		{
+			"name"	"sniper no charge real"
+			"attribute_class"	"mod_sniper_no_charge"
+			"description_string"	"#Attrib_SniperNoChargeReal"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
 	}
 	
 	"armory_data"

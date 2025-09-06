@@ -371,8 +371,11 @@ void CTFSniperRifle::ItemPostFrame( void )
 	}
 	else if ( m_flNextSecondaryAttack <= gpGlobals->curtime )
 	{
+		int iCanNotCharge = 0;
+		CALL_ATTRIB_HOOK_INT(iCanNotCharge, mod_sniper_no_charge);
+
 		// Don't start charging in the time just after a shot before we unzoom to play rack anim.
-		if ( pPlayer->m_Shared.InCond( TF_COND_AIMING ) && !m_bRezoomAfterShot )
+		if ( pPlayer->m_Shared.InCond( TF_COND_AIMING ) && !m_bRezoomAfterShot && !iCanNotCharge)
 		{
 			float fSniperRifleChargePerSec = m_flChargePerSec;
 			ApplyChargeSpeedModifications( fSniperRifleChargePerSec );
@@ -1332,6 +1335,14 @@ bool CTFSniperRifle::ShouldEjectBrass()
 //-----------------------------------------------------------------------------
 float CTFSniperRifle::GetHUDDamagePerc( void )
 {
+	CTFPlayer* pPlayer = ToTFPlayer(GetOwner());
+
+	int iCanNotCharge = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iCanNotCharge, mod_sniper_no_charge);
+
+	if (iCanNotCharge)
+		return 1.0f;
+
 	return (m_flChargedDamage / TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX);
 }
 
@@ -1651,8 +1662,8 @@ int CSniperDot::DrawModel( int flags )
 		flStrength = pWeapon->GetHUDDamagePerc();
 
 		// FIXME: We should find out what's causing this and fix it.
-		AssertMsg1( flStrength >= ( 0.0f - FLT_EPSILON ) && flStrength <= ( 1.0f + FLT_EPSILON ), "GetHUDDamagePerc returned out of range value: %f", flStrength );
-		flStrength = clamp( flStrength, 0.1f, 1.0f );
+		AssertMsg1(flStrength >= (0.0f - FLT_EPSILON) && flStrength <= (1.0f + FLT_EPSILON), "GetHUDDamagePerc returned out of range value: %f", flStrength);
+		flStrength = clamp(flStrength, 0.1f, 1.0f);
 	}
 	else
 	{
