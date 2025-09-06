@@ -177,6 +177,7 @@ int g_nRarityScores[] =
 	13,		// AE_HAUNTED
 	12,		// AE_COLLECTORS
 	8,		// AE_PAINTKITWEAPON
+
 	7,		// AE_RARITY_DEFAULT,
 	6,		// AE_RARITY_COMMON,
 	5,		// AE_RARITY_UNCOMMON,

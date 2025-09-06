@@ -103,18 +103,12 @@
 		"34446"
 		{
 			"name"	"Foxhound"
-			"prefab" "weapon_revolver"
+			"prefab" "moditem_prefab weapon_revolver"
 			
-			"show_in_armory"	"1"
 			"propername"		"0"
-			"customitem" 		"1"
 			
 			"item_name"	"#TF_Weapon_Foxhound"
 			"item_description"	"#TF_Weapon_Foxhound_desc"
-			
-			"item_quality"	"moditem"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_foxhound/c_foxhound"
 			"model_player"	"models/weapons/c_models/c_foxhound/c_foxhound.mdl"
@@ -158,15 +152,9 @@
 		"34447"
 		{
 			"name"	"Deputy"
-			"prefab" "weapon_revolver_engineer"
+			"prefab" " moditem_prefab weapon_revolver_engineer"
 			
-			"show_in_armory"	"1"
 			"propername"		"0"
-			"customitem" 		"1"
-
-			"item_quality"	"moditem"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_name"		"#TF_Weapon_Deputy"
 			"item_description"	"#TF_Weapon_Deputy_desc"
@@ -205,15 +193,9 @@
 		"34448"
 		{
 			"name"	"Ballestar"
-			"prefab" "weapon_pistol"
-			
-			"show_in_armory"	"1"
+			"prefab" "moditem_prefab weapon_pistol"
+		
 			"propername"		"0"
-			"customitem" 		"1"
-			
-			"item_quality"	"moditem"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_name"	"#TF_Weapon_Ballestar"
 			"item_description"	"#TF_Weapon_Ballestar_desc"
@@ -266,16 +248,10 @@
 		"34449"
 		{
 			"name"	"Gentle End"
-			"prefab" "weapon_revolver"
+			"prefab" "moditem_prefab weapon_revolver"
 			
-			"show_in_armory"	"1"
 			"propername"		"0"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
+
 			"item_name"	"#TF_Weapon_GentleEnd"
 			"item_description"	"#TF_Weapon_GentleEnd_desc"
 			
@@ -317,20 +293,12 @@
 		{
 			"name"				"Crowbar"
 			"base_item_name"	"Crowbar"
-			"item_class"	"saxxy"
-			"prefab"		"weapon_melee_allclass"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
+			"item_class"		"saxxy"
+			"prefab"		"moditem_prefab weapon_melee_allclass"
 			
 			"item_name"	"#TF_Mod_Crowbar"
 			"item_type_name"	"#TF_Weapon_Crowbar"
 			"item_description"	"#TF_Weapon_Crowbar_Desc"
-			
-			"item_quality"	"moditem"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_logname"	"crowbar"
 			"item_iconname"	"crowbar"

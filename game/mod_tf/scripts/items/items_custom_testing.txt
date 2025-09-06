@@ -16,7 +16,7 @@
 			
 			"base_item_name"	"The Fatscout"
 			"show_in_armory"	"1"
-			"item_type_name" 	"#TF_Wearable_Outfit"
+			"item_type_name" 	"#TF_Wearable_Apparel"
 			
 			"item_slot"		"primary"
 			
@@ -25,7 +25,6 @@
 			
 			"propername"	"0"
 			
-			"act_as_wearable" "1"
 			"drop_type"	"none"
 			
 			"used_by_classes"
@@ -54,19 +53,13 @@
 		"60000"
 		{
 			"name"				"Resistant Vest"
-			"prefab"			"valve weapon_heavy_wearable"
+			"prefab"			"moditem_testing_prefab weapon_heavy_wearable"
 			
 			"equip_region"		"shirt"
-			
-			"show_in_armory"	"1"
 			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_name"			"#TF_Wearable_ResistantVest"
+			"item_type_name" 	"#TF_Wearable_Apparel"
 			"item_description"	"#TF_Wearable_ResistantVest_Desc"
 			
 			"image_inventory"	"backpack/player/items/heavy/Bullet_Resistant_Vest/Bullet_Resistant_Vest"
@@ -101,15 +94,9 @@
 		"60002"
 		{
 			"name"				"Syringe"
-			"prefab"			"valve weapon_bonesaw"
-			
-			"show_in_armory"	"1"
+			"prefab"			"moditem_testing_prefab weapon_bonesaw"
+
 			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_name"			"#TF_Weapon_Syringe"
 			"item_type_name"	"#TF_WeaponType_Syringe"
@@ -143,17 +130,11 @@
 		"60003"
 		{
 			"name"				"Mortar Launcher"
-			"prefab"			"valve weapon_rocketlauncher"
+			"prefab"			"moditem_testing_prefab weapon_rocketlauncher"
 			
 			"item_class"	"tf_weapon_rocketlauncher_mortar"
 			
-			"show_in_armory"	"1"
 			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"item_name"			"#TF_Weapon_MortarLauncher"
 			"item_description"	"#TF_Weapon_MortarLauncher_Desc"
@@ -211,15 +192,11 @@
 		"60005"
 		{
 			"name"	"Walkabout"
-			"prefab" "weapon_sniperrifle"
+			"prefab" "moditem_testing_prefab weapon_sniperrifle"
 			
 			"item_name"	"#TF_Walkabout"
 			
 			"customitem" "1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_classic_force/c_classic_force"
 			"image_inventory_size_w"		"128"
@@ -259,20 +236,14 @@
 		"60006"
 		{
 			"name"	"Tranquilizer"
-			"prefab" "weapon_revolver"
+			"prefab" "moditem_testing_prefab weapon_revolver"
 			"item_class"	"tf_weapon_tranq"
 			
 			"item_name"	"#TF_Weapon_Tranq"
 			"item_type_name"	"#TF_Weapon_Tranq"
 		
-			"show_in_armory"	"1"
 			"propername"		"0"
-			"customitem" 		"1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
+
 			"image_inventory"				"backpack\weapons\w_models\w_tranq"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
@@ -310,22 +281,18 @@
 		"60007"
 		{
 			"name"			"Ammopack Sandvich"
-			"prefab"		"weapon_sandvich"
+			"prefab"		"moditem_testing_prefab weapon_sandvich"
 			
 			"item_name"		"#TF_Unique_Lunchbox_Ammo"
 			"item_description"		"#TF_Lunchbox_Ammo_desc"
-			
-			"show_in_armory"	"1"
+
 			"propername"		"0"
-			"customitem" 		"1"
 			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
+			"image_inventory"				"backpack/weapons/c_models/c_pistol"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_pistol/c_pistol.mdl"
 			
-			"image_inventory"		"backpack/weapons/c_models/c_banana/c_banana"
-			"model_player"		"models/weapons/c_models/c_banana/c_banana.mdl"
-		
 			"static_attrs"
 			{
 				"item_meter_charge_rate"	"10"
@@ -359,15 +326,11 @@
 		"60008"
 		{
 			"name"	"Sniper Rifle Aim Charge"
-			"prefab" "weapon_sniperrifle"
+			"prefab" "moditem_testing_prefab weapon_sniperrifle"
 			
 			"item_name"	"#TF_AimCharge"
 			
 			"customitem" "1"
-			
-			"item_quality"	"moditem_testing"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
 			
 			"used_by_classes"
 			{

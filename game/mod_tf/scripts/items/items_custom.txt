@@ -29,6 +29,37 @@
 		}
 	}
 	
+	"prefabs"
+	{
+		"moditem_prefab"
+		{
+			"show_in_armory"	"1"
+			"customitem" 		"1"
+			
+			"item_quality"	"moditem"
+			"min_ilevel"	"5"
+			"max_ilevel"	"5"
+		}
+		
+		"moditem_testing_prefab"
+		{
+			"prefab" "moditem_prefab"
+			
+			"item_quality"	"moditem_testing"
+			"min_ilevel"	"50"
+			"max_ilevel"	"50"
+		}
+		
+		"moditem_oddity_prefab"
+		{
+			"prefab" "moditem_prefab"
+			
+			"item_quality"	"moditem_oddity"
+			"min_ilevel"	"100"
+			"max_ilevel"	"100"
+		}
+	}
+	
 	"attributes"
 	{
 		"3500"

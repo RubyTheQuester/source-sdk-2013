@@ -5,15 +5,11 @@
 		"50000"
 		{
 			"name"		"Dispenser Spy"
-			"prefab"	"weapon_knife"
-			
-			"customitem" "1"
-
-			"item_quality"	"moditem_oddity"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
+			"prefab"	"moditem_oddity_prefab weapon_knife"
 			
 			"item_name"		"#TF_Dispenser_Knife"
+			
+			"propername"		"1"
 			
 			"attributes"
 			{
@@ -33,15 +29,10 @@
 		"50001"
 		{
 			"name"	"Ammopack Flamethrower"
-			"prefab" "weapon_flamethrower"
-
-			"customitem" "1"
-			
-			"item_quality"	"moditem_oddity"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
+			"prefab" "moditem_oddity_prefab weapon_flamethrower"
 			
 			"item_name"	"#TF_FT_ReflectAmmo"
+			
 			"propername"	"1"
 			
 			"attributes"
@@ -67,87 +58,15 @@
 		
 		"50002"
 		{
-			"name"				"Radial Buff Killing Gloves of Boxing"
-			"prefab"			"valve weapon_fists"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_type_name"	"#TF_Weapon_Gloves"
-			"item_name"			"#TF_RadialBuff_Fists"
-			"item_description"	"#TF_RadialBuff_Fists_Desc"
-			
-			"item_slot"	"melee"
-			"item_logname"	"gloves"
-			"item_iconname"	"gloves"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_boxing_gloves/c_boxing_gloves"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"inspect_panel_dist" 				"53"					
-			"model_player"	"models/weapons/c_models/c_boxing_gloves/c_boxing_gloves.mdl"
-			"attach_to_hands"	"1"
-			
-			"item_quality"	"moditem_oddity"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-		
-			"static_attrs"
-			{
-				"min_viewmodel_offset"		"10 0 -10"
-			}
-			
-			"attributes"
-			{
-				"fists have radial buff"
-				{
-					"attribute_class"	"set_weapon_mode"
-					"value" "1"
-				}
-			}
-			"hide_bodygroups_deployed_only"	"1"
-			"visuals"
-			{
-				"sound_melee_miss"	"Weapon_BoxingGloves.Miss"
-				"sound_melee_hit"	"Weapon_BoxingGloves.HitFlesh"
-				"sound_melee_hit_world"	"Weapon_BoxingGloves.HitWorld"
-				"sound_burst"	"Weapon_BoxingGloves.MissCrit"
-				
-				"player_bodygroups"
-				{
-					"hands"		"1"
-				}
-				
-				"animation_replacement"
-				{
-					"ACT_MELEE_VM_INSPECT_START"	"ACT_MELEE_ALT1_VM_INSPECT_START"
-					"ACT_MELEE_VM_INSPECT_IDLE"		"ACT_MELEE_ALT1_VM_INSPECT_IDLE"
-					"ACT_MELEE_VM_INSPECT_END"		"ACT_MELEE_ALT1_VM_INSPECT_END"
-				}
-			}
-			
-			"mouse_pressed_sound" 	"ui/item_boxing_gloves_pickup.wav"
-			"drop_sound" 		"ui/item_boxing_gloves_drop.wav"
-		}
-		
-		"50003"
-		{
 			"name"				"Healer Sapper"
-			"prefab"			"valve weapon_sapper"
+			"prefab"			"moditem_oddity_prefab weapon_sapper"
 			
 			"item_class"	"tf_weapon_sapper"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem_oddity"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
-			
+
 			"item_name"			"#TF_Healer_Sapper"
 			"item_description"	"#TF_Healer_Sapper_Desc"
+			
+			"propername"		"1"
 			
 			"attributes"
 			{
@@ -174,26 +93,20 @@
 			}
 		}
 		
-		"50004"
+		"50003"
 		{
 			"name"				"Speedpad PDA"
-			"prefab"			"weapon_pda"
-			
-			"show_in_armory"	"1"
-			"propername"		"1"
-			"customitem"		"1"
-			
-			"item_quality"	"moditem_oddity"
-			"min_ilevel"	"1"
-			"max_ilevel"	"1"
+			"prefab"			"moditem_oddity_prefab weapon_pda"
 			
 			"item_name"			"#TF_Speedpad_PDA"
 			"item_description"	"#TF_Speedpad_PDA_Desc"
 			
-			"image_inventory"	"backpack/weapons/w_models/w_builder"
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/weapons/w_models/w_builder"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"	"models/weapons/c_models/c_builder/c_builder.mdl"
+			"model_player"					"models/weapons/c_models/c_builder/c_builder.mdl"
 			
 			"used_by_classes"
 			{

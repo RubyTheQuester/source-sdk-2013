@@ -3293,9 +3293,13 @@ void CEconItemDescription::Generate_FlagsAttributes( const CLocalizationProvider
 		{
 			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_LoanerItem", ATTRIB_COL_NEUTRAL ) );
 		}
-		else if (eOrigin == kEconItemOrigin_CustomItem)
+		else if ( eOrigin == kEconItemOrigin_CustomItem )
 		{
-			vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CustomItem", ATTRIB_COL_NEUTRAL));
+			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CustomItem", ATTRIB_COL_NEUTRAL ) );
+		}
+		else if ( eOrigin == kEconItemOrigin_ArmoryItem )
+		{
+			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_ArmoryItem", ATTRIB_COL_NEUTRAL ) );
 		}
 		else if ( eOrigin == kEconItemOrigin_Invalid )
 		{

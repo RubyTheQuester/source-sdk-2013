@@ -262,15 +262,22 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	pItem->m_unLevel = 1;
 	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
 	pItemView->SetItemID(id);
+	
+	CEconItemDefinition* pItemDef = ItemSystem()->GetStaticDataForItemByDefIndex(id);
 
-	if (pItemView->GetItemQuality() == AE_UNIQUE)
+	if ( !pItemDef->IsSoloItem() )
 	{
-		pItemView->SetItemQuality(AE_RARITY_DEFAULT);
+		pItemView->SetItemLevel(1);
+		pItemView->SetItemQuality(AE_NORMAL);
+#if CLIENT_DLL
+		pItemView->SetItemOriginOverride(kEconItemOrigin_ArmoryItem);
+#endif
 	}
 
 #if CLIENT_DLL
-	pItemView->SetNonSOEconItem(pItem);
+	//pItemView->SetNonSOEconItem(pItem); Is this even needed?
 #endif
+
 	m_pSoloLoadoutItems.AddToTail(pItemView);
 	return pItemView;
 }
