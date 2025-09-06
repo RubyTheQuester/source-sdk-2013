@@ -4664,4 +4664,11 @@ bool INextBotComponentScriptInstanceHelper::ToString( void *p, char *pBuf, int b
 }
 
 INextBotComponentScriptInstanceHelper g_NextBotComponentScriptInstanceHelper;
+
+CON_COMMAND_F(vscript_reload_sv, "Reload Server Vscript.", FCVAR_CHEAT)
+{
+	VScriptServerTerm();
+	VScriptServerInit();
+}
+
 #endif

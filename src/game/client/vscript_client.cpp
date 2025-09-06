@@ -2332,3 +2332,9 @@ void CVScriptGameSystem::Reload()
 	VScriptClientTerm();
 	VScriptClientInit();
 }
+
+CON_COMMAND_F(vscript_reload_cl, "Reload Client Vscript.", FCVAR_NONE)
+{
+	VScriptClientTerm();
+	VScriptClientInit();
+}
