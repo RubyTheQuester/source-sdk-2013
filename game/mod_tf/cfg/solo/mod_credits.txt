@@ -4,25 +4,135 @@ DESCRIPTION INFO_OPTIONS
 {
 	"category1"
 	{
-		"Team Fortress: Greatest Hits"
+		"Code"
 		{ CATEGORY }
 	}
 
 	"credit1_1"
 	{
-		"Mod by BetaM"
+		"Team Fortress: Greatest Hits, main codebase - BetaM"
 		"https://www.youtube.com/BetaM"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_1"
+	{
+		"TF Bot Randomized Weapons - Source SDK 2013 BDS Base"
+		"https://github.com/BitlDevelopmentStudios/source-sdk-2013-bds-base"
 		{ BOOL }
 		{ "1" }
 	}
 	
 	"category2"
 	{
-		"Campaign - Headhunt"
+		"Models, Textures, Sounds"
 		{ CATEGORY }
 	}
 	
 	"credit2_1"
+	{
+		"The Gentle End - Griefyn on gamebanana"
+		"https://gamebanana.com/members/1754744"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_2"
+	{
+		"Classic Force - Griefyn on gamebanana"
+		"https://gamebanana.com/members/1754744"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_3"
+	{
+		"Dome Breaker - Griefyn on gamebanana"
+		"https://gamebanana.com/members/1754744"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_4"
+	{
+		"The Ballestar - Haau on gamebanana"
+		"https://gamebanana.com/members/2028132"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_5"
+	{
+		"The Foxhound - catmilk_ on gamebanana"
+		"https://gamebanana.com/mods/200647"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_6"
+	{
+		"Tranquilizer Gun Port - EnergyPixel on gamebanana"
+		"https://gamebanana.com/mods/198287"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_7"
+	{
+		"Syringe Port - DatOneSpy on gamebanana"
+		"https://gamebanana.com/mods/197578"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_8"
+	{
+		"Classic Crowbar - SilentFox3 on gamebanana"
+		"https://gamebanana.com/mods/198771"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_9"
+	{
+		"Nine Iron Golf Club Sounds - SilentFox3 on gamebanana"
+		"https://gamebanana.com/mods/40389"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_10"
+	{
+		"Sniper Tracer Particles Material - Team Fortress 2 Classic Team"
+		"https://tf2classic.com/"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_11"
+	{
+		"Sniper Tracer Particles Material - Team Fortress 2 Classic Team"
+		"https://steamcommunity.com/sharedfiles/filedetails/?id=313583108"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_12"
+	{
+		"Enhanced Rockets - Various People"
+		"https://forums.alliedmods.net/showthread.php?t=294325"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"category3"
+	{
+		"Campaign - Headhunt"
+		{ CATEGORY }
+	}
+	
+	"credit3_1"
 	{
 		"Campaign by BetaM"
 		"https://www.youtube.com/BetaM"
@@ -30,7 +140,7 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit2_2"
+	"credit3_2"
 	{
 		"Ed voiced by bwab"
 		"https://steamcommunity.com/profiles/76561198871068952"
@@ -38,13 +148,13 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"category3"
+	"category4"
 	{
 		"Campaign - Bloodthirst"
 		{ CATEGORY }
 	}
 	
-	"credit3_1"
+	"credit4_1"
 	{
 		"Campaign by BetaM"
 		"https://www.youtube.com/BetaM"

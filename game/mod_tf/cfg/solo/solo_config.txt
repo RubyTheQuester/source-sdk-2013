@@ -1,8 +1,9 @@
-#base solo_live.txt
-#base solo_valve.txt
-#base solo_community.txt
-//#base solo_bundled.txt
-#base solo_workshop.txt
+#base maps/solo_live.txt
+#base maps/solo_valve.txt
+#base maps/solo_community.txt
+
+//#base maps/solo_bundled.txt
+//#base maps/solo_workshop.txt
 
 solo_config
 {
