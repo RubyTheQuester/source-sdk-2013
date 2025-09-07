@@ -38,6 +38,15 @@ const char *g_szQualityStrings[] =
 	"mythical",		// AE_RARITY_MYTHICAL,
 	"legendary",	// AE_RARITY_LEGENDARY,
 	"ancient",		// AE_RARITY_ANCIENT,
+
+	"armory",
+
+	"custom",
+	"CustomTesting",
+	"Customoddity",
+
+	"NonCustomRebalanced",
+	"NonCustomNew",
 };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szQualityStrings ) == AE_MAX_TYPES );
@@ -102,6 +111,15 @@ const char *g_szQualityColorStrings[] =
 	"ItemRarityMythical"	, // AE_RARITY_MYTHICAL,
 	"ItemRarityLegendary"	, // AE_RARITY_LEGENDARY,
 	"ItemRarityAncient"		, // AE_RARITY_ANCIENT,
+
+	"ItemArmory_1"	,
+
+	"ItemArmory_2"	,
+	"ItemArmory_3"	,
+	"ItemArmory_4"	,
+
+	"ItemArmory_5"	,
+	"ItemArmory_6"	,
 };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szQualityColorStrings ) == AE_MAX_TYPES );
@@ -142,14 +160,23 @@ const char *g_szQualityLocalizationStrings[] =
 	"#Rarity_Rare",
 	"#Rarity_Mythical",
 	"#Rarity_Legendary",
-	"#Rarity_Ancient"
+	"#Rarity_Ancient",
+
+	"#Armory",
+
+	"#Custom",
+	"#Custom_Testing",
+	"#Custom_Oddity",
+
+	"#NonCustom_Rebalanced",
+	"#NonCustom_New",
 };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szQualityLocalizationStrings ) == AE_MAX_TYPES );
 
 const char *EconQuality_GetLocalizationString( EEconItemQuality eQuality )
 {
-	if ( eQuality >= 0 && eQuality < AE_MAX_TYPES )
+	if ( eQuality >= 0 && (eQuality < AE_RARITY_ANCIENT) && eQuality < AE_MAX_TYPES )
 		return g_szQualityLocalizationStrings[ eQuality ];
 
 	return NULL;
@@ -184,6 +211,15 @@ int g_nRarityScores[] =
 	4,		// AE_RARITY_RARE,
 	3,		// AE_RARITY_MYTHICAL,
 	2,		// AE_RARITY_LEGENDARY,
+	1,		// AE_RARITY_ANCIENT,
+
+	1,		// AE_RARITY_ANCIENT,
+
+	1,		// AE_RARITY_ANCIENT,
+	1,		// AE_RARITY_ANCIENT,
+	1,		// AE_RARITY_ANCIENT,
+
+	1,		// AE_RARITY_ANCIENT,
 	1,		// AE_RARITY_ANCIENT,
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_nRarityScores ) == AE_MAX_TYPES );

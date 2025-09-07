@@ -841,7 +841,7 @@ static void GenerateLocalizedFullItemName
 		}
 	}
 
-	const char* pszQualityFormat = ( !attrQualityTextOverride.has_value() && ( unQuality == AE_NORMAL || unQuality == AE_UNIQUE || unQuality == AE_PAINTKITWEAPON || bIgnoreQuality ) && unQuality != AE_SELFMADE ) 
+	const char* pszQualityFormat = ( !attrQualityTextOverride.has_value() && ( unQuality == AE_NORMAL || unQuality == AE_ARMORY  || unQuality == AE_NONCUSTOM_REBALANCE || unQuality == AE_NONCUSTOM_NEW || unQuality == AE_UNIQUE || unQuality == AE_PAINTKITWEAPON || bIgnoreQuality ) && unQuality != AE_SELFMADE )
 								 ? "ItemNameNormalOrUniqueQualityFormat" 
 								 : "ItemNameQualityFormat";
 

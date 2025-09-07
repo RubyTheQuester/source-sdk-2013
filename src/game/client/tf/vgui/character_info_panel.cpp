@@ -81,7 +81,7 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 	SetMoveable( false );
 	SetSizeable( false );
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 	SetScheme(scheme);
 	SetProportional( true );
 

@@ -32,7 +32,7 @@ CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName
 	SetParent( parent );
 
 	// Use the client scheme
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 	SetScheme(scheme);
 	SetProportional( true );
 

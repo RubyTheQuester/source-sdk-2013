@@ -15,17 +15,31 @@
 {
 	"qualities"
 	{
+		"armory"
+		{
+			"value" 	"23"
+		}
+		
 		"moditem"
 		{
-			"value" 	"17"
+			"value" 	"24"
 		}
 		"moditem_testing"
 		{
-			"value" 	"18"
+			"value" 	"25"
 		}
 		"moditem_oddity"
 		{
-			"value" 	"22"
+			"value" 	"26"
+		}
+		
+		"moditem_rebalance"
+		{
+			"value" 	"27"
+		}
+		"moditem_newstats"
+		{
+			"value" 	"28"
 		}
 	}
 	

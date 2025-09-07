@@ -268,7 +268,10 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	if ( !pItemDef->IsSoloItem() )
 	{
 		pItemView->SetItemLevel(1);
-		pItemView->SetItemQuality(AE_NORMAL);
+		if (pItemView->GetItemQuality() < AE_RARITY_DEFAULT)
+		{
+			pItemView->SetItemQuality(AE_ARMORY);
+		}
 #if CLIENT_DLL
 		pItemView->SetItemOriginOverride(kEconItemOrigin_ArmoryItem);
 #endif

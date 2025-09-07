@@ -93,8 +93,16 @@ const char *g_szItemBorders[][5] =
 	{ "BackpackItemBorder_RarityMythical",	"BackpackItemMouseOverBorder_RarityMythical",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityMythical",	"BackpackItemGreyedOutSelectedBorder_RarityMythical"	}, // AE_RARITY_MYTHICAL,
 	{ "BackpackItemBorder_RarityLegendary",	"BackpackItemMouseOverBorder_RarityLegendary",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityLegendary",	"BackpackItemGreyedOutSelectedBorder_RarityLegendary"	}, // AE_RARITY_LEGENDARY,
 	{ "BackpackItemBorder_RarityAncient",	"BackpackItemMouseOverBorder_RarityAncient",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityAncient",	"BackpackItemGreyedOutSelectedBorder_RarityAncient"		}, // AE_RARITY_ANCIENT,
-};	
 
+	{ "BackpackItemBorder_Armory_1",	"BackpackItemMouseOverBorder_Armory_1",		"BackpackItemSelectedBorder_Armory_1",		"BackpackItemGreyedOutBorder_Armory_1",		"BackpackItemGreyedOutSelectedBorder_Armory_1"		},		// AE_ARMORY = 0
+
+	{ "BackpackItemBorder_Armory_2",	"BackpackItemMouseOverBorder_Armory_2",		"BackpackItemSelectedBorder_Armory_2",		"BackpackItemGreyedOutBorder_Armory_2",		"BackpackItemGreyedOutSelectedBorder_Armory_2"		},		// AE_CUSTOM = 0
+	{ "BackpackItemBorder_Armory_3",	"BackpackItemMouseOverBorder_Armory_3",		"BackpackItemSelectedBorder_Armory_3",		"BackpackItemGreyedOutBorder_Armory_3",		"BackpackItemGreyedOutSelectedBorder_Armory_3"		},		// AE_CUSTOM_TESTING = 0
+	{ "BackpackItemBorder_Armory_4",	"BackpackItemMouseOverBorder_Armory_4",		"BackpackItemSelectedBorder_Armory_4",		"BackpackItemGreyedOutBorder_Armory_4",		"BackpackItemGreyedOutSelectedBorder_Armory_4"		},		// AE_CUSTOM_ODDITY = 0
+
+	{ "BackpackItemBorder_Armory_5",	"BackpackItemMouseOverBorder_Armory_5",		"BackpackItemSelectedBorder_Armory_5",		"BackpackItemGreyedOutBorder_Armory_5",		"BackpackItemGreyedOutSelectedBorder_Armory_5"		},		// AE_NONCUSTOM_REBALANCE = 0
+	{ "BackpackItemBorder_Armory_6",	"BackpackItemMouseOverBorder_Armory_6",		"BackpackItemSelectedBorder_Armory_6",		"BackpackItemGreyedOutBorder_Armory_6",		"BackpackItemGreyedOutSelectedBorder_Armory_6"		},		// AE_NONCUSTOM_NEW = 0
+};	
 COMPILE_TIME_ASSERT( ARRAYSIZE(g_szItemBorders) == AE_MAX_TYPES );
 
 enum { kNoUserData = -1 };
