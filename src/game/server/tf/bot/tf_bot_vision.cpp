@@ -434,7 +434,7 @@ bool CTFBotVision::IsVisibleEntityNoticed( CBaseEntity *subject ) const
 			if ( player->IsPlacingSapper() )
 			{
 				// spotted a spy!
-				me->RealizeSpy(player);
+				me->RealizeSpy( player );
 				return true;
 			}
 		}

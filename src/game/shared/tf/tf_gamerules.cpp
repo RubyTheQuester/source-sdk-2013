@@ -21508,8 +21508,8 @@ const CUtlVector< CHandle< CBaseEntity > > &CTFGameRules::GetAmmoEntityVector( v
 //-----------------------------------------------------------------------------
 CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) const
 {
-	if ( TFGameRules()->GetGameType() != TF_GAMETYPE_ESCORT )
-		return NULL;
+	//if ( TFGameRules()->GetGameType() != TF_GAMETYPE_ESCORT )
+		//return NULL;
 
 	if ( pushingTeam == TF_TEAM_RED )
 	{
@@ -21531,8 +21531,16 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 			}
 			else
 			{
-				// normal Escort scenario, red always blocks
-				return NULL;
+				// find any cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled())
+					{
+						m_redPayloadToPush = watcher;
+						break;
+					}
+				}
 			}
 		}
 
@@ -21583,8 +21591,8 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToPush( int pushingTeam ) c
 //-----------------------------------------------------------------------------
 CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam ) const
 {
-	if ( TFGameRules()->GetGameType() != TF_GAMETYPE_ESCORT )
-		return NULL;
+	//if ( TFGameRules()->GetGameType() != TF_GAMETYPE_ESCORT )
+	//return NULL;
 
 	if ( blockingTeam == TF_TEAM_RED )
 	{
@@ -21606,13 +21614,13 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			}
 			else
 			{
-				// normal Escort scenario, red always blocks
-				CTeamTrainWatcher *watcher = NULL;
-				while( ( watcher = dynamic_cast< CTeamTrainWatcher * >( gEntList.FindEntityByClassname( watcher, "team_train_watcher" ) ) ) != NULL )
+				// find any cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ( ( watcher = dynamic_cast<CTeamTrainWatcher *>( gEntList.FindEntityByClassname(watcher, "team_train_watcher" ) ) ) != NULL )
 				{
 					if ( !watcher->IsDisabled() )
 					{
-						m_redPayloadToBlock = watcher;
+						m_bluePayloadToBlock = watcher;
 						break;
 					}
 				}
@@ -21641,8 +21649,16 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			}
 			else
 			{
-				// normal Payload, blue never blocks
-				return NULL;
+				// find any cart
+				CTeamTrainWatcher* watcher = NULL;
+				while ((watcher = dynamic_cast<CTeamTrainWatcher*>(gEntList.FindEntityByClassname(watcher, "team_train_watcher"))) != NULL)
+				{
+					if (!watcher->IsDisabled())
+					{
+						m_bluePayloadToBlock = watcher;
+						break;
+					}
+				}
 			}
 		}
 
