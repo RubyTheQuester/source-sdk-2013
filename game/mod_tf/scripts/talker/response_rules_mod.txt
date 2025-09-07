@@ -1,0 +1,10 @@
+criterion "WeaponIsRocketLauncherMortar" "playerweapon" "tf_weapon_rocketlauncher_mortar" "required"
+
+criterion "WeaponIsRevolverSecondary" "playerweapon" "tf_weapon_revolver_secondary" "required"
+criterion "WeaponIsRevolverEngineer" "playerweapon" "tf_weapon_revolver" "required"
+
+criterion "WeaponIsRevolver" "playerweapon" "tf_weapon_tranq" "required"
+// Test rules
+#include "talker/response_rules.txt"
+#include "talker/tf_mod.txt"
+

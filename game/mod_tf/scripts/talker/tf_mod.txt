@@ -1,0 +1,48 @@
+//============================================================================================================
+
+	rule SoldierTauntMortar
+	{
+		criteria ConceptPlayerTaunt IsSoldier WeaponIsRocketLauncherMortar
+		response SoldierTauntDirectHit
+	}
+	
+	rule HeavyTauntPlayerMeleeAllClass
+	{
+		criteria ConceptPlayerTaunt IsHeavy WeaponIsAxe
+		response HeavyTauntMelee
+	}
+	
+	response "EngineerTauntRevolverTrickshot"
+	{
+		scene "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"
+	}
+	
+	rule EngineerTauntPlayerRevolverSolo
+	{
+		criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverEngineer
+		response EngineerTauntRevolverTrickshot
+	}
+	
+	rule EngineerTauntPlayerRevolverSecondary
+	{
+		criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverSecondary
+		response EngineerTauntRevolverTrickshot
+	}
+	
+	Response "SpyTauntSpycicle"
+	{
+		scene "scenes/player/spy/low/taunt03_v1.vcd"
+		scene "scenes/player/spy/low/taunt03_v2.vcd"
+	}
+	
+	Rule SpyTauntSpycicle
+	{
+		criteria ConceptPlayerTaunt IsSpy WeaponIsSpycicle
+		response SpyTauntSpycicle
+	}
+	
+	rule SpyTauntPlayerPrimaryTranq
+	{
+		criteria ConceptPlayerTaunt IsSpy WeaponIsTranq
+		response SpyTauntPrimary
+	}

@@ -686,9 +686,6 @@ criterion "IsCompWinner"	"IsCompWinner" "1" required
 criterion "ConceptPlayerGameOverComp" "Concept" "TLK_GAME_OVER_COMP" required
 criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 
-criterion "WeaponIsRevolverSecondary" "playerweapon" "tf_weapon_revolver_secondary" "required"
-criterion "WeaponIsRevolverEngineer" "playerweapon" "tf_weapon_revolver" "required"
-
 // Test rules
 #include "talker/tf.txt"
 #include "talker/Heavy.txt"

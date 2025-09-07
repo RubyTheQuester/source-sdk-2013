@@ -2872,7 +2872,7 @@ public:
 
 	virtual const char *GetScriptFile( void ) 
 	{
-		return "scripts/talker/response_rules.txt";
+		return "scripts/talker/response_rules_mod.txt";
 	}
 
 	// CAutoServerSystem
