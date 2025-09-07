@@ -25,4 +25,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a3 = attrib.GetKey("is_a_sword", true)
 	a3.SetString("attribute_class","is_a_sword")
 	a3.SetInt("value", 72)
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })

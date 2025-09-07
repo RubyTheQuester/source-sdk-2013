@@ -12,4 +12,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("fire rate penalty", true)
 	a1.SetString("attribute_class","mult_postfiredelay")
 	a1.SetFloat("value",1.5)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

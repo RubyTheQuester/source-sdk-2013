@@ -26,4 +26,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//local a5 = attrib.GetKey("heal on kill", true)
 	//a5.SetString("attribute_class","heal_on_kill")
 	//a5.SetInt("value", 50)
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })

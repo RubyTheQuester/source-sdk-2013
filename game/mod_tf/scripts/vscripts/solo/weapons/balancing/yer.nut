@@ -7,4 +7,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	// Remove cloak drain penalty
 	attrib.RemoveSubKey("mult cloak meter consume rate")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

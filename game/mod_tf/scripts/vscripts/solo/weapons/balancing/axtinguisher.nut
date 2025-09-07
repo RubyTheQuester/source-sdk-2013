@@ -26,4 +26,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a3 = attrib.GetKey("no crit vs nonburning", true)
 	a3.SetString("attribute_class","set_nocrit_vs_nonburning")
 	a3.SetInt("value",1)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

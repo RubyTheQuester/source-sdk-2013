@@ -12,4 +12,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("move speed penalty", true)
 	a1.SetString("attribute_class","mult_player_movespeed")
 	a1.SetFloat("value", 0.85)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

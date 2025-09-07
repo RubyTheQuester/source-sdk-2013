@@ -31,4 +31,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//local a4 = attrib.GetKey("damage penalty", true)
 	//a4.SetString("attribute_class","mult_dmg")
 	//a4.SetFloat("value", 0.9)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

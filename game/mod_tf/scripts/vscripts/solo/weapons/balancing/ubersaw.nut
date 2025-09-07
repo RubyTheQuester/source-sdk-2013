@@ -9,4 +9,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("max health additive penalty", true)
 	a1.SetString("attribute_class","add_maxhealth")
 	a1.SetInt("value", -25)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

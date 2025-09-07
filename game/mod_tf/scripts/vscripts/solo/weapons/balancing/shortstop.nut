@@ -7,4 +7,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	// Remove 50% reload speed penalty
 	attrib.RemoveSubKey("reload time increased hidden")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

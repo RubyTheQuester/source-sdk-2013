@@ -46,4 +46,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//local a3 = attrib.GetKey("no hauling", true)
 	//a3.SetString("attribute_class","building_no_pickup")
 	//a3.SetInt("value", 1)
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })

@@ -7,4 +7,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	// Remove critical damage falloff
 	attrib.RemoveSubKey("crit_dmg_falloff")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

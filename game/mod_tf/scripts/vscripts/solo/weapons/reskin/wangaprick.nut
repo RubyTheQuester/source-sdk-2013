@@ -6,4 +6,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local attrib = prefab.FindKey("attributes")
 	
 	prefab.SetString("prefab","weapon_buff_knife")
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })

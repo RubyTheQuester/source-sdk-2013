@@ -8,4 +8,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	// Remove health drain
 	local statattr = prefab.GetKey("static_attrs", true)
 	statattr.RemoveSubKey("mod_maxhealth_drain_rate")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

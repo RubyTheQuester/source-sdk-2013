@@ -8,4 +8,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("last_shot_crits", true)
 	a1.SetString("attribute_class","last_shot_crits")
 	a1.SetInt("value", 1)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

@@ -8,4 +8,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	prefab.SetString("item_slot","equipment")
 	
 	prefab.SetString("usable_by_bots","0")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

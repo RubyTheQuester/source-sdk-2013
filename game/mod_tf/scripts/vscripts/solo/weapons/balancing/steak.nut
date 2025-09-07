@@ -7,4 +7,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	// Remove +20% damage vulnerability
 	attrib.RemoveSubKey("energy buff dmg taken multiplier")
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

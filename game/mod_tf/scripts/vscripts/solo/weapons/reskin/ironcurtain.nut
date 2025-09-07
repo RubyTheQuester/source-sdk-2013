@@ -25,4 +25,5 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a4.SetString("attribute_class","mult_dmg")
 	a4.SetFloat("value", 0.8)
 	
+	prefab.SetString("item_quality","moditem_newstats")
 })

@@ -9,4 +9,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a1 = attrib.GetKey("energy weapon penetration", true)
 	a1.SetString("attribute_class","energy_weapon_penetration")
 	a1.SetInt("value", 1)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

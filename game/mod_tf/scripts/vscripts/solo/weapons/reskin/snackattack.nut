@@ -31,4 +31,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//local a5 = attrib.GetKey("robo sapper", true)
 	//a5.SetString("attribute_class","robo_sapper")
 	//a5.SetInt("value", 1)
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })

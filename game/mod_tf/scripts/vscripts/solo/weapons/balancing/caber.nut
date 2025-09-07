@@ -9,8 +9,5 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	attrib.RemoveSubKey("fire rate penalty")
 	attrib.RemoveSubKey("single wep deploy time increased")
 	
-	// Add 45% damage penalty
-	//local a1 = attrib.GetKey("damage penalty" true)
-	//a1.SetString("attribute_class","mult_dmg")
-	//a1.SetFloat("value", 0.55)
+	prefab.SetString("item_quality","moditem_rebalance")
 })

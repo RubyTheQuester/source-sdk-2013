@@ -11,4 +11,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	// Reduce boost loss on air jumps from 75% to 10%
 	local a1 = attrib.FindKey("hype resets on jump")
 	a1.SetInt("value", 10)
+	
+	prefab.SetString("item_quality","moditem_rebalance")
 })

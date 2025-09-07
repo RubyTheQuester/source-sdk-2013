@@ -20,4 +20,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local a3 = attrib.GetKey("invis_reset_meter_holster", true)
 	a3.SetString("attribute_class","invis_reset_meter_holster")
 	a3.SetInt("value", 1)
+	
+	prefab.SetString("item_quality","moditem_newstats")
 })
