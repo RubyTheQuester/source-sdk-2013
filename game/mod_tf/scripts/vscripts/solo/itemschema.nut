@@ -10,6 +10,7 @@ IncludeScript("solo/weapons/balancing/bfb.nut")
 
 //-Soldier-//
 IncludeScript("solo/weapons/balancing/libertylauncher.nut")
+IncludeScript("solo/weapons/balancing/bison.nut")
 
 //-Pyro-//
 IncludeScript("solo/weapons/balancing/gaspasser.nut")

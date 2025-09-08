@@ -42,6 +42,8 @@ const char* g_pszBisonTrailParticle				( "drg_bison_projectile" );
 const char* g_pszBisonTrailParticleCrit			( "drg_bison_projectile_crit" );
 												  
 const char* g_pszEnergyProjectileImpactParticle	( "drg_pomson_impact" );
+
+#define ENERGY_RING_SPEED					1200.f
 //=============================================================================
 //
 // TF Energy Ring Projectile functions
@@ -64,7 +66,7 @@ void PrecacheRing(void *pUser)
 PRECACHE_REGISTER_FN(PrecacheRing);
 
 #ifdef GAME_DLL
-ConVar tf_bison_tick_time( "tf_bison_tick_time", "0.025", FCVAR_CHEAT );
+ConVar tf_bison_tick_time( "tf_bison_tick_time", "0.001", FCVAR_CHEAT );
 #endif
 
 
@@ -98,7 +100,10 @@ float CTFProjectile_EnergyRing::GetGravity( void )
 
 float CTFProjectile_EnergyRing::GetInitialVelocity( void )
 {
-	return 1200.f; 
+	float flLaunchSpeed = ENERGY_RING_SPEED;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(m_hLauncher, flLaunchSpeed, mult_projectile_speed);
+
+	return flLaunchSpeed;
 }
 
 //-----------------------------------------------------------------------------
@@ -148,19 +153,20 @@ CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pL
 	// for the Pomson and Righteous Bison
 	CTFRaygun* pRaygun = assert_cast< CTFRaygun* >( pLauncher );
 
+	float flLaunchSpeed = ENERGY_RING_SPEED;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pLauncher, flLaunchSpeed, mult_projectile_speed);
+
 	if ( pRaygun && !pRaygun->UseNewProjectileCode() )
 	{
 		if ( pRaygun->GetWeaponID() == TF_WEAPON_DRG_POMSON )
 		{
 			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner, 
-																					   1200.f, g_sModelIndexRing, 
-																					   ENERGY_RING_DISPATCH_EFFECT_POMSON, pScorer, bCritical, vColor1, vColor2 ) );
+				flLaunchSpeed, g_sModelIndexRing, ENERGY_RING_DISPATCH_EFFECT_POMSON, pScorer, bCritical, vColor1, vColor2 ) );
 		}
 		else
 		{
 			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner, 
-																					   1200.f, g_sModelIndexRing, 
-																					   ENERGY_RING_DISPATCH_EFFECT, pScorer, bCritical, vColor1, vColor2 ) );
+				flLaunchSpeed, g_sModelIndexRing, ENERGY_RING_DISPATCH_EFFECT, pScorer, bCritical, vColor1, vColor2 ) );
 		}
 
 		if ( pRing )
