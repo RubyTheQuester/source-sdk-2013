@@ -1501,7 +1501,7 @@ void CEconItemDetailsRichText::DataText_AppendSetData( const CEconItemDefinition
 			if ( pItemSet->m_iAttributes.Count() > 0 )
 			{
 				// Used for grabbing display colors.
-				vgui::HScheme hScheme = vgui::scheme()->GetScheme( "ClientScheme" );
+				vgui::HScheme hScheme = vgui::scheme()->GetScheme( "ClientScheme_Mod" );
 				vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( hScheme );
 
 				Assert( pScheme );
@@ -2301,7 +2301,7 @@ CGenericWaitingDialog::CGenericWaitingDialog( vgui::Panel *pParent )
 {
 	if ( pParent == NULL )
 	{
-		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 		SetScheme(scheme);
 		SetProportional( true );
 	}

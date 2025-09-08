@@ -113,7 +113,7 @@ CTFGiveawayItemPanel::CTFGiveawayItemPanel( IViewPort *pViewPort ) : Frame( NULL
 	m_pViewPort = pViewPort;
 
 	// load the new scheme early!!
-	SetScheme( "ClientScheme" );
+	SetScheme( "ClientScheme_Mod" );
 
 	SetTitleBarVisible( false );
 	SetMinimizeButtonVisible( false );

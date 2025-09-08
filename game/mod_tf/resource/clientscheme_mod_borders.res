@@ -9,58 +9,49 @@ Scheme
 		{
 			"bordertype"			"scalable_image"
 			"backgroundtype"		"2"
+			"color"					"ItemArmory_1"
 			
-			"image"					"backpack_rect"
+			"image"					"backpack_rect_color"
 			"src_corner_height"		"24"				// pixels inside the image
 			"src_corner_width"		"24"
-			"draw_corner_width"		"11"				// screen size of the corners ( and sides ), proportional
-			"draw_corner_height" 	"11"	
+			"draw_corner_width"		"5"				// screen size of the corners ( and sides ), proportional
+			"draw_corner_height" 	"5"	
 		}
 		BackpackItemMouseOverBorder_Armory_1
 		{
 			"bordertype"			"scalable_image"
 			"backgroundtype"		"2"
+			"color"					"ItemArmory_1"
 			
-			"image"					"backpack_rect_mouseover"
+			"image"					"backpack_rect_mouseover_color"
 			"src_corner_height"		"24"				// pixels inside the image
 			"src_corner_width"		"24"
-			"draw_corner_width"		"11"				// screen size of the corners ( and sides ), proportional
-			"draw_corner_height" 	"11"	
-		}
-		BackpackItemSelectedBorder_Armory_1
-		{
-			"bordertype"			"scalable_image"
-			"backgroundtype"		"2"
-			
-			"image"					"backpack_rect_selected"
-			"src_corner_height"		"24"				// pixels inside the image
-			"src_corner_width"		"24"
-			"draw_corner_width"		"11"				// screen size of the corners ( and sides ), proportional
-			"draw_corner_height" 	"11"	
+			"draw_corner_width"		"5"				// screen size of the corners ( and sides ), proportional
+			"draw_corner_height" 	"5"	
 		}
 		BackpackItemGreyedOutBorder_Armory_1
 		{
 			"bordertype"			"scalable_image"
 			"backgroundtype"		"2"
-			"color"					"Black"
+			"color"					"ItemArmory_1_GreyedOut"
 			
 			"image"					"backpack_rect_color"
 			"src_corner_height"		"24"				// pixels inside the image
 			"src_corner_width"		"24"
-			"draw_corner_width"		"11"				// screen size of the corners ( and sides ), proportional
-			"draw_corner_height" 	"11"	
+			"draw_corner_width"		"5"				// screen size of the corners ( and sides ), proportional
+			"draw_corner_height" 	"5"	
 		}
 		BackpackItemGreyedOutSelectedBorder_Armory_1
 		{
 			"bordertype"			"scalable_image"
 			"backgroundtype"		"2"
-			"color"					"Black"
+			"color"					"ItemArmory_1_GreyedOut"
 			
-			"image"					"backpack_rect_selected"
+			"image"					"backpack_rect_mouseover_color"
 			"src_corner_height"		"24"				// pixels inside the image
 			"src_corner_width"		"24"
-			"draw_corner_width"		"11"				// screen size of the corners ( and sides ), proportional
-			"draw_corner_height" 	"11"	
+			"draw_corner_width"		"5"				// screen size of the corners ( and sides ), proportional
+			"draw_corner_height" 	"5"	
 		}
 		//*********************************************
 		BackpackItemBorder_Armory_2

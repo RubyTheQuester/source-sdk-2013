@@ -1104,7 +1104,7 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 				iRarity = nRarity + AE_RARITY_DEFAULT;
 			}
 
-			if ( (iRarity > 0) || (iRarity == 23) )
+			if ( (iRarity > 0) && (iRarity != AE_ARMORY) )
 			{
 				if ( bMouseOver || pItemPanel->IsSelected() )
 				{
@@ -1118,7 +1118,7 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 		}
 		
 		
-		if ( iRarity == 0 )
+		if ( iRarity == 0 || iRarity == AE_ARMORY )
 		{
 			if ( bMouseOver || pItemPanel->IsSelected() )
 			{

@@ -281,7 +281,7 @@ void CTFGenericConfirmDialog::CommonInit( const char *pTitle, const char *pConfi
 {
 	if ( pParent == NULL )
 	{
-		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 		SetScheme(scheme);
 		SetProportional( true );
 	}

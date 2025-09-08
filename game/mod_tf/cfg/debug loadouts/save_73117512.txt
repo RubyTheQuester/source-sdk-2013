@@ -2,7 +2,7 @@
 {
 	"Generic"
 	{
-		"BaseGameWeapons"		"0"
+		"BaseGameWeapons"		"1"
 		"BaseGameTaunts"		"0"
 		"BaseGameCosmetics"		"0"
 	}

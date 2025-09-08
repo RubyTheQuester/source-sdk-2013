@@ -229,7 +229,7 @@ CStorePanel::CStorePanel( Panel *parent ) : PropertyDialog(parent, "store_panel"
 	SetMoveable( false );
 	SetSizeable( false );
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 	SetScheme(scheme);
 	SetProportional( true );
 
@@ -1914,7 +1914,7 @@ static vgui::DHANDLE<CStoreStatusDialog> g_StoreStatusPanel;
 //-----------------------------------------------------------------------------
 CStoreStatusDialog::CStoreStatusDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "StoreStatusDialog" )
 {
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme_Mod.res", "ClientScheme");
 	SetScheme(scheme);
 	SetProportional( true );
 	m_bNotifyOnCancel = false;
