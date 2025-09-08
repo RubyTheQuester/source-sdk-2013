@@ -330,7 +330,6 @@ void CTFStickBomb::Detonate(bool bTaunting)
 			pPlayer->m_Shared.SetItemChargeMeter(LOADOUT_POSITION_MELEE, 0.f);
 			pPlayer->RemoveAmmo(1, TF_AMMO_GRENADES2);
 			StartEffectBarRegen();
-			//StartEffectBarRegen();
 		}
 #endif
 	}
