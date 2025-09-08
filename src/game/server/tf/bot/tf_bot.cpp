@@ -75,7 +75,16 @@ ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellboo
 ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
 
 ConVar tf_bot_give_items("tf_bot_give_items", "1", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_nosteamcheck("tf_bot_give_items_nosteamcheck", "0", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_australium_rarity("tf_bot_give_items_australium_rarity", "3", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_killstreak("tf_bot_give_items_killstreak", "1", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_killstreak_rarity("tf_bot_give_items_killstreak_rarity", "6", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_killstreak_professional_rarity("tf_bot_give_items_killstreak_professional_rarity", "4", FCVAR_GAMEDLL);
+
+ConVar tf_bot_give_items_nocosmetics("tf_bot_give_items_nocosmetics", "0", FCVAR_GAMEDLL);
+
 ConVar tf_bot_give_items_skip_reskins("tf_bot_give_items_skip_reskins", "0", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items_skip_australiums("tf_bot_give_items_skip_australiums", "0", FCVAR_GAMEDLL);
 
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
@@ -5102,16 +5111,31 @@ void CTFBot::SelectRandomizedLoadout(void)
 
 		if (pItem)
 		{
-			vecSavedRandomLoadout.AddToTail(pItem);
+			BotLoadoutItem_t weapon;
+			weapon.pItemDef = pItem;
+			weapon.bIsAustralium = false;
+			weapon.bHasCheckedIfAustralium = false;
+			weapon.bIsKillstreak = false;
+			weapon.bHasCheckedIfKillstreak = false;
+			weapon.flKillstreakTier = 0;
+			weapon.flKillstreakSheen = 0;
+			weapon.flKillstreakEffect = 0;
+			weapon.flPaintkitQuality = 0;
+			vecSavedRandomLoadout.AddToTail(weapon);
 		}
 	}
 
 	int iChosenSlotVal = RandomInt(0, 2);
 	int iCosmeticSlot = LOADOUT_POSITION_HEAD;
 
-	switch (iChosenSlotVal)
+	if (tf_bot_give_items_nocosmetics.GetBool())
 	{
-		// 0 is default values above.
+		int iChosenSlotVal = RandomInt(0, 2);
+		int iCosmeticSlot = LOADOUT_POSITION_HEAD;
+
+		switch (iChosenSlotVal)
+		{
+			// 0 is default values above.
 		case 1:
 		{
 			iCosmeticSlot = LOADOUT_POSITION_MISC;
@@ -5131,14 +5155,25 @@ void CTFBot::SelectRandomizedLoadout(void)
 			DevMsg("BOT %s CHOSE SLOT LOADOUT_POSITION_HEAD\n", GetPlayerName());
 			break;
 		}
-	}
+		}
 
-	// then cosmetics
-	const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iCosmeticSlot);
+		// then cosmetics
+		const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iCosmeticSlot);
 
-	if (pItem)
-	{
-		vecSavedRandomLoadout.AddToTail(pItem);
+		if (pItem)
+		{
+			BotLoadoutItem_t cosmetic;
+			cosmetic.pItemDef = pItem;
+			cosmetic.bIsAustralium = false;
+			cosmetic.bHasCheckedIfAustralium = true;
+			cosmetic.bIsKillstreak = false;
+			cosmetic.bHasCheckedIfKillstreak = true;
+			cosmetic.flKillstreakTier = 0;
+			cosmetic.flKillstreakSheen = 0;
+			cosmetic.flKillstreakEffect = 0;
+			cosmetic.flPaintkitQuality = 0;
+			vecSavedRandomLoadout.AddToTail(cosmetic);
+		}
 	}
 }
 
@@ -5179,6 +5214,260 @@ void TFBotGenerateAndWearItem(CTFBot* pBot, CEconItemView* pItem)
 	}
 }
 
+bool TFBotSetPaintkitQuality(CTFBot* pBot, CEconItemView* pItem, int iSlot)
+{
+	CSteamID ownerSteamID;
+	pBot->GetSteamID(&ownerSteamID);
+	const char* itemName = pItem->GetItemDefinition()->GetItemDefinitionName();
+
+	if (IsValidPickupWeaponSlot(iSlot))
+	{
+		const CUtlVector<static_attrib_t>& vecStaticAttribs = pItem->GetStaticData()->GetStaticAttributes();
+
+		FOR_EACH_VEC(vecStaticAttribs, i)
+		{
+			const static_attrib_t& staticAttrib = vecStaticAttribs[i];
+
+			const CEconItemAttributeDefinition* pAttrDefPaint = GetItemSchema()->GetAttributeDefinitionByName("texture_wear_default");
+			if (!pAttrDefPaint)
+				return false;
+
+			if (staticAttrib.iDefIndex == pAttrDefPaint->GetDefinitionIndex())
+			{
+				//killstreaks can be applied to any weapon, so no checking here.
+				CAttributeList* pAttrList = pItem->GetAttributeList();
+				Assert(pAttrList);
+
+				if (pBot->vecSavedRandomLoadout[iSlot].flPaintkitQuality <= 0)
+				{
+					//hacky ass way of adding qualities...
+					CUtlVector<float> vecWear;
+					vecWear.AddToTail(0.2f);
+					vecWear.AddToTail(0.4f);
+					vecWear.AddToTail(0.6f);
+					vecWear.AddToTail(0.8f);
+					vecWear.AddToTail(1.0f);
+
+					float flQuality = vecWear.Random();
+
+					pBot->vecSavedRandomLoadout[iSlot].flPaintkitQuality = flQuality;
+				}
+				
+				pAttrList->SetRuntimeAttributeValue(pAttrDefPaint, pBot->vecSavedRandomLoadout[iSlot].flPaintkitQuality);
+				DevMsg("%s's [%i] %s Set Painted Weapon quality to %f\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName, pBot->vecSavedRandomLoadout[iSlot].flPaintkitQuality);
+
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool TFBotSetItemAsAustralium(CTFBot* pBot, CEconItemView* pItem)
+{
+	//check if we're in a weapon slot. if we are, determine if we should spawn this as a fake AUSTRALIUM.
+	int iClass = pBot->GetPlayerClass()->GetClassIndex();
+	CSteamID ownerSteamID;
+	pBot->GetSteamID(&ownerSteamID);
+	const char* itemName = pItem->GetItemDefinition()->GetItemDefinitionName();
+
+	if (IsValidPickupWeaponSlot(pItem->GetStaticData()->GetLoadoutSlot(iClass)))
+	{
+		const CUtlVector<static_attrib_t>& vecStaticAttribs = pItem->GetStaticData()->GetStaticAttributes();
+
+		FOR_EACH_VEC(vecStaticAttribs, i)
+		{
+			const static_attrib_t& staticAttrib = vecStaticAttribs[i];
+
+			const CEconItemAttributeDefinition* pAttrDefLimited = GetItemSchema()->GetAttributeDefinitionByName("limited quantity item");
+			if (!pAttrDefLimited)
+				return false;
+
+			if (staticAttrib.iDefIndex == pAttrDefLimited->GetDefinitionIndex())
+			{
+				//festives aren't australiums in most cases.
+				DevMsg("%s's [%i] %s Australium spawn failed: Festive Weapon\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				return false;
+			}
+
+			const CEconItemAttributeDefinition* pAttrDefPaint = GetItemSchema()->GetAttributeDefinitionByName("texture_wear_default");
+			if (!pAttrDefPaint)
+				return false;
+
+			if (staticAttrib.iDefIndex == pAttrDefPaint->GetDefinitionIndex())
+			{
+				//painted weapons aren't australiums.
+				DevMsg("%s's [%i] %s Australium spawn failed: Painted Weapon\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				return false;
+			}
+
+			const CEconItemAttributeDefinition* pAttrDef = GetItemSchema()->GetAttributeDefinitionByName("BOT ONLY uses australium variant");
+			if (!pAttrDef)
+				return false;
+
+			if (staticAttrib.iDefIndex == pAttrDef->GetDefinitionIndex())
+			{
+				//SUCCESS!!
+				//reinit any base item as an Upgradable item.
+				//fake the strange quality since we can't do functional strange counters on bots
+				if (pItem->GetItemDefinition()->IsBaseItem())
+				{
+					CEconItemView* pItemNew = new CEconItemView();
+					CFmtStr fmtStrCustomizedDefName("Upgradeable %s", pItem->GetItemDefinition()->GetDefinitionName());
+					CEconItemDefinition* pItemDef = GetItemSchema()->GetItemDefinitionByName(fmtStrCustomizedDefName.Access());
+					if (pItemDef)
+					{
+						pItemNew->Init(pItemDef->GetDefinitionIndex(), AE_STRANGE, AE_USE_SCRIPT_VALUE, true);
+					}
+
+					pItem = pItemNew;
+				}
+				else
+				{
+					pItem->SetItemQuality(AE_STRANGE);
+				}
+
+				//WE ARE AN AUSTRALIUM!
+
+				DevMsg("%s's [%i] %s spawned as an Australium!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+
+				CAttributeList* pAttrList = pItem->GetAttributeList();
+				Assert(pAttrList);
+
+				const CEconItemAttributeDefinition* pAttrDefAustralium = GetItemSchema()->GetAttributeDefinitionByName("is australium item");
+				if (!pAttrDefAustralium)
+					return false;
+
+				pAttrList->SetRuntimeAttributeValue(pAttrDefAustralium, 1.0f);
+
+				const CEconItemAttributeDefinition* pAttrDefStyleOverride = GetItemSchema()->GetAttributeDefinitionByName("item style override");
+				if (!pAttrDefStyleOverride)
+					return false;
+
+				pAttrList->SetRuntimeAttributeValue(pAttrDefStyleOverride, 1.0f);
+
+				//now find them. should return true at this point
+				return (::FindAttribute(pAttrList, pAttrDefAustralium) && ::FindAttribute(pAttrList, pAttrDefStyleOverride));
+			}
+		}
+	}
+
+	DevMsg("%s's [%i] %s Australium spawn failed: No Australium Variant\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+	return false;
+}
+
+bool TFBotSetItemAsKillstreak(CTFBot* pBot, CEconItemView* pItem, int iSlot)
+{
+	//check if we're in a weapon slot. if we are, determine if we should spawn this as a fake AUSTRALIUM.
+	CSteamID ownerSteamID;
+	pBot->GetSteamID(&ownerSteamID);
+	const char* itemName = pItem->GetItemDefinition()->GetItemDefinitionName();
+
+	if (IsValidPickupWeaponSlot(iSlot))
+	{
+		//does our weapon do any damage?
+		econ_tag_handle_t tagHandle = GetItemSchema()->GetHandleForTag("can_deal_damage");
+		if (!pItem->GetItemDefinition()->HasEconTag(tagHandle))
+		{
+			// are we a medigun?
+			if (!FStrEq(pItem->GetStaticData()->GetItemClass(), "tf_weapon_medigun"))
+			{
+				DevMsg("%s's [%i] %s Killstreak spawn failed: Doesn't deal damage or is not a Medigun\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				return false;
+			}
+		}
+
+		//reinit any base item as an Upgradable item.
+		if (pItem->GetItemDefinition()->IsBaseItem())
+		{
+			CEconItemView* pItemNew = new CEconItemView();
+			CFmtStr fmtStrCustomizedDefName("Upgradeable %s", pItem->GetItemDefinition()->GetDefinitionName());
+			CEconItemDefinition* pItemDef = GetItemSchema()->GetItemDefinitionByName(fmtStrCustomizedDefName.Access());
+			if (pItemDef)
+			{
+				pItemNew->Init(pItemDef->GetDefinitionIndex(), AE_UNIQUE, AE_USE_SCRIPT_VALUE, true);
+			}
+
+			pItem = pItemNew;
+		}
+
+		//killstreaks can be applied to any weapon, so no checking here.
+		CAttributeList* pAttrList = pItem->GetAttributeList();
+		Assert(pAttrList);
+
+		DevMsg("%s's [%i] %s spawned as a Killstreak weapon!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+
+		const CEconItemAttributeDefinition* pAttrDefTier = GetItemSchema()->GetAttributeDefinitionByName("killstreak tier");
+		if (!pAttrDefTier)
+			return false;
+
+		if (pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier <= 0)
+		{
+			CUniformRandomStream randomize;
+			randomize.SetSeed(pItem->GetItemDefinition()->GetDefinitionIndex());
+			int iTierRarity = randomize.RandomInt(0, tf_bot_give_items_killstreak_professional_rarity.GetInt());
+
+			if (iTierRarity == tf_bot_give_items_killstreak_professional_rarity.GetInt())
+			{
+				DevMsg("%s's [%i] %s chose Professional Killstreak!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier = 3;
+			}
+			else if (iTierRarity == (tf_bot_give_items_killstreak_professional_rarity.GetInt() / 2))
+			{
+				DevMsg("%s's [%i] %s chose Specialized Killstreak!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier = 2;
+			}
+			else
+			{
+				DevMsg("%s's [%i] %s chose Normal Killstreak!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+				pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier = 1;
+			}
+		}
+
+		pAttrList->SetRuntimeAttributeValue(pAttrDefTier, pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier);
+
+		if (pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier >= 2)
+		{
+			//sheens
+			const CEconItemAttributeDefinition* pAttrDefIdleEffect = GetItemSchema()->GetAttributeDefinitionByName("killstreak idleeffect");
+			if (!pAttrDefIdleEffect)
+				return false;
+
+			if (pBot->vecSavedRandomLoadout[iSlot].flKillstreakSheen <= 0)
+			{
+				pBot->vecSavedRandomLoadout[iSlot].flKillstreakSheen = ((float)RandomInt(1, 7));
+			}
+
+			DevMsg("%s's [%i] %s set to Killstreak Sheen %f!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName, pBot->vecSavedRandomLoadout[iSlot].flKillstreakSheen);
+
+			pAttrList->SetRuntimeAttributeValue(pAttrDefIdleEffect, pBot->vecSavedRandomLoadout[iSlot].flKillstreakSheen);
+
+			if (pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier == 3)
+			{
+				//effects
+				const CEconItemAttributeDefinition* pAttrDefEffect = GetItemSchema()->GetAttributeDefinitionByName("killstreak effect");
+				if (!pAttrDefEffect)
+					return false;
+
+				if (pBot->vecSavedRandomLoadout[iSlot].flKillstreakEffect <= 0)
+				{
+					pBot->vecSavedRandomLoadout[iSlot].flKillstreakEffect = ((float)RandomInt(2002, 2008));
+				}
+
+				DevMsg("%s's [%i] %s set to Killstreak Effect %f!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName, pBot->vecSavedRandomLoadout[iSlot].flKillstreakEffect);
+
+				pAttrList->SetRuntimeAttributeValue(pAttrDefEffect, pBot->vecSavedRandomLoadout[iSlot].flKillstreakEffect);
+			}
+		}
+
+		//return true if we have the tier selected.
+		return (::FindAttribute(pAttrList, pAttrDefTier));
+	}
+
+	return false;
+}
+
 void CTFBot::GiveSavedLoadout(void)
 {
 	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
@@ -5186,16 +5475,93 @@ void CTFBot::GiveSavedLoadout(void)
 
 	for (int i = 0; i < vecSavedRandomLoadout.Count(); ++i)
 	{
-		if (vecSavedRandomLoadout[i])
+		if (vecSavedRandomLoadout[i].pItemDef)
 		{
 			CEconItemView* pItemData = new CEconItemView();
 			CSteamID ownerSteamID;
 			GetSteamID(&ownerSteamID);
-			pItemData->Init(vecSavedRandomLoadout[i]->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, ownerSteamID.GetAccountID());
+			pItemData->Init(vecSavedRandomLoadout[i].pItemDef->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, ownerSteamID.GetAccountID());
 			if (pItemData && pItemData->IsValid())
 			{
 				const char* itemName = pItemData->GetItemDefinition()->GetItemDefinitionName();
-				//DevMsg("GIVING %s TO BOT %s [%i]\n", itemName, GetPlayerName(), ownerSteamID.GetAccountID());
+				DevMsg("GIVING %s TO BOT %s [%i]\n", itemName, GetPlayerName(), ownerSteamID.GetAccountID());
+
+				CUniformRandomStream randomize;
+				randomize.SetSeed(pItemData->GetItemDefinition()->GetDefinitionIndex());
+
+				//set the paintkit quality if we have one.
+				bool painted = TFBotSetPaintkitQuality(this, pItemData, i);
+
+				//australium
+				if (!painted && !tf_bot_give_items_skip_reskins.GetBool() && !tf_bot_give_items_skip_australiums.GetBool())
+				{
+					if (!vecSavedRandomLoadout[i].bIsAustralium)
+					{
+						if (!vecSavedRandomLoadout[i].bHasCheckedIfAustralium)
+						{
+							//note: not all weapons can be australiums, so this can be rarer than what the cvar states.
+							int rarity = tf_bot_give_items_australium_rarity.GetInt();
+
+							if (randomize.RandomInt(1, rarity) == rarity)
+							{
+								DevMsg("%s's [%i] %s CAN spawn as an Australium!\n", GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+								vecSavedRandomLoadout[i].bIsAustralium = TFBotSetItemAsAustralium(this, pItemData);
+							}
+							else
+							{
+								vecSavedRandomLoadout[i].bIsAustralium = false;
+							}
+
+							vecSavedRandomLoadout[i].bHasCheckedIfAustralium = true;
+						}
+					}
+					else
+					{
+						TFBotSetItemAsAustralium(this, pItemData);
+					}
+				}
+				else
+				{
+					vecSavedRandomLoadout[i].bIsAustralium = false;
+					vecSavedRandomLoadout[i].bHasCheckedIfAustralium = true;
+				}
+
+				//killstreaks
+				if (tf_bot_give_items_killstreak.GetBool())
+				{
+					if (!vecSavedRandomLoadout[i].bIsKillstreak)
+					{
+						if (!vecSavedRandomLoadout[i].bHasCheckedIfKillstreak)
+						{
+							int rarity = tf_bot_give_items_killstreak_rarity.GetInt();
+
+							if (randomize.RandomInt(1, rarity) == rarity)
+							{
+								DevMsg("%s's [%i] %s CAN spawn as a Killstreak!\n", GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
+								vecSavedRandomLoadout[i].bIsKillstreak = TFBotSetItemAsKillstreak(this, pItemData, i);
+							}
+							else
+							{
+								vecSavedRandomLoadout[i].bIsKillstreak = false;
+							}
+
+							vecSavedRandomLoadout[i].bHasCheckedIfKillstreak = true;
+						}
+					}
+					else
+					{
+						TFBotSetItemAsKillstreak(this, pItemData, i);
+					}
+				}
+				else
+				{
+					vecSavedRandomLoadout[i].bIsKillstreak = false;
+					vecSavedRandomLoadout[i].bHasCheckedIfKillstreak = true;
+					vecSavedRandomLoadout[i].flKillstreakTier = 0;
+					vecSavedRandomLoadout[i].flKillstreakSheen = 0;
+					vecSavedRandomLoadout[i].flKillstreakEffect = 0;
+				}
+
 				TFBotGenerateAndWearItem(this, pItemData);
 			}
 		}
@@ -5210,7 +5576,7 @@ void CTFBot::HandleLoadout(void)
 	if (!m_InitialLoadoutLoadTimer.IsElapsed())
 		return;
 
-	bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
+	bool bLoggedIntoSteam = !tf_bot_give_items_nosteamcheck.GetBool() && (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn());
 
 	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && tf_bot_quota_use_presets.GetInt() != 1)
 	{
@@ -5235,7 +5601,7 @@ void CTFBot::ResetLoadout(void)
 	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
 		return;
 
-	bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
+	bool bLoggedIntoSteam = !tf_bot_give_items_nosteamcheck.GetBool() && (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn());
 	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && !(TFGameRules() && TFGameRules()->IsMannVsMachineMode()))
 	{
 		vecSavedRandomLoadout.RemoveAll();

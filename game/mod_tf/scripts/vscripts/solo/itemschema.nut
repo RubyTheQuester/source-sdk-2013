@@ -54,6 +54,7 @@ IncludeScript("solo/weapons/reskin/nineiron.nut") 			// Design stats
 IncludeScript("solo/weapons/reskin/postalpummeler.nut") 		// Design stats
 
 //-Demoman-//
+IncludeScript("solo/weapons/reskin/handshake.nut")				//Unsure
 IncludeScript("solo/weapons/reskin/bootlegger.nut") 			//Design stats
 
 //-Heavy-//
@@ -88,6 +89,9 @@ IncludeScript("solo/weapons/new/pipboy.nut") 					// Unsure
 //================================//
 //=======Enchacements/Fixes=======//
 //================================//
+
+//-Medic-//
+IncludeScript("solo/weapons/fixes/vow.nut")
 
 //-Spy-//
 IncludeScript("solo/weapons/fixes/spycicle.nut")

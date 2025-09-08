@@ -351,11 +351,11 @@ public:
 
 	void GiveRandomItem( loadout_positions_t loadoutPosition );
 
-	const CEconItemDefinition *GiveRandomItemEx(loadout_positions_t loadoutPosition);
+	const CEconItemDefinition* GiveRandomItemEx(loadout_positions_t loadoutPosition);
 	void SelectRandomizedLoadout(void);
 	void GiveSavedLoadout(void);
-	void ResetLoadout(void);
 	void HandleLoadout(void);
+	void ResetLoadout(void);
 	void ScriptHandleLoadout(void) { HandleLoadout(); }
 	//void Regenerate(bool bRefillHealthAndAmmo) OVERRIDE;
 	//void HandleCommand_JoinClass(const char* pClassName, bool bAllowSpawn = true) OVERRIDE;
@@ -526,12 +526,26 @@ public:
 
 public:
 	CountdownTimer m_CompressionBlastTimer;
+
+	struct BotLoadoutItem_t
+	{
+		const CEconItemDefinition* pItemDef;
+		bool bIsAustralium;
+		bool bHasCheckedIfAustralium;
+		bool bIsKillstreak;
+		bool bHasCheckedIfKillstreak;
+		float flKillstreakTier;
+		float flKillstreakSheen;
+		float flKillstreakEffect;
+		float flPaintkitQuality;
+	};
+
+	CUtlVector< BotLoadoutItem_t > vecSavedRandomLoadout;
 private:
 	CTFBotLocomotion	*m_locomotor;
 	CTFBotBody			*m_body;
 	CTFBotVision		*m_vision;
 
-	CUtlVector< const CEconItemDefinition* > vecSavedRandomLoadout;
 	CountdownTimer m_InitialLoadoutLoadTimer;
 	int iOldClassIndex;
 

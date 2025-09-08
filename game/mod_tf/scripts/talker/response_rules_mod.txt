@@ -5,6 +5,8 @@ criterion "WeaponIsRevolverEngineer" "playerweapon" "tf_weapon_revolver" "requir
 
 criterion "WeaponIsTranq" "playerweapon" "tf_weapon_tranq" "required"
 
+criterion "WeaponIsHandshake" "item_name" "The Scottish Handshake" "required" weight 10
+
 // Test rules
 #include "talker/response_rules.txt"
 #include "talker/tf_mod.txt"

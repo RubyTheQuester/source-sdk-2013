@@ -46,3 +46,18 @@
 		criteria ConceptPlayerTaunt IsSpy WeaponIsTranq
 		response SpyTauntPrimary
 	}
+	
+	// Custom stuff
+	response "DemomanTauntHandshake"
+	{
+		scene "scenes/player/demoman/low/taunt04_v1.vcd" 
+		scene "scenes/player/demoman/low/taunt04_v2.vcd" 
+	}
+	
+	// Custom Stuff
+	rule DemomanTauntHandshake
+	{
+		criteria ConceptPlayerTaunt IsDemoman WeaponIsHandshake
+		response DemomanTauntHandshake
+	}
+	// Ullapool Caber taunt - from unused Bottle taunt.
