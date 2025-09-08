@@ -260,12 +260,17 @@ void CTFStickBomb::Precache( void )
 	PrecacheModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
 }
 
-void CTFStickBomb::Smack( void )
+void CTFStickBomb::Detonate(bool bTaunting)
 {
-	CTFWeaponBaseMelee::Smack();
+	CTFPlayer* pTFPlayer = ToTFPlayer(GetOwner());
+	if (!pTFPlayer)
+		return;
+
+
+	bool connectedHit = (!bTaunting) ? ConnectedHit() : true;
 
 	// Stick bombs detonate once, on impact.
-	if ( m_iDetonated == 0 && ConnectedHit() )
+	if ( m_iDetonated == 0 && connectedHit )
 	{
 		m_iDetonated = 1;
 		m_bBroken = true;
@@ -298,12 +303,24 @@ void CTFStickBomb::Smack( void )
 
 			TE_TFExplosion( filter, 0.0f, explosion, Vector(0,0,1), TF_WEAPON_GRENADELAUNCHER, pTFPlayer->entindex(), -1, SPECIAL1, iCustomParticleIndex );
 
-			int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD;
+			int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD | DMG_MELEE;
 			if ( IsCurrentAttackACrit() )
 				dmgType |= DMG_CRITICAL;
 
-			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 100.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
-			CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
+			float flDamage = 75.0f;
+			CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg );
+
+			if (bTaunting)
+			{
+				flDamage = TF_STICKBOMB_KILLTAUNT_DAMAGE;
+			}
+
+			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, flDamage, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
+
+			float flRadius = 100.f;
+			CALL_ATTRIB_HOOK_FLOAT( flRadius, mult_explosion_radius );
+
+			CTFRadiusDamageInfo radiusinfo( &info, explosion, flRadius );
 			TFGameRules()->RadiusDamage( radiusinfo );
 
 			CTFPlayer* pPlayer = ToTFPlayer(GetPlayerOwner());
@@ -331,6 +348,12 @@ void CTFStickBomb::OnResourceMeterFilled()
 	WeaponRegenerate();
 }
 #endif
+
+void CTFStickBomb::Smack(void)
+{
+	CTFWeaponBaseMelee::Smack();
+	Detonate();
+}
 
 void CTFStickBomb::WeaponReset( void )
 {

@@ -76,6 +76,7 @@ public:
 	virtual int			GetWeaponID( void ) const OVERRIDE { return TF_WEAPON_BREAKABLE_SIGN; }
 };
 
+#define TF_STICKBOMB_KILLTAUNT_DAMAGE 500.0f
 //=============================================================================
 //
 // StickBomb class.
@@ -110,6 +111,8 @@ public:
 
 	void				SetDetonated( int iVal ) { m_iDetonated = iVal; }
 	int					GetDetonated( void ) { return m_iDetonated; }
+
+	void				Detonate(bool bTaunting = false);
 
 #ifdef GAME_DLL
 	//virtual void		EffectBarRegenFinished(void) ;

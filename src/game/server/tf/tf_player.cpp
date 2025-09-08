@@ -18527,10 +18527,23 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 	}
 	else if ( IsPlayerClass( TF_CLASS_DEMOMAN ) )
 	{
-		if ( !V_stricmp( szResponse, "scenes/player/demoman/low/taunt09.vcd" ) )
+		if (!V_stricmp(szResponse, "scenes/player/demoman/low/taunt09.vcd"))
 		{
 			m_flTauntAttackTime = gpGlobals->curtime + 2.55f;
 			m_iTauntAttack = TAUNTATK_DEMOMAN_BARBARIAN_SWING;
+		}
+		else if (!V_stricmp(szResponse, "scenes/player/demoman/low/taunt04_v1.vcd") || !V_stricmp(szResponse, "scenes/player/demoman/low/taunt04_v2.vcd"))
+		{
+			if (pActiveWeapon && pActiveWeapon->GetWeaponID() == TF_WEAPON_STICKBOMB)
+			{
+				m_flTauntAttackTime = gpGlobals->curtime + 3.77f;
+				m_iTauntAttack = TAUNTATK_DEMOMAN_CABER_SWING;
+			}
+			else 
+			{
+				m_flTauntAttackTime = gpGlobals->curtime + 3.77f;
+				m_iTauntAttack = TAUNTATK_DEMOMAN_BOTTLE_SWING;
+			}
 		}
 	}
 	else if ( IsPlayerClass( TF_CLASS_ENGINEER ) )
@@ -19592,6 +19605,124 @@ void CTFPlayer::DoTauntAttack( void )
 				// Launch them up a little
 				AngleVectors(QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward);
 				pEnt->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_BULLET, TF_DMG_CUSTOM_TAUNTATK_ENGINEER_TRICKSHOT));
+			}
+		}
+	}
+	else if (iTauntAttack == TAUNTATK_DEMOMAN_CABER_SWING)
+	{
+		// Find a player in front of us and knock 'em across the map.
+		// Same box logic as hadouken & pyro knockback.
+		Vector vecForward;
+		AngleVectors(QAngle(0, m_angEyeAngles[YAW], 0), &vecForward);
+		Vector vecCenter = WorldSpaceCenter() + vecForward * 64;
+		Vector vecSize = Vector(24, 24, 24);
+		CBaseEntity* pObjects[256];
+		int count = UTIL_EntitiesInBox(pObjects, 256, vecCenter - vecSize, vecCenter + vecSize, FL_CLIENT | FL_OBJECT);
+		if (count)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				// Must be facing whoever we knock back.
+				Vector vecToTarget;
+				vecToTarget = pObjects[i]->WorldSpaceCenter() - WorldSpaceCenter();
+				VectorNormalize(vecToTarget);
+				float flDot = DotProduct(vecForward, vecToTarget);
+				if (flDot < 0.80)
+					continue;
+
+				CTFPlayer* pTarget = ToTFPlayer(pObjects[i]);
+				if (!pTarget)
+					continue;
+
+				if (pTarget->GetTeamNumber() == GetTeamNumber())
+					continue;
+
+				// Do a quick trace and make sure we have LOS.
+				trace_t tr;
+				UTIL_TraceLine(WorldSpaceCenter(), pObjects[i]->WorldSpaceCenter(), MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_PLAYER, &tr);
+
+				if (tr.fraction < 1.0)
+					continue;
+
+				CTFWeaponBase* pWeapon = GetActiveTFWeapon();
+				if (pWeapon && pWeapon->GetWeaponID() == TF_WEAPON_STICKBOMB)
+				{
+					CTFStickBomb* pBomb = dynamic_cast<CTFStickBomb*>(pWeapon);
+					if (pBomb)
+					{
+						if (!pBomb->GetDetonated())
+						{
+							pBomb->Detonate(true);
+						}
+						else
+						{
+							// if the stickbomb exploded, launch them a bit.
+							pTarget->SetAbsVelocity(vec3_origin);
+
+							pTarget->ApplyPunchImpulseX(RandomInt(2, 5));
+
+							AngleVectors(QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward);
+							pTarget->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_CLUB | DMG_MELEE));
+						}
+					}
+				}
+			}
+		}
+	}
+	else if (iTauntAttack == TAUNTATK_DEMOMAN_BOTTLE_SWING)
+	{
+		// Find a player in front of us and knock 'em across the map.
+		// Same box logic as hadouken & pyro knockback.
+		Vector vecForward;
+		AngleVectors(QAngle(0, m_angEyeAngles[YAW], 0), &vecForward);
+		Vector vecCenter = WorldSpaceCenter() + vecForward * 64;
+		Vector vecSize = Vector(24, 24, 24);
+		CBaseEntity* pObjects[256];
+		int count = UTIL_EntitiesInBox(pObjects, 256, vecCenter - vecSize, vecCenter + vecSize, FL_CLIENT | FL_OBJECT);
+		if (count)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				// Must be facing whoever we knock back.
+				Vector vecToTarget;
+				vecToTarget = pObjects[i]->WorldSpaceCenter() - WorldSpaceCenter();
+				VectorNormalize(vecToTarget);
+				float flDot = DotProduct(vecForward, vecToTarget);
+				if (flDot < 0.80)
+					continue;
+
+				CTFPlayer* pTarget = ToTFPlayer(pObjects[i]);
+				if (!pTarget)
+					continue;
+
+				if (pTarget->GetTeamNumber() == GetTeamNumber())
+					continue;
+
+				// Do a quick trace and make sure we have LOS.
+				trace_t tr;
+				UTIL_TraceLine(WorldSpaceCenter(), pObjects[i]->WorldSpaceCenter(), MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_PLAYER, &tr);
+
+				if (tr.fraction < 1.0)
+					continue;
+
+				CTFWeaponBase* pWeapon = GetActiveTFWeapon();
+				// if the stickbomb exploded, launch them a bit.
+				pTarget->SetAbsVelocity(vec3_origin);
+
+				pTarget->ApplyPunchImpulseX(RandomInt(2, 5));
+
+				AngleVectors(QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward);
+				//pTarget->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_CLUB | DMG_MELEE));
+
+				CTFBottle* pBomb = dynamic_cast<CTFBottle*>(pWeapon);
+				if (pBomb) 
+				{
+					if (pTarget->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_CLUB | DMG_MELEE)))
+					{
+						DevMsg("Test\n");
+						pBomb->SetBroken( true );
+					}
+				}
 			}
 		}
 	}
