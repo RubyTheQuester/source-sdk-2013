@@ -125,6 +125,7 @@ ConVar cl_gunlowerspeed( "cl_gunlowerspeed", "2", FCVAR_CLIENTDLL | FCVAR_CHEAT 
 ConVar tf_use_min_viewmodels( "tf_use_min_viewmodels", "0", FCVAR_ARCHIVE, "Use minimized viewmodels." );
 
 ConVar tf_viewmodels_offset_override( "tf_viewmodels_offset_override", "", FCVAR_CHEAT, "If set, this will override the position of all viewmodels. Usage 'x y z'" );
+ConVar tf_viewmodel_cloak_tint("tf_viewmodel_cloak_tint", "0", FCVAR_ARCHIVE, "Allow viewmodels to be tinted while cloaked.");
 #endif
 
 void CTFViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, const QAngle& eyeAngles )
@@ -512,8 +513,36 @@ EXPOSE_INTERFACE( CViewModelInvisProxy, IMaterialProxy, "vm_invis" IMATERIAL_PRO
 class CInvisProxy : public CBaseInvisMaterialProxy
 {
 public:
+	CInvisProxy(void);
+	virtual bool Init(IMaterial* pMaterial, KeyValues* pKeyValues) OVERRIDE;
 	virtual void OnBind( C_BaseEntity *pC_BaseEntity ) OVERRIDE;
+
+private:
+	IMaterialVar* m_pCloakColorTint;
 };
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+CInvisProxy::CInvisProxy(void)
+{
+	m_pCloakColorTint = NULL;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Get pointer to the color value
+// Input  : *pMaterial - 
+//-----------------------------------------------------------------------------
+bool CInvisProxy::Init(IMaterial* pMaterial, KeyValues* pKeyValues)
+{
+	// Need to get the material var
+	bool bInvis = CBaseInvisMaterialProxy::Init(pMaterial, pKeyValues);
+
+	bool bTint;
+	m_pCloakColorTint = pMaterial->FindVar("$cloakColorTint", &bTint);
+
+	return (bInvis && bTint);
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -527,11 +556,27 @@ void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 
 	CTFPlayer *pPlayer = NULL;
 
+	static Vector cloakTintRed = Vector(1.0f, 0.5f, 0.4f);
+	static Vector cloakTintBlue = Vector(0.4f, 0.5f, 1.0f);
+
 	// Check if we have a move parent and if it's a player
 	C_BaseEntity *pMoveParent = pEnt->GetMoveParent();
 	if ( pMoveParent && pMoveParent->IsPlayer() )
 	{
 		pPlayer = ToTFPlayer( pMoveParent );
+
+		// Anything relating to players always tint
+		switch (pPlayer->GetTeamNumber())
+		{
+		case TF_TEAM_RED:
+			m_pCloakColorTint->SetVecValue(cloakTintRed.Base(), 3);
+			break;
+
+		case TF_TEAM_BLUE:
+		default:
+			m_pCloakColorTint->SetVecValue(cloakTintBlue.Base(), 3);
+			break;
+		}
 	}
 
 	// If it's not a player then check for viewmodel.
@@ -543,6 +588,28 @@ void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 		if ( pVM )
 		{
 			pPlayer = ToTFPlayer( pVM->GetOwner() );
+
+			// Viewmodels do not tint unless otherwise specified
+			bool bViewmodelTint = tf_viewmodel_cloak_tint.GetBool();
+
+			if (!bViewmodelTint)
+			{
+				m_pCloakColorTint->SetVecValue(1.0f, 1.0f, 1.0f);
+			}
+			else
+			{
+				switch (pPlayer->GetTeamNumber())
+				{
+				case TF_TEAM_RED:
+					m_pCloakColorTint->SetVecValue(cloakTintRed.Base(), 3);
+					break;
+
+				case TF_TEAM_BLUE:
+				default:
+					m_pCloakColorTint->SetVecValue(cloakTintBlue.Base(), 3);
+					break;
+				}
+			}
 		}
 	}
 	
