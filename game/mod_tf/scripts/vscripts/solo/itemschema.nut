@@ -90,6 +90,8 @@ IncludeScript("solo/weapons/new/pipboy.nut") 					// Unsure
 //=======Enchacements/Fixes=======//
 //================================//
 
+IncludeScript("solo/weapons/misc/misc_changes.nut")
+
 //-Medic-//
 IncludeScript("solo/weapons/fixes/vow.nut")
 
