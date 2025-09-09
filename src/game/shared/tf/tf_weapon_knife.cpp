@@ -21,6 +21,8 @@
 #include "ilagcompensationmanager.h"
 #endif
 
+static ConVar tf_backstab_buff_length("tf_backstab_buff_length", "10.0", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_GAMEDLL, "The length of buffs granted by the backstab buff knife.");
+
 //=============================================================================
 //
 // Weapon Knife tables.
@@ -311,34 +313,39 @@ void CTFKnife::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 void CTFKnife::BackstabBuff(CTFPlayer* pVictim, CTFPlayer *pAttacker, int iVictimHealth, int iVictimRuneType)
 {
+	float fBackstabDuration = tf_backstab_buff_length.GetFloat();
+
 	switch (m_hBackstabVictim->m_Shared.GetDesiredPlayerClassIndex())
 	{
 		default:
 		case TF_CLASS_SCOUT:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_SPEED_BOOST, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_SPEED_BOOST, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_SOLDIER:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_MEDIGUN_UBER_BLAST_RESIST, fBackstabDuration);
+			pAttacker->AddCustomAttribute("dmg taken from blast reduced", 0.1f, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_PYRO:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_FIRE_IMMUNE, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_MEDIGUN_UBER_FIRE_RESIST, fBackstabDuration);
+			pAttacker->AddCustomAttribute("dmg taken from fire reduced", 0.1f, fBackstabDuration);
 			break;
 		}
 
 
 		case TF_CLASS_DEMOMAN:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_BLAST_IMMUNE, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_MEDIGUN_UBER_BLAST_RESIST, fBackstabDuration);
+			pAttacker->AddCustomAttribute("dmg taken from blast reduced", 0.1f, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_HEAVYWEAPONS:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_DEFENSEBUFF, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_DEFENSEBUFF, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_ENGINEER:
@@ -369,12 +376,13 @@ void CTFKnife::BackstabBuff(CTFPlayer* pVictim, CTFPlayer *pAttacker, int iVicti
 		}
 		case TF_CLASS_SNIPER:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_OFFENSEBUFF, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_OFFENSEBUFF, fBackstabDuration);
+			pAttacker->AddCustomAttribute("weapon spread bonus", 0.1f, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_SPY:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_STEALTHED_USER_BUFF, 3.0f);
+			pAttacker->m_Shared.AddCond(TF_COND_STEALTHED_USER_BUFF, fBackstabDuration);
 			break;
 		}
 	}
