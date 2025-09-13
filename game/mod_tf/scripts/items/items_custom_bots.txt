@@ -1,0 +1,489 @@
+"items_game"
+{
+	"prefabs"
+	{
+		"weapon_melee_allclass"
+		{
+			"usable_by_bots" "0"
+		}
+		"weapon_gunboats"
+		{
+			"usable_by_bots" "0"
+		}
+		"paintkit_weapon"
+		{
+			"usable_by_bots" "0"
+		}
+	}
+	
+	"items"
+	{
+		//Gunboats
+		"133"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		//Rocket Jumper
+		"237"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		//Sticky Jumper
+		"265"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		//Mantreads
+		"444"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		//Base Jumper
+		"1101"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		
+		
+		
+		"792"
+		{
+			"usable_by_bots" "0"
+		}
+		"793"
+		{
+			"usable_by_bots" "0"
+		}
+		"794"
+		{
+			"usable_by_bots" "0"
+		}
+		"795"
+		{
+			"usable_by_bots" "0"
+		}
+		"796"
+		{
+			"usable_by_bots" "0"
+		}
+		"797"
+		{
+			"usable_by_bots" "0"
+		}
+		"798"
+		{
+			"usable_by_bots" "0"
+		}
+		"799"
+		{
+			"usable_by_bots" "0"
+		}
+		"800"
+		{
+			"usable_by_bots" "0"
+		}
+		"801"
+		{
+			"usable_by_bots" "0"
+		}
+		"802"
+		{
+			"usable_by_bots" "0"
+		}
+		"803"
+		{
+			"usable_by_bots" "0"
+		}
+		"804"
+		{
+			"usable_by_bots" "0"
+		}
+		"805"
+		{
+			"usable_by_bots" "0"
+		}
+		"806"
+		{
+			"usable_by_bots" "0"
+		}
+		"807"
+		{
+			"usable_by_bots" "0"
+		}
+		"808"
+		{
+			"usable_by_bots" "0"
+		}
+		"809"
+		{
+			"usable_by_bots" "0"
+		}
+		"881"
+		{
+			"usable_by_bots" "0"
+		}
+		"882"
+		{
+			"usable_by_bots" "0"
+		}
+		"883"
+		{
+			"usable_by_bots" "0"
+		}
+		"884"
+		{
+			"usable_by_bots" "0"
+		}
+		"885"
+		{
+			"usable_by_bots" "0"
+		}
+		"886"
+		{
+			"usable_by_bots" "0"
+		}
+		"887"
+		{
+			"usable_by_bots" "0"
+		}
+		"888"
+		{
+			"usable_by_bots" "0"
+		}
+		"889"
+		{
+			"usable_by_bots" "0"
+		}
+		"890"
+		{
+			"usable_by_bots" "0"
+		}
+		"891"
+		{
+			"usable_by_bots" "0"
+		}
+		"892"
+		{
+			"usable_by_bots" "0"
+		}
+		"893"
+		{
+			"usable_by_bots" "0"
+		}
+		"894"
+		{
+			"usable_by_bots" "0"
+		}
+		"895"
+		{
+			"usable_by_bots" "0"
+		}
+		"896"
+		{
+			"usable_by_bots" "0"
+		}
+		"897"
+		{
+			"usable_by_bots" "0"
+		}
+		"898"
+		{
+			"usable_by_bots" "0"
+		}
+		"899"
+		{
+			"usable_by_bots" "0"
+		}
+		"900"
+		{
+			"usable_by_bots" "0"
+		}
+		"901"
+		{
+			"usable_by_bots" "0"
+		}
+		"902"
+		{
+			"usable_by_bots" "0"
+		}
+		"903"
+		{
+			"usable_by_bots" "0"
+		}
+		"904"
+		{
+			"usable_by_bots" "0"
+		}
+		"905"
+		{
+			"usable_by_bots" "0"
+		}
+		"906"
+		{
+			"usable_by_bots" "0"
+		}
+		"907"
+		{
+			"usable_by_bots" "0"
+		}
+		"908"
+		{
+			"usable_by_bots" "0"
+		}
+		"909"
+		{
+			"usable_by_bots" "0"
+		}
+		"910"
+		{
+			"usable_by_bots" "0"
+		}
+		"911"
+		{
+			"usable_by_bots" "0"
+		}
+		"912"
+		{
+			"usable_by_bots" "0"
+		}
+		"913"
+		{
+			"usable_by_bots" "0"
+		}
+		"914"
+		{
+			"usable_by_bots" "0"
+		}
+		"915"
+		{
+			"usable_by_bots" "0"
+		}
+		"916"
+		{
+			"usable_by_bots" "0"
+		}
+		"957"
+		{
+			"usable_by_bots" "0"
+		}
+		"958"
+		{
+			"usable_by_bots" "0"
+		}
+		"959"
+		{
+			"usable_by_bots" "0"
+		}
+		"960"
+		{
+			"usable_by_bots" "0"
+		}
+		"961"
+		{
+			"usable_by_bots" "0"
+		}
+		"962"
+		{
+			"usable_by_bots" "0"
+		}
+		"963"
+		{
+			"usable_by_bots" "0"
+		}
+		"964"
+		{
+			"usable_by_bots" "0"
+		}
+		"965"
+		{
+			"usable_by_bots" "0"
+		}
+		"966"
+		{
+			"usable_by_bots" "0"
+		}
+		"967"
+		{
+			"usable_by_bots" "0"
+		}
+		"968"
+		{
+			"usable_by_bots" "0"
+		}
+		"969"
+		{
+			"usable_by_bots" "0"
+		}
+		"970"
+		{
+			"usable_by_bots" "0"
+		}
+		"971"
+		{
+			"usable_by_bots" "0"
+		}
+		"972"
+		{
+			"usable_by_bots" "0"
+		}
+		"973"
+		{
+			"usable_by_bots" "0"
+		}
+		"974"
+		{
+			"usable_by_bots" "0"
+		}
+		"975"
+		{
+			"usable_by_bots" "0"
+		}
+		
+		
+		"654"
+		{
+			"usable_by_bots" "0"
+		}
+		"658"
+		{
+			"usable_by_bots" "0"
+		}
+		"659"
+		{
+			"usable_by_bots" "0"
+		}
+		"660"
+		{
+			"usable_by_bots" "0"
+		}
+		"661"
+		{
+			"usable_by_bots" "0"
+		}
+		"662"
+		{
+			"usable_by_bots" "0"
+		}
+		"663"
+		{
+			"usable_by_bots" "0"
+		}
+		"664"
+		{
+			"usable_by_bots" "0"
+		}
+		"665"
+		{
+			"usable_by_bots" "0"
+		}
+		"669"
+		{
+			"usable_by_bots" "0"
+		}
+		"999"
+		{
+			"usable_by_bots" "0"
+		}
+		"1000"
+		{
+			"usable_by_bots" "0"
+		}
+		"1001"
+		{
+			"usable_by_bots" "0"
+		}
+		"1002"
+		{
+			"usable_by_bots" "0"
+		}
+		"1003"
+		{
+			"usable_by_bots" "0"
+		}
+		"1004"
+		{
+			"usable_by_bots" "0"
+		}
+		"1005"
+		{
+			"usable_by_bots" "0"
+		}
+		"1006"
+		{
+			"usable_by_bots" "0"
+		}
+		"1007"
+		{
+			"usable_by_bots" "0"
+		}
+		"1078"
+		{
+			"usable_by_bots" "0"
+		}
+		"1079"
+		{
+			"usable_by_bots" "0"
+		}
+		"1080"
+		{
+			"usable_by_bots" "0"
+		}
+		"1081"
+		{
+			"usable_by_bots" "0"
+		}
+		"1082"
+		{
+			"usable_by_bots" "0"
+		}
+		"1083"
+		{
+			"usable_by_bots" "0"
+		}
+		"1084"
+		{
+			"usable_by_bots" "0"
+		}
+		"1085"
+		{
+			"usable_by_bots" "0"
+		}
+		"1086"
+		{
+			"usable_by_bots" "0"
+		}
+		"1141"
+		{
+			"usable_by_bots" "0"
+		}
+		"1142"
+		{
+			"usable_by_bots" "0"
+		}
+		"1143"
+		{
+			"usable_by_bots" "0"
+		}
+		"1144"
+		{
+			"usable_by_bots" "0"
+		}
+		"1145"
+		{
+			"usable_by_bots" "0"
+		}
+		"1146"
+		{
+			"usable_by_bots" "0"
+		}
+		"1149"
+		{
+			"usable_by_bots" "0"
+		}
+	}
+}

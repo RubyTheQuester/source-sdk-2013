@@ -11,6 +11,8 @@
 #base items_custom_rebalance.txt //REPLACE ME WITH VSCRIPT
 #base items_custom_oddity.txt
 
+#base items_custom_bots.txt
+
 "items_game"
 {
 	"qualities"
@@ -67,6 +69,7 @@
 		"moditem_oddity_prefab"
 		{
 			"prefab" "moditem_prefab"
+			"usable_by_bots" "0"
 			
 			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"100"
