@@ -5104,7 +5104,7 @@ void CTFBot::SelectRandomizedLoadout(void)
 	// roll weapons first
 	for (int iSlot = LOADOUT_POSITION_PRIMARY; iSlot <= LOADOUT_POSITION_PDA2; ++iSlot)
 	{
-		if (iSlot == LOADOUT_POSITION_UTILITY)
+		if (iSlot == LOADOUT_POSITION_UTILITY || iSlot == LOADOUT_POSITION_PDA)
 			continue;
 
 		const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iSlot);
@@ -5125,11 +5125,35 @@ void CTFBot::SelectRandomizedLoadout(void)
 		}
 	}
 
-	int iChosenSlotVal = RandomInt(0, 2);
-	int iCosmeticSlot = LOADOUT_POSITION_HEAD;
+	//int iChosenSlotVal = RandomInt(0, 2);
+	//int iCosmeticSlot = LOADOUT_POSITION_HEAD;
 
-	if (tf_bot_give_items_nocosmetics.GetBool())
+	if (!tf_bot_give_items_nocosmetics.GetBool())
 	{
+		for (int iCosmeticSlot = LOADOUT_POSITION_HEAD; iCosmeticSlot <= LOADOUT_POSITION_MISC2; ++iCosmeticSlot)
+		{
+			if (iCosmeticSlot == LOADOUT_POSITION_ACTION)
+				continue;
+
+			const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iCosmeticSlot);
+
+			if (pItem)
+			{
+				BotLoadoutItem_t cosmetic;
+				cosmetic.pItemDef = pItem;
+				cosmetic.bIsAustralium = false;
+				cosmetic.bHasCheckedIfAustralium = true;
+				cosmetic.bIsKillstreak = false;
+				cosmetic.bHasCheckedIfKillstreak = true;
+				cosmetic.flKillstreakTier = 0;
+				cosmetic.flKillstreakSheen = 0;
+				cosmetic.flKillstreakEffect = 0;
+				cosmetic.flPaintkitQuality = 0;
+				vecSavedRandomLoadout.AddToTail(cosmetic);
+			}
+		}
+
+		/*
 		int iChosenSlotVal = RandomInt(0, 2);
 		int iCosmeticSlot = LOADOUT_POSITION_HEAD;
 
@@ -5156,24 +5180,9 @@ void CTFBot::SelectRandomizedLoadout(void)
 			break;
 		}
 		}
+		*/
 
 		// then cosmetics
-		const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iCosmeticSlot);
-
-		if (pItem)
-		{
-			BotLoadoutItem_t cosmetic;
-			cosmetic.pItemDef = pItem;
-			cosmetic.bIsAustralium = false;
-			cosmetic.bHasCheckedIfAustralium = true;
-			cosmetic.bIsKillstreak = false;
-			cosmetic.bHasCheckedIfKillstreak = true;
-			cosmetic.flKillstreakTier = 0;
-			cosmetic.flKillstreakSheen = 0;
-			cosmetic.flKillstreakEffect = 0;
-			cosmetic.flPaintkitQuality = 0;
-			vecSavedRandomLoadout.AddToTail(cosmetic);
-		}
 	}
 }
 
