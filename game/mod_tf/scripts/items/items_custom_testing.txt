@@ -212,18 +212,18 @@
 				"bullets per shot bonus"
 				{
 					"attribute_class"	"mult_bullets_per_shot"
-					"value" "1.5"
+					"value" "1.2"
 				}
-				"reload time increased hidden"
-				{
-					"attribute_class"	"mult_reload_time_hidden"
-					"value"	"1.5"
-				}
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"	"1.2"
-				}
+				//"reload time increased hidden"
+				//{
+				//	"attribute_class"	"mult_reload_time_hidden"
+				//	"value"	"1.5"
+				//}
+				//"spread penalty"
+				//{
+				//	"attribute_class"	"mult_spread_scale"
+				//	"value"	"1.2"
+				//}
 			}
 			
 			"visuals"

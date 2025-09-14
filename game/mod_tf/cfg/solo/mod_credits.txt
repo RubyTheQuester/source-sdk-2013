@@ -126,6 +126,14 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
+	"credit2_13"
+	{
+		"Doulbe Trouble - HAUU on gamebanana"
+		"https://gamebanana.com/mods/560082"
+		{ BOOL }
+		{ "1" }
+	}
+	
 	"category3"
 	{
 		"Campaign - Headhunt"
