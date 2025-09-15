@@ -1,39 +1,33 @@
 "items_game"
 {
+
 	"prefabs"
 	{
+	
 		"weapon_buff_knife"
 		{
 			"prefab"	"weapon_spy_knife_item2"
 			
 			"attributes"
 			{
-				"disguise on backstab"
-				{
-					"attribute_class"	"set_disguise_on_backstab"
-					"value" "1"
-				}
 				"buff on backstab"
 				{
 					"attribute_class"	"backstab_buff"
 					"value" "1"
 				}
-				"lunchbox adds minicrits"
+				"max health additive penalty"
 				{
-					"attribute_class"	"set_weapon_mode"
-					"value" "1"
+					"attribute_class"	"add_maxhealth"
+					"value" "-10"
 				}
-				"special taunt"
+				"move speed penalty"
 				{
-					"attribute_class"	"special_taunt"
-					"value" "1"
-				}
-				"mod_disguise_consumes_cloak"
-				{
-					"attribute_class"	"mod_disguise_consumes_cloak"
-					"value"				"1"
+					"attribute_class"	"mult_player_movespeed"
+					"value"	"0.90"
 				}
 			}
 		}
+	
 	}
+	
 }
