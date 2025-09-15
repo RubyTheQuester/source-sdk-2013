@@ -1,0 +1,9 @@
+#base custom_weapons.txt
+#base custom_prefabs.txt
+#base custom_weapons_testing.txt
+#base custom_weapons_oddity.txt
+
+"items_game"
+{
+
+}

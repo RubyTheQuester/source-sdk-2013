@@ -1,0 +1,8 @@
+#base solo_weapons.txt
+#base solo_tools.txt
+#base solo_taunts.txt
+
+"items_game"
+{
+
+}

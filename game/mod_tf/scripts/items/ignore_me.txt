@@ -1,0 +1,12 @@
+#base items_custom_share.txt
+#base items_custom_weapons.txt
+
+#base items_custom_testing.txt
+
+#base items_solo_taunts.txt
+#base items_solo_tools.txt
+
+#base items_custom_rebalance.txt //REPLACE ME WITH VSCRIPT
+#base items_custom_oddity.txt
+
+#base items_custom_bots.txt
