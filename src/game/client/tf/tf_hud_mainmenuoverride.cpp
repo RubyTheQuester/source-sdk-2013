@@ -192,10 +192,10 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 	m_flCheckTrainingAt = 0;
 	m_bWasInTraining = false;
 
-	if ( g_pVGuiLocalize )
-	{
-		g_pVGuiLocalize->AddFile( "resource/tfsolo_%language%.txt" );
-	}
+	//if ( g_pVGuiLocalize )
+	//{
+	//	g_pVGuiLocalize->AddFile( "resource/tfsolo_%language%.txt" );
+	//}
 
 	ScheduleItemCheck();
 
