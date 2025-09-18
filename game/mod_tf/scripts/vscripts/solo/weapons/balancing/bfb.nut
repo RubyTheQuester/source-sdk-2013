@@ -5,8 +5,9 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	local prefab = key1.FindKey("772")
 	local attrib = prefab.FindKey("attributes")
 	
-	// Remove boost loss on damage
-	attrib.RemoveSubKey("lose hype on take damage")
+	// Lower boost loss on damage
+	local a1 = attrib.FindKey("lose hype on take damage")
+	a1.SetInt("value", 1)
 	
 	// Reduce boost loss on air jumps from 75% to 10%
 	local a1 = attrib.FindKey("hype resets on jump")
