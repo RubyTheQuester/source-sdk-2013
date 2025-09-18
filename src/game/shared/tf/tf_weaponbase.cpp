@@ -5862,6 +5862,9 @@ bool CTFWeaponBase::DeflectProjectiles()
 		if ( bTruce && ( pObjects[i]->GetTeamNumber() == iEnemyTeam ) )
 			continue;
 
+		if ( (pObjects[i]->GetTeamNumber() != iEnemyTeam) )
+			continue;
+
 		if ( !pObjects[i]->IsDeflectable() && !FClassnameIs( pObjects[i], "prop_physics" ) )
 			continue;
 
