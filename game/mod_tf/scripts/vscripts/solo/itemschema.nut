@@ -4,6 +4,7 @@
 //==========================//
 
 //-Scout-//
+IncludeScript("solo/weapons/balancing/backscatter.nut")
 IncludeScript("solo/weapons/balancing/shortstop.nut")
 IncludeScript("solo/weapons/balancing/sandman.nut")
 IncludeScript("solo/weapons/balancing/bfb.nut")
@@ -35,6 +36,7 @@ IncludeScript("solo/weapons/balancing/pomson.nut")
 IncludeScript("solo/weapons/balancing/ubersaw.nut")
 
 //-Sniper-//
+IncludeScript("solo/weapons/balancing/carbine.nut")
 
 //-Spy-//
 IncludeScript("solo/weapons/balancing/ambassador.nut") 
