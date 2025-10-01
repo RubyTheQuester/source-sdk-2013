@@ -753,6 +753,7 @@ public:
 	CNetworkVar(	bool, m_bDisguiseWeapon );
 
 	CNetworkVar(	float, m_flLastFireTime );
+	CNetworkVar(	float, m_flLastAccurateFireTime );
 
 	CNetworkHandle( CTFWearable, m_hExtraWearable );
 	CNetworkHandle( CTFWearable, m_hExtraWearableViewModel );

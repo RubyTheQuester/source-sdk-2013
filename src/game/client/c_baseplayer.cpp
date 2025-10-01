@@ -1657,7 +1657,11 @@ void C_BasePlayer::CalcFreezeCamView( Vector& eyeOrigin, QAngle& eyeAngles, floa
 
 	// Zoom towards our target
 	float flCurTime = (gpGlobals->curtime - m_flFreezeFrameStartTime);
-	float flBlendPerc = clamp( flCurTime / spec_freeze_traveltime.GetFloat(), 0.f, 1.f );
+
+	static ConVarRef mp_disable_respawn_times("mp_disable_respawn_times");
+	const float flTravelTime = mp_disable_respawn_times.GetInt() == 2 ? 0.01f : spec_freeze_traveltime.GetFloat();
+
+	float flBlendPerc = clamp( flCurTime / flTravelTime, 0.f, 1.f );
 	flBlendPerc = SimpleSpline( flBlendPerc );
 
 	Vector vecCamDesired = pTarget->GetObserverCamOrigin();	// Returns ragdoll origin if they're ragdolled
@@ -1722,7 +1726,7 @@ void C_BasePlayer::CalcFreezeCamView( Vector& eyeOrigin, QAngle& eyeAngles, floa
 		}
 
 		m_bSentFreezeFrame = true;
-		view->FreezeFrame( spec_freeze_time.GetFloat() );
+		view->FreezeFrame( mp_disable_respawn_times.GetInt() == 2 ? 0.0f : spec_freeze_time.GetFloat() );
 	}
 }
 

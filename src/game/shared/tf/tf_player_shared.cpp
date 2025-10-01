@@ -12174,12 +12174,19 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 		return true;
 	}
 
-	if ( ( m_Shared.GetStealthNoAttackExpireTime() > gpGlobals->curtime && !m_Shared.InCond( TF_COND_STEALTHED_USER_BUFF ) ) || m_Shared.InCond( TF_COND_STEALTHED ) )
-	{
-		int iCloakCheck = 0;
-		CALL_ATTRIB_HOOK_INT( iCloakCheck, invis_allow_deploy_firing );
+	bool bCanAttackWhileCloaked = false;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(GetActiveWeapon(), bCanAttackWhileCloaked, attack_while_cloak);
 
-		if ( iCloakCheck == 0 && !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
+	const bool bCanAttackWhenDecloaking = tf_spy_invis_unstealth_time.GetFloat() > tf_spy_cloak_no_attack_time.GetFloat();
+	const bool bIsCloaked = m_Shared.InCond(TF_COND_STEALTHED_USER_BUFF);
+	float flCurTime = gpGlobals->curtime;
+
+	const bool bCanAttackStealthTime = m_Shared.GetStealthNoAttackExpireTime() <= flCurTime;
+	const bool bCanAttackForCloak = bCanAttackWhenDecloaking ? (bCanAttackStealthTime) : bCanAttackStealthTime && !bIsCloaked;
+
+	if ( !bCanAttackWhileCloaked && (!bCanAttackForCloak || m_Shared.InCond(TF_COND_STEALTHED)))
+	{
+		if ( !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
 		{
 #ifdef CLIENT_DLL
 			HintMessage( HINT_CANNOT_ATTACK_WHILE_CLOAKED, true, true );
@@ -12188,7 +12195,7 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 		}
 	}
 
-	if ( m_Shared.IsFeignDeathReady() )
+	if ( !bCanAttackWhileCloaked && m_Shared.IsFeignDeathReady() )
 	{
 #ifdef CLIENT_DLL
 		HintMessage( HINT_CANNOT_ATTACK_WHILE_FEIGN_ARMED, true, true );

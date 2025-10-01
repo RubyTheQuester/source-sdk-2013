@@ -107,7 +107,7 @@ public:
 	void				RemoveBallChild( void );
 #endif
 
-	virtual void		PickedUpBall( void );
+	virtual void		PickedUpBall( bool bNextSwingIsCrit = false );
 
 	float				GetProgress( void ) { return GetEffectBarProgress(); }
 	const char*			GetEffectLabelText( void ) { return "#TF_BALL"; }
@@ -153,6 +153,7 @@ public:
 	virtual void		ApplyBallImpactEffectOnVictim( CBaseEntity *pOther );
 	virtual void		PipebombTouch( CBaseEntity *pOther );
 	virtual void		VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
+	bool				GiveBall( CTFPlayer* pPlayer, bool bNextSwingIsACrit = false );
 	
 	virtual float		GetDamage( void );
 	virtual int			GetDamageType( void )				{ return DMG_CLUB; }

@@ -1,0 +1,30 @@
+// ------------------------------------------------------------------------------------ //
+// Misc
+// ------------------------------------------------------------------------------------ //
+
+"HudChat.Message"
+{
+	"channel"	"CHAN_STREAM"
+	"volume"	"VOL_NORM"
+	"soundlevel"  "SNDLVL_NONE"
+	"pitch"	"PITCH_NORM"
+
+	"wave"	"misc/talk.wav"
+}
+
+"General.hop_boing" 
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1"
+	"pitch"		"100"
+	"soundlevel"  	"SNDLVL_85dB"
+	
+	"rndwave"
+	{
+		"wave"			"misc/boing1.wav"
+		"wave"			"misc/boing2.wav"
+		"wave"			"misc/boing3.wav"
+		"wave"			"misc/boing4.wav"
+		"wave"			"misc/boing5.wav"
+	}
+}

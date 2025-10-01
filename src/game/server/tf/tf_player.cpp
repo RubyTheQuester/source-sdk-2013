@@ -1470,7 +1470,7 @@ void CTFPlayer::TFPlayerThink()
 	{
 		m_iLeftGroundHealth = -1;
 
-		if ( m_iBlastJumpState )
+		if ( m_iBlastJumpState && m_Local.m_bBrakingFrameTolerated )
 		{
 			const char *pszEvent = NULL;
 
@@ -14254,7 +14254,7 @@ void CTFPlayer::StateEnterDYING( void )
 //-----------------------------------------------------------------------------
 void CTFPlayer::StateThinkDYING( void )
 {
-	// If we have a ragdoll, it's time to go to deathcam
+// If we have a ragdoll, it's time to go to deathcam
 	if ( !m_bAbortFreezeCam && m_hRagdoll && 
 		(m_lifeState == LIFE_DYING || m_lifeState == LIFE_DEAD) && 
 		GetObserverMode() != OBS_MODE_FREEZECAM )
@@ -14266,13 +14266,20 @@ void CTFPlayer::StateThinkDYING( void )
 		RemoveEffects( EF_NODRAW | EF_NOSHADOW );	// still draw player body
 	}
 
-	float flTimeInFreeze = spec_freeze_traveltime.GetFloat() + spec_freeze_time.GetFloat();
+	static ConVarRef mp_disable_respawn_times("mp_disable_respawn_times");
+	float flTimeInFreeze = mp_disable_respawn_times.GetInt() == 2 ? ( 0.01f ) : ( spec_freeze_traveltime.GetFloat() + spec_freeze_time.GetFloat() );
 	float flFreezeEnd = (m_flDeathTime + TF_DEATH_ANIMATION_TIME + flTimeInFreeze );
-	if ( !m_bPlayedFreezeCamSound  && GetObserverTarget() && GetObserverTarget() != this )
+
+	if ( !m_bPlayedFreezeCamSound && mp_disable_respawn_times.GetInt() == 2 )
+	{
+		m_bPlayedFreezeCamSound = true;
+	}
+
+	if ( !m_bPlayedFreezeCamSound && GetObserverTarget() && GetObserverTarget() != this )
 	{
 		// Start the sound so that it ends at the freezecam lock on time
-		float flFreezeSoundLength = 0.3;
-		float flFreezeSoundTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + spec_freeze_traveltime.GetFloat() - flFreezeSoundLength;
+		float flFreezeSoundLength = 0.3f;
+		float flFreezeSoundTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( mp_disable_respawn_times.GetInt() == 2 ? 0.01f : spec_freeze_traveltime.GetFloat() ) - flFreezeSoundLength;
 		if ( gpGlobals->curtime >= flFreezeSoundTime )
 		{
 			CSingleUserRecipientFilter filter( this );
@@ -14348,7 +14355,8 @@ void CTFPlayer::StateThinkDYING( void )
 //-----------------------------------------------------------------------------
 void CTFPlayer::AttemptToExitFreezeCam( void )
 {
-	float flFreezeTravelTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + spec_freeze_traveltime.GetFloat() + 0.5;
+	static ConVarRef mp_disable_respawn_times("mp_disable_respawn_times");
+	float flFreezeTravelTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( mp_disable_respawn_times.GetInt() == 2 ? 0.01f : spec_freeze_traveltime.GetFloat() ) + 0.5f;
 	if ( gpGlobals->curtime < flFreezeTravelTime )
 		return;
 
