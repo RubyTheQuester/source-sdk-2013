@@ -305,11 +305,11 @@ void CTFStatsSummaryPanel::OnThink()
 		UpdateLeaderboard();
 	}
 
-	if ( m_bWasActivated )
-	{
-		vgui::VPANEL rootPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
-		SetLoadingVisibilityRecursive( rootPanel, "LoadingDialog" );
-	}
+	//if ( m_bWasActivated )
+	//{
+	//	vgui::VPANEL rootPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
+	//	SetLoadingVisibilityRecursive( rootPanel, "LoadingDialog" );
+	//}
 }
 
 //-----------------------------------------------------------------------------

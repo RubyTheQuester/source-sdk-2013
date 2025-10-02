@@ -3156,6 +3156,7 @@ void CTFPlayer::PrecacheTFPlayer()
 	PrecacheModel( "models/props_mvm/mvm_revive_tombstone.mdl" );
 
 	PrecacheScriptSound( "General.banana_slip" ); // Used for SodaPopper Hype Jumps
+	PrecacheScriptSound( "General.hop_boing" );
 
 
 	PrecacheScriptSound( "Parachute_open" );
@@ -16413,10 +16414,22 @@ void CTFPlayer::OnMyWeaponFired( CBaseCombatWeapon *weapon )
 //-----------------------------------------------------------------------------
 // Purpose: Remove invisibility, called when player attacks
 //-----------------------------------------------------------------------------
-void CTFPlayer::RemoveInvisibility( void )
+void CTFPlayer::RemoveInvisibility( bool bOnAttack )
 {
 	if ( !m_Shared.IsStealthed() )
 		return;
+
+	if (bOnAttack && GetActiveTFWeapon())
+	{
+		// L'Etranger can attack while invis but flash a little
+		bool bCanAttackWhileCloaked = false;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetActiveTFWeapon(), bCanAttackWhileCloaked, attack_while_cloak );
+		if ( bCanAttackWhileCloaked )
+		{
+			m_Shared.OnSpyTouchedByEnemy();
+			return;
+		}
+	}
 
 	// remove quickly
 	CTFPlayer *pProvider = ToTFPlayer( m_Shared.GetConditionProvider( TF_COND_STEALTHED_USER_BUFF ) );

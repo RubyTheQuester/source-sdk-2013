@@ -24,15 +24,15 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a3.SetString("attribute_class","mult_dmg")
 	a3.SetFloat("value", 0.9)
 	
-	// 50% slower fire rate
-	local a4 = attrib.GetKey("fire rate penalty", true)
-	a4.SetString("attribute_class","mult_postfiredelay")
-	a4.SetFloat("value", 1.5)
+	// 10% slower fire rate
+	//local a4 = attrib.GetKey("fire rate penalty", true)
+	//a4.SetString("attribute_class","mult_postfiredelay")
+	//a4.SetFloat("value", 1.1)
 	
-	// 50% slower reload rate
-	local a5 = attrib.GetKey("Reload time increased", true)
-	a5.SetString("attribute_class","mult_reload_time")
-	a5.SetFloat("value", 1.5)
+	// 10% slower reload rate
+	//local a5 = attrib.GetKey("Reload time increased", true)
+	//a5.SetString("attribute_class","mult_reload_time")
+	//a5.SetFloat("value", 1.1)
 
 	prefab.SetString("item_quality","moditem_rebalance")
 	prefab.SetString("item_name","#TF_Weapon_3lbTrigger")

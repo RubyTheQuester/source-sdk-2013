@@ -5017,7 +5017,7 @@ void CTFWeaponBase::ApplyOnHitAttributes( CBaseEntity *pVictimBaseEntity, CTFPla
 			CALL_ATTRIB_HOOK_INT( iRevealCloakedSpyOnHit, reveal_cloaked_victim_on_hit );
 			if ( iRevealCloakedSpyOnHit > 0 )
 			{
-				pVictim->RemoveInvisibility();
+				pVictim->RemoveInvisibility( false );
 				bIsSpyRevealed = true;
 			}
 		}
@@ -6379,11 +6379,11 @@ void CTFWeaponBase::FinishReload( void )
 		{
 			if ( m_iClip1 == 1 )
 			{
-				pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED );
+				pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED_SELF );
 			}
 			else
 			{
-				pPlayer->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );
+				pPlayer->m_Shared.RemoveCond( TF_COND_CRITBOOSTED_SELF );
 			}
 		}
 	}

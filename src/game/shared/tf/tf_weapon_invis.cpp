@@ -264,6 +264,10 @@ bool CTFWeaponInvis::ActivateInvisibilityWatch( void )
 				pOwner->ApplyAbsVelocityImpulse(vForce);
 
 				bDoSkill = true;
+
+			#ifdef GAME_DLL
+				pOwner->AddCustomAttribute("cancel falling damage", 1.0f, 6.0f);
+			#endif
 			}
 			else
 			{

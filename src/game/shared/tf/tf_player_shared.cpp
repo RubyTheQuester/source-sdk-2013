@@ -1606,6 +1606,7 @@ void CTFPlayerShared::OnConditionAdded( ETFCond eCond )
 	case TF_COND_SNIPERCHARGE_RAGE_BUFF:
 	case TF_COND_CRITBOOSTED_CARD_EFFECT:
 	case TF_COND_CRITBOOSTED_RUNE_TEMP:
+	case TF_COND_CRITBOOSTED_SELF:
 		OnAddCritBoost();
 		break;
 
@@ -1896,6 +1897,7 @@ void CTFPlayerShared::OnConditionRemoved( ETFCond eCond )
 	case TF_COND_SNIPERCHARGE_RAGE_BUFF:
 	case TF_COND_CRITBOOSTED_CARD_EFFECT:
 	case TF_COND_CRITBOOSTED_RUNE_TEMP:
+	case TF_COND_CRITBOOSTED_SELF:
 		OnRemoveCritBoost();
 		break;
 
@@ -8031,7 +8033,8 @@ bool CTFPlayerShared::IsCritBoosted( void ) const
 								  InCond( TF_COND_CRITBOOSTED_CTF_CAPTURE ) || 
 								  InCond( TF_COND_CRITBOOSTED_ON_KILL ) ||
 								  InCond( TF_COND_CRITBOOSTED_CARD_EFFECT ) ||
-								  InCond( TF_COND_CRITBOOSTED_RUNE_TEMP ) );
+								  InCond( TF_COND_CRITBOOSTED_RUNE_TEMP ) ||
+								  InCond(TF_COND_CRITBOOSTED_SELF));
 
 	if ( bAllWeaponCritActive )
 		return true;
@@ -11134,7 +11137,7 @@ void CTFPlayer::SetItem( CTFItem *pItem )
 
 	if ( pItem && pItem->GetItemID() == TF_ITEM_CAPTURE_FLAG )
 	{
-		RemoveInvisibility();
+		RemoveInvisibility( false );
 	}
 #endif
 }
@@ -12173,20 +12176,34 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 		// Always allow throwing the ball.
 		return true;
 	}
-
 	bool bCanAttackWhileCloaked = false;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER(GetActiveWeapon(), bCanAttackWhileCloaked, attack_while_cloak);
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetActiveTFWeapon(), bCanAttackWhileCloaked, attack_while_cloak );
 
-	const bool bCanAttackWhenDecloaking = tf_spy_invis_unstealth_time.GetFloat() > tf_spy_cloak_no_attack_time.GetFloat();
+	bool bCloakCheck = false;
+	CALL_ATTRIB_HOOK_INT( bCloakCheck, invis_allow_deploy_firing );
+
 	const bool bIsCloaked = m_Shared.InCond(TF_COND_STEALTHED_USER_BUFF);
+
 	float flCurTime = gpGlobals->curtime;
+	const bool bCanAttackWhenDecloaking = tf_spy_invis_unstealth_time.GetFloat() > tf_spy_cloak_no_attack_time.GetFloat();
 
 	const bool bCanAttackStealthTime = m_Shared.GetStealthNoAttackExpireTime() <= flCurTime;
-	const bool bCanAttackForCloak = bCanAttackWhenDecloaking ? (bCanAttackStealthTime) : bCanAttackStealthTime && !bIsCloaked;
+	const bool bCanAttackForCloak = bCanAttackWhenDecloaking ? (bCanAttackStealthTime) : !bCanAttackStealthTime && !bIsCloaked;
 
-	if ( !bCanAttackWhileCloaked && (!bCanAttackForCloak || m_Shared.InCond(TF_COND_STEALTHED)))
+	if (GetActiveTFWeapon() && GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_KNIFE)
 	{
-		if ( !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK ) )
+		flCurTime += 0.5f;
+	}
+
+	if ( 
+		( bCanAttackForCloak ) || m_Shared.InCond( TF_COND_STEALTHED )
+		)
+	{
+
+		if ( 
+			( !bCloakCheck  && !bCanAttackWhileCloaked )
+			&& !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK )
+			)
 		{
 #ifdef CLIENT_DLL
 			HintMessage( HINT_CANNOT_ATTACK_WHILE_CLOAKED, true, true );
@@ -12195,7 +12212,7 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 		}
 	}
 
-	if ( !bCanAttackWhileCloaked && m_Shared.IsFeignDeathReady() )
+	if ( m_Shared.IsFeignDeathReady() )
 	{
 #ifdef CLIENT_DLL
 		HintMessage( HINT_CANNOT_ATTACK_WHILE_FEIGN_ARMED, true, true );
@@ -14434,21 +14451,67 @@ void CTFPlayerShared::IncrementRevengeCrits( void )
 // Purpose: 
 //-----------------------------------------------------------------------------
 void CTFPlayerShared::SetRevengeCrits( int iVal )
-{	
-	m_iRevengeCrits = clamp( iVal, 0, 35 );
+{
+	CTFWeaponBase* pWeapon = m_pOuter->GetActiveTFWeapon();
+	if (!pWeapon)
+		return;
 
-	CTFWeaponBase *pWeapon = m_pOuter->GetActiveTFWeapon();
-	if ( ( pWeapon && pWeapon->CanHaveRevengeCrits() ) )
+	// if we increase the revenge crits, check up against our weapon max
+	int iMaxRevengeCrits = 35;
+	if ( iVal > m_iRevengeCrits )
 	{
-		if ( m_iRevengeCrits > 0 && !InCond( TF_COND_CRITBOOSTED ) )
+		// find the revenge weapons
+		for (int i = LOADOUT_POSITION_PRIMARY; i <= LOADOUT_POSITION_MELEE; ++i)
 		{
-			AddCond( TF_COND_CRITBOOSTED );
-		}
-		else if ( m_iRevengeCrits == 0 && InCond( TF_COND_CRITBOOSTED ) )
-		{
-			RemoveCond( TF_COND_CRITBOOSTED );
+			CBaseCombatWeapon* pSlotWeapon = m_pOuter->GetWeapon(i);
+			if (!pSlotWeapon)
+				continue;
+
+			CTFWeaponBase* pTFWeapon = dynamic_cast<CTFWeaponBase*>(pSlotWeapon);
+			if (!pSlotWeapon)
+				continue;
+
+			if (pTFWeapon->GetMaxRevengeCrits() < iMaxRevengeCrits )
+			{
+				iMaxRevengeCrits = pTFWeapon->GetMaxRevengeCrits();
+			}
 		}
 	}
+
+	m_iRevengeCrits = clamp( iVal, 0, iMaxRevengeCrits );
+	
+	if ( pWeapon->CanHaveRevengeCrits() )
+	{
+		if ( m_iRevengeCrits > 0 && !InCond( TF_COND_CRITBOOSTED_SELF ) )
+		{
+			AddCond( TF_COND_CRITBOOSTED_SELF );
+		}
+		else if ( m_iRevengeCrits == 0 && InCond( TF_COND_CRITBOOSTED_SELF ) )
+		{
+			RemoveCond( TF_COND_CRITBOOSTED_SELF );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CTFPlayerShared::ConditionConflictsWithRevenge( void )
+{
+	if ( InCond( TF_COND_CRITBOOSTED )
+		|| InCond( TF_COND_CRITBOOSTED_PUMPKIN )
+		|| InCond( TF_COND_CRITBOOSTED_USER_BUFF )
+		|| InCond( TF_COND_CRITBOOSTED_FIRST_BLOOD )
+		|| InCond( TF_COND_CRITBOOSTED_BONUS_TIME )
+		|| InCond( TF_COND_CRITBOOSTED_CTF_CAPTURE )
+		|| InCond( TF_COND_CRITBOOSTED_ON_KILL )
+		|| InCond( TF_COND_CRITBOOSTED_CARD_EFFECT )
+		|| InCond( TF_COND_CRITBOOSTED_RUNE_TEMP )
+	)
+	{
+		return true;
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------

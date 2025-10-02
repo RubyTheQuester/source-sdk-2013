@@ -144,7 +144,7 @@ void CTFBaseRocket::Spawn( void )
 
 		if ( !FStrEq(customModel.value().c_str(), "") )
 		{
-			DevMsg("Custom Rocket Model: (%s).\n", pszValue);
+			//DevMsg("Custom Rocket Model: (%s).\n", pszValue);
 			SetModel(pszValue);
 		}
 	}

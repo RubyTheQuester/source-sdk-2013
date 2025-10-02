@@ -759,6 +759,17 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
+		
+		"4018"
+		{
+			"name"	"attack_while_cloak"
+			"attribute_class"	"attack_while_cloak"
+			"description_string"	"#Attrib_AttackWhileCloaked"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 	}
 	
 }

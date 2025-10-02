@@ -184,7 +184,7 @@ void CTFBat::PlayDeflectionSound( bool bPlayer )
 //-----------------------------------------------------------------------------
 CTFBat_Wood::CTFBat_Wood()
 {
-	//m_bNextSwingIsCrit = false;
+	m_bNextSwingIsCrit = false;
 	m_iEnemyBallID = 0;
 #ifdef CLIENT_DLL
 	m_hStunBallVM = NULL;
@@ -386,16 +386,6 @@ void CTFBat_Wood::Drop( const Vector &vecVelocity )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFBat_Wood::WeaponReset( void )
-{
-	RemoveBallChild();
-
-	BaseClass::WeaponReset();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
 void CTFBat_Wood::UpdateOnRemove( void )
 {
 	RemoveBallChild();
@@ -453,6 +443,37 @@ bool CTFBat_Wood::CanCreateBall( CTFPlayer* pPlayer )
 		return true;
 	}
 }
+//-----------------------------------------------------------------------------
+// Purpose: Reset crits
+//-----------------------------------------------------------------------------
+bool CTFBat_Wood::Holster(CBaseCombatWeapon* pSwitchingTo)
+{
+#ifdef GAME_DLL
+	CTFPlayer* pOwner = ToTFPlayer(GetPlayerOwner());
+	if (pOwner && m_bNextSwingIsCrit)
+	{
+		pOwner->m_Shared.RemoveCond(TF_COND_CRITBOOSTED_SELF);
+	}
+#endif
+
+	return BaseClass::Holster(pSwitchingTo);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Reset crits
+//-----------------------------------------------------------------------------
+bool CTFBat_Wood::Deploy(void)
+{
+#ifdef GAME_DLL
+	CTFPlayer* pOwner = ToTFPlayer(GetOwner());
+	if (pOwner && m_bNextSwingIsCrit)
+	{
+		pOwner->m_Shared.AddCond(TF_COND_CRITBOOSTED_SELF);
+	}
+#endif
+
+	return BaseClass::Deploy();
+}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -482,6 +503,20 @@ void CTFBat_Wood::LaunchBall( void )
 
 // SERVER ONLY --
 #ifdef GAME_DLL
+
+//-----------------------------------------------------------------------------
+// Purpose: Reset crits
+//-----------------------------------------------------------------------------
+void CTFBat_Wood::Detach(void)
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (pPlayer && m_bNextSwingIsCrit)
+	{
+		pPlayer->m_Shared.RemoveCond(TF_COND_CRITBOOSTED_SELF);
+	}
+
+	BaseClass::Detach();
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: The wooden bat creates a baseball that stuns whomever it hits.
@@ -521,11 +556,33 @@ CBaseEntity* CTFBat_Wood::CreateBall( void )
 	pBall->SetOwnerEntity( pPlayer );
 	pBall->SetInitialSpeed( tf_scout_stunball_base_speed.GetInt() );
 
+	if (!pPlayer->m_Shared.ConditionConflictsWithRevenge())
+	{
+		pPlayer->m_Shared.RemoveCond(TF_COND_CRITBOOSTED_SELF);
+	}
+
 	return pBall;
 }
 
 // -- SERVER ONLY
 #endif
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFBat_Wood::PrimaryAttack(void)
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (!pPlayer)
+		return;
+
+	if (m_bNextSwingIsCrit && CanAttack())
+	{
+		pPlayer->m_Shared.SetNextMeleeCrit(MELEE_CRIT);
+	}
+
+	BaseClass::PrimaryAttack();
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Play pickup anim when we grab a new ball.
@@ -542,14 +599,51 @@ void CTFBat_Wood::PickedUpBall( bool bNextSwingIsCrit )
 	}
 	if (bNextSwingIsCrit)
 	{
-		//m_bNextSwingIsCrit = true;
+		m_bNextSwingIsCrit = true;
 #ifdef GAME_DLL
 		if ( pPlayer->GetActiveTFWeapon() == this )
 		{
-			pPlayer->m_Shared.AddCond(TF_COND_CRITBOOSTED);
+			pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED_SELF );
 		}
 #endif
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Reset crits
+//-----------------------------------------------------------------------------
+void CTFBat_Wood::WeaponReset(void)
+{
+#ifdef GAME_DLL
+	CTFPlayer* pOwner = ToTFPlayer(GetOwner());
+	if (pOwner && m_bNextSwingIsCrit)
+	{
+		pOwner->m_Shared.RemoveCond(TF_COND_CRITBOOSTED_SELF);
+		m_bNextSwingIsCrit = false;
+	}
+#else
+	RemoveBallChild();
+#endif
+
+	BaseClass::WeaponReset();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFBat_Wood::Smack(void)
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (!pPlayer)
+		return;
+
+	if (!pPlayer->m_Shared.ConditionConflictsWithRevenge())
+	{
+		m_bNextSwingIsCrit = false;
+		pPlayer->m_Shared.RemoveCond(TF_COND_CRITBOOSTED_SELF);
+	}
+
+	BaseClass::Smack();
 }
 
 //-----------------------------------------------------------------------------

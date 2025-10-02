@@ -110,6 +110,11 @@
 					"attribute_class"	"keep_disguise_on_attack"
 					"value" "1"
 				}
+				"attack_while_cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
 				"tranq slowdown"
 				{
 					"attribute_class"	"fires_slow_tranq"

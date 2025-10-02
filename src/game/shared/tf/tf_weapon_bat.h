@@ -80,9 +80,16 @@ public:
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_BAT_WOOD; }
 	virtual bool		BatDeflects() { return false; }
 
+	virtual void		PrimaryAttack(void);
 	virtual void		SecondaryAttack( void );
 	void				SecondaryAttackAnim( CTFPlayer *pPlayer );
 	virtual bool		SendWeaponAnim( int iActivity );
+
+	virtual bool		Holster(CBaseCombatWeapon* pSwitchingTo = NULL);
+	virtual bool		Deploy(void);
+	virtual void		WeaponReset() OVERRIDE;
+
+	virtual void		Smack(void);
 
 	virtual bool		CanCreateBall( CTFPlayer* pPlayer );
 	virtual void		LaunchBall( void );
@@ -92,6 +99,7 @@ public:
 	virtual int			GetEffectBarAmmo( void ) { return TF_AMMO_GRENADES1; }
 
 #ifdef GAME_DLL
+	virtual void		Detach();
 	virtual void		GetBallDynamics( Vector& vecLoc, QAngle& vecAngles, Vector& vecVelocity, AngularImpulse& angImpulse, CTFPlayer* pPlayer );
 #endif
 
@@ -100,7 +108,6 @@ public:
 
 	// Child removal:
 	virtual	void		Drop( const Vector &vecVelocity );
-	virtual void		WeaponReset( void );
 	virtual void		UpdateOnRemove( void );
 	virtual void		OnDataChanged( DataUpdateType_t updateType );
 	void				AddBallChild( void );
@@ -119,6 +126,7 @@ public:
 #endif
 
 	int					m_iEnemyBallID;
+	bool				m_bNextSwingIsCrit;
 
 #ifdef CLIENT_DLL
 	EHANDLE				m_hStunBallVM; // View model ball.
