@@ -7,5 +7,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	prefab.SetString("prefab","weapon_buff_knife")
 	
+	prefab.SetString("item_description","#TF_Weapon_BuffKnife_desc")
 	prefab.SetString("item_quality","moditem_newstats")
 })
