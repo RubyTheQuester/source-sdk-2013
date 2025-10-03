@@ -344,6 +344,14 @@
 			"usable_by_bots" "0"
 		}
 		
+		"1179"
+		{
+			"usable_by_bots" "0"
+		}
+		"998"
+		{
+			"usable_by_bots" "0"
+		}
 		
 		"654"
 		{
