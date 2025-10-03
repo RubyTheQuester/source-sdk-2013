@@ -125,19 +125,13 @@
 				"war damage bonus spy engineer"
 				{
 					"attribute_class"	"mult_dmg_vs_war_class"
-					"value"	"1.75"
+					"value"	"1.7"
 				}
 				
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"	"0.8"
-				}
-				
-				"single wep deploy time decreased"
-				{
-					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"	"0.75"
 				}
 				
 				"reload time increased"
