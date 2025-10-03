@@ -21648,13 +21648,13 @@ CHandle< CTeamTrainWatcher > CTFGameRules::GetPayloadToBlock( int blockingTeam )
 			}
 			else
 			{
-				// find any cart
+				// normal Escort scenario, red always blocks
 				CTeamTrainWatcher* watcher = NULL;
 				while ( ( watcher = dynamic_cast<CTeamTrainWatcher *>( gEntList.FindEntityByClassname(watcher, "team_train_watcher" ) ) ) != NULL )
 				{
 					if ( !watcher->IsDisabled() )
 					{
-						m_bluePayloadToBlock = watcher;
+						m_redPayloadToBlock = watcher;
 						break;
 					}
 				}
