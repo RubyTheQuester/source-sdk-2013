@@ -66,7 +66,7 @@
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
 				"crit_dmg_falloff"			"1"
-				"single wep deploy time decreased"		"0.4"
+				"single wep deploy time decreased"		"0.7"
 				"switch from wep deploy time decreased"	"0.7"
 			}
 			
@@ -92,12 +92,6 @@
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
 				}
-			}
-			
-			"visuals"
-			{
-				"sound_single_shot" "Weapon_Ambassador.Single"
-				"sound_burst" "Weapon_Ambassador.SingleCrit"
 			}
 		}
 	
@@ -365,7 +359,7 @@
 		"34453"
 		{
 			"name"				"Syringe"
-			"prefab"			"moditem_testing weapon_bonesaw"
+			"prefab"			"moditem_prefab weapon_bonesaw"
 
 			"propername"		"1"
 			
@@ -401,7 +395,7 @@
 		"34454"
 		{
 			"name"	"Walkabout"
-			"prefab" "moditem_testing weapon_sniperrifle"
+			"prefab" "moditem_prefab weapon_sniperrifle"
 			
 			"item_name"	"#TF_Walkabout"
 			
@@ -450,7 +444,7 @@
 		"34455"
 		{
 			"name"	"The Double Trouble"
-			"prefab"	"moditem_testing weapon_shotgun"
+			"prefab"	"moditem_prefab weapon_shotgun"
 			
 			"item_name"	"#TF_DoubleTrouble"
 			

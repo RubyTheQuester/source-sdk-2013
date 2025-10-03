@@ -335,6 +335,15 @@ Activity CTFRevolver::TranslateViewmodelHandActivityInternal(Activity actBase)
 		case ACT_VM_RELOAD:
 			actBase = ACT_ENGINEER_REVOLVER_RELOAD;
 			break;
+		case ACT_PRIMARY_VM_INSPECT_START:
+			actBase = ACT_SECONDARY_VM_INSPECT_START;
+			break;
+		case ACT_PRIMARY_VM_INSPECT_IDLE:
+			actBase = ACT_SECONDARY_VM_INSPECT_IDLE;
+			break;
+		case ACT_PRIMARY_VM_INSPECT_END:
+			actBase = ACT_SECONDARY_VM_INSPECT_END;
+			break;
 		default:
 			break;
 		}
