@@ -15,12 +15,12 @@
 				"can_deal_long_distance_damage"	"1"
 			}
 			
-			"base_item_name"	"TF_WEAPON_REVOLVER_SECONDARY"
+			"base_item_name"	"TF_WEAPON_REVOLVER"
 			
 			"item_type_name"	"#TF_Weapon_Revolver"
 			"item_name"	"#TF_Weapon_Revolver"
 			
-			"item_slot"		"secondary"
+			"item_slot"		"primary"
 			"item_iconname"	"revolver_engineer"
 			
 			"item_quality"	"collector"
@@ -50,7 +50,7 @@
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
 			}
-			
+		
 			"visuals"
 			{
 				"animation_replacement"
@@ -75,7 +75,6 @@
 			"min_ilevel"		"1"
 			"max_ilevel"		"1"
 			
-			"base_item_name"	"The Fatscout"
 			"show_in_armory"	"1"
 			"item_type_name" 	"#TF_Wearable_Apparel"
 			

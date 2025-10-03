@@ -289,6 +289,20 @@ const char* CTFRevolver::GetEffectLabelText( void )
 	}
 	return "#TF_CRITS";
 }
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+int CTFRevolver::GetActivityWeaponRole() const
+{
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (pPlayer && pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER)
+	{
+		// demo should use act table item1
+		return TF_WPN_TYPE_SECONDARY;
+	}
+
+	return BaseClass::GetActivityWeaponRole();
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 

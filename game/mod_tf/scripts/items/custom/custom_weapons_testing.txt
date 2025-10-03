@@ -2,42 +2,6 @@
 {
 	"items"
 	{
-		"60002"
-		{
-			"name"				"Syringe"
-			"prefab"			"moditem_testing_prefab weapon_bonesaw"
-
-			"propername"		"1"
-			
-			"item_name"			"#TF_Weapon_Syringe"
-			"item_type_name"	"#TF_WeaponType_Syringe"
-			"item_description"	"#TF_Weapon_Syringe_Desc"
-			
-			"image_inventory"				"backpack\weapons\c_models\c_syringe/c_syringe"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"					"models/weapons/c_models/c_syringe/c_syringe.mdl"
-			
-			"attributes"
-			{
-				"syringe heal"
-				{
-					"attribute_class"	"syringe_heal"
-					"value" "65"
-				}
-				"fire rate bonus"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"0.75"
-				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"0.50"
-				}
-			}
-		}
-		
 		"60005"
 		{
 			"name"	"Walkabout"
@@ -237,6 +201,39 @@
 				"sound_burst"	"Weapon_Scatter_Gun_Double.SingleCrit"
 				"muzzle_flash"	"muzzle_bignasty"
 				"tracer_effect"	"bullet_bignasty_tracer01"
+			}
+		}
+		
+		"60010"
+		{
+			"name"	"The Pacificateur"
+			"prefab"	"moditem_testing_prefab weapon_revolver"
+			
+			"item_name"	"#TF_Pacificateur"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_revolver/c_revolver"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"32"
+			"model_player"					"models/weapons/c_models/c_pacificateur/c_pacificateur.mdl"
+			
+			"used_by_classes"
+			{
+				"spy" "secondary"
+				"engineer" "primary"
+			}
+			
+			"model_player_per_class"
+			{
+				"spy"	"models/weapons/c_models/c_pacificateur/c_pacificateur.mdl"
+				"engineer"	"models/weapons/c_models/c_pacificateur/c_pacificateur_engineer.mdl"
+			}
+			
+			"attributes"
+			{
+
 			}
 		}
 	}
