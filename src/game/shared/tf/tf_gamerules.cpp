@@ -6886,6 +6886,39 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 				// Potentially boost damage
 				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flDamage, mult_dmg_vs_same_class );
 			}
+
+			//float flDamageWar = 0;
+			//CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flDamageWar, mult_dmg_vs_war_class);
+
+			switch (nAttackerClass)
+			{
+			case TF_CLASS_SOLDIER:
+			case TF_CLASS_DEMOMAN:
+				if (nVictimClass == TF_CLASS_SOLDIER ||
+					nVictimClass == TF_CLASS_DEMOMAN)
+				{
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flDamage, mult_dmg_vs_war_class);
+				}
+				break;
+
+			case TF_CLASS_HEAVYWEAPONS:
+			case TF_CLASS_PYRO:
+				if (nVictimClass == TF_CLASS_HEAVYWEAPONS ||
+					nVictimClass == TF_CLASS_PYRO)
+				{
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flDamage, mult_dmg_vs_war_class);
+				}
+				break;
+
+			case TF_CLASS_SPY:
+			case TF_CLASS_ENGINEER:
+				if (nVictimClass == TF_CLASS_ENGINEER ||
+					nVictimClass == TF_CLASS_SPY)
+				{
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flDamage, mult_dmg_vs_war_class);
+				}
+				break;
+			}
 		}
 	}
 

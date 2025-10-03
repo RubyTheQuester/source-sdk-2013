@@ -770,6 +770,38 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		
+		"4019"
+		{
+			"name"	"war damage bonus spy engineer"
+			"attribute_class"	"mult_dmg_vs_war_class"
+			"description_string"	"#Attrib_WarWewapon_Spy_Engineer"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"4020"
+		{
+			"name"	"war damage bonus soldier demoman"
+			"attribute_class"	"mult_dmg_vs_war_class"
+			"description_string"	"#Attrib_WarWewapon_Soldier_Demoman"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"4021"
+		{
+			"name"	"war damage bonus heavy pyro"
+			"attribute_class"	"mult_dmg_vs_war_class"
+			"description_string"	"#Attrib_WarWewapon_Heavy_Pyro"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 	}
-	
 }
