@@ -65,30 +65,39 @@
 			{
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
+				"crit_dmg_falloff"			"1"
+				"single wep deploy time decreased"		"0.4"
+				"switch from wep deploy time decreased"	"0.7"
 			}
 			
 			"attributes"
 			{
-				"mult_dmg_vs_same_class"
+				"revolver use hit locations"
 				{
-					"attribute_class"	"mult_dmg_vs_same_class"
-					"value"	"1.35"
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.8"
+					"value" "0.85"
 				}
-				"dmg bonus vs buildings"
+				"fire rate penalty"
 				{
-					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"	"1.6"
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
 				}
-				"damage applies to sappers"
+				"crit mod disabled"
 				{
-					"attribute_class"	"set_dmg_apply_to_sapper"
-					"value"	"1"
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
 				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot" "Weapon_Ambassador.Single"
+				"sound_burst" "Weapon_Ambassador.SingleCrit"
 			}
 		}
 	
@@ -198,9 +207,9 @@
 			"item_class"		"saxxy"
 			"prefab"		"moditem_prefab weapon_melee_allclass"
 			
-			"item_name"	"#TF_Mod_Crowbar"
+			"item_name"	"#TF_Weapon_ModCrowbar"
 			"item_type_name"	"#TF_Weapon_Crowbar"
-			"item_description"	"#TF_Weapon_Crowbar_Desc"
+			"item_description"	"#TF_Weapon_Crowbar_desc"
 			
 			"item_logname"	"crowbar"
 			"item_iconname"	"crowbar"

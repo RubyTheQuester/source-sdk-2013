@@ -8,7 +8,7 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	
 	statattrib.RemoveSubKey("item_meter_charge_rate")
 	
-	prefab.SetString("item_description","#TF_Lunchbox_Ammo_desc")
+	prefab.SetString("item_description","#TF_Weapon_Lunchbox_Ammo_desc")
 	
 	// TODO: New design
 	
