@@ -128,8 +128,24 @@ DESCRIPTION INFO_OPTIONS
 	
 	"credit2_13"
 	{
-		"Doulbe Trouble - HAUU on gamebanana"
+		"Double Trouble - HAUU on gamebanana"
 		"https://gamebanana.com/mods/560082"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_14"
+	{
+		"The Pacificateur for Mashers Engineering pack  - Uncle Doe on gamebanana"
+		"https://gamebanana.com/mods/621952"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_15"
+	{
+		"The Pacificateur  - Zero Tsu on gamebanana"
+		"https://gamebanana.com/mods/466065"
 		{ BOOL }
 		{ "1" }
 	}
