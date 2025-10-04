@@ -1,0 +1,45 @@
+armory_config
+{
+	"Mr. Rostov"
+	{
+		Cost 100
+	}
+	"Esprit De Corps"
+	{
+		Cost 100
+	}
+	"Hardcore Pantalon"
+	{
+		Cost 100
+	}
+	"The Soho Sleuth"
+	{
+		Cost 100
+	}
+	"Pyro the Flamedeer"
+	{
+		Cost 100
+	}
+	
+	"Clue Hairdo"
+	{
+		Cost 100
+	}
+	"Sleuth Suit"
+	{
+		Cost 100
+	}
+	
+	"Sheriff's Stetson"
+	{
+		Cost 100
+	}
+	"Wild West Waistcoat"
+	{
+		Cost 100
+	}
+	"Support Spurs"
+	{
+		Cost 100
+	}
+}
