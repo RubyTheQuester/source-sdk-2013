@@ -2,11 +2,11 @@
 {
 	"Generic"
 	{
-		"BaseGameWeapons"		"1"
+		"BaseGameWeapons"		"0"
 		"BaseGameTaunts"		"0"
 		"BaseGameCosmetics"		"0"
 	}
-	"Credits"		"250"
+	"Credits"		"99999"
 	"UnlockedItems"
 	{
 		"The Kritzkrieg"		"1"
