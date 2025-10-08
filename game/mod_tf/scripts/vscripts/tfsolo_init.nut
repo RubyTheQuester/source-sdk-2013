@@ -20,6 +20,8 @@ if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
 	IncludeScript("solo/credits.nut")
 }
 
+IncludeScript("solo/credits.nut")
+
 TFSOLO.CoreEventTag <- UniqueString()
 getroottable()[TFSOLO.CoreEventTag] <- {
 	OnGameEvent_teamplay_round_start = function(params)

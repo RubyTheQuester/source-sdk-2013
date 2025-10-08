@@ -12,7 +12,7 @@
 //#base armory/armory_steam.txt
 //#base armory/armory_valve_decorated.txt
 #base armory/armory_valve_cosmetics.txt
-//#base armory/armory_community_cosmetics.txt
+#base armory/armory_community_cosmetics.txt
 
 #base armory/armory_itemsets_cosmetics.txt
 #base armory/armory_wanted_cosmetics.txt

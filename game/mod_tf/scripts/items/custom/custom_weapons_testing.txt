@@ -98,7 +98,7 @@
 			"name"	"The Pacificateur"
 			"prefab"	"moditem_testing_prefab weapon_revolver"
 			
-			"item_name"	"#TF_Pacificateur"
+			"item_name"	"#TF_Weapon_Pacificateur"
 			"item_description"	"#TF_Weapon_Pacificateur_desc"
 			
 			"customitem" "1"
