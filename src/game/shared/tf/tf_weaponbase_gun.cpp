@@ -916,7 +916,8 @@ float CTFWeaponBaseGun::GetProjectileDamage( void )
 	{
 		CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg_disguised );
 	}
-	else {
+	else if ( pPlayer && !pPlayer->m_Shared.InCond(TF_COND_DISGUISED) )
+	{
 		CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg_undisguised );
 	}
 
