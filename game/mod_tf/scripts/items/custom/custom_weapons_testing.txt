@@ -112,7 +112,7 @@
 			"used_by_classes"
 			{
 				"spy" "secondary"
-				"engineer" "primary"
+				"engineer" "secondary"
 			}
 			
 			"model_player_per_class"
@@ -123,29 +123,16 @@
 			
 			"attributes"
 			{
-				"war damage bonus spy engineer"
-				{
-					"attribute_class"	"mult_dmg_vs_war_class"
-					"value"	"1.7"
-				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
 					"value"	"0.8"
 				}
-				
-				"reload time increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"	"1.25"
-				}
-				
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
-					"value"	"1.6"
+					"value"	"1.75"
 				}
-				
 				"damage applies to sappers"
 				{
 					"attribute_class"	"set_dmg_apply_to_sapper"
@@ -153,5 +140,26 @@
 				}
 			}
 		}
+		
+		"34447"
+		{
+			"name"	"Deputy"
+			"prefab" " moditem_testing_prefab weapon_revolver_engineer"
+			
+			"propername"		"0"
+			
+			"item_name"		"#TF_Weapon_Deputy"
+			"item_description"	"#TF_Weapon_Deputy_desc"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+				"single wep deploy time decreased"		"0.7"
+				"switch from wep deploy time decreased"	"0.7"
+			}
+		}
+		
+		//END OF THE LINE
 	}
 }

@@ -916,6 +916,9 @@ float CTFWeaponBaseGun::GetProjectileDamage( void )
 	{
 		CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg_disguised );
 	}
+	else {
+		CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg_undisguised );
+	}
 
 	if ( pPlayer && ( pPlayer->IsPlayerClass( TF_CLASS_SOLDIER ) || pPlayer->IsPlayerClass( TF_CLASS_PYRO ) ) )
 	{	

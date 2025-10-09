@@ -20,8 +20,8 @@
 			"item_type_name"	"#TF_Weapon_Revolver"
 			"item_name"	"#TF_Weapon_Revolver"
 			
-			"item_slot"		"primary"
-			"item_iconname"	"revolver_engineer"
+			"item_slot"		"secondary"
+			"item_iconname"	"revolver"
 			
 			"item_quality"	"collector"
 			"min_ilevel"	"1"
@@ -106,5 +106,7 @@
 				}
 			}
 		}
+		
+		//END OF THE LINE
 	}
 }

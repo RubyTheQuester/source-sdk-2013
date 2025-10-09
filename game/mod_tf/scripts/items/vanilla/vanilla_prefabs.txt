@@ -10,6 +10,11 @@
 			
 			"attributes"
 			{
+				"mult cloak meter consume rate"
+				{
+					"attribute_class"	"mult_cloak_meter_consume_rate"
+					"value" "1.33"
+				}
 				"buff on backstab"
 				{
 					"attribute_class"	"backstab_buff"
@@ -27,7 +32,33 @@
 				}
 			}
 		}
-	
+		
+		
+		"weapon_capper"
+		{
+			"prefab"		"weapon_pistol"
+			"item_class"	"tf_weapon_pistol_charge"
+			
+			"static_attrs"
+			{
+				"energy weapon no ammo"					"1"
+				"energy weapon no hurt building"		"1"
+			}
+			
+			"attributes"
+			{
+				"minicrit_boost_charge_rate"
+				{
+					"attribute_class" "minicrit_boost_charge_rate"
+					"value" "1"
+				}
+				"minicrit_boost_when_charged"
+				{
+					"attribute_class" "minicrit_boost_when_charged"
+					"value" "8"
+				}
+			}
+		}
 	}
 	
 }

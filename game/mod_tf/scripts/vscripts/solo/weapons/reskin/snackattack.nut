@@ -33,8 +33,8 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//a5.SetInt("value", 1)
 	
 	// deploy time increased
-	local a5 = attrib.GetKey("single wep deploy time increased", true)
-	a5.SetString("attribute_class","mult_single_wep_deploy_time")
+	local a5 = attrib.GetKey("sapper_deploy_time", true)
+	a5.SetString("attribute_class","sapper_deploy_time")
 	a5.SetFloat("value", 1.25)
 	
 	prefab.SetString("item_quality","moditem_newstats")

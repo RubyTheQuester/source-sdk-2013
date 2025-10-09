@@ -18,6 +18,7 @@
 #define CTFPistol_Scout C_TFPistol_Scout
 #define CTFPistol_ScoutPrimary C_TFPistol_ScoutPrimary
 #define CTFPistol_ScoutSecondary C_TFPistol_ScoutSecondary
+#define CTFChargedPistol C_TFChargedPistol
 #endif
 
 // We allow the pistol to fire as fast as the player can click.
@@ -65,6 +66,7 @@ public:
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PISTOL_SCOUT; }
 };
 
+//Shortstop
 class CTFPistol_ScoutPrimary : public CTFPistol_Scout
 {
 public:
@@ -104,6 +106,49 @@ public:
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_HANDGUN_SCOUT_SECONDARY; }
 
 	virtual int		GetDamageType( void ) const;
+};
+
+//=============================================================================
+//
+// TF Weapon Charged Sub-machine gun.
+//
+class CTFChargedPistol : public CTFPistol
+{
+public:
+	DECLARE_CLASS( CTFChargedPistol, CTFPistol );
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	CTFChargedPistol() {}
+	~CTFChargedPistol() {}
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_PISTOL_CHARGE; }
+
+	const char* GetEffectLabelText(void) { return "#TF_PistolCharge"; }
+	float			GetProgress(void);
+	bool			ShouldFlashChargeBar();
+	void			SecondaryAttack() OVERRIDE;
+	bool			CanPerformSecondaryAttack() const OVERRIDE;
+	void			WeaponReset() OVERRIDE;
+
+	virtual bool		IsEnergyWeapon(void) const { return true; }
+
+#ifdef GAME_DLL
+	void	ApplyOnHitAttributes( CBaseEntity* pVictimBaseEntity, CTFPlayer* pAttacker, const CTakeDamageInfo& info ) OVERRIDE;
+#endif
+
+protected:
+	CNetworkVar( float, m_flMinicritCharge );
+
+	float m_flMinicritStartTime;
+
+private:
+	CTFChargedPistol( const CTFChargedPistol& ) {}
 };
 
 #endif // TF_WEAPON_PISTOL_H

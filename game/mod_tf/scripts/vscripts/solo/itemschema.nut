@@ -2,6 +2,8 @@
 //==========================//
 //========Rebalances========//
 //==========================//
+//-Multiclass-//
+
 
 //-Scout-//
 IncludeScript("solo/weapons/balancing/backscatter.nut")
@@ -46,6 +48,8 @@ IncludeScript("solo/weapons/balancing/yer.nut")
 //=======================//
 //========Reskins========//
 //=======================//
+//-Multiclass-//
+IncludeScript("solo/weapons/reskin/capper.nut") 
 
 //-Scout-//
 IncludeScript("solo/weapons/reskin/threeruneblade.nut") 		// Design stats

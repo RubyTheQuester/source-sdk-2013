@@ -1,49 +1,53 @@
 WeaponData
 {
 	// Attributes Base.
-	"printname"		"#TF_Weapon_Revolver_Secondary"
+	"printname"		"#TF_Weapon_Pistol"
 	"BuiltRightHanded"	"0"
-	"weight"		"3"
+	"weight"		"2"
 	"WeaponType"		"secondary"
 	"ITEM_FLAG_NOITEMPICKUP" 	"1"
 		
 	// Attributes TF.
-	"Damage"			"40"
-	"Range"				"4096"
+	"Damage"		"15"
+	"Range"			"4096"
 	"BulletsPerShot"	"1"
-	"Spread"			"0.025"
-	"TimeFireDelay"		"0.5"
+	"Spread"		"0.04"
+	"TimeFireDelay"		"0.15"
+	"TimeIdle"		"5.0"
+	"TimeIdleEmpty"		"0.25"
+	"TimeReload"		"0.5"
 	"ProjectileType"	"projectile_bullet"
-	"DoInstantEjectBrass"	"0"
-	"HasTeamSkins_Viewmodel"			"1"
+	"BrassModel"		"models/weapons/shells/shell_pistol.mdl"
+	"UseRapidFireCrits"	"1"
 	"TracerEffect"		"bullet_pistol_tracer01"
-
+	"HasTeamSkins_Viewmodel"	"1"
 
 	// Ammo & Clip.
 	"primary_ammo"		"TF_AMMO_SECONDARY"
 	"secondary_ammo"	"None"
-	clip_size			6
-	default_clip		6
+	clip_size		12
+	default_clip		12
 
 	// Buckets.
 	"bucket"		"1"
 	"bucket_position"	"0"
 
 	// Animation.
-	"anim_prefix"		"ac"
-
+	"viewmodel"	"models/weapons/c_models/c_pistol/c_pistol.mdl"
+	"playermodel" "models/weapons/c_models/c_pistol/c_pistol.mdl"
+	"anim_prefix" "ac"
 
 	// Muzzleflash
-	"MuzzleFlashParticleEffect" "muzzle_revolver"
+	"MuzzleFlashParticleEffect" "muzzle_pistol"
 
 	// Sounds.
 	// Max of 16 per category (ie. max 16 "single_shot" sounds).
 	SoundData
 	{
-		"reload"		"Weapon_Revolver.WorldReload"
-		"empty"			"Weapon_Revolver.ClipEmpty"	
-		"single_shot"		"Weapon_Revolver.Single"
-		"burst"			"Weapon_Revolver.SingleCrit"
+		"reload"			"Weapon_Pistol.WorldReload"
+		"empty"			"Weapon_Pistol.ClipEmpty"	
+		"single_shot"		"Weapon_Pistol.Single"
+		"burst"			"Weapon_Pistol.SingleCrit"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.
@@ -76,7 +80,7 @@ WeaponData
 		"crosshair"
 		{
 				"file"		"sprites/crosshairs"
-				"x"			"64"
+				"x"			"0"
 				"y"			"0"
 				"width"		"32"
 				"height"	"32"

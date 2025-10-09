@@ -803,5 +803,16 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		
+		"4022"
+		{
+			"name"	"damage bonus while undisguised"
+			"attribute_class"		"mult_dmg_undisguised"
+			"description_string"	"#Attrib_DmgBonus_Undisguised"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 	}
 }

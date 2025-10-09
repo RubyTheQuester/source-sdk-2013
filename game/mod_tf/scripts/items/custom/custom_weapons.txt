@@ -45,52 +45,9 @@
 				}
 			}
 		}
-		
-		"34447"
-		{
-			"name"	"Deputy"
-			"prefab" " moditem_prefab weapon_revolver_engineer"
-			
-			"propername"		"0"
-			
-			"item_name"		"#TF_Weapon_Deputy"
-			"item_description"	"#TF_Weapon_Deputy_desc"
-			
-						"static_attrs"
-			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
-				"crit_dmg_falloff"			"1"
-				"single wep deploy time decreased"		"0.7"
-				"switch from wep deploy time decreased"	"0.7"
-			}
-			
-			"attributes"
-			{
-					"revolver use hit locations"
-					{
-						"attribute_class"	"set_weapon_mode"
-						"value"	"1"
-					}
-					"damage penalty"
-					{
-						"attribute_class"	"mult_dmg"
-						"value" "0.85"
-					}
-					"fire rate penalty"
-					{
-						"attribute_class"	"mult_postfiredelay"
-						"value"	"1.2"
-					}
-					"crit mod disabled"
-					{
-						"attribute_class"	"mult_crit_chance"
-						"value"	"0"
-					}
-			}
-			
-		}
 	
+		//THIS IS WHERE THE DEPUTY GOES
+		
 		"34448"
 		{
 			"name"	"Ballestar"

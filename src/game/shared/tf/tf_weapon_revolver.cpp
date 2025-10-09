@@ -20,6 +20,7 @@
 //
 // Weapon Revolver tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFRevolver, DT_WeaponRevolver )
 
 BEGIN_NETWORK_TABLE( CTFRevolver, DT_WeaponRevolver )
@@ -42,6 +43,7 @@ END_DATADESC()
 
 //============================
 CREATE_SIMPLE_WEAPON_TABLE(TFRevolver_Secondary, tf_weapon_revolver_secondary)
+//============================
 
 //=============================================================================
 //
