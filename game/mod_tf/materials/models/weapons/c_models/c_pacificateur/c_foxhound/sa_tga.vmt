@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$baseTexture" "weapons\c_items\c_pacificateur\c_foxhound\sa_plain.vtf"
+	"$baseTexture" "models/weapons/c_models/c_pacificateur\c_foxhound\sa_plain.vtf"
 	
 	"$phong" "1"
 	"$phongexponent" "12"

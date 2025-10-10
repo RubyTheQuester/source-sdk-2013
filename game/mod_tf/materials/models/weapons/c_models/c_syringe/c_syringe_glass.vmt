@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"models/weapons/c_syringe/c_syringe_glass"
+	"$basetexture"	"models/weapons/c_models/c_syringe/c_syringe_glass"
 	"$translucent" "1"
 	"$bumpmap"     "models/player/shared/shared_normal"
 	"$nocull" 1

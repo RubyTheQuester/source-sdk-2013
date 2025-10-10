@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/weapons/c_syringe/syringe_inside_blu"
+	"$basetexture" "models/weapons/c_models/c_syringe/syringe_inside_red"
 	"$bumpmap"     "models/player/shared/shared_normal"
 	"$basemapalphaphongmask" "1"
 	

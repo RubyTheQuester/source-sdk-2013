@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/weapons/c_syringe/c_syringe"
+	"$basetexture" "models/weapons/c_models/c_syringe/c_syringe"
 	"$bumpmap" "models/weapons/w_syringe/w_syringe_normal"
 
 	"$phong" "1"

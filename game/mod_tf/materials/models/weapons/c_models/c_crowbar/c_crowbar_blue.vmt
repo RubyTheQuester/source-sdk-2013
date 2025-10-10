@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"models/weapons/c_items/c_crowbar_green"
+	"$basetexture"	"models/weapons/c_models/c_crowbar/c_crowbar_blue"
 	"$surfaceprop"	"default"
-	"$bumpmap"	"models/weapons/c_items/c_crowbar_normal"
+	"$bumpmap"	"models/weapons/c_models/c_crowbar/c_crowbar_normal"
 	"$envmap"	"env_cubemap"
 	"$envmaptint" "[.5 .5 .5]"
 
