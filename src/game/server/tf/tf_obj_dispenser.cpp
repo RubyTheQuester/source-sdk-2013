@@ -123,7 +123,6 @@ CObjectDispenser::CObjectDispenser()
 	m_bThrown = false;
 
 	m_bPlayAmmoPickupSound = true;
-	m_flPrevRadius = -1.f;
 
 	SetType( OBJ_DISPENSER );
 }
@@ -149,6 +148,26 @@ void CObjectDispenser::DetonateObject( void )
 	if ( m_bDying )
 		return;
 
+#ifndef STAGING_ONLY
+	// If we're built, explode for damage
+	if ( IsMiniBuilding() && !IsCarried() && !IsBuilding() && !IsPlacing() )
+	{
+		Vector vecOrigin = GetAbsOrigin();
+		CTraceFilterIgnorePlayers traceFilter( NULL, COLLISION_GROUP_PROJECTILE );
+
+		// base 50 damage, scale by metal amount
+		float flDamage = RemapValClamped( m_iAmmoMetal, 0, MINI_DISPENSER_MAX_METAL, 50.0f, 300.0f );
+		CTakeDamageInfo info( this, GetOwner(), flDamage, DMG_BLAST );
+
+		// Scale blast radius
+		float flRadius = RemapValClamped( m_iAmmoMetal, 0, MINI_DISPENSER_MAX_METAL, 150.0f, 200.0f );
+		CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, flRadius );
+		TFGameRules()->RadiusDamage( radiusinfo );
+
+		CPVSFilter filter( vecOrigin );
+		TE_TFExplosion( filter, 0.0f, vecOrigin, Vector(0,0,0), TF_WEAPON_GRENADE_PIPEBOMB, kInvalidEHandleExplosion, -1, SPECIAL1, INVALID_STRING_INDEX );
+	}
+#endif
 
 	TFGameRules()->OnDispenserDestroyed( this );
 
@@ -209,6 +228,13 @@ void CObjectDispenser::FirstSpawn()
 //-----------------------------------------------------------------------------
 const char* CObjectDispenser::GetBuildingModel( int iLevel )
 {
+#ifndef STAGING_ONLY
+	if ( ShouldBeMiniBuilding( GetOwner() ) )
+	{
+		return MINI_DISPENSER_MODEL_BUILDING;
+	}
+	else
+#endif // STAGING_ONLY
 	{
 		switch ( iLevel )
 		{
@@ -236,6 +262,13 @@ const char* CObjectDispenser::GetBuildingModel( int iLevel )
 //-----------------------------------------------------------------------------
 const char* CObjectDispenser::GetFinishedModel( int iLevel )
 {
+#ifndef STAGING_ONLY
+	if ( IsMiniBuilding() )
+	{
+		return MINI_DISPENSER_MODEL;
+	}
+	else
+#endif // STAGING_ONLY
 	{
 		switch ( iLevel )
 		{
@@ -357,9 +390,15 @@ void CObjectDispenser::SetModel( const char *pModel )
 	BaseClass::SetModel( pModel );
 
 		// Reset this after model change
+#ifndef STAGING_ONLY
+		UTIL_SetSize(this,
+			IsMiniBuilding() ? MINI_DISPENSER_MINS : DISPENSER_MINS,
+			IsMiniBuilding() ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
+#else
 		UTIL_SetSize( this,
 			DISPENSER_MINS,
 			DISPENSER_MAXS );
+#endif // STAGING_ONLY
 	ResetSequenceInfo();
 }
 
@@ -376,7 +415,13 @@ void CObjectDispenser::InitializeMapPlacedObject( void )
 
 bool CObjectDispenser::ShouldBeMiniBuilding( CTFPlayer* pPlayer )
 {
+#ifndef STAGING_ONLY
+	int nMiniDispenserEnabled = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwner(), nMiniDispenserEnabled, allows_building_mini_dispenser );
+	return nMiniDispenserEnabled != 0;
+#else
 	return false;
+#endif // STAGING_ONLY
 }
 
 //-----------------------------------------------------------------------------
@@ -384,6 +429,10 @@ bool CObjectDispenser::ShouldBeMiniBuilding( CTFPlayer* pPlayer )
 //-----------------------------------------------------------------------------
 int CObjectDispenser::GetMaxUpgradeLevel()
 {
+#ifndef STAGING_ONLY
+	if ( IsMiniBuilding() )
+		return DISPENSER_MINI_MAX_LEVEL;
+#endif // STAGING_ONLY
 
 	return BaseClass::GetMaxUpgradeLevel();
 }
@@ -500,6 +549,11 @@ void CObjectDispenser::Precache()
 	iModelIndex = PrecacheModel( DISPENSER_MODEL_LVL3 );
 	PrecacheGibsForModel( iModelIndex );
 
+#ifndef STAGING_ONLY
+	PrecacheGibsForModel( PrecacheModel( MINI_DISPENSER_MODEL_PLACEMENT ) );
+	PrecacheGibsForModel( PrecacheModel( MINI_DISPENSER_MODEL_BUILDING ) );
+	PrecacheGibsForModel( PrecacheModel( MINI_DISPENSER_MODEL ) );
+#endif // STAGING_ONLY
 
 	PrecacheVGuiScreen( "screen_obj_dispenser_blue" );
 	PrecacheVGuiScreen( "screen_obj_dispenser_red" );
@@ -526,7 +580,11 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 	int nNoPrimaryAmmoFromDispensersWhileActive = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer->GetActiveWeapon(), nNoPrimaryAmmoFromDispensersWhileActive, no_primary_ammo_from_dispensers );
 
+#ifndef STAGING_ONLY
+	float flAmmoRate = IsMiniBuilding() ? DISPENSER_MINI_AMMO_RATE : g_flDispenserAmmoRates[GetUpgradeLevel()];
+#else
 	float flAmmoRate = g_flDispenserAmmoRates[GetUpgradeLevel()];
+#endif
 
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetBuilder(), flAmmoRate, mult_dispenser_rate );
 
@@ -638,20 +696,54 @@ void CObjectDispenser::DispenseThink( void )
 		return;
 	}
 	
-	if ( GetOwner() )
-	{
-		float flRadius = GetDispenserRadius();
-		if ( ( flRadius != m_flPrevRadius ) && m_hTouchTrigger.Get() )
-		{
-			m_hTouchTrigger->SetAbsOrigin( WorldSpaceCenter() );
-			UTIL_SetSize( m_hTouchTrigger.Get(), Vector( -flRadius, -flRadius, -flRadius ), Vector( flRadius, flRadius, flRadius ) );
-			m_flPrevRadius = flRadius;
-		}
-	}	
+	float flRadius = GetDispenserRadius();
 
-	// time to dispense ammo?
-	bool bDispenseAmmo = ( m_flNextAmmoDispense <= gpGlobals->curtime );
-	bool bPlayerReceivedAmmo = false;
+	if ( m_flNextAmmoDispense <= gpGlobals->curtime )
+	{
+		int iNumNearbyPlayers = 0;
+
+		if ( GetOwner() )
+		{
+			// find players in sphere, that are visible
+			if ( ( flRadius != m_flPrevRadius ) && m_hTouchTrigger.Get() )
+			{
+				UTIL_SetSize( m_hTouchTrigger.Get(), Vector( -flRadius, -flRadius, -flRadius ), Vector( flRadius, flRadius, flRadius ) );	
+			}
+		}
+
+		m_flPrevRadius = flRadius;
+
+		Vector vecOrigin = GetAbsOrigin() + Vector(0,0,32);
+
+		CBaseEntity *pListOfNearbyEntities[32];
+		int iNumberOfNearbyEntities = UTIL_EntitiesInSphere( pListOfNearbyEntities, ARRAYSIZE( pListOfNearbyEntities ), vecOrigin, flRadius, FL_CLIENT );
+		for ( int i=0;i<iNumberOfNearbyEntities;i++ )
+		{
+			CTFPlayer *pPlayer = ToTFPlayer( pListOfNearbyEntities[i] );
+
+			if ( !pPlayer || !pPlayer->IsAlive() )
+				continue;
+
+			if ( pPlayer->GetTeamNumber() != GetTeamNumber() )
+			{
+				if ( !pPlayer->IsPlayerClass( TF_CLASS_SPY ) || ( pPlayer->m_Shared.GetDisguiseTeam() != GetTeamNumber() ) )
+					continue;
+			}
+
+			DispenseAmmo( pPlayer );
+
+			iNumNearbyPlayers++;
+		}
+
+		// Try to dispense more often when no players are around so we 
+		// give it as soon as possible when a new player shows up
+#ifndef STAGING_ONLY
+		float flNextAmmoDelay = IsMiniBuilding() ? DISPENSER_MINI_AMMO_THINK : 1.0;
+#else
+		float flNextAmmoDelay = 1.0;
+#endif
+		m_flNextAmmoDispense = gpGlobals->curtime + ( ( iNumNearbyPlayers > 0 ) ? flNextAmmoDelay : 0.1 );
+	}	
 
 	// for each player in touching list
 	int iSize = m_hTouchingEntities.Count();
@@ -668,7 +760,7 @@ void CObjectDispenser::DispenseThink( void )
 				continue;
 
 			// stop touching and healing a dead entity, or one that is grossly out of range (EndTouch() can be flakey)
-			float flDistSqr = ( m_hTouchTrigger->WorldSpaceCenter() - pEnt->WorldSpaceCenter() ).LengthSqr();
+			float flDistSqr = (m_hTouchTrigger->WorldSpaceCenter() - pEnt->WorldSpaceCenter()).LengthSqr();
 			Vector vecMins, vecMaxs;
 			m_hTouchTrigger->GetCollideable()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
 			float flDoubleRadiusSqr = ( vecMaxs - vecMins ).LengthSqr();
@@ -684,7 +776,6 @@ void CObjectDispenser::DispenseThink( void )
 			bool bHealingTarget = IsHealingTarget( pEnt );
 			bool bValidHealTarget = CouldHealTarget( pEnt );
 
-			// handle healing
 			if ( bHealingTarget && !bValidHealTarget )
 			{
 				// if we can't see them, remove them from healing list
@@ -697,24 +788,7 @@ void CObjectDispenser::DispenseThink( void )
 				// does nothing if we are healing them already
 				StartHealing( pEnt );
 			}	
-
-			// handle ammo
-			if ( bDispenseAmmo && bValidHealTarget )
-			{
-				if ( DispenseAmmo( ToTFPlayer( pEnt ) ) )
-				{
-					bPlayerReceivedAmmo = true;
-				}
-			}
 		}
-	}
-
-	if ( bDispenseAmmo )
-	{
-		// Try to dispense more often when no players are around so we 
-		// give it as soon as possible when a new player shows up
-		float flNextAmmoDelay = 1.0;
-		m_flNextAmmoDispense = gpGlobals->curtime + ( bPlayerReceivedAmmo ? flNextAmmoDelay : 0.1 );
 	}
 
 	if ( bIsAnyTeammateTouching )
@@ -834,7 +908,11 @@ void CObjectDispenser::ResetHealingTargets( void )
 //-----------------------------------------------------------------------------
 float CObjectDispenser::GetHealRate() const
 {
+#ifndef STAGING_ONLY
+	float flHealRate = IsMiniBuilding() ? DISPENSER_MINI_HEAL_RATE : g_flDispenserHealRates[GetUpgradeLevel()];
+#else
 	float flHealRate = g_flDispenserHealRates[GetUpgradeLevel()];
+#endif
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetBuilder(), flHealRate, mult_dispenser_rate );
 
 	return flHealRate;
@@ -855,8 +933,8 @@ void CObjectDispenser::StartHealing( CBaseEntity *pOther )
 	if ( pPlayer )
 	{
 		float flHealRate = GetHealRate();
-		float flOverhealBonus = 1.f;
-		pPlayer->m_Shared.Heal( this, flHealRate, flOverhealBonus, 1.f, true, GetBuilder() );
+		float flOverhealBonus = 1.0;
+		pPlayer->m_Shared.Heal( this, flHealRate, flOverhealBonus, 1.0, true, GetBuilder() );
 	}
 }
 
@@ -874,7 +952,7 @@ void CObjectDispenser::StopHealing( CBaseEntity *pOther )
 			float flHealingDone = pPlayer->m_Shared.StopHealing( this );
 			if ( GetBuilder() && pOther != GetBuilder() && flHealingDone > 0 )
 			{
-				//GetBuilder()->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DISPENSER_HEAL_GRIND, floor( flHealingDone ) );
+				GetBuilder()->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_DISPENSER_HEAL_GRIND, floor( flHealingDone ) );
 
 				if ( GetBuilder()->GetTeam() == pOther->GetTeam() )
 				{
@@ -892,15 +970,12 @@ void CObjectDispenser::StopHealing( CBaseEntity *pOther )
 	}
 }
 
-// Josh: Basically everything except grating.
-#define MASK_DISPENSER (MASK_BLOCKLOS | CONTENTS_WINDOW)
-
 //-----------------------------------------------------------------------------
 // Purpose: Is this a valid heal target? and not already healing them?
 //-----------------------------------------------------------------------------
 bool CObjectDispenser::CouldHealTarget( CBaseEntity *pTarget )
 {
-	if ( !HasSpawnFlags( SF_DISPENSER_IGNORE_LOS ) && !pTarget->FVisible( this, MASK_DISPENSER ) )
+	if ( !HasSpawnFlags( SF_DISPENSER_IGNORE_LOS ) && !pTarget->FVisible( this, MASK_BLOCKLOS ) )
 		return false;
 
 	if ( pTarget->IsPlayer() && pTarget->IsAlive() )
