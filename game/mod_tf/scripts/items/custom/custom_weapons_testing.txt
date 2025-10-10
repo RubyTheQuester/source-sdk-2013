@@ -61,6 +61,8 @@
 			
 			"customitem" "1"
 			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
 			"used_by_classes"
 			{
 				"sniper"		"1"

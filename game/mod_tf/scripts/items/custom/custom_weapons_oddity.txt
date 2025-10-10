@@ -11,6 +11,8 @@
 			
 			"propername"		"1"
 			
+			"image_inventory"	"backpack/crafting/token_melee"
+			
 			"attributes"
 			{
 				"disguise_as_dispenser_on_crouch"
@@ -34,6 +36,8 @@
 			"item_name"	"#TF_FT_ReflectAmmo"
 			
 			"propername"	"1"
+			
+			"image_inventory"	"backpack/crafting/token_primary"
 			
 			"attributes"
 			{
@@ -65,6 +69,8 @@
 
 			"item_name"			"#TF_Healer_Sapper"
 			"item_description"	"#TF_Healer_Sapper_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_pda"
 			
 			"propername"		"1"
 			
@@ -103,9 +109,7 @@
 			
 			"propername"		"1"
 			
-			"image_inventory"				"backpack/weapons/w_models/w_builder"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
+			"image_inventory"				"backpack/crafting/token_pda"
 			"model_player"					"models/weapons/c_models/c_builder/c_builder.mdl"
 			
 			"used_by_classes"
@@ -121,6 +125,41 @@
 					"value" 	"1" 
 				}
 			}
+		}
+		
+		"50004"
+		{
+			"name"	"The Decoy"
+			"prefab"		"moditem_oddity_prefab"
+			"item_class"	"tf_weapon_decoy"
+
+			"item_name"			"#TF_Decoy"
+			"item_description"	"#TF_Decoy_Desc"
+			
+			"item_type_name"	"#TF_Weapon_Spy_Sapper"
+			
+			"item_slot"	"building"
+			"anim_slot"	"melee"
+			"attach_to_hands"	"1"
+			
+			"image_inventory"	"backpack/crafting/token_pda"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models/weapons/c_models/c_knife/c_knife.mdl"
+			
+			"used_by_classes"
+			{
+				"spy"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"8 0 -6"	
+			}
+			
+			"mouse_pressed_sound"	"ui/item_watch_pickup.wav"
+			"drop_sound"		"ui/item_watch_drop.wav"
 		}
 	}
 }

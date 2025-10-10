@@ -207,8 +207,8 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 
 	int numFound = 0;
 
-	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD 
-		|| tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDEFENSE )
+	if ( tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_CTF || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_PD )
+		//|| tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDAMAGE || tf_gamemode_override.GetInt() == TF_GAMEMODEOVERRIDE_TFSOLO_PROPERTYDEFENSE )
 	{
 		while ( pEnt )
 		{

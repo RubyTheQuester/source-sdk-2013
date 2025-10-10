@@ -56,12 +56,13 @@ void CTFDecoy::PrimaryAttack( void )
 		return;
 
 	CBotNPCDecoy *decoy = (CBotNPCDecoy *)CreateEntityByName( "bot_npc_decoy" );
+
 	if ( decoy )
 	{
 		decoy->SetOwnerEntity( pOwner );
 		DispatchSpawn( decoy );
 
-		m_flNextPrimaryAttack = gpGlobals->curtime + 5.0f;
+		m_flNextPrimaryAttack = gpGlobals->curtime + 1.0f;
 	}
 #endif // CLIENT_DLL
 }

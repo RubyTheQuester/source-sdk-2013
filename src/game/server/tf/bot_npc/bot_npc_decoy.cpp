@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+	//========= Copyright Valve Corporation, All rights reserved. ============//
 // bot_npc_decoy.cpp
 // A NextBot non-player decoy that imitates a real player
 // Michael Booth, January 2011
@@ -10,6 +10,9 @@
 #include "nav_mesh/tf_nav_area.h"
 #include "bot_npc_decoy.h"
 #include "econ_wearable.h"
+#include "ndebugoverlay.h"
+#include "te_effect_dispatch.h"
+#include "tf_fx.h"
 
 LINK_ENTITY_TO_CLASS( bot_npc_decoy, CBotNPCDecoy );
 PRECACHE_REGISTER( bot_npc_decoy );
@@ -211,14 +214,21 @@ public:
 
 	virtual ActionResult< CBotNPCDecoy > Update( CBotNPCDecoy *me, float interval )
 	{
+		CTFPlayer* owner = ToTFPlayer(me->GetOwnerEntity());
+
 		if ( m_timer.IsElapsed() )
 		{
-			// we're out of time
+#ifdef GAME_DLL
+			int ownerTeam = owner->m_Shared.InCond(TF_COND_DISGUISED) ? owner->m_Shared.GetDisguiseTeam() : owner->GetTeamNumber();
+
+			CPVSFilter filter(me->GetAbsOrigin() );
+			TE_TFParticleEffect(filter, 0.0, ownerTeam == TF_TEAM_RED ? "spell_pumpkin_mirv_goop_red" : "spell_pumpkin_mirv_goop_blue", me->GetAbsOrigin(), vec3_angle);
+#endif // GAME_DLL
+
 			UTIL_Remove( me );
 			return Done( "Lifetime expired" );
 		}
 
-		CTFPlayer *owner = ToTFPlayer( me->GetOwnerEntity() );
 		if ( !owner )
 		{
 			UTIL_Remove( me );
@@ -226,11 +236,16 @@ public:
 		}
 
 		Vector forward;
+		//me->EyeVectors(&forward);
+		forward.z = 0.0f;
+		forward.NormalizeInPlace();
 		me->GetVectors( &forward, NULL, NULL );
 
 		me->GetLocomotionInterface()->SetDesiredSpeed( FLT_MAX );	// this is just a rate limiter
 		me->GetLocomotionInterface()->Run();
-		me->GetLocomotionInterface()->Approach( me->GetAbsOrigin() + 100.0f * forward );
+		me->GetLocomotionInterface()->Approach( me->GetAbsOrigin() + (100.0f * forward) );
+
+		NDebugOverlay::Cross3D( (me->GetAbsOrigin() + 100.0f * forward), 32, 255, 255, 255, false, 1.0);
 
 		return Continue();
 	}

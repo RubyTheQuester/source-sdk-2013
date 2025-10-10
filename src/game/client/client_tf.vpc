@@ -671,6 +671,8 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\shared\tf\tf_weapon_mechanical_arm.h"
 				$File	"$SRCDIR\game\shared\tf\tf_weapon_rocketpack.cpp"
 				$File	"$SRCDIR\game\shared\tf\tf_weapon_rocketpack.h"
+				$File	"$SRCDIR\game\shared\tf\tf_weapon_decoy.cpp"
+				$File	"$SRCDIR\game\shared\tf\tf_weapon_decoy.h"
 			}
 
 			$Folder	"Economy"
