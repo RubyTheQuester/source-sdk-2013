@@ -293,7 +293,7 @@ const char* CObjectDispenser::GetFinishedModel( int iLevel )
 
 const char* CObjectDispenser::GetPlacementModel()
 {
-	return /*IsMiniBuilding() ? MINI_DISPENSER_MODEL_PLACEMENT :*/ DISPENSER_MODEL_PLACEMENT;
+	return IsMiniBuilding() ? MINI_DISPENSER_MODEL_PLACEMENT : DISPENSER_MODEL_PLACEMENT;
 }
 
 void CObjectDispenser::StartPlacement( CTFPlayer *pPlayer )
