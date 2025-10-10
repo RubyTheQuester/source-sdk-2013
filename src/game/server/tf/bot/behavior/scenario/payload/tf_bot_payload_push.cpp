@@ -58,17 +58,11 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 	}
 
 	CBaseEntity *cart = trainWatcher->GetTrainEntity();
-	/*
-	if ( !cart )
-	{
-		return Continue();
-	}
-	*/
 
 	if ( !trainWatcher->IsHandlingTrainMovement() )
 	{
 		bool bFoundCapzone = false;
-		for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+		for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
 		{
 			CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture *>( ITriggerAreaCaptureAutoList::AutoList()[i] );
 			if ( pArea->IsActive() && !pArea->IsBlocked() && pArea->TeamCanCap( me->GetTeamNumber() ) )
@@ -78,12 +72,12 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 				break;
 			}
 		}
-		if (!bFoundCapzone)
+		if ( !bFoundCapzone )
 		{
-			for (int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i)
+			for ( int i = 0; i < ITriggerAreaCaptureAutoList::AutoList().Count(); ++i )
 			{
-				CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>(ITriggerAreaCaptureAutoList::AutoList()[i]);
-				if (pArea->TeamCanCap(me->GetTeamNumber()))
+				CTriggerAreaCapture* pArea = static_cast<CTriggerAreaCapture*>( ITriggerAreaCaptureAutoList::AutoList()[i] );
+				if ( pArea->TeamCanCap(me->GetTeamNumber() ) )
 				{
 					cart = pArea;
 					bFoundCapzone = true;
@@ -91,6 +85,11 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 				}
 			}
 		}
+	}
+
+	if ( !cart )
+	{
+		return Continue();
 	}
 
 	// move toward the point, periodically repathing to account for changing situation

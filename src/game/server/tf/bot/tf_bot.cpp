@@ -43,13 +43,13 @@
 #include "bot/map_entities/tf_bot_hint_entity.h"
 #include "func_passtime_goal.h"
 #include "tf_item_powerup_bottle.h"
+//#include "solo/propertydamage_prop.h"
 
 ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a class name, all TFBots will respawn as that class" );
 
 ConVar tf_bot_notice_gunfire_range( "tf_bot_notice_gunfire_range", "3000", FCVAR_GAMEDLL );
 ConVar tf_bot_notice_quiet_gunfire_range( "tf_bot_notice_quiet_gunfire_range", "500", FCVAR_GAMEDLL );
 ConVar tf_bot_sniper_personal_space_range( "tf_bot_sniper_personal_space_range", "1000", FCVAR_CHEAT, "Enemies beyond this range don't worry the Sniper" );
-ConVar tf_bot_pyro_deflect_tolerance( "tf_bot_pyro_deflect_tolerance", "0.5", FCVAR_CHEAT );
 ConVar tf_bot_keep_class_after_death( "tf_bot_keep_class_after_death", "0", FCVAR_GAMEDLL );
 ConVar tf_bot_prefix_name_with_difficulty( "tf_bot_prefix_name_with_difficulty", "0", FCVAR_GAMEDLL, "Append the skill level of the bot to the bot's name" );
 ConVar tf_bot_near_point_travel_distance( "tf_bot_near_point_travel_distance", "750", FCVAR_CHEAT, "If within this travel distance to the current point, bot is 'near' it" );
@@ -2327,9 +2327,12 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 		}
 
 		// Flag is being used as a workaround
-		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION && flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+		if ( flag->GetType() == TF_FLAGTYPE_PLAYER_DESTRUCTION )
 		{
-			continue;
+			if ( flag->GetPrevOwner() && FClassnameIs( flag->GetPrevOwner(), "worldspawn" ) )
+				continue;
+			if ( !V_strcmp( STRING( flag->GetModelName() ), "models/empty.mdl" ) )
+				continue;
 		}
 
 		switch( flag->GetType() )
@@ -3758,6 +3761,21 @@ float CTFBot::GetDesiredAttackRange( void ) const
 // If we're required to equip a specific weapon, do it.
 bool CTFBot::EquipRequiredWeapon( void )
 {
+	if ( GetLocomotionInterface()->IsUsingLadder() )
+	{
+		if ( TFGameRules()->IsUsingGrapplingHook() )
+		{
+			// Mannpower - using grappling hook to climb ladder areas
+			Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_ITEM1 ) );
+		}
+		else
+		{
+			// Versus Saxton Hale (Community) - using Brave Jump or melee hits to climb ladder areas
+			Weapon_Switch( Weapon_GetSlot( TF_WPN_TYPE_MELEE ) );
+		}
+		return true;
+	}
+
 	// if we have a required weapon on our stack, it takes precedence (items, etc)
 	if ( m_requiredWeaponStack.Count() )
 	{

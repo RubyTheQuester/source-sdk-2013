@@ -47,6 +47,11 @@
 			
 			"attributes"
 			{
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "1.25"
+				}
 				"minicrit_boost_charge_rate"
 				{
 					"attribute_class" "minicrit_boost_charge_rate"

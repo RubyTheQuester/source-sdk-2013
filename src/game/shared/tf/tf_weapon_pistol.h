@@ -110,8 +110,9 @@ public:
 
 //=============================================================================
 //
-// TF Weapon Charged Sub-machine gun.
+// TF Weapon Capper.
 //
+//=============================================================================
 class CTFChargedPistol : public CTFPistol
 {
 public:
@@ -119,9 +120,12 @@ public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
+#ifndef CAPPER_1
 	// Server specific.
 #ifdef GAME_DLL
 	DECLARE_DATADESC();
+#endif
+
 #endif
 
 	CTFChargedPistol() {}
@@ -129,14 +133,34 @@ public:
 
 	virtual int		GetWeaponID(void) const { return TF_WEAPON_PISTOL_CHARGE; }
 
-	const char* GetEffectLabelText(void) { return "#TF_PistolCharge"; }
+	const char*		GetEffectLabelText(void) { return "#TF_Capper"; }
 	float			GetProgress(void);
+	virtual bool	IsEnergyWeapon(void) const { return true; }
+
+#ifndef CAPPER_1
 	bool			ShouldFlashChargeBar();
 	void			SecondaryAttack() OVERRIDE;
 	bool			CanPerformSecondaryAttack() const OVERRIDE;
 	void			WeaponReset() OVERRIDE;
+#else
+	virtual void		PrimaryAttack(void);
+	virtual void		ModifyProjectile(CBaseEntity* pProj);
 
-	virtual bool		IsEnergyWeapon(void) const { return true; }
+	virtual float		Energy_GetShotCost(void) const
+	{
+		int iNoDrain = 0;
+		CALL_ATTRIB_HOOK_INT(iNoDrain, energy_weapon_no_drain);
+		if (iNoDrain > 0)
+		{
+			return 0.0f;
+		}
+
+		return 1.f;
+	}
+	virtual float		Energy_GetRechargeCost(void) const { return 20.f; }
+#endif
+
+#ifndef CAPPER_1
 
 #ifdef GAME_DLL
 	void	ApplyOnHitAttributes( CBaseEntity* pVictimBaseEntity, CTFPlayer* pAttacker, const CTakeDamageInfo& info ) OVERRIDE;
@@ -146,6 +170,8 @@ protected:
 	CNetworkVar( float, m_flMinicritCharge );
 
 	float m_flMinicritStartTime;
+
+#endif
 
 private:
 	CTFChargedPistol( const CTFChargedPistol& ) {}

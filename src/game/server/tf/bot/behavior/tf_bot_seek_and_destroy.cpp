@@ -204,13 +204,20 @@ CTFNavArea *CTFBotSeekAndDestroy::ChooseGoalArea( CTFBot *me )
 	}
 
 	// Go somewhere already
-	int count = TheTFNavMesh()->GetNavAreaCount();
-	auto carea = TheTFNavMesh()->GetNavAreaByID( RandomInt( 0, count - 1 ) );
-	if ( carea )
+	int count = TheNavAreas.Count();
+	if ( count > 0 )
 	{
-		CTFNavArea* area = static_cast<CTFNavArea*>( carea );
-		goalVector.AddToTail( area );
-		m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+		auto carea = TheNavAreas[ RandomInt( 0, count - 1 ) ];
+		if ( carea )
+		{
+			CTFNavArea* area = static_cast<CTFNavArea*>( carea );
+			goalVector.AddToTail( area );
+			m_repathRandTimer.Start( RandomFloat( 15.0f, 25.0f ) );
+		}
+		else
+		{
+			m_repathRandTimer.Start( RandomFloat( 3.0f, 7.0f ) );
+		}
 	}
 	else
 	{

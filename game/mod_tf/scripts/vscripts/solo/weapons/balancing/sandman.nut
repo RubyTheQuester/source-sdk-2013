@@ -13,5 +13,10 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a1.SetString("attribute_class","mult_postfiredelay")
 	a1.SetFloat("value",1.5)
 	
+	// Test
+	local a2 = attrib.GetKey("crit mod disabled", true)
+	a2.SetString("attribute_class","mult_crit_chance")
+	a2.SetFloat("value", 0)
+	
 	prefab.SetString("item_quality","moditem_rebalance")
 })

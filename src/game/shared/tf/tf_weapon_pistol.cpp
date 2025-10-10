@@ -8,7 +8,7 @@
 #include "in_buttons.h"
 #include "tf_gamerules.h"
 
-static const float DAMAGE_TO_FILL_MINICRIT_METER = 100.0f;
+static const float DAMAGE_TO_FILL_MINICRIT_METER = 200.0f;
 
 // Client specific.
 #ifdef CLIENT_DLL
@@ -66,8 +66,8 @@ LINK_ENTITY_TO_CLASS( tf_weapon_handgun_scout_primary, CTFPistol_ScoutPrimary );
 PRECACHE_WEAPON_REGISTER( tf_weapon_handgun_scout_primary );
 
 //============================
-// ---------- Charged SMG -------------
-
+// ---------- Capper -------------
+#ifndef CAPPER_1
 IMPLEMENT_NETWORKCLASS_ALIASED(TFChargedPistol, DT_WeaponChargedPistol)
 
 BEGIN_NETWORK_TABLE(CTFChargedPistol, DT_WeaponChargedPistol)
@@ -95,6 +95,18 @@ END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS(tf_weapon_pistol_charge, CTFChargedPistol);
 PRECACHE_WEAPON_REGISTER(tf_weapon_pistol_charge);
+#else
+IMPLEMENT_NETWORKCLASS_ALIASED( TFChargedPistol, DT_WeaponChargedPistol )
+
+BEGIN_NETWORK_TABLE( CTFChargedPistol, DT_WeaponChargedPistol )
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFChargedPistol )
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_pistol_charge, CTFChargedPistol );
+PRECACHE_WEAPON_REGISTER( tf_weapon_pistol_charge );
+#endif
 //============================
 
 
@@ -295,26 +307,12 @@ int	CTFPistol_ScoutSecondary::GetDamageType( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	Determine if secondary fire is available.
-//-----------------------------------------------------------------------------
-bool CTFChargedPistol::CanPerformSecondaryAttack() const
-{
-	return (m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER && BaseClass::CanPerformSecondaryAttack());
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Determine whether to flash the HUD element showing the charge bar
-//-----------------------------------------------------------------------------
-bool CTFChargedPistol::ShouldFlashChargeBar()
-{
-	return m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER;
-}
-
-//-----------------------------------------------------------------------------
 // Purpose: Get HUD charge bar progress amount
 //-----------------------------------------------------------------------------
 float CTFChargedPistol::GetProgress(void)
 {
+
+#ifndef CAPPER_1
 	// Progress bar shows charge amount if we're charging up, otherwise drains over time if we're mini-crit boosted.
 	CTFPlayer* pPlayer = ToTFPlayer(GetOwner());
 	if (pPlayer && pPlayer->m_Shared.InCond(TF_COND_ENERGY_BUFF))
@@ -336,8 +334,27 @@ float CTFChargedPistol::GetProgress(void)
 	{
 		return m_flMinicritCharge / DAMAGE_TO_FILL_MINICRIT_METER;
 	}
+#else
+	return Energy_GetEnergy() / Energy_GetMaxEnergy();
+#endif
 }
 
+#ifndef CAPPER_1
+//-----------------------------------------------------------------------------
+// Purpose:	Determine if secondary fire is available.
+//-----------------------------------------------------------------------------
+bool CTFChargedPistol::CanPerformSecondaryAttack() const
+{
+	return (m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER && BaseClass::CanPerformSecondaryAttack());
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Determine whether to flash the HUD element showing the charge bar
+//-----------------------------------------------------------------------------
+bool CTFChargedPistol::ShouldFlashChargeBar()
+{
+	return m_flMinicritCharge >= DAMAGE_TO_FILL_MINICRIT_METER;
+}
 //-----------------------------------------------------------------------------
 // Purpose: Reset weapon state
 //-----------------------------------------------------------------------------
@@ -393,4 +410,25 @@ void CTFChargedPistol::ApplyOnHitAttributes(CBaseEntity* pVictimBaseEntity, CTFP
 		}
 	}
 }
+#endif
+#else
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFChargedPistol::PrimaryAttack(void)
+{
+	if (!Energy_HasEnergy())
+		return;
+
+	BaseClass::PrimaryAttack();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFChargedPistol::ModifyProjectile(CBaseEntity* pProj)
+{
+	Energy_DrainEnergy();
+}
+
 #endif
