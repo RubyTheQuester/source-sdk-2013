@@ -245,7 +245,7 @@ public:
 		me->GetLocomotionInterface()->Run();
 		me->GetLocomotionInterface()->Approach( me->GetAbsOrigin() + (100.0f * forward) );
 
-		NDebugOverlay::Cross3D( (me->GetAbsOrigin() + 100.0f * forward), 32, 255, 255, 255, false, 1.0);
+		NDebugOverlay::Cross3D( (me->GetAbsOrigin() + 100.0f * forward), 16, 255, 255, 255, false, 0.5);
 
 		return Continue();
 	}

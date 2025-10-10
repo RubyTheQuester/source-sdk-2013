@@ -31,6 +31,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( tf_weapon_decoy, CTFDecoy );
 PRECACHE_WEAPON_REGISTER( tf_weapon_decoy );
 
+ConVar tf_decoy_delay("tf_decoy_delay", "1", FCVAR_CHEAT, "The delay being able to send a decoy, in seconds");
 
 //-----------------------------------------------------------------------------
 CTFDecoy::CTFDecoy()
@@ -62,7 +63,7 @@ void CTFDecoy::PrimaryAttack( void )
 		decoy->SetOwnerEntity( pOwner );
 		DispatchSpawn( decoy );
 
-		m_flNextPrimaryAttack = gpGlobals->curtime + 1.0f;
+		m_flNextPrimaryAttack = gpGlobals->curtime + tf_decoy_delay.GetFloat();
 	}
 #endif // CLIENT_DLL
 }
