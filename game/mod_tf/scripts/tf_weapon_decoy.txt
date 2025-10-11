@@ -15,7 +15,7 @@
 	"MeleeWeapon"			"1"	// so we can always attack
 
 	// Buckets.	
-	"bucket"			"4"
+	"bucket"			"0"
 	"bucket_position"		"0"
 
 	// Model & Animation

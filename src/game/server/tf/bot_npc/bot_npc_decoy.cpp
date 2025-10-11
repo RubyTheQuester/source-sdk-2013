@@ -222,7 +222,13 @@ public:
 			int ownerTeam = owner->m_Shared.InCond(TF_COND_DISGUISED) ? owner->m_Shared.GetDisguiseTeam() : owner->GetTeamNumber();
 
 			CPVSFilter filter(me->GetAbsOrigin() );
-			TE_TFParticleEffect(filter, 0.0, ownerTeam == TF_TEAM_RED ? "spell_pumpkin_mirv_goop_red" : "spell_pumpkin_mirv_goop_blue", me->GetAbsOrigin(), vec3_angle);
+			TE_TFParticleEffect(filter, 0.0, ownerTeam == TF_TEAM_RED ? "spy_start_disguise_red" : "spy_start_disguise_blue", me->GetAbsOrigin(), vec3_angle);
+
+			//const char* pEffectName = (ownerTeam == TF_TEAM_RED) ? "spy_start_disguise_red" : "spy_start_disguise_blue";
+			//me->m_pDisguisingEffect = me->ParticleProp()->Create(pEffectName, PATTACH_ABSORIGIN_FOLLOW);
+			//me->m_flDisguiseEffectStartTime = gpGlobals->curtime;
+
+			me->EmitSound("Player.Spy_Disguise");
 #endif // GAME_DLL
 
 			UTIL_Remove( me );
