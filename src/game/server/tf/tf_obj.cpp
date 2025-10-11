@@ -1963,6 +1963,18 @@ int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(info.GetWeapon());
 	if ( pWeapon )
 	{
+#ifndef STAGING_ONLY		
+		// Attacker has building disabling properties
+		float flDisablingAttack = 0.0f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flDisablingAttack, disable_buildings_on_hit );
+		if ( flDisablingAttack )
+		{
+			// do not override if existing time is longer
+			m_flPlasmaDisableTime = Max( gpGlobals->curtime + flDisablingAttack, m_flPlasmaDisableTime );
+			m_bPlasmaDisable = true;
+			UpdateDisabledState();
+		}
+#endif // STAGING_ONLY
 
 		// Apply attributes that increase damage vs buildings
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flDamage, mult_dmg_vs_buildings );

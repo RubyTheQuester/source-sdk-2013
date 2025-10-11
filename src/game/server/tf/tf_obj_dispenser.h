@@ -82,9 +82,9 @@ public:
 
 #ifndef STAGING_ONLY
 // Mini models
-#define MINI_DISPENSER_MODEL_PLACEMENT		"models/workshop/buildables/mini_dispenser/mini_dispenser.mdl"
-#define MINI_DISPENSER_MODEL_BUILDING		"models/workshop/buildables/mini_dispenser/mini_dispenser.mdl"
-#define MINI_DISPENSER_MODEL				"models/workshop/buildables/mini_dispenser/mini_dispenser.mdl"
+#define MINI_DISPENSER_MODEL_PLACEMENT		"models/buildables/dispenser_blueprint_mini.mdl"
+#define MINI_DISPENSER_MODEL_BUILDING		"models/buildables/dispenser_mini.mdl"
+#define MINI_DISPENSER_MODEL				"models/buildables/dispenser_light_mini.mdl"
 #endif // STAGING_ONLY
 
 // ------------------------------------------------------------------------ //

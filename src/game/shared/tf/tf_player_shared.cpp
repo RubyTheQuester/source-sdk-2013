@@ -11481,6 +11481,31 @@ int CTFPlayerShared::CalculateObjectCost( CTFPlayer* pBuilder, int iObjectType )
 	}
 	
 
+#ifndef STAGING_ONLY	
+	// Mini dispensers are 30 metal cheaper
+
+	/*
+	CTFWeaponPDA* pPDA = dynamic_cast<CTFWeaponPDA*>( pBuilder->Weapon_OwnsThisID( TF_WEAPON_WRENCH ) );
+	if ( pPDA && pPDA->IsMiniPDA() && ( iObjectType == OBJ_DISPENSER) )
+	*/
+
+	int nMiniDispenserEnabled = 0;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, nMiniDispenserEnabled, allows_building_mini_dispenser);
+
+	if ( nMiniDispenserEnabled != 0 && iObjectType == OBJ_DISPENSER )
+	{
+		nCost -= 30;
+	}
+
+	// Speed Pads are cheaper
+	int nSpeedPad = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( pBuilder, nSpeedPad, teleporter_is_speedpad );
+	if ( nSpeedPad != 0 && iObjectType == OBJ_TELEPORTER )
+	{
+		nCost -= 25;
+	}
+#endif
+
 	if ( iObjectType == OBJ_TELEPORTER )
 	{
 		float flCostMod = 1.f;

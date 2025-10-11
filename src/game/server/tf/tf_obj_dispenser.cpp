@@ -418,6 +418,9 @@ bool CObjectDispenser::ShouldBeMiniBuilding( CTFPlayer* pPlayer )
 #ifndef STAGING_ONLY
 	int nMiniDispenserEnabled = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwner(), nMiniDispenserEnabled, allows_building_mini_dispenser );
+
+	//DevMsg("nMiniDispenserEnabled = %i\nOwner = %s\n", nMiniDispenserEnabled, GetOwner()->GetPlayerName());
+
 	return nMiniDispenserEnabled != 0;
 #else
 	return false;
@@ -662,13 +665,16 @@ void CObjectDispenser::RefillThink( void )
 	}
 
 	// Auto-refill half the amount as tfc, but twice as often
-	if ( m_iAmmoMetal < DISPENSER_MAX_METAL_AMMO )
+	
+	int m_iBullshit = ShouldBeMiniBuilding(GetOwner() ) ? MINI_DISPENSER_MAX_METAL : DISPENSER_MAX_METAL_AMMO;
+
+	if ( m_iAmmoMetal < m_iBullshit )
 	{
-		int iMetal = (DISPENSER_MAX_METAL_AMMO * 0.1) + ((GetUpgradeLevel()-1) * 10);
+		int iMetal = ( m_iBullshit * 0.1 ) + ( ( GetUpgradeLevel()-1 ) * 10 );
 
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetBuilder(), iMetal, mult_dispenser_rate );
 
-		m_iAmmoMetal = Min( m_iAmmoMetal + iMetal, DISPENSER_MAX_METAL_AMMO );
+		m_iAmmoMetal = Min( m_iAmmoMetal + iMetal, m_iBullshit );
 
 		if ( m_bUseGenerateMetalSound )
 		{

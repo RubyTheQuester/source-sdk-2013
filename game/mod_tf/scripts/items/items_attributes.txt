@@ -814,5 +814,27 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		
+		"4023"
+		{
+			"name"	"mod pda builds minidispenser"
+			"attribute_class"		"allows_building_mini_dispenser"
+			"description_string"	"#Attrib_Mini_Dispenser"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		
+		"4024"
+		{
+			"name"	"teleporter_is_speedpad"
+			"attribute_class"		"teleporter_is_speedpad"
+			"description_string"	"#Attrib_Speed_Teleporter"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
 	}
 }
