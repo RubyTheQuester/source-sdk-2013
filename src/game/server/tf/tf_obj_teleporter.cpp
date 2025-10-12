@@ -293,6 +293,33 @@ void CObjectTeleporter::FirstSpawn()
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::SetObjectMode( int iVal )
 {
+#ifndef STAGING_ONLY
+	int iSpeedPad = 0;
+	if ( GetBuilder() )
+	{
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetBuilder(), iSpeedPad, teleporter_is_speedpad );
+
+		//DevMsg("iSpeedPad = %i\nOwner = %s\n", iSpeedPad, GetBuilder()->GetPlayerName());
+
+		if ( iSpeedPad )
+		{
+			SetTeleporterType( TTYPE_SPEEDPAD );
+		}
+	}
+
+	if ( !iSpeedPad )
+	{
+		switch ( iVal )
+		{
+		case MODE_TELEPORTER_ENTRANCE:
+			SetTeleporterType( TTYPE_ENTRANCE );
+			break;
+		case MODE_TELEPORTER_EXIT:
+			SetTeleporterType( TTYPE_EXIT );
+			break;
+		}
+	}
+#else
 	if ( iVal == MODE_TELEPORTER_ENTRANCE )
 	{
 		SetTeleporterType( TTYPE_ENTRANCE );
@@ -301,6 +328,7 @@ void CObjectTeleporter::SetObjectMode( int iVal )
 	{
 		SetTeleporterType( TTYPE_EXIT );
 	}
+#endif
 
 	BaseClass::SetObjectMode( iVal );
 }
@@ -308,8 +336,21 @@ void CObjectTeleporter::SetObjectMode( int iVal )
 //-----------------------------------------------------------------------------
 int CObjectTeleporter::GetUpgradeMetalRequired()
 {
-
 	int nCost = GetObjectInfo( GetType() )->m_UpgradeCost;
+
+#ifndef STAGING_ONLY
+	// STAGING_ENGY
+	int iSpeedPad = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetBuilder(), iSpeedPad, teleporter_is_speedpad )
+
+	//DevMsg("iSpeedPad = %i\nOwner = %s\n", iSpeedPad, GetBuilder()->GetPlayerName());
+
+	if ( iSpeedPad )
+	{
+		nCost = 100;
+	}
+#endif
+
 
 	float flCostMod = 1.f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetBuilder(), flCostMod, mod_teleporter_cost );
@@ -350,6 +391,10 @@ void CObjectTeleporter::InitializeMapPlacedObject( void )
 	
 	SetObjectMode( IsEntrance() ? MODE_TELEPORTER_ENTRANCE : MODE_TELEPORTER_EXIT );
 
+#ifndef STAGING_ONLY
+	if ( GetTeleporterType() == TTYPE_SPEEDPAD )
+		return;
+#endif
 
 	m_hMatchingTeleporter = dynamic_cast<CObjectTeleporter*>( gEntList.FindEntityByName( NULL, m_iszMatchingMapPlacedTeleporter.ToCStr() ) );
 
@@ -505,6 +550,12 @@ void CObjectTeleporter::Precache()
 	PrecacheParticleSystem( "teleporter_arms_circle_red_blink" );
 	PrecacheParticleSystem( "teleporter_arms_circle_blue_blink" );
 
+#ifndef STAGING_ONLY
+	// STAGING ENGY
+	PrecacheScriptSound( "Building_Speedpad.BoostStart" );
+	PrecacheScriptSound( "Building_Speedpad.BoostStop" );
+#endif
+
 }
 
 //-----------------------------------------------------------------------------
@@ -607,6 +658,15 @@ void CObjectTeleporter::TeleporterTouch( CBaseEntity *pOther )
 		return;
 	}
 
+#ifndef STAGING_ONLY
+	// STAGING_ENGY
+	// For Speed Teleporters
+	if ( IsSpeedPad() )
+	{
+		ApplySpeedBoost( pPlayer );
+		return;
+	}
+#endif
 
 	int iBiDirectional = 0;
 	if ( GetOwner() )
@@ -661,6 +721,51 @@ void CObjectTeleporter::TeleporterTouch( CBaseEntity *pOther )
 	}
 }
 
+#ifndef STAGING_ONLY
+//STAGING_ENGY
+//-----------------------------------------------------------------------------
+void CObjectTeleporter::ApplySpeedBoost( CTFPlayer *pPlayer )
+{
+	if ( m_iState != TELEPORTER_STATE_READY )
+		return;
+	
+	Vector origin = GetAbsOrigin();
+	CPVSFilter filter( origin );
+	int iTeam = pPlayer->GetTeamNumber();
+	if ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) )
+	{
+		if ( GetBuilder() && iTeam != GetBuilder()->GetTeamNumber() )
+		{
+			iTeam = GetBuilder()->GetTeamNumber();
+		}
+	}
+
+	switch ( iTeam )
+	{
+	case TF_TEAM_RED:
+		TE_TFParticleEffect( filter, 0.0, "teleported_red", origin, vec3_angle );
+		TE_TFParticleEffect( filter, 0.0, "player_sparkles_red", origin, vec3_angle, pPlayer, PATTACH_POINT );
+		break;
+	case TF_TEAM_BLUE:
+		TE_TFParticleEffect( filter, 0.0, "teleported_blue", origin, vec3_angle );
+		TE_TFParticleEffect( filter, 0.0, "player_sparkles_blue", origin, vec3_angle, pPlayer, PATTACH_POINT );
+		break;
+	default:
+		break;
+	}
+
+	float flUpgrade = (float)GetUpgradeLevel();
+	pPlayer->m_Shared.AddCond( TF_COND_SPEED_BOOST, 3.0f + flUpgrade );
+
+	SetState( TELEPORTER_STATE_RECHARGING );
+
+	EmitSound( "Building_Speedpad.BoostStart" );
+
+	m_flCurrentRechargeDuration = 2.0f - ( flUpgrade / 3.0f );
+	m_flRechargeTime = gpGlobals->curtime + ( BUILD_TELEPORTER_FADEOUT_TIME + BUILD_TELEPORTER_FADEIN_TIME + m_flCurrentRechargeDuration );
+	m_flMyNextThink = gpGlobals->curtime + m_flCurrentRechargeDuration;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -722,7 +827,7 @@ int CObjectTeleporter::Command_Repair( CTFPlayer *pActivator, float flAmount, fl
 //-----------------------------------------------------------------------------
 bool CObjectTeleporter::IsReady( void )
 {
-	if ( !IsMatchingTeleporterReady() )
+	if ( !IsMatchingTeleporterReady() && !IsSpeedPad() )
 		return false;
 
 	return GetState() != TELEPORTER_STATE_BUILDING && !IsUpgrading() && !IsDisabled();
@@ -800,6 +905,11 @@ void CObjectTeleporter::CopyUpgradeStateToMatch( CObjectTeleporter *pMatch, bool
 //-----------------------------------------------------------------------------
 CObjectTeleporter *CObjectTeleporter::GetMatchingTeleporter( void )
 {
+#ifndef STAGING_ONLY
+	if ( GetTeleporterType() == TTYPE_SPEEDPAD )
+		return NULL;
+#endif
+
 	return m_hMatchingTeleporter.Get();
 }
 
@@ -1049,7 +1159,11 @@ void CObjectTeleporter::TeleporterThink( void )
 	SetContextThink( &CObjectTeleporter::TeleporterThink, gpGlobals->curtime + BUILD_TELEPORTER_NEXT_THINK, TELEPORTER_THINK_CONTEXT );
 
 	// At any point, if our match is not ready, revert to IDLE
+#ifndef STAGING_ONLY	
+	if ( IsDisabled() || ( IsMatchingTeleporterReady() == false && !IsSpeedPad() ))
+#else
 	if ( IsDisabled() || IsMatchingTeleporterReady() == false )
+#endif
 	{
 		if ( GetState() != TELEPORTER_STATE_IDLE && GetState() != TELEPORTER_STATE_UPGRADING )
 		{
@@ -1063,7 +1177,18 @@ void CObjectTeleporter::TeleporterThink( void )
 		return;
 
 	// pMatch is not NULL and is not building
+#ifndef STAGING_ONLY		
+	CObjectTeleporter *pMatch = NULL;
+
+	if ( !IsSpeedPad() )
+	{
+		pMatch = GetMatchingTeleporter();
+		Assert( pMatch );
+		Assert( pMatch->m_iState != TELEPORTER_STATE_BUILDING );
+	}
+#else
 	CObjectTeleporter *pMatch = GetMatchingTeleporter();
+#endif
 
 	int iBiDirectional = 0;
 
@@ -1083,7 +1208,11 @@ void CObjectTeleporter::TeleporterThink( void )
 	default:
 	case TELEPORTER_STATE_IDLE:
 		// Do we have a match that is active?
+#ifndef STAGING_ONLY			
+		if ( IsMatchingTeleporterReady() || IsSpeedPad() )
+#else
 		if ( IsMatchingTeleporterReady() )
+#endif
 		{
 			SetState( TELEPORTER_STATE_READY );
 			EmitSound( "Building_Teleporter.Ready" );

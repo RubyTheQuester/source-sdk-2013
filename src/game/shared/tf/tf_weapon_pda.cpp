@@ -355,6 +355,117 @@ bool CTFWeaponPDA_Spy::VisibleInWeaponSelection( void )
 
 
 //-----------------------------------------------------------------------------
+// Purpose: Kill all buildings when wrench is changed.
+//-----------------------------------------------------------------------------
+#ifdef GAME_DLL
+void CTFWeaponPDA::Equip( CBaseCombatCharacter* pOwner )
+{
+	// STAGING_ENGY
+	CTFPlayer* pPlayer = ToTFPlayer( pOwner );
+	if ( pPlayer )
+	{
+		// if switching too gunslinger, blow up other sentry
+		int iMiniDispenser = 0;
+		CALL_ATTRIB_HOOK_INT( iMiniDispenser, allows_building_mini_dispenser );
+		if ( iMiniDispenser )
+		{
+			// Just detonate Sentries
+			CBaseObject* pObject = pPlayer->GetObjectOfType( OBJ_DISPENSER );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+		}
+		
+		int iSpeedPad = 0;
+		CALL_ATTRIB_HOOK_INT( iSpeedPad, teleporter_is_speedpad );
+		if ( iSpeedPad )
+		{
+			// Just detonate Sentries
+			// Detonate entrance and exit
+			CBaseObject *pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 0 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 1 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 2 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 3 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+		}
+	}
+
+	BaseClass::Equip(pOwner);
+}
+//-----------------------------------------------------------------------------
+// Purpose: Kill all buildings when wrench is changed.
+//-----------------------------------------------------------------------------
+void CTFWeaponPDA::Detach( void )
+{
+	// STAGING_ENGY
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if ( pPlayer )
+	{
+		// if switching too gunslinger, blow up other sentry
+		int iMiniDispenser = 0;
+		CALL_ATTRIB_HOOK_INT( iMiniDispenser, allows_building_mini_dispenser );
+		if ( iMiniDispenser )
+		{
+			// Just detonate Sentries
+			CBaseObject* pObject = pPlayer->GetObjectOfType( OBJ_DISPENSER );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+		}
+		
+		int iSpeedPad = 0;
+		CALL_ATTRIB_HOOK_INT( iSpeedPad, teleporter_is_speedpad );
+		if ( iSpeedPad )
+		{
+			// Just detonate Sentries
+			// Detonate entrance and exit
+			CBaseObject *pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 0 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 1 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 2 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+			pObject = pPlayer->GetObjectOfType( OBJ_TELEPORTER, 3 );
+			if ( pObject )
+			{
+				pObject->DetonateObject();
+			}
+		}
+	}
+
+	BaseClass::Detach();
+}
+#endif
+
+//-----------------------------------------------------------------------------
 // PDA Expansion Slots
 void CTFWeaponPDAExpansion_Dispenser::Equip( CBasePlayer *pOwner )
 {

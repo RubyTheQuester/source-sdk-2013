@@ -43,6 +43,11 @@ public:
 
 	virtual void	Spawn();
 
+#ifdef GAME_DLL
+	virtual void		Equip(CBaseCombatCharacter* pOwner);
+	virtual void		Detach();
+#endif 
+
 #if !defined( CLIENT_DLL )
 		virtual void	Precache();
 		virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );

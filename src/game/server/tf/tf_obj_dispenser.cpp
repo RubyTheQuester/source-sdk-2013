@@ -206,11 +206,7 @@ void CObjectDispenser::FirstSpawn()
 {
 	SetSolid( SOLID_BBOX );
 
-	bool bShouldBeMini = ShouldBeMiniBuilding( GetOwner() );
-
-	UTIL_SetSize(this,
-		bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
-		bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
+	SetModel( GetPlacementModel() );
 
 	m_takedamage = DAMAGE_YES;
 	m_iAmmoMetal = 0;
@@ -293,12 +289,18 @@ const char* CObjectDispenser::GetFinishedModel( int iLevel )
 
 const char* CObjectDispenser::GetPlacementModel()
 {
-	return IsMiniBuilding() ? MINI_DISPENSER_MODEL_PLACEMENT : DISPENSER_MODEL_PLACEMENT;
+	return ShouldBeMiniBuilding( GetOwner() ) ? MINI_DISPENSER_MODEL_PLACEMENT : DISPENSER_MODEL_PLACEMENT;
 }
 
 void CObjectDispenser::StartPlacement( CTFPlayer *pPlayer )
 {
 	BaseClass::StartPlacement( pPlayer );
+
+	UTIL_SetSize( this,
+		ShouldBeMiniBuilding( GetOwner() ) ? MINI_DISPENSER_MINS : DISPENSER_MINS,
+		ShouldBeMiniBuilding( GetOwner() ) ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
+
+	MakeMiniBuilding(pPlayer);
 }
 
 //-----------------------------------------------------------------------------

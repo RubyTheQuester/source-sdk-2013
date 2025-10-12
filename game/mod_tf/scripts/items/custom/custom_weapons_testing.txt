@@ -2,7 +2,7 @@
 {
 	"items"
 	{	
-		"60006"
+		"40006"
 		{
 			"name"	"Tranquilizer"
 			"prefab" "moditem_testing_prefab weapon_revolver"
@@ -20,12 +20,12 @@
 			
 			"attributes"
 			{
-				"keep_disguise_on_attack"
+				"keep disguise on attack"
 				{
 					"attribute_class"	"keep_disguise_on_attack"
 					"value" "1"
 				}
-				"attack_while_cloak"
+				"attack while cloak"
 				{
 					"attribute_class"	"attack_while_cloak"
 					"value" "1"
@@ -52,7 +52,7 @@
 			}
 		}
 		
-		"60008"
+		"40008"
 		{
 			"name"	"Sniper Rifle Aim Charge"
 			"prefab" "moditem_testing_prefab weapon_sniperrifle"
@@ -76,7 +76,7 @@
 				//	"value"	"1"
 				//}
 				
-				"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+				"mult sniper charge under crosshair"
 				{
 					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
 					"value"	"6"
@@ -95,7 +95,7 @@
 			}
 		}
 		
-		"60010"
+		"40010"
 		{
 			"name"	"The Pacificateur"
 			"prefab"	"moditem_testing_prefab weapon_revolver"
@@ -105,7 +105,7 @@
 			
 			"customitem" "1"
 			
-			"image_inventory"				"backpack/weapons/c_models/c_revolver/c_revolver"
+			"image_inventory"				"backpack/crafting/token_primary"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"32"
@@ -143,23 +143,164 @@
 			}
 		}
 		
-		"34447"
+		"40011"
 		{
-			"name"	"Deputy"
-			"prefab" " moditem_testing_prefab weapon_revolver_engineer"
+			"name"				"Healer Sapper"
+			"prefab"			"moditem_oddity_prefab weapon_sapper"
 			
-			"propername"		"0"
+			"item_class"		"tf_weapon_sapper"
+
+			"item_name"			"#TF_Healer_Sapper"
+			"item_description"	"#TF_Healer_Sapper_Desc"
 			
-			"item_name"		"#TF_Weapon_Deputy"
-			"item_description"	"#TF_Weapon_Deputy_desc"
+			"image_inventory"				"backpack/crafting/token_pda"
 			
-			"static_attrs"
+			"propername"		"1"
+			
+			"attributes"
 			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
-				"single wep deploy time decreased"		"0.7"
-				"switch from wep deploy time decreased"	"0.7"
+				"sapper damage leaches health"
+				{
+					"attribute_class"	"sapper_damage_leaches_health"
+					"value" "1"
+				}
+				"sapper health penalty"
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value" "0.5"
+				}
+				"sapper damage penalty"
+				{
+					"attribute_class"	"mult_sapper_damage"
+					"value" "0.5"
+				}
 			}
+		}
+		
+		"40012"
+		{
+			"name"				"Handy Partner"
+			"prefab"			"moditem_testing_prefab weapon_pda"
+			
+			"item_name"			"#TF_Weapon_HandyPartner"
+			"item_description"	"#TF_Weapon_HandyPartner_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/crafting/token_pda"
+			"model_player"					"models/weapons/w_models/w_handy_builder/w_handy_builder.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
+			"attributes"
+			{
+				"mod pda builds minidispenser"
+				{
+					"attribute_class"	"allows_building_mini_dispenser"
+					"value" 	"1" 
+				}
+				
+				"engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"
+					"value" 	"2.5" 
+				}
+			}
+		}
+		
+		"40013"
+		{
+			"name"				"SpeedPad"
+			"prefab"			"moditem_testing_prefab weapon_pda"
+			
+			"item_name"			"#TF_Weapon_SpeedPad"
+			"item_description"	"#TF_Weapon_SpeedPad_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/crafting/token_secondary"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
+			"attributes"
+			{
+				"mod weapon builds speedpad"
+				{
+					"attribute_class"	"teleporter_is_speedpad"
+					"value" 	"1" 
+				}
+				
+				"engineer teleporter build rate multiplier"
+				{
+					"attribute_class"	"teleporter_build_rate_multiplier"
+					"value" 	"2.5" 
+				}
+			}
+			
+		}
+		
+		"40014"
+		{
+			"name"				"Assault Cannon"
+			"prefab"			"moditem_testing_prefab weapon_minigun"
+			
+			"item_name"			"#TF_Weapon_AssaultCannon"
+			"item_description"	"#TF_Weapon_AssaultCannon_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			
+			"attributes"
+			{
+				"minigun spinup time decreased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value" "0.5"
+				}
+
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
+				}
+
+				"spread penalty"
+				{
+					"attribute_class" 	"mult_spread_scale"
+					"value" "1.5"
+				}
+
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"	"1.33"
+				}
+
+				//"duckwalk deployed"
+				//{
+				//	"attribute_class"	"allow_duckwalks_deployed"
+				//	"value"	"1"
+				//}
+				
+				//"jump deployed"
+				//{
+				//	"attribute_class"	"allow_jump_while_deployed"
+				//	"value"	"1"
+				//}
+			}
+			
 		}
 		
 		//END OF THE LINE

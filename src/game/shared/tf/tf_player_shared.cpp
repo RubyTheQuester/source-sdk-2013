@@ -32,6 +32,7 @@
 #include "tf_dropped_weapon.h"
 #include "tf_weapon_passtime_gun.h"
 #include "tf_weapon_rocketpack.h"
+#include "tf_weapon_pda.h"
 #include <functional>
 
 // Client specific.
@@ -11483,15 +11484,8 @@ int CTFPlayerShared::CalculateObjectCost( CTFPlayer* pBuilder, int iObjectType )
 
 #ifndef STAGING_ONLY	
 	// Mini dispensers are 30 metal cheaper
-
-	/*
-	CTFWeaponPDA* pPDA = dynamic_cast<CTFWeaponPDA*>( pBuilder->Weapon_OwnsThisID( TF_WEAPON_WRENCH ) );
-	if ( pPDA && pPDA->IsMiniPDA() && ( iObjectType == OBJ_DISPENSER) )
-	*/
-
 	int nMiniDispenserEnabled = 0;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, nMiniDispenserEnabled, allows_building_mini_dispenser);
-
 	if ( nMiniDispenserEnabled != 0 && iObjectType == OBJ_DISPENSER )
 	{
 		nCost -= 30;
@@ -11519,6 +11513,15 @@ int CTFPlayerShared::CalculateObjectCost( CTFPlayer* pBuilder, int iObjectType )
 	{
 		float flCostMod = 1.f;
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flCostMod, mod_sentry_cost );
+		if ( flCostMod != 1.f )
+		{
+			nCost *= flCostMod;
+		}
+	}
+	else if ( iObjectType == OBJ_DISPENSER )
+	{
+		float flCostMod = 1.f;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flCostMod, mod_dispenser_cost );
 		if ( flCostMod != 1.f )
 		{
 			nCost *= flCostMod;

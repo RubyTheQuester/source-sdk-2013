@@ -21,6 +21,7 @@ enum
 	TTYPE_NONE=0,
 	TTYPE_ENTRANCE,
 	TTYPE_EXIT,
+	TTYPE_SPEEDPAD,
 };
 
 #define TELEPORTER_MAX_HEALTH	150
@@ -102,6 +103,11 @@ public:
 	bool			IsEntrance( void ) { return m_iTeleportType == TTYPE_ENTRANCE; }
 	bool			IsExit( void ) { return m_iTeleportType == TTYPE_EXIT; }
 
+#ifndef STAGING_ONLY
+	// STAGING_ENGY
+	bool			IsSpeedPad( void ) { return m_iTeleportType == TTYPE_SPEEDPAD; }
+#endif
+
 	virtual void	MakeCarriedObject( CTFPlayer *pCarrier );
 
 	virtual void	SetObjectMode( int iVal );
@@ -124,6 +130,10 @@ public:
 	virtual void	InputEnable( inputdata_t &inputdata ) OVERRIDE;
 	virtual void	InputDisable( inputdata_t &inputdata ) OVERRIDE;
 
+#ifndef STAGING_ONLY
+	// STAGING_ENGY
+	void			ApplySpeedBoost(CTFPlayer* pPlayer);
+#endif
 
 	CTFPlayer *GetTeleportingPlayer( void ){ return m_hTeleportingPlayer.Get(); }
 

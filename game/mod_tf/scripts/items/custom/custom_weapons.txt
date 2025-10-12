@@ -12,8 +12,8 @@
 			"item_name"	"#TF_Weapon_Foxhound"
 			"item_description"	"#TF_Weapon_Foxhound_desc"
 			
-			"image_inventory"	"backpack/weapons/c_models/c_foxhound/c_foxhound"
-			"model_player"	"models/weapons/c_models/c_foxhound_pacificateur/c_foxhound_pacificateur.mdl"
+			"image_inventory"	"backpack/crafting/token_primary"
+			"model_player"		"models/weapons/c_models/c_foxhound_pacificateur/c_foxhound_pacificateur.mdl"
 			
 			"static_attrs"
 			{
@@ -46,7 +46,24 @@
 			}
 		}
 	
-		//THIS IS WHERE THE DEPUTY GOES
+		"34447"
+		{
+			"name"	"Deputy"
+			"prefab" " moditem_prefab weapon_revolver_engineer"
+			
+			"propername"		"0"
+			
+			"item_name"		"#TF_Weapon_Deputy"
+			"item_description"	"#TF_Weapon_Deputy_desc"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+				"single wep deploy time decreased"		"0.7"
+				"switch from wep deploy time decreased"	"0.7"
+			}
+		}
 		
 		"34448"
 		{
