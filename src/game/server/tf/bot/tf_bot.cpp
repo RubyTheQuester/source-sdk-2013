@@ -74,7 +74,7 @@ ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FC
 ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
 ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
 
-ConVar tf_bot_give_items("tf_bot_give_items", "1", FCVAR_GAMEDLL);
+ConVar tf_bot_give_items("tf_bot_give_items", "0", FCVAR_GAMEDLL);
 ConVar tf_bot_give_items_nosteamcheck("tf_bot_give_items_nosteamcheck", "0", FCVAR_GAMEDLL);
 ConVar tf_bot_give_items_australium_rarity("tf_bot_give_items_australium_rarity", "3", FCVAR_GAMEDLL);
 ConVar tf_bot_give_items_killstreak("tf_bot_give_items_killstreak", "1", FCVAR_GAMEDLL);
@@ -84,7 +84,6 @@ ConVar tf_bot_give_items_killstreak_professional_rarity("tf_bot_give_items_kills
 ConVar tf_bot_give_items_nocosmetics("tf_bot_give_items_nocosmetics", "0", FCVAR_GAMEDLL);
 
 ConVar tf_bot_give_items_skip_reskins("tf_bot_give_items_skip_reskins", "0", FCVAR_GAMEDLL | FCVAR_NOTIFY);
-ConVar tf_bot_debug_give_items("tf_bot_debug_give_items", "0", FCVAR_GAMEDLL | FCVAR_CHEAT);
 ConVar tf_bot_give_items_skip_australiums("tf_bot_give_items_skip_australiums", "0", FCVAR_GAMEDLL);
 
 extern ConVar tf_bot_sniper_spot_max_count;
