@@ -46,7 +46,9 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Spy",			// ARMFILT_CLASS_SPY,
 	"#ArmoryFilter_Engineer",		// ARMFILT_CLASS_ENGINEER,
 	"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
+
 	"#ArmoryFilter_Customitems",	// ARMFILT_CUSTOMITEMS,
+	"#ArmoryFilter_Taunts",			// ARMFILT_TAUNT,
 
 	"",								// ARMFILT_NUM_IN_DROPDOWN
 	"Not Used",						// ARMFILT_CUSTOM
@@ -808,6 +810,25 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 	case ARMFILT_CUSTOMITEMS:
 		{
 			bInList = pDef->IsSoloItem();
+			break;
+		}
+
+	case ARMFILT_TAUNT:
+		{
+			int iSlot = pDef->GetDefaultLoadoutSlot();
+			bool bIsTaunt = (
+				iSlot == LOADOUT_POSITION_TAUNT
+				|| iSlot == LOADOUT_POSITION_TAUNT2
+				|| iSlot == LOADOUT_POSITION_TAUNT3
+				|| iSlot == LOADOUT_POSITION_TAUNT4
+				|| iSlot == LOADOUT_POSITION_TAUNT5
+				|| iSlot == LOADOUT_POSITION_TAUNT6
+				|| iSlot == LOADOUT_POSITION_TAUNT7
+				|| iSlot == LOADOUT_POSITION_TAUNT8
+				);
+
+			bInList = ( pDef->GetItemClass() && ( !V_strcmp( pDef->GetItemClass(), "taunt" )  ) ) 
+				|| (bIsTaunt);
 			break;
 		}
 

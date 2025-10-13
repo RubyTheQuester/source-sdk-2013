@@ -459,6 +459,17 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3541"
+		{
+			"name"	"bullets per shot penalty"
+			"attribute_class"	"mult_bullets_per_shot"
+			"description_string"	"#Attrib_BulletsPerShot_Penalty"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 	}
 }

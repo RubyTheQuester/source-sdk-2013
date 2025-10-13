@@ -359,6 +359,19 @@
 					"attribute_class"	"mult_dmg"
 					"value"	"0.50"
 				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"medic"		"scenes/player/medic/low/taunt08.vcd"
+				}
 			}
 		}
 		
@@ -432,11 +445,6 @@
 			
 			"attributes"
 			{
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" "0.9"
-				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -451,6 +459,11 @@
 				{
 					"attribute_class"	"mult_bullets_per_shot"
 					"value" "1.2"
+				}
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.75"
 				}
 			}
 			

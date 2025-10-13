@@ -119,3 +119,55 @@
 		"wave"		"weapons/golfclub/golfclub_hit.wav"
 	}
 }
+
+// ------------------------------------------------------------------------------------ //
+// BROKEN STEEL
+// ------------------------------------------------------------------------------------ //
+"Weapon_BrokenSteel.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/brokensteel/shotgun_shoot.wav"
+}
+
+"Weapon_BrokenSteel.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/brokensteel/shotgun_shoot_crit.wav"
+}
+
+"Weapon_BrokenSteel.Empty"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/brokensteel/shotgun_empty.wav"
+}
+
+"Weapon_BrokenSteel.Reload"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/brokensteel/shotgun_reload.wav"
+}
+
+
+"Weapon_BrokenSteel.Pump"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/brokensteel/shotgun_cock.wav"
+}
+
+"Weapon_BrokenSteel.Draw_Pyro"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/brokensteel/draw_shotgun_pyro.wav"
+}

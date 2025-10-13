@@ -124,6 +124,16 @@
 					"value"	"models/enhancedrockets2/w_rocket_original.mdl"
 				}
 			}
+			
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_QuakeRPG.Single"
+				"sound_burst"			"Weapon_QuakeRPG.SingleCrit"
+				"sound_deploy"			"Weapon_QuakeRPG.Draw"
+				"sound_reload"			"Weapon_QuakeRPG.Reload"
+				"sound_special1"		"Weapon_QuakeRPG.Explode"
+				"particle_effect"		"rocket_explosion_classic"
+			}
 		}
 		
 		//Beggar's Bazooka
