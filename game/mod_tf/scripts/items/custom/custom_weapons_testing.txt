@@ -270,11 +270,11 @@
 					"value" "0.5"
 				}
 
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.5"
-				}
+				//"fire rate penalty"
+				//{
+				//	"attribute_class"	"mult_postfiredelay"
+				//	"value"	"1.5"
+				//}
 
 				"spread penalty"
 				{
@@ -307,7 +307,7 @@
 		"40015"
 		{
 			"name"	"Broken Steel"
-			"prefab"	"moditem_prefab weapon_shotgun"
+			"prefab"	"moditem_testing_prefab weapon_shotgun"
 			
 			"item_name"	"#TF_Weapon_BrokenSteel"
 			
@@ -331,7 +331,7 @@
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value" "1.25"
+					"value" "1.1"
 				}
 				"fire rate bonus"
 				{
@@ -341,7 +341,7 @@
 				"Reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"1.2"
+					"value"	"1.25"
 				}
 			}
 			

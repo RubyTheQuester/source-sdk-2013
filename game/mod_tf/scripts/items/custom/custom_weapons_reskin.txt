@@ -1,0 +1,59 @@
+"items_game"
+{	
+	"items"
+	{
+		"35000"
+		{
+			"name"	"Six Shooter"
+			"prefab" "moditem_reskin_prefab weapon_ambassador"
+			
+			"propername"		"0"
+			
+			"item_name"	"#TF_Weapon_SixShooter"
+			
+			"image_inventory"	"backpack/crafting/token_primary"
+			"model_player"		"models/weapons/c_models/c_sixshooter/c_sixshooter.mdl"
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"	"Weapon_SixShooter.Single"
+				"sound_burst"		"Weapon_SixShooter.SingleCrit"
+			}		
+		}
+		
+		"35001"
+		{
+			"name"	"Full Frontier"
+			"prefab" "moditem_reskin_prefab weapon_shotgun"
+			
+			"propername"		"0"
+			
+			"item_name"	"#TF_Weapon_FullFrontier"
+			
+			"image_inventory"	"backpack\weapons\w_models\w_shotgun_full"
+			"model_player"		"models/weapons/c_models/c_shotgun_full/c_shotgun_full.mdl"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+				"weapon_stattrak_module_scale"				"0.608"				
+			}
+			
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"pyro" "secondary"
+				"soldier" "secondary"
+				"heavy" "secondary"
+			}
+		}
+		
+		// END OF LINE
+	}
+}

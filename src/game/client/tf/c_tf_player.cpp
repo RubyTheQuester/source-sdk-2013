@@ -355,6 +355,9 @@ static ConVar tf_medieval_cam_idealdist( "tf_medieval_cam_idealdist", "125", FCV
 static ConVar tf_medieval_cam_idealdistright( "tf_medieval_cam_idealdistright", "25", FCVAR_CLIENTDLL | FCVAR_CHEAT );	 // thirdperson distance
 static ConVar tf_medieval_cam_idealdistup( "tf_medieval_cam_idealdistup", "-10", FCVAR_CLIENTDLL | FCVAR_CHEAT );	 // thirdperson distance
 static ConVar tf_medieval_cam_idealpitch( "tf_medieval_cam_idealpitch", "0", FCVAR_CLIENTDLL | FCVAR_CHEAT );	 // thirdperson pitch
+
+static ConVar tf_thirdperson( "tf_thirdperson", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Turns on third-person camera in medieval mode." );
+
 extern ConVar cam_idealpitch;
 extern ConVar tf_allow_taunt_switch;
 
@@ -423,7 +426,8 @@ void SetAppropriateCamera( C_TFPlayer *pPlayer )
 
 	if ( TFGameRules() &&
 		( ( TFGameRules()->IsInMedievalMode() && tf_medieval_thirdperson.GetBool() )
-		|| pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) ) )
+		|| pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) 
+		|| tf_thirdperson.GetBool() ) )
 	{
 		g_ThirdPersonManager.SetForcedThirdPerson( true );
 		Vector offset( tf_medieval_cam_idealdist.GetFloat(), tf_medieval_cam_idealdistright.GetFloat(), tf_medieval_cam_idealdistup.GetFloat() );

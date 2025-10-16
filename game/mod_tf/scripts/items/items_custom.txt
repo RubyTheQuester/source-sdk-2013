@@ -18,6 +18,7 @@
 		{
 			"value" 	"24"
 		}
+		
 		"moditem_testing"
 		{
 			"value" 	"25"
@@ -66,6 +67,16 @@
 			"item_quality"	"moditem_oddity"
 			"min_ilevel"	"100"
 			"max_ilevel"	"100"
+		}
+		
+		"moditem_reskin_prefab"
+		{
+			"prefab" "moditem_prefab"
+			"usable_by_bots" "0"
+			
+			"item_quality"	"rarity2"
+			"min_ilevel"	"0"
+			"max_ilevel"	"0"
 		}
 	}
 	
