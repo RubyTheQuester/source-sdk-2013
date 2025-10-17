@@ -1,17 +1,29 @@
-# Source SDK 2013
+# Shlormby Source Code
+This is just a for fun project, so keep in mind alot of this code is just sourced from other places or poorly done
 
-Source code for Source SDK 2013.
+## Credits
 
-Contains the game code for Half-Life 2, HL2: DM and TF2.
-
-**Now including Team Fortress 2! ✨**
-
-## Build instructions
-
-Clone the repository using the following command:
-
-`git clone https://github.com/ValveSoftware/source-sdk-2013`
-
+- **Weapon Models**
+	- ** WIP, I PROMISE I'LL CREDIT EVERYONE HERE **
+		- Model credits page exists within the game itself
+	
+- **Community Help/Contributions**
+	- ** WIP, I PROMISE I'LL CREDIT EVERYONE HERE **
+	
+	- ** BetaM **  – Created the mod that made Shlormby possible in the first place.
+		https://www.youtube.com/BetaM
+		
+	- ** Better Fortress 2 ** – Various bits of code is taken from here.
+		https://github.com/ALIEN31ITA/Better-Fortress-2
+	
+	- ** Team Fortress: Grub ** – RPG Code
+		https://github.com/grub-fortress/grub_fortress_src
+		
+	- ** Team Comtress 2 ** – Instant Respawn Code
+		https://github.com/mastercomfig/tc2
+		
+	- ** Various Communty Pull Request ** – For a bunch of minor things I didn't do myself.
+	
 ### Windows
 
 Requirements:
@@ -26,7 +38,12 @@ Inside the cloned directory, navigate to `src`, run:
 ```bat
 createallprojects.bat
 ```
-This will generate the Visual Studio project `everything.sln` which will be used to build your mod.
+or
+```bat
+creategameprojects.bat
+```
+
+This will generate the Visual Studio project `everything.sln` which will be used to build the mod. You can also use `games.sln` to only build the files needed for the mod.
 
 Then, on the menu bar, go to `Build > Build Solution`, and wait for everything to build.
 
@@ -51,21 +68,3 @@ You can then, in the root of the cloned directory, you can navigate to `game` an
 ```bash
 ./mod_tf
 ```
-
-*Mods that are distributed on Steam MUST be built against the Steam Runtime, which the above steps will automatically do for you.*
-
-## Distributing your Mod
-
-There is guidance on distributing your mod both on and off Steam available at the following link:
-
-https://partner.steamgames.com/doc/sdk/uploading/distributing_source_engine
-
-## Additional Resources
-
-- [Valve Developer Wiki](https://developer.valvesoftware.com/wiki/Source_SDK_2013)
-
-## License
-
-The SDK is licensed to users on a non-commercial basis under the [SOURCE 1 SDK LICENSE](LICENSE), which is contained in the [LICENSE](LICENSE) file in the root of the repository.
-
-For more information, see [Distributing your Mod](#markdown-header-distributing-your-mod).
