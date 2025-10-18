@@ -533,10 +533,22 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 
 	CTFProjectile_Rocket *pProjectile = CTFProjectile_Rocket::Create( this, trace.endpos, angForward, pPlayer, pPlayer );
 
+	float fGravityProjectile = 0;
+	CALL_ATTRIB_HOOK_FLOAT( fGravityProjectile, projectile_has_gravity );
+
+	//int fBouncyProjectile = 0;
+	//	CALL_ATTRIB_HOOK_INT( fBouncyProjectile, projectile_bounce );
+
 	if ( pProjectile )
 	{
 		pProjectile->SetCritical( IsCurrentAttackACrit() );
 		pProjectile->SetDamage( GetProjectileDamage() );
+
+		if ( fGravityProjectile )
+		{
+			pProjectile->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_CUSTOM );
+			pProjectile->SetGravity( fGravityProjectile );
+		}
 	}
 
 	return pProjectile;

@@ -345,6 +345,7 @@ public:
 	virtual void		ValidateCurrentObserverTarget( void );
 
 	void CheckUncoveringSpies( CTFPlayer *pTouchedPlayer );
+	void SpreadInfection( CTFPlayer *pTouchedPlayer );
 	void Touch( CBaseEntity *pOther );
 
 	virtual	void RefreshCollisionBounds( void );
@@ -600,6 +601,8 @@ public:
 	void InputTriggerLootIslandAchievement2( inputdata_t &inputdata );
 	void InputRollRareSpell( inputdata_t &inputdata );
 	void InputRoundSpawn( inputdata_t &inputdata );
+	void InputPoisonPlayer( inputdata_t& inputdata );
+	void InputDePoisonPlayer( inputdata_t& inputdata );
 
 	bool InAirDueToExplosion( void ) { return (!(GetFlags() & FL_ONGROUND) && (GetWaterLevel() == WL_NotInWater) && ( (m_iBlastJumpState != 0) ) || m_Shared.InCond( TF_COND_ROCKETPACK ) ); }
 	bool InAirDueToKnockback( void ) { return (!(GetFlags() & FL_ONGROUND) && (GetWaterLevel() == WL_NotInWater) && ( (m_iBlastJumpState != 0) || m_Shared.InCond( TF_COND_KNOCKED_INTO_AIR ) || m_Shared.InCond( TF_COND_GRAPPLINGHOOK ) || m_Shared.InCond( TF_COND_GRAPPLINGHOOK_SAFEFALL ) ) ); }

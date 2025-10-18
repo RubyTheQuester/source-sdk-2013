@@ -353,6 +353,77 @@
 			}
 		}
 		
+		"40007"
+		{
+			"name"	"RPG"
+			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
+			
+			"item_name"	"#TF_Weapon_RPG"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"attributes"
+			{
+				"has gravity"
+				{
+					"attribute_class"	"projectile_has_gravity"
+					"value" "1"
+				}
+				
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.20"
+				}
+				
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.50"
+				}
+			}
+		}
+		
+		"40016"
+		{
+			"name"	"Bouncer"
+			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
+			
+			"item_name"	"#TF_Weapon_Bouncer"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"attributes"
+			{
+				"has gravity"
+				{
+					"attribute_class"	"projectile_has_gravity"
+					"value" "1"
+				}
+				
+				"bouncer"
+				{
+					"attribute_class"	"projectile_bounce"
+					"value" "1"
+				}
+				
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.20"
+				}
+				
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.50"
+				}
+			}
+		}
 		//END OF THE LINE
 	}
 }

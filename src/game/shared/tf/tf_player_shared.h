@@ -442,6 +442,7 @@ public:
 	void	Burn( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, float flBurningTime = -1.0f );
 	void	SelfBurn( float flBurningTime );		// Boss Burn
 	void    MakeBleed( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, float flBleedingTime, int nBleedDmg = TF_BLEEDING_DMG, bool bPermanentBleeding = false, int nDmgType = TF_DMG_CUSTOM_BLEEDING );
+	void	Poison( CTFPlayer* pPlayer, float flTime );
 #ifdef GAME_DLL
 	void	StopBleed( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon );
 #endif // GAME_DLL
@@ -516,6 +517,8 @@ public:
 	void	RemovePhaseEffects( void );
 
 	void	PulseMedicRadiusHeal( void );
+
+	void	PulseInfection( void );
 
 	float	GetScoutEnergyDrinkMeter() const{ return m_flEnergyDrinkMeter; }
 	void	SetScoutEnergyDrinkMeter( float val ) { m_flEnergyDrinkMeter = val; }
@@ -827,6 +830,7 @@ private:
 	void OnAddCompetitiveLoser( void );
 	void OnAddCondGas( void );
 	void OnAddRocketPack( void );
+	void OnAddPoison(void);
 
 
 	void OnRemoveZoomed( void );
@@ -907,7 +911,7 @@ private:
 	void OnRemoveCondGas( void );
 	void OnRemoveRocketPack( void );
 	void OnRemoveBurningPyro( void );
-	
+	void OnRemovePoison( void );
 
 	// Starting a new trend, putting Add and Remove next to each other
 	void OnAddCondParachute( void );
@@ -1027,6 +1031,7 @@ private:
 	CUtlVector< int >		m_iRadiusHealTargets;
 	float					m_flRadiusHealCheckTime;
 
+	float					m_flInfectionCheckTime;
 #endif
 
 	// King Rune buff 
@@ -1044,6 +1049,12 @@ private:
 	CHandle<CTFWeaponBase>	m_hBurnWeapon;
 	float					m_flFlameBurnTime;
 	float					m_flAfterburnDuration;
+
+	// Poison
+	CHandle<CTFPlayer>		m_hPoisonAttacker;
+	float					m_flPoisonTime;
+	float					m_flPoisonRemoveTime;
+	float					m_flPoisonDamageTaken;
 
 	// Bleeding
 	struct bleed_struct_t

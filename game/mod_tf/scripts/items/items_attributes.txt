@@ -470,6 +470,39 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3542"
+		{
+			"name"	"has gravity"
+			"attribute_class"	"projectile_has_gravity"
+			"description_string"	"#Attrib_Projectile_Has_Gravity"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3543"
+		{
+			"name"	"bouncer"
+			"attribute_class"	"projectile_bounce"
+			"description_string"	"#Attrib_Projectile_Bounce"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3544"
+		{
+			"name"	"infection"
+			"attribute_class"	"can_infect"
+			"description_string"	"#Attrib_Infection"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
 		//End of Line
+		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}
 }

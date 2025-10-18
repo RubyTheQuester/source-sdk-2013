@@ -129,7 +129,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 				bSuccess = true;
 			}
 
-			if ( nHealthGiven > 0 || pTFPlayer->m_Shared.InCond( TF_COND_BLEEDING ) || pTFPlayer->m_Shared.InCond( TF_COND_BURNING ) || pTFPlayer->m_Shared.InCond( TF_COND_PLAGUE ) )
+			if ( nHealthGiven > 0 || pTFPlayer->m_Shared.InCond( TF_COND_BLEEDING ) || pTFPlayer->m_Shared.InCond( TF_COND_BURNING ) || pTFPlayer->m_Shared.InCond( TF_COND_PLAGUE )  || pTFPlayer->m_Shared.InCond( TF_COND_POISON ) )
 			{
 				bPerformPickup = true;
 				bSuccess = true;

@@ -4133,6 +4133,10 @@ void CTFPlayer::Regenerate( bool bRefillHealthAndAmmo /*= true*/ )
 			m_Shared.RemoveCond( TF_COND_PLAGUE );
 		}
 
+		if ( m_Shared.InCond( TF_COND_POISON ) )
+		{
+			m_Shared.RemoveCond( TF_COND_POISON );
+		}
 
 		m_Shared.SetSpyCloakMeter( 100.0f );
 		m_Shared.SetScoutEnergyDrinkMeter( 100.0f );
@@ -9212,6 +9216,19 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 				pRandomInternalOrgan->ThinkSet( &CBaseEntity::SUB_Remove, gpGlobals->curtime + 5.f, "DieContext" );
 			}
+		}
+	}
+
+	// Check for infection weapons
+	//CTFWeaponBase* pWep = ToTFPlayer(pAttacker)->GetActiveTFWeapon();
+	if ( pWeapon )
+	{
+		float flInfection = 0;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flInfection, can_infect);
+
+		if ( flInfection )
+		{
+			m_Shared.Poison( ToTFPlayer(pAttacker), flInfection );
 		}
 	}
 
@@ -16147,6 +16164,7 @@ void CTFPlayer::FeignDeath( const CTakeDamageInfo& info, bool bDeathnotice )
 	// Stop us from burning and other effects that would give the game away.
 	m_Shared.RemoveCond( TF_COND_BURNING );
 	m_Shared.RemoveCond( TF_COND_BLEEDING );
+	m_Shared.RemoveCond( TF_COND_POISON );
 	RemoveTeleportEffect();
 
 	// Fake death audio.
@@ -18574,7 +18592,7 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 			m_flTauntAttackTime = gpGlobals->curtime + 3.695f;
 			m_iTauntAttack = TAUNTATK_ENGINEER_GUITAR_SMASH;
 		}
-		if (!V_stricmp(szResponse, "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"))
+		else if (!V_stricmp(szResponse, "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"))
 		{
 			m_flTauntAttackTime = gpGlobals->curtime + 3.47f;
 			m_iTauntAttack = TAUNTATK_ENGINEER_TRICKSHOT;
@@ -21312,6 +21330,20 @@ void CTFPlayer::IgnitePlayer()
 void CTFPlayer::InputIgnitePlayer( inputdata_t &inputdata )
 {
 	IgnitePlayer();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Poison a player
+//-----------------------------------------------------------------------------
+void CTFPlayer::InputPoisonPlayer( inputdata_t &inputdata )
+{
+	m_Shared.Poison( ToTFPlayer( inputdata.pActivator ), inputdata.value.Float() );
+}
+
+void CTFPlayer::InputDePoisonPlayer( inputdata_t &inputdata )
+{
+	if ( m_Shared.InCond( TF_COND_POISON ) )
+		m_Shared.RemoveCond( TF_COND_POISON );
 }
 
 //-----------------------------------------------------------------------------

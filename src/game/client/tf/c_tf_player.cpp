@@ -3837,6 +3837,7 @@ C_TFPlayer::C_TFPlayer() :
 	m_pKingRuneRadiusEffect = NULL;
 	m_pKingBuffRadiusEffect = NULL;
 	m_pRunePlagueEffect = NULL;
+	m_pPoisonEffect = NULL;
 	m_pMegaHealEffect = NULL;
 	m_pTempShield = NULL;
 

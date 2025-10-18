@@ -753,6 +753,7 @@ public:
 	HPARTICLEFFECT m_pKingRuneRadiusEffect;
 	HPARTICLEFFECT m_pKingBuffRadiusEffect;
 	HPARTICLEFFECT m_pRunePlagueEffect;
+	HPARTICLEFFECT m_pPoisonEffect;
 	C_LocalTempEntity*	m_pTempShield;
 	float				m_flLastResistTime;
 
