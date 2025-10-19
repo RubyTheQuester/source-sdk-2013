@@ -2,135 +2,135 @@ armory_config
 {
 	"The Ambassador"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Ap-Sap"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Apoco-Fists"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The AWPer Hand"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Axtinguisher"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Backburner"
 	{
-		Cost 50
+		Cost 10
 	}
 	"TTG Sam Revolver"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Black Rose"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Blutsauger"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Bonk! Atomic Punch"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Bread Bite"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Buff Banner"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Candy Cane"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Chargin' Targe"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Classic"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Cloak and Dagger"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Cow Mangler 5000"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Crit-a-Cola"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Dead Ringer"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Direct Hit"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Dragon's Fury"
 	{
-		Cost 50
+		Cost 10
 	}
 	"TTG Watch"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Equalizer"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Escape Plan"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Eyelander"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Fishcake"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Flare Gun"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Force-a-Nature"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Fortified Compound"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Frontier Justice"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Frying Pan"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Gas Passer"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Gloves of Running Urgently"
 	{
-		Cost 50
+		Cost 10
 	}
 	//"Gold Frying Pan"
 	//{
@@ -140,159 +140,159 @@ armory_config
 	//}
 	"The Gunboats"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Gunslinger"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Horseless Headless Horseman's Headtaker"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Hot Hand"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Huntsman"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Iron Curtain"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Jarate"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Killing Gloves of Boxing"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Kritzkrieg"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Lollichop"
 	{
-		Cost 50
+		Cost 10
 	}
 	"TTG Max Pistol"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Maul"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Memory Maker"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Mutated Milk"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Natascha"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Necro Smasher"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Original"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Overdose"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Quick-Fix"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Rainblower"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Razorback"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Righteous Bison"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Robo-Sandvich"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Rocket Jumper"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Sandman"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Sandvich"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Saxxy"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Scottish Resistance"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Self-Aware Beauty Mark"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Sharp Dresser"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Sharpened Volcano Fragment"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Snack Attack"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Solemn Vow"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Stickybomb Jumper"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Sun-on-a-Stick"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Thermal Thruster"
 	{
-		Cost 50
+		Cost 10
 	}
 	"Three-Rune Blade"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Ubersaw"
 	{
-		Cost 50
+		Cost 10
 	}
 	"The Wrangler"
 	{
-		Cost 50
+		Cost 10
 	}
 	
 	"Power Up Canteen (MvM)"

@@ -541,3 +541,5 @@ game/mod_tf/scriptdata/merc/merc_headhunt/savedata.nut
 game/mod_tf/cfg/solo/save_73117512.txt
 game/mod_tf/workshop_localcache.txt
 *.7z
+/game/mod_tf/campaigns/pd_atom_smash
+/game/mod_tf/test

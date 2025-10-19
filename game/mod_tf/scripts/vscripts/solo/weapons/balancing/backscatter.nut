@@ -34,6 +34,6 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//a5.SetString("attribute_class","mult_reload_time")
 	//a5.SetFloat("value", 1.1)
 
-	prefab.SetString("item_quality","moditem_rebalance")
+	prefab.SetString("item_quality","moditem_newstats")
 	prefab.SetString("item_name","#TF_Weapon_3lbTrigger")
 })
