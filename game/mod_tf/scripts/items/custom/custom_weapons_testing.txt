@@ -2,7 +2,7 @@
 {
 	"items"
 	{	
-		"40001"
+		"40009"
 		{
 			"name"	"Pacificateur"
 			"prefab"	"moditem_testing_prefab weapon_revolver"
@@ -50,7 +50,7 @@
 			}
 		}
 		
-		"40002"
+		"40010"
 		{
 			"name"				"Healer Sapper"
 			"prefab"			"moditem_oddity_prefab weapon_sapper"
@@ -84,7 +84,7 @@
 			}
 		}
 		
-		"40003"
+		"40011"
 		{
 			"name"				"Handy Partner"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -118,7 +118,7 @@
 			}
 		}
 		
-		"40004"
+		"40012"
 		{
 			"name"				"SpeedPad"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -152,7 +152,7 @@
 			
 		}
 		
-		"40005"
+		"40013"
 		{
 			"name"				"Assault Cannon"
 			"prefab"			"moditem_testing_prefab weapon_minigun"
@@ -211,7 +211,7 @@
 		}
 		
 		
-		"40006"
+		"40014"
 		{
 			"name"	"Broken Steel"
 			"prefab"	"moditem_testing_prefab weapon_shotgun"
@@ -260,7 +260,7 @@
 			}
 		}
 		
-		"40007"
+		"40015"
 		{
 			"name"	"RPG"
 			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
@@ -293,7 +293,7 @@
 			}
 		}
 		
-		"40008"
+		"40016"
 		{
 			"name"	"Bouncer"
 			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
