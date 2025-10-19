@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"Models\c_crowbar\c_crowbar.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"225.632 -2.97453 4.13806"
+	"SetCameraAngles"		"30.2 -35.0993 13.211"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"15.6 -153.2 -146.9 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

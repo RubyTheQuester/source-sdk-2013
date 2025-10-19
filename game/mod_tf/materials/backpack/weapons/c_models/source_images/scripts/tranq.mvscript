@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\c_tranq\c_tranq.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"70.5101 -4.20226 -1.14469"
+	"SetCameraAngles"		"13.4882 -50.9601 -16.2488"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"3 -161.8 173.4 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

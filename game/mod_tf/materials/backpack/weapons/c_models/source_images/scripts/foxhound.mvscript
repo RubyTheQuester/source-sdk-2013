@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\c_foxhound_pacificateur\c_foxhound_pacificateur.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"86.2956 -5.22534 -0.0636142"
+	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"3 -161.8 173.4 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

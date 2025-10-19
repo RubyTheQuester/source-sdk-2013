@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_sixshooter/c_sixshooter"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

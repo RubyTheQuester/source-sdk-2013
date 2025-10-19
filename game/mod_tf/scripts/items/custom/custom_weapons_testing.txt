@@ -12,7 +12,7 @@
 			
 			"customitem" "1"
 			
-			"image_inventory"				"backpack/crafting/token_primary"
+			"image_inventory"				"backpack/weapons/c_models/c_pacificateur/c_pacificateur"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"32"
@@ -94,7 +94,7 @@
 			
 			"propername"		"1"
 			
-			"image_inventory"				"backpack/crafting/token_pda"
+			"image_inventory"				"backpack/weapons/c_models/c_handypartner/c_handypartner"
 			"model_player"					"models/weapons/c_models/c_handy_builder/c_handy_builder.mdl"
 			
 			"used_by_classes"

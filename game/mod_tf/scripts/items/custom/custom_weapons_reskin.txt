@@ -70,7 +70,7 @@
 			
 			"item_name"	"#TF_Weapon_SixShooter"
 			
-			"image_inventory"	"backpack/crafting/token_primary"
+			"image_inventory"	"backpack/weapons/c_models/c_sixshooter/c_sixshooter"
 			"model_player"		"models/weapons/c_models/c_sixshooter/c_sixshooter.mdl"
 			
 			"static_attrs"
@@ -122,7 +122,7 @@
 			
 			"item_name"		"#TF_Weapon_HuntingShotgun"
 			
-			"image_inventory"	"backpack/crafting/token_secondary"
+			"image_inventory"	"backpack/weapons/c_models/c_huntingshotgun/c_huntingshotgun"
 			"model_player"		"models/weapons/c_models/c_shotgun_full/c_shotgun_full.mdl"
 			
 			"static_attrs"

@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\c_doublepump\c_doublepump.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"189.596 -9.55131 -1.26293"
+	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"-5.9 170.7 175.6 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

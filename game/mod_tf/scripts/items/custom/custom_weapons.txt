@@ -12,7 +12,7 @@
 			"item_name"	"#TF_Weapon_Foxhound"
 			"item_description"	"#TF_Weapon_Foxhound_desc"
 			
-			"image_inventory"	"backpack/crafting/token_primary"
+			"image_inventory"	"backpack/weapons/c_models/c_foxhound/c_foxhound"
 			"model_player"		"models/weapons/c_models/c_foxhound_pacificateur/c_foxhound_pacificateur.mdl"
 			
 			"static_attrs"
