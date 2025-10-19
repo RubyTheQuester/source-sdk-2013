@@ -34,6 +34,7 @@
 			//
 			// Note that this folder is scanned only when the game is booted.
 			game+mod+custom_mod    |gameinfo_path|custom/*
+			game+mod+custom_mod	   |gameinfo_path|campaigns/*
 			// Enable this if you want to load your TF custom content.
 			//game+mod	|appid_440|tf/custom/*
 

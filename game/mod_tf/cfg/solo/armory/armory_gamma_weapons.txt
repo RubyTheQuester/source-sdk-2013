@@ -1,10 +1,5 @@
 armory_config
 {
-	"Pip-Boy"
-	{
-		Cost 50
-	}
-	
 	"Foxhound"
 	{
 		Cost 0
@@ -92,6 +87,10 @@ armory_config
 		Cost 0
 	}
 	"Full Frontier"
+	{
+		Cost 0
+	}
+	"Stock Hunting Shotgun"
 	{
 		Cost 0
 	}
