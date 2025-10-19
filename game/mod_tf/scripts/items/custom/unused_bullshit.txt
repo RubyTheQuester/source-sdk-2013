@@ -1,0 +1,42 @@
+		"40001"
+		{
+			"name"	"Sniper Rifle Aim Charge"
+			"prefab" "moditem_testing_prefab weapon_sniperrifle"
+			
+			"item_name"	"#TF_AimCharge"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				//"sniper beep"
+				//{
+				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
+				//	"value"	"1"
+				//}
+				
+				"mult sniper charge under crosshair"
+				{
+					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
+					"value"	"6"
+				}
+				"sniper no headshot without full charge"
+				{
+					"attribute_class"	"sniper_no_headshot_without_full_charge"
+					"value" "1"
+				}
+				
+				"decapitate type"
+				{
+					"attribute_class"	"decapitate_type"
+					"value"	"1"
+				}
+			}
+		}

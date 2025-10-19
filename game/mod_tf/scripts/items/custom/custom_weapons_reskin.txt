@@ -4,6 +4,65 @@
 	{
 		"35000"
 		{
+			"name"				"Crowbar"
+			"base_item_name"	"Crowbar"
+			"item_class"		"saxxy"
+			"prefab"			"moditem_reskin_prefab weapon_melee_allclass"
+			
+			"item_name"			"#TF_Weapon_ModCrowbar"
+			"item_type_name"	"#TF_Weapon_Crowbar"
+			"item_description"	"#TF_Weapon_Crowbar_desc"
+			
+			"item_logname"	"crowbar"
+			"item_iconname"	"crowbar"
+			
+			"item_slot"	"melee"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_crowbar/c_crowbar"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_crowbar/c_crowbar.mdl"
+			
+			"attach_to_hands"		"1"
+			"inspect_panel_dist" 	"40"
+			
+			"anim_slot" "MELEE_ALLCLASS"
+			
+			"xifier_class_remap"	"Frying Pan"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+			
+			"visuals"
+			{
+				"sound_melee_hit"			"Crowbar.HitFlesh"
+				"sound_melee_hit_world"		"Crowbar.HitWorld"
+				"sound_melee_miss"			"Weapon_Machete.Miss"
+				"sound_burst"				"Weapon_Machete.MissCrit"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"pyro" 		"1"
+				
+				"spy" 		"1"
+				"engineer" 	"1"
+			}
+		}
+		
+		"35001"
+		{
 			"name"	"Six Shooter"
 			"prefab" "moditem_reskin_prefab weapon_ambassador"
 			
@@ -27,7 +86,7 @@
 			}		
 		}
 		
-		"35001"
+		"35002"
 		{
 			"name"	"Full Frontier"
 			"prefab" "moditem_reskin_prefab weapon_shotgun"
@@ -36,7 +95,34 @@
 			
 			"item_name"	"#TF_Weapon_FullFrontier"
 			
-			"image_inventory"	"backpack\weapons\w_models\w_shotgun_full"
+			"image_inventory"	"backpack/weapons/c_models/c_full_frontier/c_full_frontier"
+			"model_player"		"models/weapons/c_models/c_full_frontier/c_full_frontier.mdl"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+				"weapon_stattrak_module_scale"				"0.608"				
+			}
+			
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"pyro" "secondary"
+				"soldier" "secondary"
+				"heavy" "secondary"
+			}
+		}
+		
+		"35003"
+		{
+			"name"	"Stock Hunting Shotgun"
+			"prefab" "moditem_reskin_prefab weapon_shotgun"
+			
+			"propername"		"0"
+			
+			"item_name"		"#TF_Weapon_HuntingShotgun"
+			
+			"image_inventory"	"backpack/crafting/token_secondary"
 			"model_player"		"models/weapons/c_models/c_shotgun_full/c_shotgun_full.mdl"
 			
 			"static_attrs"
@@ -54,6 +140,6 @@
 			}
 		}
 		
-		// END OF LINE
+		// END OF THE LINE
 	}
 }

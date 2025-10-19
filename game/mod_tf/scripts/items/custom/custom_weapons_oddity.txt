@@ -97,6 +97,6 @@
 			"drop_sound"		"ui/item_watch_drop.wav"
 		}
 		
-		//END OF LINE
+		//END OF THE LINE
 	}
 }

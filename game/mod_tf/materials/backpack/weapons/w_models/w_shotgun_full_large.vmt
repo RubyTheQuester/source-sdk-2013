@@ -1,5 +1,0 @@
-"UnlitGeneric"
-{
-	"$baseTexture" "backpack/weapons/w_models/w_shotgun_full_large"
-	$translucent 1
-}

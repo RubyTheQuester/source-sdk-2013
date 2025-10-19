@@ -166,65 +166,6 @@
 		
 		"34450"
 		{
-			"name"				"Crowbar"
-			"base_item_name"	"Crowbar"
-			"item_class"		"saxxy"
-			"prefab"		"moditem_prefab weapon_melee_allclass"
-			
-			"item_name"	"#TF_Weapon_ModCrowbar"
-			"item_type_name"	"#TF_Weapon_Crowbar"
-			"item_description"	"#TF_Weapon_Crowbar_desc"
-			
-			"item_logname"	"crowbar"
-			"item_iconname"	"crowbar"
-			
-			"item_slot"	"melee"
-			
-			"image_inventory"				"backpack/player/items/all_class/crowbar"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"					"models/weapons/c_models/c_crowbar/c_crowbar.mdl"
-			
-			"attach_to_hands"		"1"
-			"inspect_panel_dist" 	"40"
-			
-			"anim_slot" "MELEE_ALLCLASS"
-			
-			"xifier_class_remap"	"Frying Pan"
-			
-			"static_attrs"
-			{
-				"min_viewmodel_offset"		"10 0 -7"
-			}
-			
-			"visuals"
-			{
-				"sound_melee_hit"			"Crowbar.HitFlesh"
-				"sound_melee_hit_world"		"Crowbar.HitWorld"
-				"sound_melee_miss"			"Weapon_Machete.Miss"
-				"sound_burst"				"Weapon_Machete.MissCrit"
-			}
-			
-			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
-			"drop_sound"		"ui/item_metal_weapon_drop.wav"
-			
-			"used_by_classes"
-			{
-				"scout"		"1"
-				"sniper"	"1"
-				"soldier"	"1"
-				"demoman"	"1"
-				"medic"		"1"
-				"heavy"		"1"
-				"pyro" 		"1"
-				
-				"spy" 		"1"
-				"engineer" 	"1"
-			}
-		}
-		
-		"34451"
-		{
 			"name"				"Resistant Vest"
 			"prefab"			"moditem_prefab weapon_heavy_wearable"
 			
@@ -264,7 +205,7 @@
 			}
 		}
 		
-		"34452"
+		"34451"
 		{
 			"name"				"Mortar Launcher"
 			"prefab"			"moditem_prefab weapon_rocketlauncher"
@@ -326,7 +267,7 @@
 			}
 		}
 		
-		"34453"
+		"34452"
 		{
 			"name"				"Syringe"
 			"prefab"			"moditem_prefab weapon_bonesaw"
@@ -374,7 +315,7 @@
 			}
 		}
 		
-		"34454"
+		"34453"
 		{
 			"name"	"Walkabout"
 			"prefab" "moditem_prefab weapon_sniperrifle"
@@ -423,16 +364,16 @@
 			}
 		}
 		
-		"34455"
+		"34454"
 		{
-			"name"	"The Double Trouble"
+			"name"	"Double Trouble"
 			"prefab"	"moditem_prefab weapon_shotgun"
 			
 			"item_name"	"#TF_Weapon_DoubleTrouble"
 			
 			"customitem" "1"
 			
-			"image_inventory"				"backpack/weapons/c_models/c_doubletrouble"
+			"image_inventory"				"backpack/weapons/c_models/c_doubletrouble/c_doubletrouble"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"model_player"					"models/weapons/c_models/c_doublepump/c_doublepump.mdl"
@@ -474,5 +415,57 @@
 				"tracer_effect"	"bullet_bignasty_tracer01"
 			}
 		}
+		
+		"34455"
+		{
+			"name"			"Tranquilizer"
+			"prefab" 		"moditem_prefab weapon_revolver"
+			"item_class"	"tf_weapon_tranq"
+			
+			"item_name"	"#TF_Weapon_Tranq"
+			"item_type_name"	"#TF_Weapon_Tranq"
+		
+			"propername"		"0"
+
+			"image_inventory"				"backpack\weapons\c_models\c_tranq\c_tranq"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_tranq/c_tranq.mdl"
+			
+			"attributes"
+			{
+				"keep disguise on attack"
+				{
+					"attribute_class"	"keep_disguise_on_attack"
+					"value" "1"
+				}
+				"attack while cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
+				"tranq slowdown"
+				{
+					"attribute_class"	"fires_slow_tranq"
+					"value" "1"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"			"Weapon_Tranq_New.Single"
+				"sound_burst" 				"Weapon_Tranq_New.SingleCrit"
+			
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"						"ACT_ITEM4_VM_IDLE"
+					"ACT_VM_DRAW"						"ACT_ITEM4_VM_DRAW"
+					"ACT_VM_PRIMARYATTACK"				"ACT_ITEM4_VM_PRIMARYATTACK"
+					"ACT_VM_RELOAD"						"ACT_ITEM4_VM_RELOAD"
+				}
+			}
+		}
+		
+		//END OF THE LINE
 	}
 }

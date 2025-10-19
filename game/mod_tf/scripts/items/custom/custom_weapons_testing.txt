@@ -2,102 +2,9 @@
 {
 	"items"
 	{	
-		"40006"
+		"40001"
 		{
-			"name"	"Tranquilizer"
-			"prefab" "moditem_testing_prefab weapon_revolver"
-			"item_class"	"tf_weapon_tranq"
-			
-			"item_name"	"#TF_Weapon_Tranq"
-			"item_type_name"	"#TF_Weapon_Tranq"
-		
-			"propername"		"0"
-
-			"image_inventory"				"backpack\weapons\w_models\w_tranq"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"					"models/weapons/c_models/c_tranq/c_tranq.mdl"
-			
-			"attributes"
-			{
-				"keep disguise on attack"
-				{
-					"attribute_class"	"keep_disguise_on_attack"
-					"value" "1"
-				}
-				"attack while cloak"
-				{
-					"attribute_class"	"attack_while_cloak"
-					"value" "1"
-				}
-				"tranq slowdown"
-				{
-					"attribute_class"	"fires_slow_tranq"
-					"value" "1"
-				}
-			}
-			
-			"visuals"
-			{
-				"sound_single_shot"			"Weapon_Tranq_New.Single"
-				"sound_burst" 				"Weapon_Tranq_New.SingleCrit"
-			
-				"animation_replacement"
-				{
-					"ACT_VM_IDLE"						"ACT_ITEM4_VM_IDLE"
-					"ACT_VM_DRAW"						"ACT_ITEM4_VM_DRAW"
-					"ACT_VM_PRIMARYATTACK"				"ACT_ITEM4_VM_PRIMARYATTACK"
-					"ACT_VM_RELOAD"						"ACT_ITEM4_VM_RELOAD"
-				}
-			}
-		}
-		
-		"40008"
-		{
-			"name"	"Sniper Rifle Aim Charge"
-			"prefab" "moditem_testing_prefab weapon_sniperrifle"
-			
-			"item_name"	"#TF_AimCharge"
-			
-			"customitem" "1"
-			
-			"image_inventory"				"backpack/crafting/token_primary"
-			
-			"used_by_classes"
-			{
-				"sniper"		"1"
-			}
-			
-			"attributes"
-			{
-				//"sniper beep"
-				//{
-				//	"attribute_class"	"sniper_beep_with_enemy_under_crosshair"
-				//	"value"	"1"
-				//}
-				
-				"mult sniper charge under crosshair"
-				{
-					"attribute_class"	"mult_sniper_charge_per_sec_with_enemy_under_crosshair"
-					"value"	"6"
-				}
-				"sniper no headshot without full charge"
-				{
-					"attribute_class"	"sniper_no_headshot_without_full_charge"
-					"value" "1"
-				}
-				
-				"decapitate type"
-				{
-					"attribute_class"	"decapitate_type"
-					"value"	"1"
-				}
-			}
-		}
-		
-		"40010"
-		{
-			"name"	"The Pacificateur"
+			"name"	"Pacificateur"
 			"prefab"	"moditem_testing_prefab weapon_revolver"
 			
 			"item_name"	"#TF_Weapon_Pacificateur"
@@ -143,7 +50,7 @@
 			}
 		}
 		
-		"40011"
+		"40002"
 		{
 			"name"				"Healer Sapper"
 			"prefab"			"moditem_oddity_prefab weapon_sapper"
@@ -177,7 +84,7 @@
 			}
 		}
 		
-		"40012"
+		"40003"
 		{
 			"name"				"Handy Partner"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -188,7 +95,7 @@
 			"propername"		"1"
 			
 			"image_inventory"				"backpack/crafting/token_pda"
-			"model_player"					"models/weapons/w_models/w_handy_builder/w_handy_builder.mdl"
+			"model_player"					"models/weapons/c_models/c_handy_builder/c_handy_builder.mdl"
 			
 			"used_by_classes"
 			{
@@ -211,7 +118,7 @@
 			}
 		}
 		
-		"40013"
+		"40004"
 		{
 			"name"				"SpeedPad"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -245,7 +152,7 @@
 			
 		}
 		
-		"40014"
+		"40005"
 		{
 			"name"				"Assault Cannon"
 			"prefab"			"moditem_testing_prefab weapon_minigun"
@@ -304,7 +211,7 @@
 		}
 		
 		
-		"40015"
+		"40006"
 		{
 			"name"	"Broken Steel"
 			"prefab"	"moditem_testing_prefab weapon_shotgun"
@@ -386,7 +293,7 @@
 			}
 		}
 		
-		"40016"
+		"40008"
 		{
 			"name"	"Bouncer"
 			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
