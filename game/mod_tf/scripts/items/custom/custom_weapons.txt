@@ -60,6 +60,12 @@
 			{
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
+			}
+			
+			"static_attrs"
+			{
+				"weapon_stattrak_module_scale"			"0.497"
+				"min_viewmodel_offset"					"10 0 -6"
 				"single wep deploy time decreased"		"0.7"
 				"switch from wep deploy time decreased"	"0.7"
 			}
@@ -431,6 +437,11 @@
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"model_player"					"models/weapons/c_models/c_tranq/c_tranq.mdl"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 0 -6"
+			}
 			
 			"attributes"
 			{
