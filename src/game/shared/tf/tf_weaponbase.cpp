@@ -18,6 +18,7 @@
 #include "tf_gcmessages.h"
 
 #include "tf_weapon_wrench.h"
+#include "tf_viewmodel.h"
 
 #include "passtime_convars.h"
 
@@ -48,7 +49,6 @@
 // Client specific.
 #else
 #include "c_tf_player.h"
-#include "tf_viewmodel.h"
 #include "hud_crosshair.h"
 #include "c_tf_playerresource.h"
 #include "clientmode_tf.h"
@@ -666,13 +666,24 @@ const char *CTFWeaponBase::GetViewModel( int iViewModel ) const
 	}
 
 	const CEconItemView *pItem = GetAttributeContainer()->GetItem();
-	if ( pPlayer && pItem->IsValid() && pItem->GetStaticData()->ShouldAttachToHands() )
+	if ( pPlayer && pItem->IsValid() )
 	{
-		// Should always be valid, because players without classes shouldn't be carrying items
-		const char *pszHandModel = pPlayer->GetPlayerClass()->GetHandModelName( iHandModelIndex );
-		Assert( pszHandModel );
+		if ( pItem->GetStaticData()->ShouldAttachToHands() )
+		{
+			// Should always be valid, because players without classes shouldn't be carrying items
+			const char *pszHandModel = pPlayer->GetPlayerClass()->GetHandModelName( iHandModelIndex );
+			Assert( pszHandModel );
 
-		return pszHandModel;
+			return pszHandModel;
+		}
+		else
+		{
+			// Should always be valid, because players without classes shouldn't be carrying items
+			const char *pszModel = pItem->GetPlayerDisplayModel( pPlayer->GetPlayerClass()->GetClassIndex(), pPlayer->GetTeamNumber() );
+			Assert( pszModel );
+
+			return pszModel ? pszModel : "";
+		}
 	}
 
 	return GetTFWpnData().szViewModel;

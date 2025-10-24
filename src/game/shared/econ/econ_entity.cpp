@@ -1138,44 +1138,44 @@ void CEconEntity::UpdateAttachmentModels( void )
 	}
 
 	// Update the state of attachment models for this item
- 	bool bItemNeedsAttachment = pItemDef && (pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly());
-	if ( bItemNeedsAttachment )
+	bool bItemNeedsAttachment = pItemDef;
+	if (bItemNeedsAttachment)
 	{
 		bool bShouldShowAttachment = false;
-		CBasePlayer *pOwner = ToBasePlayer( GetOwnerEntity() );
-		if ( pOwner && !pOwner->ShouldDrawThisPlayer() )
+		CBasePlayer* pOwner = ToBasePlayer(GetOwnerEntity());
+		if (pOwner && !pOwner->ShouldDrawThisPlayer())
 		{
 			// Drawing the viewmodel
 			bShouldShowAttachment = true;
 		}
 
-		if ( bShouldShowAttachment && AttachmentModelsShouldBeVisible() )
+		if (bShouldShowAttachment && AttachmentModelsShouldBeVisible())
 		{
-			if ( !m_hViewmodelAttachment )
+			if (!m_hViewmodelAttachment)
 			{
-				C_BaseViewModel *vm = pOwner->GetViewModel( 0 );
-				if ( vm )
+				C_BaseViewModel* vm = pOwner->GetViewModel(0);
+				if (vm)
 				{
-					C_ViewmodelAttachmentModel *pEnt = new class C_ViewmodelAttachmentModel;
-					if ( !pEnt )
+					C_ViewmodelAttachmentModel* pEnt = new class C_ViewmodelAttachmentModel;
+					if (!pEnt)
 						return;
 
-					pEnt->SetOuter( this );
+					pEnt->SetOuter(this);
 
 					int iClass = 0;
 #if defined( TF_DLL ) || defined( TF_CLIENT_DLL )
-					CTFPlayer *pTFPlayer = ToTFPlayer( pOwner );
-					if ( pTFPlayer )
+					CTFPlayer* pTFPlayer = ToTFPlayer(pOwner);
+					if (pTFPlayer)
 					{
 						iClass = pTFPlayer->GetPlayerClass()->GetClassIndex();
 					}
 #endif // defined( TF_DLL ) || defined( TF_CLIENT_DLL )
-					if ( pEnt->InitializeAsClientEntity( pItem->GetPlayerDisplayModel( iClass, pOwner->GetTeamNumber() ), RENDER_GROUP_VIEW_MODEL_OPAQUE ) == false )
+					if (pEnt->InitializeAsClientEntity(pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly() ? pItem->GetPlayerDisplayModel(iClass, pOwner->GetTeamNumber()) : pTFPlayer->GetPlayerClass()->GetHandModelName(0), RENDER_GROUP_VIEW_MODEL_OPAQUE) == false)
 						return;
 
 					m_hViewmodelAttachment = pEnt;
-					m_hViewmodelAttachment->SetParent( vm );
-					m_hViewmodelAttachment->SetLocalOrigin( vec3_origin );
+					m_hViewmodelAttachment->SetParent(vm);
+					m_hViewmodelAttachment->SetLocalOrigin(vec3_origin);
 					m_hViewmodelAttachment->UpdatePartitionListEntry();
 					m_hViewmodelAttachment->CollisionProp()->UpdatePartition();
 					m_hViewmodelAttachment->UpdateVisibility();
@@ -1183,21 +1183,21 @@ void CEconEntity::UpdateAttachmentModels( void )
 					m_bAttachmentDirty = true;
 				}
 			}
-			else if ( m_hViewmodelAttachment )
+			else if (m_hViewmodelAttachment)
 			{
 				// If a player changes team, we may need to update the skin on the attachment weapon model
-				if ( m_iOldTeam != m_iTeamNum )
+				if (m_iOldTeam != m_iTeamNum)
 				{
 					m_bAttachmentDirty = true;
 				}
 			}
 
 			// We can't pull data from the viewmodel until we're actually the active weapon.
-			if ( m_bAttachmentDirty && m_hViewmodelAttachment )
+			if (m_bAttachmentDirty && m_hViewmodelAttachment)
 			{
-				pOwner = ToBasePlayer( GetOwnerEntity() );
-				C_BaseViewModel *vm = pOwner->GetViewModel( 0 );
-				if ( vm && vm->GetWeapon() == this )
+				pOwner = ToBasePlayer(GetOwnerEntity());
+				C_BaseViewModel* vm = pOwner->GetViewModel(0);
+				if (vm && vm->GetWeapon() == this)
 				{
 					m_hViewmodelAttachment->m_nSkin = vm->GetSkin();
 					m_bAttachmentDirty = false;
