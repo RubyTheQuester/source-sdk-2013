@@ -750,6 +750,78 @@ bool CChoreoStringPool::GetString( short stringId, char *buff, int buffSize )
 
 CChoreoStringPool g_ChoreoStringPool;
 
+#ifndef OF_CLIENT_DLL
+CChoreoScene *C_SceneEntity::LoadScene( const char *filename )
+{
+	char loadfile[ 512 ];
+	Q_strncpy( loadfile, filename, sizeof( loadfile ) );
+	Q_SetExtension( loadfile, ".vcd", sizeof( loadfile ) );
+	Q_FixSlashes( loadfile );
+
+	CChoreoScene *pScene;
+	void *pBuffer = NULL;
+
+	{
+		int fileSize = filesystem->ReadFileEx(loadfile, "MOD", &pBuffer, true, true);
+
+		if (fileSize)
+		{
+			g_TokenProcessor.SetBuffer((char*)pBuffer);
+			pScene = ChoreoLoadScene(loadfile, this, &g_TokenProcessor, Scene_Printf);
+		}
+		else
+		{
+			char *pBuffer2 = NULL;
+			size_t bufsize = scenefilecache->GetSceneBufferSize(loadfile);
+			if (bufsize <= 0)
+				return NULL;
+
+			pBuffer2 = new char[bufsize];
+			if (!scenefilecache->GetSceneData(filename, (byte *)pBuffer2, bufsize))
+			{
+				delete[] pBuffer2;
+				return NULL;
+			}
+
+			if (IsBufferBinaryVCD(pBuffer2, bufsize))
+			{
+				pScene = new CChoreoScene(this);
+				CUtlBuffer buf(pBuffer2, bufsize, CUtlBuffer::READ_ONLY);
+				if (!pScene->RestoreFromBinaryBuffer(buf, loadfile, &g_ChoreoStringPool))
+				{
+					Warning("Unable to restore binary scene '%s'\n", loadfile);
+					delete pScene;
+					pScene = NULL;
+				}
+				else
+				{
+					pScene->SetPrintFunc(Scene_Printf);
+					pScene->SetEventCallbackInterface(this);
+				}
+			}
+			else
+			{
+				g_TokenProcessor.SetBuffer(pBuffer2);
+				pScene = ChoreoLoadScene(loadfile, this, &g_TokenProcessor, Scene_Printf);
+			}
+
+			delete[] pBuffer2;
+			return pScene;
+		}
+	}
+	
+	if (pScene)
+	{
+		pScene->SetPrintFunc(Scene_Printf);
+		pScene->SetEventCallbackInterface(this);
+	}
+
+	
+	filesystem->FreeOptimalReadBuffer(pBuffer);
+
+	return pScene;
+}
+#else
 CChoreoScene *C_SceneEntity::LoadScene( const char *filename )
 {
 	char loadfile[ 512 ];
@@ -795,6 +867,7 @@ CChoreoScene *C_SceneEntity::LoadScene( const char *filename )
 	delete[] pBuffer;
 	return pScene;
 }
+#endif
 
 
 //-----------------------------------------------------------------------------
