@@ -2,6 +2,18 @@
 {
 	"prefabs"
 	{
+		"weapon_shotgun_multiclass"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
+				"mercenary"	"primary"
+			}
+		}
+		
 		"weapon_russian_riot"
 		{
 			"used_by_classes"
@@ -10,8 +22,10 @@
 				"soldier"	"secondary"
 				"pyro"		"secondary"
 				"heavy"		"secondary"
+				"mercenary"	"primary"
 			}
 		}
+		
 		"weapon_gunboats"
 		{
 			"used_by_classes"

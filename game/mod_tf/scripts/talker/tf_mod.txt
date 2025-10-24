@@ -1,63 +1,360 @@
 //============================================================================================================
+rule SoldierTauntMortar
+{
+	criteria ConceptPlayerTaunt IsSoldier WeaponIsRocketLauncherMortar
+	response SoldierTauntDirectHit
+}
 
-	rule SoldierTauntMortar
+rule HeavyTauntPlayerMeleeAllClass
+{
+	criteria ConceptPlayerTaunt IsHeavy WeaponIsAxe
+	response HeavyTauntMelee
+}
+
+response "EngineerTauntRevolverTrickshot"
+{
+	scene "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"
+}
+
+rule EngineerTauntPlayerRevolverSolo
+{
+	criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverEngineer
+	response EngineerTauntRevolverTrickshot
+}
+
+rule EngineerTauntPlayerRevolverSecondary
+{
+	criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverSecondary
+	response EngineerTauntRevolverTrickshot
+}
+
+Response "SpyTauntSpycicle"
+{
+	scene "scenes/player/spy/low/taunt03_v1.vcd"
+	scene "scenes/player/spy/low/taunt03_v2.vcd"
+}
+
+Rule SpyTauntSpycicle
+{
+	criteria ConceptPlayerTaunt IsSpy WeaponIsSpycicle
+	response SpyTauntSpycicle
+}
+
+rule SpyTauntPlayerPrimaryTranq
+{
+	criteria ConceptPlayerTaunt IsSpy WeaponIsTranq
+	response SpyTauntPrimary
+}
+
+// Custom stuff
+response "DemomanTauntHandshake"
+{
+	scene "scenes/player/demoman/low/taunt04_v1.vcd" 
+	scene "scenes/player/demoman/low/taunt04_v2.vcd" 
+}
+
+// Custom Stuff
+rule DemomanTauntHandshake
+{
+	criteria ConceptPlayerTaunt IsDemoman WeaponIsHandshake
+	response DemomanTauntHandshake
+}
+// Ullapool Caber taunt - from unused Bottle taunt.
+
+//============================================================================================================
+//Mercenary
+//============================================================================================================
+
+// Default expressions and idle facial pose
+	Response PlayerExpressionIdleMercenary
 	{
-		criteria ConceptPlayerTaunt IsSoldier WeaponIsRocketLauncherMortar
-		response SoldierTauntDirectHit
+		scene "scenes/player/mercenary/low/idleloop01.vcd"
 	}
 	
-	rule HeavyTauntPlayerMeleeAllClass
+	Rule PlayerExpressionIdleMercenary
 	{
-		criteria ConceptPlayerTaunt IsHeavy WeaponIsAxe
-		response HeavyTauntMelee
+		criteria ConceptPlayerExpression IsMercenary
+		Response PlayerExpressionIdleMercenary
 	}
 	
-	response "EngineerTauntRevolverTrickshot"
+	Response PlayerExpressionIdleHurtMercenary
 	{
-		scene "scenes/workshop/player/engineer/low/taunt_texan_trickshot.vcd"
+		scene "scenes/player/mercenary/low/idleloopHurt01.vcd"
 	}
 	
-	rule EngineerTauntPlayerRevolverSolo
+	Rule PlayerExpressionIdleHurtMercenary
 	{
-		criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverEngineer
-		response EngineerTauntRevolverTrickshot
+		criteria ConceptPlayerExpression IsMercenary LowHealthContext
+		Response PlayerExpressionIdleHurtMercenary
+	}
+	Rule PlayerExpressionRoundLossMercenary
+	{
+		criteria ConceptPlayerExpression IsMercenary GameRulesInWinState PlayerOnLosingTeam
+		Response PlayerExpressionIdleHurtMercenary
 	}
 	
-	rule EngineerTauntPlayerRevolverSecondary
+	Response PlayerExpressionAttackMercenary
 	{
-		criteria ConceptPlayerTaunt IsEngineer WeaponIsRevolverSecondary
-		response EngineerTauntRevolverTrickshot
+		scene "scenes/player/mercenary/low/attack01.vcd"
 	}
 	
-	Response "SpyTauntSpycicle"
+	Rule PlayerExpressionAttackMercenary
 	{
-		scene "scenes/player/spy/low/taunt03_v1.vcd"
-		scene "scenes/player/spy/low/taunt03_v2.vcd"
+		criteria ConceptFireWeapon IsMercenary
+		Response PlayerExpressionAttackMercenary
+	}
+
+	// TAUNTS
+	
+	///
+	/// RESPONSES
+	///
+	
+	//Taunts Custom Responds
+	
+	response "MercenaryTauntKnockKnockKnuckles"
+	{
+		scene "scenes/Player/Mercenary/low/taunt_knuckles.vcd"
 	}
 	
-	Rule SpyTauntSpycicle
+	response "MercenaryTauntSoClose"
 	{
-		criteria ConceptPlayerTaunt IsSpy WeaponIsSpycicle
-		response SpyTauntSpycicle
+		scene "scenes/Player/Mercenary/low/taunt_soclose.vcd"
 	}
 	
-	rule SpyTauntPlayerPrimaryTranq
+	response "MercenaryTauntGroovy"
 	{
-		criteria ConceptPlayerTaunt IsSpy WeaponIsTranq
-		response SpyTauntPrimary
+		scene "scenes/Player/Mercenary/low/taunt_groovy.vcd"
 	}
 	
-	// Custom stuff
-	response "DemomanTauntHandshake"
+	response "MercenaryTauntDeadMeat"
 	{
-		scene "scenes/player/demoman/low/taunt04_v1.vcd" 
-		scene "scenes/player/demoman/low/taunt04_v2.vcd" 
+		scene "scenes/Player/Mercenary/low/taunt_deadmeat.vcd"
 	}
 	
-	// Custom Stuff
-	rule DemomanTauntHandshake
+	response "MercenaryTauntBombScare"
 	{
-		criteria ConceptPlayerTaunt IsDemoman WeaponIsHandshake
-		response DemomanTauntHandshake
+		scene "scenes/Player/Mercenary/low/taunt_bombscare.vcd"
 	}
-	// Ullapool Caber taunt - from unused Bottle taunt.
+	
+	response "MercenaryTauntBond"
+	{
+		scene "scenes/Player/Mercenary/low/taunt_bond.vcd"
+	}
+	
+	response "MercenaryTauntBondAlt"
+	{
+		scene "scenes/Player/Mercenary/low/taunt06_v1.vcd"
+	}
+	///
+	/// RULES
+	///	
+	
+	//Custom Taunts Rules
+	rule MercenaryTauntKnucklesCrackRule
+	{
+		criteria ConceptPlayerTauntKnucklesCrack IsMercenary
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	
+	rule MercenaryTauntSoCloseRule
+	{
+		criteria ConceptPlayerTauntSoClose IsMercenary
+		response MercenaryTauntSoClose
+	}
+	
+	rule MercenaryTauntGroovyRule
+	{
+		criteria ConceptPlayerTauntGroovy IsMercenary
+		response MercenaryTauntGroovy
+	}
+	
+	rule MercenaryTauntDeadMeatRule
+	{
+		criteria ConceptPlayerTauntDeadMeat IsMercenary
+		response MercenaryTauntDeadMeat
+	}
+	
+	rule MercenaryTauntBondRule
+	{
+		criteria ConceptPlayerTauntBond IsMercenary
+		response MercenaryTauntBond
+	}
+	
+	rule MercenaryTauntBombScareRule
+	{
+		criteria ConceptPlayerTauntBombScare IsMercenary
+		response MercenaryTauntBombScare
+	}
+	
+	//Knuckles Crack
+	rule MercenaryTauntEternalShotgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsEternalShotgun
+		response MercenaryTauntKnockKnockKnuckles
+	}		
+	rule MercenaryTauntSuperShotgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsSupershotgun
+		response MercenaryTauntKnockKnockKnuckles
+	}		
+	rule MercenaryTauntDMRocketLauncher
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsDMRocketLauncher
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	rule MercenaryTauntBouncer
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsBouncer
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	rule MercenaryTauntRailgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsRailgun
+		response MercenaryTauntKnockKnockKnuckles
+	}	
+	rule MercenaryTauntGatlingGun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsGatlingGun
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	rule MercenaryTauntLightningGun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsLightningGun
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	//So Close	
+	rule MercenaryTauntShotgunSecondary
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsShotgun
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntDynamitePack
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsDynamiteBundle
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntNailgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsNailgun
+		response MercenaryTauntSoClose
+	}	
+	rule MercenaryTauntChinaLake
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsChinaLake
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntTommyGun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsTommyGun
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntRailgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsRailgun
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntAssault
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsAssaultRifle
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntNailgun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsNailgun
+		response MercenaryTauntSoClose
+	}
+	rule MercenaryTauntDynamiteBundle
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsDynamiteBundle
+		response MercenaryTauntSoClose
+	}
+	//Groovy
+	rule MercenaryTauntCrowbar
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsCrowbar
+		response MercenaryTauntGroovy
+	}
+	rule MercenaryTauntLeadpipe
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsLeadPipe
+		response MercenaryTauntGroovy
+	}
+	rule MercenaryTauntCombatKnife
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsCombatKnife
+		response MercenaryTauntGroovy
+	}
+	rule MercenaryTauntKnife
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsKnife
+		response MercenaryTauntGroovy
+	}
+	rule MercenaryTauntUmbrella
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsUmbrella
+		response MercenaryTauntGroovy
+	}
+	rule MercenaryTauntFlamethrower
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsFlamethrowerDM
+		response MercenaryTauntGroovy
+	}
+	
+	//Dead Meat
+	rule MercenaryTauntBerserk
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsBerserk
+		response MercenaryTauntDeadMeat
+	}
+	rule MercenaryTauntGIB
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsGIB
+		response MercenaryTauntDeadMeat
+	}
+	rule MercenaryTauntQuad
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsQuad
+		response MercenaryTauntDeadMeat
+	}
+	rule MercenaryTauntChainsaw
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsChainsaw
+		response MercenaryTauntDeadMeat
+	}
+	
+	//Bomb Scare
+	//NONE
+	
+	//Bond
+	rule MercenaryTauntPistol
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistol
+		response MercenaryTauntBond
+	}
+	rule MercenaryTauntScoutPistol
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolScout
+		response MercenaryTauntBond
+	}
+	rule MercenaryTauntPistolMercenary
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolMercenary
+		response MercenaryTauntBond
+	}
+	rule MercenaryTauntAkimboPistols
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolAkimbo
+		response MercenaryTauntBond
+	}	
+	rule MercenaryTauntRevolver
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsRevolver
+		response MercenaryTauntBond
+	}	
+	rule MercenaryTauntDMRevolver
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsDMRevolver
+		response MercenaryTauntBond
+	}	
+//============================================================================================================

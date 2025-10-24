@@ -1,0 +1,582 @@
+"items_game"
+{	
+	"prefabs"
+	{
+		"weapon_shotgun_multiclass"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"pyro" 		"secondary"
+				"soldier" 	"secondary"
+				"heavy" 	"secondary"
+				"mercenary"	"secondary"
+			}
+		}
+		
+		"weapon_crowbar"
+		{
+			"enabled"	"0"
+			
+			"item_class"	"tf_weapon_crowbar"
+			
+			"item_type_name"	"#TF_Weapon_Crowbar"
+			"item_name"			"#TF_Weapon_Crowbar"
+			
+			"item_slot"	"melee"
+			"item_quality"	"normal"
+			
+			"baseitem" 		"0"
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_crowbar/c_crowbar"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models\weapons\v_models\v_crowbar_mercenary.mdl"
+			"model_world"	"models/weapons/w_models/w_crowbar.mdl"
+			
+			"inspect_panel_dist"       		"45"
+			
+			"attach_to_hands"				"0"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
+		
+		"weapon_pistol_merc"
+		{
+			"enabled"	"1"
+			"item_class"	"tf_weapon_pistol_mercenary"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Pistol"
+			
+			"item_name"	"#TF_Weapon_Pistol"
+			"item_slot"	"secondary"
+			
+			"item_quality"		"normal"
+			
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"attach_to_hands"	"0"
+			"inspect_panel_dist" "31"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_pistol"
+			
+			"model_player"	"models/weapons/v_models/v_pistol_mercenary.mdl"
+			"model_world"	"models/weapons/w_models/w_pistol_mercenary.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"10 0 -6"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			
+			"particle_suffix"		"pistol"
+		}
+		
+		"weapon_super_shotgun"
+		{
+			"enabled"	"1"
+			"item_class"	"tf_weapon_super_shotgun"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Shotgun"
+			
+			"item_name"	"#TF_Weapon_Super_Shotgun"
+			"item_slot"	"primary"
+			"anim_slot"	"item1"
+			
+			"item_quality"		"normal"
+			
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"attach_to_hands"	"0"
+			"inspect_panel_dist" "31"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_double_barrel"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models/weapons/v_models/v_supershotgun_mercenary.mdl"
+			"model_world"	"models/weapons/w_models/w_supershotgun.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"5 -2 -10"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+			"xifier_class_remap"	"force_a_nature"
+		}
+		
+		"weapon_shotgun_merc"
+		{
+			"enabled"	"1"
+			"item_class"	"tf_weapon_shotgun_mercenary"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Shotgun"
+			
+			"item_name"	"#TF_Weapon_Shotgun"
+			
+			"item_slot"	"primary"
+			"item_quality"		"normal"
+			
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"attach_to_hands"	"0"
+			"inspect_panel_dist" "31"
+			
+			"image_inventory"	"backpack/weapons/w_models/w_shotgun"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models/weapons/v_models/v_shotgun_merc.mdl"
+			"model_world"	"models/weapons/c_models/c_shotgun/c_shotgun.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"5 -2 -10"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+			"xifier_class_remap"	"force_a_nature"
+		}
+		
+		"weapon_revolver_merc"
+		{
+			"enabled"	"1"
+			"item_class"	"tf_weapon_revolver_mercenary"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_Revolver"
+			
+			"item_name"	"#TF_Weapon_SixShooter"
+			"item_slot"	"secondary"
+			"anim_slot"	"item2"
+			
+			"item_quality"		"normal"
+			
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"attach_to_hands"	"0"
+			"inspect_panel_dist" "31"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_ambassador/parts/c_ambassador_opt"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models/weapons/v_models/v_revolver_dm.mdl"
+			"model_world"	"models/weapons/w_models/w_revolver_dm.mdl"
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"bullets"		"1"
+				}
+			}
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"10 0 -6"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
+			"drop_sound"		"ui/item_heavy_gun_drop.wav"
+		}
+		
+		
+		"weapon_merc_wearable"
+		{
+			"prefab"	"valve base_hat"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_slot"		"head"
+			"item_quality"	"normal"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+		}
+		//END OF THE PREFABS LINE
+	}
+	
+	"items"
+	{
+		"34800"
+		{
+			"name"		"Crowbar Merc"
+			"prefab"	"weapon_crowbar"
+			
+			"baseitem" "1"
+		}
+		
+		"34801"
+		{
+			"name"		"Pistol"
+			"prefab"	"weapon_pistol_merc"
+			
+			"baseitem" "1"
+		}
+		
+		"34802"
+		{
+			"name"		"Super Shotgun"
+			"prefab"	"weapon_super_shotgun"
+			
+			"anim_slot"	"item1"
+			
+			"baseitem" "0"
+			"customitem" "1"
+		}
+		
+		"34803"
+		{
+			"name"		"Merc Six Shooter"
+			"prefab"	"weapon_revolver_merc"
+			
+			"customitem" "1"
+		}
+		
+		"34804"
+		{
+			"name"		"TF_WEAPON_SHOTGUN_MERCENARY"
+			"prefab"	"weapon_shotgun"
+			
+			"hidden"	"1"
+			
+			"model_player"	"models/weapons/v_models/v_shotgun_merc.mdl"
+			"model_world"	"models/weapons/c_models/c_shotgun/c_shotgun.mdl"
+			
+			"item_slot"	"primary"
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"baseitem" 	"1"
+		}
+
+
+		"34900"
+		{
+			"name"	"Mercenary Vestless"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_Vest_Less"
+			"item_description"	"#TF_Mercenary_Vest_Less_Desc"
+			
+			"item_slot"		"head"
+			"equip_region"	"grenades"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"vest"			"1"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		
+		"34901"
+		{
+			"name"	"Mercenary Vest Pocketless"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_Vest_Pockets"
+			"item_description"	"#TF_Mercenary_Vest_Pockets_Desc"
+			
+			"item_slot"		"head"
+			"equip_region"	"grenades"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"vest"			"2"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		
+		"34902"
+		{
+			"name"	"Mercenary Gloveless"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_Gloveless"
+			"item_description"	"#TF_Mercenary_Gloveless_Desc"
+			
+			"item_slot"		"head"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"lefthand"			"2"
+					"righthand"			"2"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		
+		"34903"
+		{
+			"name"	"Mercenary Fingerless"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_Fingerless"
+			"item_description"	"#TF_Mercenary_Fingerless_Desc"
+			
+			"item_slot"		"head"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"lefthand"			"3"
+					"righthand"			"3"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		
+		/*
+		"34904"
+		{
+			"name"	"Mercenary Bvest"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_BlastVest"
+			"item_description"	"#TF_Mercenary_BlastVest_Desc"
+			
+			"item_slot"		"head"
+			"equip_region"	"grenades"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk2"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/mercenary/merc_bvest/merc_bvest.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"vest"			"1"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		
+		"34905"
+		{
+			"name"	"Mercenary Flak Jacket"
+			
+			"prefab"	"weapon_merc_wearable"
+			
+			"item_class"	"tf_wearable"
+
+			"show_in_armory"	"1"
+			
+			"item_type_name"	"#TF_Wearable_CosmeticItem"
+			
+			"item_name"			"#TF_Mercenary_FlakJacket"
+			"item_description"	"#TF_Mercenary_FlakJacket_Desc"
+			
+			"item_slot"		"head"
+			"equip_region"	"grenades"
+			"item_quality"	"normal"
+			
+			"image_inventory"				"backpack/crafting/pile_of_junk2"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/player/items/mercenary/merc_flak_jacket/merc_flak_jacket.mdl"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"visuals"
+			{
+				"player_bodygroups"
+				{
+					"vest"			"1"
+				}
+			}
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 		"ui/item_hat_drop.wav"
+			
+		}
+		*/
+		
+		// END OF THE OVERALL ITEMS LINE
+	}
+}
