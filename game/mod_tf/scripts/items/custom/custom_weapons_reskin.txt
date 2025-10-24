@@ -2,7 +2,7 @@
 {	
 	"items"
 	{
-		"35000"
+		"34500"
 		{
 			"name"				"Crowbar"
 			"base_item_name"	"Crowbar"
@@ -61,7 +61,7 @@
 			}
 		}
 		
-		"35001"
+		"34501"
 		{
 			"name"	"Six Shooter"
 			"prefab" "moditem_reskin_prefab weapon_ambassador"
@@ -86,7 +86,7 @@
 			}		
 		}
 		
-		"35002"
+		"34502"
 		{
 			"name"	"Full Frontier"
 			"prefab" "moditem_reskin_prefab weapon_shotgun"
@@ -110,10 +110,11 @@
 				"pyro" "secondary"
 				"soldier" "secondary"
 				"heavy" "secondary"
+				"mercenary"	"primary"
 			}
 		}
 		
-		"35003"
+		"34503"
 		{
 			"name"	"Stock Hunting Shotgun"
 			"prefab" "moditem_reskin_prefab weapon_shotgun"
@@ -137,6 +138,7 @@
 				"pyro" "secondary"
 				"soldier" "secondary"
 				"heavy" "secondary"
+				"mercenary"	"primary"
 			}
 		}
 		

@@ -2,7 +2,7 @@
 {
 	"items"
 	{
-		"50000"
+		"34700"
 		{
 			"name"		"Dispenser Spy"
 			"prefab"	"moditem_oddity_prefab weapon_knife"
@@ -28,7 +28,7 @@
 			}
 		}
 		
-		"50001"
+		"34701"
 		{
 			"name"	"Ammopack Flamethrower"
 			"prefab" "moditem_oddity_prefab weapon_flamethrower"
@@ -62,7 +62,7 @@
 		
 		// BATSHIT INSANE STUFF
 		
-		"51000"
+		"34799"
 		{
 			"name"	"The Decoy"
 			"prefab"		"moditem_oddity_prefab"

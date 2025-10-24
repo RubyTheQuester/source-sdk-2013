@@ -2,7 +2,7 @@
 {
 	"items"
 	{	
-		"40009"
+		"34600"
 		{
 			"name"	"Pacificateur"
 			"prefab"	"moditem_testing_prefab weapon_revolver"
@@ -50,7 +50,7 @@
 			}
 		}
 		
-		"40010"
+		"34601"
 		{
 			"name"				"Healer Sapper"
 			"prefab"			"moditem_oddity_prefab weapon_sapper"
@@ -84,7 +84,7 @@
 			}
 		}
 		
-		"40011"
+		"34602"
 		{
 			"name"				"Handy Partner"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -118,7 +118,7 @@
 			}
 		}
 		
-		"40012"
+		"34603"
 		{
 			"name"				"SpeedPad"
 			"prefab"			"moditem_testing_prefab weapon_pda"
@@ -152,7 +152,7 @@
 			
 		}
 		
-		"40013"
+		"34604"
 		{
 			"name"				"Assault Cannon"
 			"prefab"			"moditem_testing_prefab weapon_minigun"
@@ -195,23 +195,23 @@
 					"value"	"1.33"
 				}
 
-				//"duckwalk deployed"
-				//{
-				//	"attribute_class"	"allow_duckwalks_deployed"
-				//	"value"	"1"
-				//}
+				"duckwalk deployed"
+				{
+					"attribute_class"	"allow_duckwalks_deployed"
+					"value"	"1"
+				}
 				
-				//"jump deployed"
-				//{
-				//	"attribute_class"	"allow_jump_while_deployed"
-				//	"value"	"1"
-				//}
+				"jump deployed"
+				{
+					"attribute_class"	"allow_jump_while_deployed"
+					"value"	"1"
+				}
 			}
 			
 		}
 		
 		
-		"40014"
+		"34605"
 		{
 			"name"	"Broken Steel"
 			"prefab"	"moditem_testing_prefab weapon_shotgun"
@@ -231,6 +231,7 @@
 				"soldier"	"secondary"
 				"pyro"		"secondary"
 				"heavy"		"secondary"
+				"mercenary"	"primary"
 			}
 			
 			"attributes"
@@ -260,7 +261,7 @@
 			}
 		}
 		
-		"40015"
+		"34606"
 		{
 			"name"	"RPG"
 			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"

@@ -2831,7 +2831,7 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 
 		if (pPaintkitItemDef == NULL)
 			bIsHatOrDecorated = true;
-
+		
 		pItemDef = pPaintkitItemDef ? pPaintkitItemDef : pItemDef;
 	}
 
@@ -2893,7 +2893,7 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 							return &vecItemsWithDefindex;
 
 						uint32 unPaintkitDefidnex = 0;
-						if (GetPaintKitDefIndex(pItemDef, &unPaintkitDefidnex) && !bIsHatOrDecorated)
+						if ( GetPaintKitDefIndex( pItemDef, &unPaintkitDefidnex ) && !bIsHatOrDecorated )
 						{
 							auto& vecItemsWithPaintkit = pLocalInv->GetItemsWithPaintkitDefindex( unPaintkitDefidnex );
 							if ( !vecItemsWithPaintkit.IsEmpty() )

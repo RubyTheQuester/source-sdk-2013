@@ -126,15 +126,15 @@ Vector g_vecFixedWpnSpreadPellets[] =
 // 9, Circle
 Vector g_vecFixedWpnSpreadPelletsCircular[] =
 {
-	Vector(0,0,0),	// First and last pellet goes down the middle to reward fine aim
-	Vector(1,0,0),
-	Vector(-1,0,0),
-	Vector(0,-1,0),
-	Vector(0,1,0),
-	Vector(0.707f,-0.707f,0),
-	Vector(0.707f,0.707f,0),
-	Vector(-0.707f,-0.707f,0),
-	Vector(-0.707f,0.707f,0),
+	Vector( 0, 0, 0 ),	// First and last pellet goes down the middle to reward fine aim
+	Vector( 1, 0, 0 ),
+	Vector( -1, 0, 0 ),
+	Vector( 0, -1, 0 ),
+	Vector( 0, 1, 0 ),
+	Vector( 0.707f, -0.707f, 0 ),
+	Vector( 0.707f, 0.707f, 0 ),
+	Vector( -0.707f, -0.707f, 0 ),
+	Vector( -0.707f, 0.707f, 0 ),
 };
 
 // 15, Rectangle - slight noise applied below (+/- 0.07)
@@ -163,6 +163,33 @@ Vector g_vecFixedWpnSpreadPelletsWideLarge[] =
 // 	Vector( -0.25f, 0.f, 0.f ),
 // 	Vector( 0.f, -0.25f, 0.f ),
 // 	Vector( 0.f, 0.25f, 0.f ),
+};
+
+// 20, Circle, Super Shotgun
+Vector g_vecFixedWpnSpreadPelletsCircular_Super[] =
+{
+	Vector( 0, 0, 0 ),	// 1
+	Vector( 1, 0, 0 ),	// 2
+	Vector( -1, 0, 0 ), // 3
+	Vector( 0, -1, 0 ), // 4
+	Vector( 0, 1, 0 ), // 5
+	Vector( 0.707f, -0.707f, 0 ), // 6
+	Vector( 0.707f, 0.707f, 0 ), // 7
+	Vector( -0.707f, -0.707f, 0 ), // 8
+	Vector( -0.707f, 0.707f, 0 ), // 9
+
+	Vector( 0.5, 0, 0 ),	// 2
+	Vector( -0.5, 0, 0 ), // 3
+	Vector( 0, -0.5, 0 ), // 4
+	Vector( 0, 0.5, 0 ), // 5
+	Vector( 0.3535f, -0.3535f, 0 ), // 6
+	Vector( 0.3535f, 0.3535f, 0 ), // 7
+	Vector( -0.3535f, -0.3535f, 0 ), // 8
+	Vector( -0.3535f, 0.3535f, 0 ), // 9
+
+	Vector( 0.25, 0, 0 ),	// 1
+	Vector( -0.25, 0, 0 ),	// 19
+	Vector( 0, 0.25, 0 ),	// 20
 };
 
 //-----------------------------------------------------------------------------
@@ -344,7 +371,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 
 		if ( bFixedSpread )
 		{
-			if ( nBulletsPerShot >= 15 )
+			if ( nBulletsPerShot >= 15 && nBulletsPerShot < 20 )
 			{
 				int iSpread = iBullet;
 				while ( iSpread >= ARRAYSIZE( g_vecFixedWpnSpreadPelletsWideLarge ) )
@@ -354,6 +381,17 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 				float flScalar = 1.f;
 				x = ( g_vecFixedWpnSpreadPelletsWideLarge[iSpread].x + random->RandomFloat( -0.07f, 0.07f ) ) * flScalar;
 				y = ( g_vecFixedWpnSpreadPelletsWideLarge[iSpread].y + random->RandomFloat( -0.07f, 0.07f ) ) * flScalar;
+			}
+			else if ( nBulletsPerShot >= 20 )
+			{
+				int iSpread = iBullet;
+				while ( iSpread >= ARRAYSIZE( g_vecFixedWpnSpreadPelletsCircular_Super ) )
+				{
+					iSpread -= ARRAYSIZE( g_vecFixedWpnSpreadPelletsCircular_Super );
+				}
+				float flScalar = 1.f;
+				x = ( g_vecFixedWpnSpreadPelletsCircular_Super[iSpread].x + random->RandomFloat( -0.07f, 0.07f ) ) * flScalar;
+				y = ( g_vecFixedWpnSpreadPelletsCircular_Super[iSpread].y + random->RandomFloat( -0.07f, 0.07f ) ) * flScalar;
 			}
 			else
 			{

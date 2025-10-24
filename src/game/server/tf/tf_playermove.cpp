@@ -67,14 +67,23 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 		{
 			if ( pTFPlayer->m_Shared.InCond( TF_COND_AIMING ) )
 			{
-				if ( pTFPlayer->GetFlags() & FL_DUCKING )
+				int iAllowDuckWalk = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER(player, iAllowDuckWalk, allow_duckwalks_deployed);
+
+				if ( pTFPlayer->GetFlags() & FL_DUCKING && !iAllowDuckWalk )
 				{
 					ucmd->forwardmove = 0.0f;
 					ucmd->sidemove = 0.0f;
 				}
 
+				int iAllowJump = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER(player, iAllowJump, allow_jump_while_deployed);
+
 				// Don't allow jumping while firing (unless the design changes)
-				ucmd->buttons &= ~IN_JUMP;
+				if ( !iAllowJump )
+				{
+					ucmd->buttons &= ~IN_JUMP;
+				}
 			}
 		}
 

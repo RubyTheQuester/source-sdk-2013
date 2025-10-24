@@ -2946,6 +2946,16 @@ void CTFPlayer::PrecachePlayerModels( void )
 		}
 	}
 
+	for ( i = TF_FIRST_NORMAL_CLASS; i < TF_CLASS_COUNT_ALL; ++i )
+	{
+		TFPlayerClassData_t *pData = GetPlayerClassData( i );
+
+		for ( int i = 0; i < ARRAYSIZE( pData->m_szJumpSound ); ++i )
+		{
+			PrecacheScriptSound( pData->m_szJumpSound );
+		}
+	}
+
 
 	COMPILE_TIME_ASSERT( TF_CALLING_CARD_MODEL_COUNT == ARRAYSIZE( g_pszDeathCallingCardModels ) );
 	// Precache, Deliberatly skipping zero
@@ -6947,20 +6957,29 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
 	}
 	else
 	{
-		int iTries = 20;
-		// The player has selected Random class...so let's pick one for them.
-		do{
-			// Don't let them be the same class twice in a row
-			iClass = random->RandomInt( TF_FIRST_NORMAL_CLASS, TF_LAST_NORMAL_CLASS - 1 ); // -1 to remove the civilian from the randomness
-			iTries--;
-		} while( iClass == GetPlayerClass()->GetClassIndex() || (iTries > 0 && !TFGameRules()->CanPlayerChooseClass(this,iClass)) );
+		int iChoices = 0;
+		int iClasses[TF_LAST_NORMAL_CLASS - 1] = {}; // -1 to remove the civilian from the randomness
+		int iCurrentClass = GetPlayerClass()->GetClassIndex();
 
-		if ( iTries <= 0 )
+		for ( iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
 		{
+			if ( iClass != iCurrentClass && TFGameRules()->CanPlayerChooseClass( this, iClass ) )
+			{
+				iClasses[iChoices++] = iClass;
+			}
+		}
+
+		if ( !iChoices )
+		{
+			if ( TFGameRules()->CanPlayerChooseClass( this, iCurrentClass ) )
+				return;
+
 			// We failed to find a random class. Bring up the class menu again.
 			ShowViewPortPanel( ( GetTeamNumber() == TF_TEAM_RED ) ? PANEL_CLASS_RED : PANEL_CLASS_BLUE );
 			return;
 		}
+
+		iClass = iClasses[random->RandomInt( 0, iChoices - 1 )];
 	}
 
 	if ( TFGameRules() && TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )

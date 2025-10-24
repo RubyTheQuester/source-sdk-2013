@@ -784,6 +784,11 @@ bool CTFMinigun::CanHolster( void ) const
 {
 	bool bCanHolster = CanHolsterWhileSpinning();
 
+	if ( bCanHolster )
+	{
+		return true;
+	}
+
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
 	if( pPlayer )
 	{
@@ -796,20 +801,11 @@ bool CTFMinigun::CanHolster( void ) const
 			return true;
 	}
 
-	if ( bCanHolster )
+	if ( GetActivity() == ACT_MP_ATTACK_STAND_POSTFIRE )
 	{
-		if ( m_iWeaponState == AC_STATE_STARTFIRING || m_iWeaponState == AC_STATE_FIRING )
-			return false;
-	}
-	else
-	{
-		if ( m_iWeaponState > AC_STATE_IDLE )
-			return false;
-
-		if ( GetActivity() == ACT_MP_ATTACK_STAND_POSTFIRE || GetActivity() == ACT_PRIMARY_ATTACK_STAND_POSTFIRE )
+		if ( !IsViewModelSequenceFinished() )
 		{
-			if ( !IsViewModelSequenceFinished() )
-				return false;
+			return false;
 		}
 	}
 
@@ -1095,6 +1091,11 @@ void CTFMinigun::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternio
 //-----------------------------------------------------------------------------
 void CTFMinigun::UpdateBarrelMovement()
 {
+	if ( !prediction->IsFirstTimePredicted() )
+	{
+		return;
+	}
+
 	if ( m_flBarrelCurrentVelocity != m_flBarrelTargetVelocity )
 	{
 		float flBarrelAcceleration = CanHolsterWhileSpinning() ? 0.5f : 0.1f;
@@ -1360,9 +1361,15 @@ void CTFMinigun::ViewModelAttachmentBlending( CStudioHdr *hdr, Vector pos[], Qua
 //-----------------------------------------------------------------------------
 void CTFMinigun::CreateMove( float flInputSampleTime, CUserCmd *pCmd, const QAngle &vecOldViewAngles )
 {
+	//allow_jump_while_deployed
+	int iAllowJump = 0;
+	CALL_ATTRIB_HOOK_INT(iAllowJump, allow_jump_while_deployed);
+
 	// Prevent jumping while firing
-	if ( m_iWeaponState != AC_STATE_IDLE )
+	if ( ( m_iWeaponState != AC_STATE_IDLE ) && iAllowJump == 0)
 	{
+		//DevMsg("Test 2\n");
+
 		pCmd->buttons &= ~IN_JUMP;
 	}
 
