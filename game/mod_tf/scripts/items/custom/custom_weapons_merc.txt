@@ -313,7 +313,7 @@
 
 		"34900"
 		{
-			"name"	"Mercenary Vestless"
+			"name"	"Merc Vest None"
 			
 			"prefab"	"weapon_merc_wearable"
 			
@@ -323,8 +323,8 @@
 			
 			"item_type_name"	"#TF_Wearable_CosmeticItem"
 			
-			"item_name"			"#TF_Mercenary_Vest_Less"
-			"item_description"	"#TF_Mercenary_Vest_Less_Desc"
+			"item_name"			"#TF_Merc_Vest_None"
+			"item_description"	"#TF_Merc_Vest_None_Desc"
 			
 			"item_slot"		"head"
 			"equip_region"	"grenades"
@@ -357,7 +357,7 @@
 		
 		"34901"
 		{
-			"name"	"Mercenary Vest Pocketless"
+			"name"	"Merc Vest Poucheless"
 			
 			"prefab"	"weapon_merc_wearable"
 			
@@ -367,8 +367,8 @@
 			
 			"item_type_name"	"#TF_Wearable_CosmeticItem"
 			
-			"item_name"			"#TF_Mercenary_Vest_Pockets"
-			"item_description"	"#TF_Mercenary_Vest_Pockets_Desc"
+			"item_name"			"#TF_Merc_Vest_Poucheless"
+			"item_description"	"#TF_Merc_Vest_Poucheless_Desc"
 			
 			"item_slot"		"head"
 			"equip_region"	"grenades"
@@ -377,7 +377,7 @@
 			"image_inventory"				"backpack/crafting/pile_of_junk"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			"model_player"					""
 			
 			"customitem" "1"
 			
@@ -401,7 +401,7 @@
 		
 		"34902"
 		{
-			"name"	"Mercenary Gloveless"
+			"name"	"Merc Gloves Fingerless"
 			
 			"prefab"	"weapon_merc_wearable"
 			
@@ -411,8 +411,8 @@
 			
 			"item_type_name"	"#TF_Wearable_CosmeticItem"
 			
-			"item_name"			"#TF_Mercenary_Gloveless"
-			"item_description"	"#TF_Mercenary_Gloveless_Desc"
+			"item_name"			"#TF_Merc_Gloves_Fingerless"
+			"item_description"	"#TF_Merc_Gloves_Fingerless_Desc"
 			
 			"item_slot"		"head"
 			"item_quality"	"normal"
@@ -420,7 +420,7 @@
 			"image_inventory"				"backpack/crafting/pile_of_junk"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			"model_player"					""
 			
 			"customitem" "1"
 			
@@ -445,7 +445,7 @@
 		
 		"34903"
 		{
-			"name"	"Mercenary Fingerless"
+			"name"	"Merc Gloves None"
 			
 			"prefab"	"weapon_merc_wearable"
 			
@@ -455,8 +455,8 @@
 			
 			"item_type_name"	"#TF_Wearable_CosmeticItem"
 			
-			"item_name"			"#TF_Mercenary_Fingerless"
-			"item_description"	"#TF_Mercenary_Fingerless_Desc"
+			"item_name"			"#TF_Merc_Gloves_None"
+			"item_description"	"#TF_Merc_Gloves_None_Desc"
 			
 			"item_slot"		"head"
 			"item_quality"	"normal"
@@ -464,7 +464,7 @@
 			"image_inventory"				"backpack/crafting/pile_of_junk"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			"model_player"					""
 			
 			"customitem" "1"
 			
