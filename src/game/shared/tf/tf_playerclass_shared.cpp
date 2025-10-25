@@ -202,3 +202,8 @@ bool CTFPlayerClassShared::CanBuildObject( int iObjectType )
 
 	return bFound;
 }
+
+const char* CTFPlayerClassShared::GetJumpSound(void) const
+{
+	return GetData()->GetJumpSound();
+}

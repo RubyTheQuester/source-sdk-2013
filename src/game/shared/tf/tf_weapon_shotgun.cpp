@@ -37,6 +37,91 @@ CREATE_SIMPLE_WEAPON_TABLE( TFSodaPopper, tf_weapon_soda_popper )
 CREATE_SIMPLE_WEAPON_TABLE( TFPEPBrawlerBlaster, tf_weapon_pep_brawler_blaster )
 CREATE_SIMPLE_WEAPON_TABLE( TFShotgunBuildingRescue, tf_weapon_shotgun_building_rescue )
 
+CREATE_SIMPLE_WEAPON_TABLE( TFShotgun_Merc, tf_weapon_shotgun_mercenary )
+CREATE_SIMPLE_WEAPON_TABLE( TFShotgun_Super, tf_weapon_super_shotgun )
+
+
+acttable_t CTFShotgun_Merc::m_acttableShotgunMerc[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_SHOTGUN, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_SHOTGUN, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_SHOTGUN, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_SHOTGUN, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_SHOTGUN, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_SHOTGUN, false },
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_SHOTGUN, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_SHOTGUN, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_SHOTGUN, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_SHOTGUN, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_SHOTGUN, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_SHOTGUN, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_SHOTGUN, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_SHOTGUN, false },
+
+	{ ACT_MP_RELOAD_STAND, ACT_MERC_RELOAD_STAND_SHOTGUN, false },
+	{ ACT_MP_RELOAD_CROUCH, ACT_MERC_RELOAD_CROUCH_SHOTGUN, false },
+	{ ACT_MP_RELOAD_SWIM, ACT_MERC_RELOAD_SWIM_SHOTGUN, false },
+
+	{ ACT_MP_RELOAD_STAND_LOOP, ACT_MERC_RELOAD_STAND_SHOTGUN_LOOP, false },
+	{ ACT_MP_RELOAD_CROUCH_LOOP, ACT_MERC_RELOAD_CROUCH_SHOTGUN_LOOP, false },
+	{ ACT_MP_RELOAD_SWIM_LOOP, ACT_MERC_RELOAD_SWIM_SHOTGUN_LOOP, false },
+
+	{ ACT_MP_RELOAD_STAND_END, ACT_MERC_RELOAD_STAND_SHOTGUN_END, false },
+	{ ACT_MP_RELOAD_CROUCH_END, ACT_MERC_RELOAD_CROUCH_SHOTGUN_END, false },
+	{ ACT_MP_RELOAD_SWIM_END, ACT_MERC_RELOAD_SWIM_SHOTGUN_END, false },
+};
+
+
+acttable_t CTFShotgun_Super::m_acttableShotgunSuper[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_SUPERSHOTGUN, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_SUPERSHOTGUN, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_SUPERSHOTGUN, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_SUPERSHOTGUN, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_SUPERSHOTGUN, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_SUPERSHOTGUN, false },
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_SUPERSHOTGUN, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_SUPERSHOTGUN, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_SUPERSHOTGUN, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_SUPERSHOTGUN, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_SUPERSHOTGUN, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_SUPERSHOTGUN, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_SUPERSHOTGUN, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_SUPERSHOTGUN, false },
+
+	{ ACT_MP_RELOAD_STAND, ACT_MERC_RELOAD_STAND_SUPERSHOTGUN, false },
+	{ ACT_MP_RELOAD_CROUCH, ACT_MERC_RELOAD_CROUCH_SUPERSHOTGUN, false },
+	{ ACT_MP_RELOAD_SWIM, ACT_MERC_RELOAD_SWIM_SUPERSHOTGUN, false },
+};
+
+acttable_t * CTFShotgun_Merc::ActivityList( int &iActivityCount )
+{
+	if ( GetTFPlayerOwner()->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY )
+	{
+		iActivityCount = ARRAYSIZE(m_acttableShotgunMerc);
+		return m_acttableShotgunMerc;
+	}
+	else
+	{
+		return BaseClass::ActivityList(iActivityCount);
+	}
+}
+
+acttable_t * CTFShotgun_Super::ActivityList( int &iActivityCount )
+{
+	if ( GetTFPlayerOwner()->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY )
+	{
+		iActivityCount = ARRAYSIZE(m_acttableShotgunSuper);
+		return m_acttableShotgunSuper;
+	}
+	else
+	{
+		return BaseClass::ActivityList(iActivityCount);
+	}
+}
+
 #define SCATTERGUN_KNOCKBACK_MIN_DMG		30.0f
 #define SCATTERGUN_KNOCKBACK_MIN_RANGE_SQ	160000.0f //400x400
 //=============================================================================
@@ -66,6 +151,14 @@ bool CanScatterGunKnockBack( CTFWeaponBase *pWeapon, float flDamage, float flDis
 CTFShotgun::CTFShotgun()
 {
 	m_bReloadsSingly = true;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CTFShotgun_Super::CTFShotgun_Super()
+{
+	m_bReloadsSingly = false;
 }
 
 //-----------------------------------------------------------------------------

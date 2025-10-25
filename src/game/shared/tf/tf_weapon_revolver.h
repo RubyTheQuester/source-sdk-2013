@@ -14,6 +14,7 @@
 #ifdef CLIENT_DLL
 #define CTFRevolver C_TFRevolver
 #define CTFRevolver_Secondary C_TFRevolver_Secondary
+#define CTFRevolver_Merc C_TFRevolver_Merc
 #endif
 
 //=============================================================================
@@ -86,6 +87,22 @@ public:
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID(void) const { return TF_WEAPON_REVOLVER_SECONDARY; }
+};
+
+//=============================================================================
+// Secondary Revolver (Engy)
+class CTFRevolver_Merc : public CTFRevolver
+{
+public:
+	DECLARE_CLASS(CTFRevolver_Merc, CTFRevolver);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_REVOLVER_MERCENARY; }
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableRevolver[];
+
 };
 
 #endif // TF_WEAPON_REVOLVER_H

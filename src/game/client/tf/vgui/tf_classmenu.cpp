@@ -490,6 +490,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 	m_pClassButtons[TF_CLASS_SNIPER] = new CExImageButton( this, "sniper", "", this );
 	m_pClassButtons[TF_CLASS_ENGINEER] = new CExImageButton( this, "engineer", "", this );
 	m_pClassButtons[TF_CLASS_SPY] = new CExImageButton( this, "spy", "", this );
+	m_pClassButtons[TF_CLASS_MERCENARY] = new CExImageButton( this, "mercenary", "", this );
 	m_pClassButtons[TF_CLASS_RANDOM] = new CExImageButton( this, "random", "", this );
 #endif
 
@@ -509,6 +510,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 	m_pMvmUpgradeImages[TF_CLASS_SNIPER] = new vgui::ImagePanel( this, "MvMUpgradeImageSniper" );
 	m_pMvmUpgradeImages[TF_CLASS_ENGINEER] = new vgui::ImagePanel( this, "MvMUpgradeImageEngineer" );
 	m_pMvmUpgradeImages[TF_CLASS_SPY] = new vgui::ImagePanel( this, "MvMUpgradeImageSpy" );
+	m_pMvmUpgradeImages[TF_CLASS_MERCENARY] = new vgui::ImagePanel( this, "MvMUpgradeImageMerc" );
 
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 }
@@ -542,6 +544,7 @@ void CTFClassMenu::ApplySchemeSettings( IScheme *pScheme )
 		m_pClassHintIcons[TF_CLASS_ENGINEER] = dynamic_cast< CSCHintIcon* >( FindChildByName( "EngineerHintIcon" ) );
 		m_pClassHintIcons[TF_CLASS_SNIPER] = dynamic_cast< CSCHintIcon* >( FindChildByName( "SniperHintIcon" ) );
 		m_pClassHintIcons[TF_CLASS_RANDOM] = dynamic_cast< CSCHintIcon* >( FindChildByName( "RandomHintIcon" ) );
+		m_pClassHintIcons[TF_CLASS_MERCENARY] = dynamic_cast< CSCHintIcon* >( FindChildByName( "MercenaryHintIcon" ) );
 
 		for ( int i = 0; i < TF_CLASS_MENU_BUTTONS; i++ )
 		{
@@ -1365,7 +1368,7 @@ static const char *g_sClassImagesBlue[] = {
 	"class_sel_sm_sniper_blu",
 	"class_sel_sm_spy_blu",
 
-	"class_sel_sm_scout_blu",
+	"class_sel_sm_mercenary_blu",
 };
 
 static const char *g_sClassImagesRed[] = {
@@ -1382,7 +1385,7 @@ static const char *g_sClassImagesRed[] = {
 	"class_sel_sm_sniper_red",
 	"class_sel_sm_spy_red",
 
-	"class_sel_sm_scout_red",
+	"class_sel_sm_mercenary_red",
 };
 
 int g_ClassDefinesRemap[] = {
@@ -1398,6 +1401,8 @@ int g_ClassDefinesRemap[] = {
 	TF_CLASS_MEDIC,
 	TF_CLASS_SNIPER,
 	TF_CLASS_SPY,
+	TF_CLASS_MERCENARY,
+
 	TF_CLASS_CIVILIAN,
 };
 

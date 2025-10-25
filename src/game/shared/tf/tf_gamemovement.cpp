@@ -79,6 +79,10 @@ ConVar tf_movement_lost_footing_friction( "tf_movement_lost_footing_friction", "
 
 ConVar	tf_duckjump("tf_duckjump", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow jumping while ducked");
 
+#if defined (CLIENT_DLL)
+ConVar 	tf_jumpsound("tf_jumpsound", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Hough", true, 0, true, 2);
+#endif
+
 extern ConVar cl_forwardspeed;
 extern ConVar cl_backspeed;
 extern ConVar cl_sidespeed;
@@ -1092,6 +1096,8 @@ ConVar sv_autobunnyhopping("sv_autobunnyhopping", "0", FCVAR_REPLICATED, "Player
 // Only allow bunny jumping up to 1.2x server / player maxspeed setting
 ConVar sv_bunnyhop_max_speed_factor("sv_bunnyhop_max_speed_factor", "1.2", FCVAR_REPLICATED, "If sv_enablebunnyhopping is 0, limit at this factor of max speed");
 
+ConVar sv_bunnyhop_max_speed_factor_merc("sv_bunnyhop_max_speed_factor_merc", "4", FCVAR_REPLICATED, "Merc's max speed bhop speed's factor");
+
 // Only allow bunny jumping up to 1.2x server / player maxspeed setting
 #define BUNNYJUMP_MAX_SPEED_FACTOR 1.2f
 
@@ -1100,14 +1106,16 @@ ConVar sv_bunnyhop_max_speed_factor("sv_bunnyhop_max_speed_factor", "1.2", FCVAR
 //-----------------------------------------------------------------------------
 void CTFGameMovement::PreventBunnyJumping()
 {
-	if (sv_enablebunnyhopping.GetBool())
+	bool bMercenary = m_pTFPlayer->GetPlayerClass()->IsClass( TF_CLASS_MERCENARY );
+
+	if ( sv_enablebunnyhopping.GetBool() || bMercenary )
 		return;
 
 	if ( m_pTFPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
 		return;
 
 	// Speed at which bunny jumping is limited
-	float maxscaledspeed = sv_bunnyhop_max_speed_factor.GetFloat() * player->m_flMaxspeed;
+	float maxscaledspeed = ( bMercenary ? sv_bunnyhop_max_speed_factor_merc.GetFloat() : sv_bunnyhop_max_speed_factor.GetFloat() ) * player->m_flMaxspeed;
 	if ( maxscaledspeed <= 0.0f )
 		return;
 
@@ -1254,18 +1262,19 @@ bool CTFGameMovement::CheckJumpButton()
 
 	// Check to see if the player is a scout.
 	bool bScout = m_pTFPlayer->GetPlayerClass()->IsClass( TF_CLASS_SCOUT );
+	bool bMercenary = m_pTFPlayer->GetPlayerClass()->IsClass( TF_CLASS_MERCENARY );
 	bool bAirDash = false;
 	bool bOnGround = ( player->GetGroundEntity() != NULL );
 
 	ToggleParachute();
 
-	if ( !tf_duckjump.GetBool() )
+	if ( !tf_duckjump.GetBool() && (bMercenary == false) )
 	{
 		// Cannot jump will ducked.
 		if (player->GetFlags() & FL_DUCKING)
 		{
 			// Let a scout do it.
-			bool bAllow = (bScout && !bOnGround);
+			bool bAllow = ( bScout && !bOnGround );
 
 			if (!bAllow)
 				return false;
@@ -1277,7 +1286,11 @@ bool CTFGameMovement::CheckJumpButton()
 		return false;
 
 	// Cannot jump again until the jump button has been released.
-	if ( ( mv->m_nOldButtons & IN_JUMP ) != 0 && ( !sv_autobunnyhopping.GetBool() || !bOnGround ) )
+	if ( 
+		( mv->m_nOldButtons & IN_JUMP ) != 0 
+		&& ( !sv_autobunnyhopping.GetBool() || !bOnGround ) 
+		&& ( !bMercenary )
+		)
 		return false;
 
 	// In air, so ignore jumps 
@@ -1409,6 +1422,81 @@ bool CTFGameMovement::CheckJumpButton()
 	// Save the output data for the physics system to react to if need be.
 	mv->m_outJumpVel.z += mv->m_vecVelocity[2] - flStartZ;
 	mv->m_outStepHeight += 0.15f;
+
+	//jump sound (grunt)
+	if ( gpGlobals->curtime >= m_pTFPlayer->m_Shared.m_flJumpSoundDelay )
+	{
+#ifdef GAME_DLL
+		CRecipientFilter filterTeammate;
+		CRecipientFilter filterEnemy;
+
+		int iClass = m_pTFPlayer->GetPlayerClass()->GetClassIndex();
+		int iDisguiseClass = iClass;
+		bool bDisguised = m_pTFPlayer->m_Shared.InCond(TF_COND_DISGUISED);
+
+		if (bDisguised)
+		{
+			iDisguiseClass = m_pTFPlayer->m_Shared.GetDisguiseClass();
+		}
+
+		for (int i = 1; i <= gpGlobals->maxClients; i++)
+		{
+			CTFPlayer* pTemp = ToTFPlayer(UTIL_PlayerByIndex(i));
+
+			if (!pTemp)
+				continue;
+
+			// Don't send to players which have it disabled
+			if ( !pTemp->JumpSoundOption() )
+				continue;
+
+			// Don't broadcast to the jumping player ( handled clientside )
+			if (pTemp == m_pTFPlayer)
+				continue;
+
+			if (m_pTFPlayer->GetTeamNumber() == pTemp->GetTeamNumber() )
+			{
+				// Don't send to players if this class is the base 9
+				// and we dont have all class jump sounds enabled
+				if (iClass <= 9 && pTemp->JumpSoundOption() != 2)
+					continue;
+
+				filterTeammate.AddRecipient(pTemp);
+			}
+			else
+			{
+				// Don't send to players if this class is the base 9
+				// and we dont have all class jump sounds enabled
+				if (iDisguiseClass <= 9 && pTemp->JumpSoundOption() != 2)
+					continue;
+
+				filterEnemy.AddRecipient(pTemp);
+			}
+		}
+
+		m_pTFPlayer->EmitSound( filterTeammate, m_pTFPlayer->entindex(), GetPlayerClassData( iClass )->GetJumpSound() );
+		m_pTFPlayer->EmitSound( filterEnemy, m_pTFPlayer->entindex(), GetPlayerClassData( iDisguiseClass )->GetJumpSound() );
+		
+		//m_pTFPlayer->EmitSound( filterTeammate, m_pTFPlayer->entindex(), "Mercenary.Jumpsound" );
+		//m_pTFPlayer->EmitSound( filterEnemy, m_pTFPlayer->entindex(), "Mercenary.Jumpsound" );
+		// 
+		//"Mercenary.Jumpsound"
+#else
+		int iClass = m_pTFPlayer->GetPlayerClass()->GetClassIndex();
+		if (m_pTFPlayer->m_Shared.InCond(TF_COND_DISGUISED) && m_pTFPlayer->IsEnemyPlayer())
+		{
+			iClass = m_pTFPlayer->m_Shared.GetDisguiseClass();
+		}
+
+		int iJumpSound = tf_jumpsound.GetInt();
+
+		if ( ( iJumpSound && iClass > 9 ) || iJumpSound == 2 )
+		{
+			m_pTFPlayer->EmitSound( GetPlayerClassData(iClass)->GetJumpSound() );
+		}
+#endif
+		m_pTFPlayer->m_Shared.m_flJumpSoundDelay = gpGlobals->curtime + 0.5f;
+	}
 
 	// Flag that we jumped and don't jump again until it is released.
 	mv->m_nOldButtons |= IN_JUMP;

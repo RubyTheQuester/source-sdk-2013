@@ -182,9 +182,9 @@ void CTFPlayerModelPanel::ApplySettings( KeyValues *inResourceData )
 		for ( KeyValues *pData = pCustomData->GetFirstSubKey(); pData != NULL; pData = pData->GetNextKey() )
 		{
 			CustomClassData_t data;
-			data.m_flFOV = pData->GetFloat( "fov" );
-			data.m_vPosition.Init( pData->GetFloat( "origin_x" ), pData->GetFloat( "origin_y" ), pData->GetFloat( "origin_z" ) );
-			data.m_vAngles.Init( pData->GetFloat( "angles_x" ), pData->GetFloat( "angles_y" ), pData->GetFloat( "angles_z" ) );
+			data.m_flFOV = pData->GetFloat( "fov", 20 );
+			data.m_vPosition.Init( pData->GetFloat( "origin_x", 175 ), pData->GetFloat( "origin_y", -5 ), pData->GetFloat( "origin_z", -90 ) );
+			data.m_vAngles.Init( pData->GetFloat( "angles_x", -5 ), pData->GetFloat( "angles_y", 172 ), pData->GetFloat( "angles_z", 0 ) );
 			m_customClassData.AddToTail( data );
 		}
 
@@ -1350,7 +1350,8 @@ int ClassZoomZ[] =
 	30, // TF_CLASS_HEAVYWEAPONS,
 	22, // TF_CLASS_PYRO,
 	27, // TF_CLASS_SPY,
-	20, // TF_CLASS_ENGINEER,		
+	20, // TF_CLASS_ENGINEER,	
+	20, // TF_CLASS_MERCENARY
 };
 
 //-----------------------------------------------------------------------------

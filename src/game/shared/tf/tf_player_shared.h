@@ -712,6 +712,8 @@ public:
 
 	bool IsLoser( void );
 
+	float m_flJumpSoundDelay;
+
 	int	GetItemFindBonus( void ) //{ return m_iItemFindBonus; }
 	{
 #ifdef GAME_DLL

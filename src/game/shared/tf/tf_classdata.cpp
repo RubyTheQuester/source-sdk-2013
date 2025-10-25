@@ -21,6 +21,7 @@ extern bool UseHWMorphModels();
 #define TF_CLASS_PYRO_FILE				"scripts/playerclasses/pyro"
 #define TF_CLASS_SPY_FILE				"scripts/playerclasses/spy"
 #define TF_CLASS_ENGINEER_FILE			"scripts/playerclasses/engineer"
+#define TF_CLASS_MERCENARY_FILE			"scripts/playerclasses/mercenary"
 #define TF_CLASS_CIVILIAN_FILE			"scripts/playerclasses/civilian"
 
 const char *s_aPlayerClassFiles[] =
@@ -35,6 +36,7 @@ const char *s_aPlayerClassFiles[] =
 	TF_CLASS_PYRO_FILE,
 	TF_CLASS_SPY_FILE,
 	TF_CLASS_ENGINEER_FILE,
+	TF_CLASS_MERCENARY_FILE,
 	TF_CLASS_CIVILIAN_FILE
 };
 
@@ -52,6 +54,7 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 	m_szHWMModelName[0] = '\0';
 	m_szHandModelName[0] = '\0';
 	m_szLocalizableName[0] = '\0';
+	m_szJumpSound[0] = '\0';
 	m_flMaxSpeed = 0.0f;
 	m_nMaxHealth = 0;
 	m_nMaxArmor = 0;
@@ -145,6 +148,7 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	{
 		Q_strncpy( m_szHWMModelName, pKeyValuesData->GetString( "model_hwm" ), TF_NAME_LENGTH );
 	}
+
 	Q_strncpy( m_szModelName, pKeyValuesData->GetString( "model" ), TF_NAME_LENGTH );
 	Q_strncpy( m_szHandModelName, pKeyValuesData->GetString( "model_hands" ), TF_NAME_LENGTH );
 	Q_strncpy( m_szLocalizableName, pKeyValuesData->GetString( "localize_name" ), TF_NAME_LENGTH );
@@ -199,6 +203,8 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	Q_strncpy( m_szDeathSound[ DEATH_SOUND_MELEE ], pKeyValuesData->GetString( "sound_melee_death", "Player.MeleeDeath" ), MAX_PLAYERCLASS_SOUND_LENGTH );
 	Q_strncpy( m_szDeathSound[ DEATH_SOUND_EXPLOSION ], pKeyValuesData->GetString( "sound_explosion_death", "Player.ExplosionDeath" ), MAX_PLAYERCLASS_SOUND_LENGTH );
 #endif
+
+	Q_strncpy( m_szJumpSound, pKeyValuesData->GetString( "jump_sound", "Mercenary.Jumpsound" ), MAX_PLAYERCLASS_SOUND_LENGTH);
 
 	// The file has been parsed.
 	m_bParsed = true;

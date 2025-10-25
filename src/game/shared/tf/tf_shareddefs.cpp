@@ -47,6 +47,7 @@ const char *g_aPlayerClassNames[TF_CLASS_MENU_BUTTONS] =
 	"#TF_Class_Name_Pyro",
 	"#TF_Class_Name_Spy",
 	"#TF_Class_Name_Engineer",
+	"#TF_Class_Name_Mercenary",
 	"#TF_Class_Name_Civilian",
 	"",
 	"#TF_Random"
@@ -64,6 +65,7 @@ const char *g_aPlayerClassNames_NonLocalized[TF_CLASS_MENU_BUTTONS] =
 	"Pyro",
 	"Spy",
 	"Engineer",
+	"Mercenary",
 	"Civilian",
 	"",
 	"Random"
@@ -81,6 +83,7 @@ const char *g_aRawPlayerClassNamesShort[TF_CLASS_MENU_BUTTONS] =
 	"pyro",
 	"spy",
 	"engineer",
+	"mercenary",// short
 	"civilian",
 	"",
 	"random"
@@ -98,6 +101,7 @@ const char *g_aRawPlayerClassNames[TF_CLASS_MENU_BUTTONS] =
 	"pyro",
 	"spy",
 	"engineer",
+	"mercenary",
 	"civilian",
 	"",
 	"random"
@@ -225,6 +229,7 @@ int iRemapIndexToClass[TF_CLASS_MENU_BUTTONS] =
 		TF_CLASS_MEDIC,
 		TF_CLASS_SNIPER,
 		TF_CLASS_SPY,
+		TF_CLASS_MERCENARY,
 		0,
 		0,
 		TF_CLASS_RANDOM
@@ -713,6 +718,11 @@ const char *g_aWeaponNames[] =
 	"TF_WEAPON_REVOLVER_SECONDARY",
 	"TF_WEAPON_PISTOL_CHARGE",
 
+	"TF_WEAPON_PISTOL_MERCENARY",
+	"TF_WEAPON_SHOTGUN_MERCENARY",
+	"TF_WEAPON_SUPER_SHOTGUN",
+	"TF_WEAPON_REVOLVER_MERCENARY",
+
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_aWeaponNames ) == TF_WEAPON_COUNT );
 
@@ -830,6 +840,11 @@ int g_aWeaponDamageTypes[] =
 	DMG_GENERIC | DMG_PREVENT_PHYSICS_FORCE, // TF_WEAPON_FLAME_BALL,
 	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_REVOLVER_SECONDARY
 	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_PISTOL_CHARGE,
+
+	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_PISTOL_MERCENARY,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,		// TF_WEAPON_SHOTGUN_MERCENARY,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,		// TF_WEAPON_SUPER_SHOTGUN,
+	DMG_BULLET	| DMG_USEDISTANCEMOD,			// TF_WEAPON_REVOLVER_MERCENARY
 
 };
 
@@ -1645,16 +1660,17 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 	{
 		"tf_weapon_shotgun",
 		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"",							// TF_CLASS_SCOUT,
-			"",							// TF_CLASS_SNIPER,
-			"tf_weapon_shotgun_soldier",// TF_CLASS_SOLDIER,
-			"",							// TF_CLASS_DEMOMAN,
-			"",							// TF_CLASS_MEDIC,
-			"tf_weapon_shotgun_hwg",	// TF_CLASS_HEAVYWEAPONS,
-			"tf_weapon_shotgun_pyro",	// TF_CLASS_PYRO,
-			"",							// TF_CLASS_SPY,
-			"tf_weapon_shotgun_primary",// TF_CLASS_ENGINEER,		
+			"",								// TF_CLASS_UNDEFINED = 0,
+			"",								// TF_CLASS_SCOUT,
+			"",								// TF_CLASS_SNIPER,
+			"tf_weapon_shotgun_soldier",	// TF_CLASS_SOLDIER,
+			"",								// TF_CLASS_DEMOMAN,
+			"",								// TF_CLASS_MEDIC,
+			"tf_weapon_shotgun_hwg",		// TF_CLASS_HEAVYWEAPONS,
+			"tf_weapon_shotgun_pyro",		// TF_CLASS_PYRO,
+			"",								// TF_CLASS_SPY,
+			"tf_weapon_shotgun_primary",	// TF_CLASS_ENGINEER,
+			"tf_weapon_shotgun_mercenary",	// TF_CLASS_MERCENARY,
 		}
 	},
 
@@ -1670,7 +1686,8 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"tf_weapon_pistol",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_pistol",			// TF_CLASS_ENGINEER,	
+			"tf_weapon_pistol_mercenary",			// TF_CLASS_MERCENARY,
 		}
 	},
 
@@ -1686,7 +1703,8 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,		
+			"",							// TF_CLASS_ENGINEER,	
+			"",
 		}
 	},
 	{
@@ -1701,7 +1719,8 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,		
+			"",							// TF_CLASS_ENGINEER,
+			"",							// TF_CLASS_MERCENARY,
 		}
 	},
 	{
@@ -1716,7 +1735,8 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_fireaxe",		// TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee weapon of his own; also I am a terrible person
 			"tf_weapon_fireaxe",		// TF_CLASS_PYRO,
 			"tf_weapon_knife",			// TF_CLASS_SPY,
-			"tf_weapon_wrench",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_wrench",			// TF_CLASS_ENGINEER,
+			"tf_weapon_crowbar",		// TF_CLASS_MERCENARY,
 		}
 	},
 	{
@@ -1732,6 +1752,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_throwable_secondary",			// TF_CLASS_PYRO,
 			"tf_weapon_throwable_secondary",			// TF_CLASS_SPY,
 			"tf_weapon_throwable_secondary",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_throwable_secondary",			// TF_CLASS_MERCENARY,	
 		}
 	},
 	{
@@ -1747,6 +1768,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",			// TF_CLASS_PYRO,
 			""			// TF_CLASS_SPY,
 			"",			// TF_CLASS_ENGINEER,		
+			"",			// TF_CLASS_MERCENARY,	
 		}
 	},
 	{
@@ -1756,12 +1778,13 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",			// TF_CLASS_SCOUT,
 			"",			// TF_CLASS_SNIPER,
 			"",			// TF_CLASS_SOLDIER,
-			"",				// TF_CLASS_DEMOMAN,
+			"",			// TF_CLASS_DEMOMAN,
 			"",			// TF_CLASS_MEDIC,
 			"",			// TF_CLASS_HEAVYWEAPONS
 			"",			// TF_CLASS_PYRO,
 			"tf_weapon_revolver",				// TF_CLASS_SPY,
-			"tf_weapon_revolver_secondary",		// TF_CLASS_ENGINEER,		
+			"tf_weapon_revolver_secondary",		// TF_CLASS_ENGINEER,
+			"tf_weapon_revolver_mercenary",		// TF_CLASS_MERCENARY,
 		}
 	},
 };
@@ -1880,6 +1903,7 @@ const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] =
 	"../hud/leaderboard_class_pyro",
 	"../hud/leaderboard_class_spy",
 	"../hud/leaderboard_class_engineer",
+	"../hud/leaderboard_class_mercenary",
 	"../hud/leaderboard_class_scout_d",
 	"../hud/leaderboard_class_sniper_d",
 	"../hud/leaderboard_class_soldier_d",
@@ -1889,6 +1913,7 @@ const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] =
 	"../hud/leaderboard_class_pyro_d",
 	"../hud/leaderboard_class_spy_d",
 	"../hud/leaderboard_class_engineer_d",
+	"../hud/leaderboard_class_mercenary_d",
 };
 
 const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
@@ -1903,6 +1928,7 @@ const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 	"class_icons/class_icon_orange_pyro",
 	"class_icons/class_icon_orange_spy",
 	"class_icons/class_icon_orange_engineer",
+	"../hud/leaderboard_class_mercenary",
 	"class_icons/class_icon_orange_scout_d",
 	"class_icons/class_icon_orange_sniper_d",
 	"class_icons/class_icon_orange_soldier_d",
@@ -1912,6 +1938,7 @@ const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 	"class_icons/class_icon_orange_pyro_d",
 	"class_icons/class_icon_orange_spy_d",
 	"class_icons/class_icon_orange_engineer_d",
+	"../hud/leaderboard_class_mercenary_d",
 };
 
 const char *g_pszItemClassImagesRed[] =
@@ -1926,6 +1953,7 @@ const char *g_pszItemClassImagesRed[] =
 	"class_portraits/pyro",			// TF_CLASS_PYRO,
 	"class_portraits/spy",			// TF_CLASS_SPY,
 	"class_portraits/engineer",		// TF_CLASS_ENGINEER,
+	"class_portraits/mercenary",		// TF_CLASS_MERCENARY,
 	"class_portraits/scout_grey",		// TF_CLASS_SCOUT,			
 	"class_portraits/sniper_grey",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_grey",		// TF_CLASS_SOLDIER,
@@ -1935,6 +1963,7 @@ const char *g_pszItemClassImagesRed[] =
 	"class_portraits/pyro_grey",		// TF_CLASS_PYRO,
 	"class_portraits/spy_grey",			// TF_CLASS_SPY,
 	"class_portraits/engineer_grey",	// TF_CLASS_ENGINEER,
+	"class_portraits/mercenary_grey",		// TF_CLASS_MERCENARY,
 };
 
 const char *g_pszItemClassImagesBlue[] =

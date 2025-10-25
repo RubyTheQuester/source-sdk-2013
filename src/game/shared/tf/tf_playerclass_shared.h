@@ -50,6 +50,7 @@ public:
 	bool		HasCustomModel( void ) const					{ return (m_iszCustomModel.Get() != NULL_STRING); }
 #endif
 
+
 #ifndef CLIENT_DLL
 	#define USE_CLASS_ANIMATIONS true
 	void		SetCustomModel( const char *pszModelName, bool isUsingClassAnimations = false );
@@ -78,6 +79,8 @@ public:
 
 	// If needed, put this into playerclass scripts
 	bool CanBuildObject( int iObjectType );
+
+	const char* GetJumpSound() const;
 
 protected:
 

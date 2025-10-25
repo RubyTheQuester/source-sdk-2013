@@ -64,6 +64,10 @@ struct TFPlayerClassData_t
 	bool		m_bParsed;
 	Vector		m_vecThirdPersonOffset;
 
+	char 	m_szJumpSound[ MAX_PLAYERCLASS_SOUND_LENGTH ];
+
+	const char* GetJumpSound() const { return m_szJumpSound; }
+
 #ifdef GAME_DLL
 	// sounds
 	char		m_szDeathSound[ DEATH_SOUND_TOTAL ][MAX_PLAYERCLASS_SOUND_LENGTH];

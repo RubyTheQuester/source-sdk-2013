@@ -894,6 +894,7 @@ CTFPlayerShared::CTFPlayerShared()
 	m_iStunIndex = -1;
 	m_flLastNoMovementTime = -1.f;
 	m_flRuneCharge = 0.f;
+	m_flJumpSoundDelay = 0.f;
 	
 	// generic meters
 	for( int i=0; i < m_flItemChargeMeter.Count(); ++i )

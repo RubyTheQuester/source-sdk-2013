@@ -175,6 +175,7 @@ static int g_TauntCamRagdollAchievements[] =
 	0,		// TF_CLASS_PYRO,
 	ACHIEVEMENT_TF_SPY_FREEZECAM_FLICK,		// TF_CLASS_SPY,
 	0,		// TF_CLASS_ENGINEER,
+	0,		// TF_CLASS_MERCENARY,
 
 	0,		// TF_CLASS_CIVILIAN,
 	0,		// TF_CLASS_COUNT_ALL,
@@ -193,6 +194,7 @@ static int g_TauntCamAchievements[] =
 	ACHIEVEMENT_TF_PYRO_FREEZECAM_TAUNTS,		// TF_CLASS_PYRO,
 	0,		// TF_CLASS_SPY,
 	ACHIEVEMENT_TF_ENGINEER_FREEZECAM_TAUNT,	// TF_CLASS_ENGINEER,
+	0,		// TF_CLASS_MERCENARY
 	0,		// TF_CLASS_CIVILIAN,
 	0,		// TF_CLASS_COUNT_ALL,
 };
@@ -211,6 +213,7 @@ static int g_TauntCamAchievements2[] =
 	0,		// TF_CLASS_PYRO,
 	0,		// TF_CLASS_SPY,
 	0,		// TF_CLASS_ENGINEER,
+	0,		// TF_CLASS_MERCENARY
 
 	0,		// TF_CLASS_CIVILIAN,
 	0,		// TF_CLASS_COUNT_ALL,
@@ -1307,7 +1310,7 @@ static CViewVectors g_TFViewVectors(
 	Vector( 0, 0, 14 )		//VEC_DEAD_VIEWHEIGHT (m_vDeadViewHeight) dead view height
 );							
 
-Vector g_TFClassViewVectors[11] =
+Vector g_TFClassViewVectors[12] =
 {
 	Vector( 0, 0, 72 ),		// TF_CLASS_UNDEFINED
 
@@ -1320,6 +1323,7 @@ Vector g_TFClassViewVectors[11] =
 	Vector( 0, 0, 68 ),		// TF_CLASS_PYRO,
 	Vector( 0, 0, 75 ),		// TF_CLASS_SPY,
 	Vector( 0, 0, 68 ),		// TF_CLASS_ENGINEER,
+	Vector( 0, 0, 68 ),		// TF_CLASS_MERCENARY
 
 	Vector( 0, 0, 65 ),		// TF_CLASS_CIVILIAN,		// TF_LAST_NORMAL_CLASS
 };
@@ -7151,6 +7155,13 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 					flRandomDamage *= 1.5f;
 				}
 				break;
+
+			case TF_WEAPON_SUPER_SHOTGUN:
+				if ( flRandomRangeVal > 0.5 )
+				{
+					flRandomDamage *= 2.0f;
+				}
+				break;
 			}
 		}
 
@@ -10829,6 +10840,8 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetAutoRezoom( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autorezoom" ) ) > 0 );
 	pTFPlayer->SetAutoReload( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autoreload" ) ) > 0 );
 
+	pTFPlayer->SetJumpSoundOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_jumpsound" ) ) );
+
 	// keep track of their tf_remember_lastswitched value
 	pTFPlayer->SetRememberActiveWeapon( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_remember_activeweapon" ) ) > 0 );
 	pTFPlayer->SetRememberLastWeapon( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_remember_lastswitched" ) ) > 0 );
@@ -11833,6 +11846,7 @@ static kill_eater_event_t g_eClassKillEvents[] =
 	kKillEaterEvent_PyroKill,					// TF_CLASS_PYRO
 	kKillEaterEvent_SpyKill,					// TF_CLASS_SPY
 	kKillEaterEvent_EngineerKill,				// TF_CLASS_ENGINEER
+	kKillEaterEvent_EngineerKill,				// TF_CLASS_MERCENARY //This is lazy.
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_eClassKillEvents ) == (TF_LAST_NORMAL_CLASS - TF_FIRST_NORMAL_CLASS) );
 
@@ -11848,6 +11862,7 @@ static kill_eater_event_t g_eRobotClassKillEvents[] =
 	kKillEaterEvent_RobotPyroKill,					// TF_CLASS_PYRO
 	kKillEaterEvent_RobotSpyKill,					// TF_CLASS_SPY
 	kKillEaterEvent_RobotEngineerKill,				// TF_CLASS_ENGINEER
+	kKillEaterEvent_RobotEngineerKill,				// TF_CLASS_MERCENARY //This is lazy.
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_eRobotClassKillEvents ) == (TF_LAST_NORMAL_CLASS - TF_FIRST_NORMAL_CLASS) );
 

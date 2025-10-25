@@ -11,6 +11,7 @@
 //
 // Weapon FireAxe tables.
 //
+//=============================================================================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFFireAxe, DT_TFWeaponFireAxe )
 
 BEGIN_NETWORK_TABLE( CTFFireAxe, DT_TFWeaponFireAxe )
@@ -21,6 +22,17 @@ END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( tf_weapon_fireaxe, CTFFireAxe );
 PRECACHE_WEAPON_REGISTER( tf_weapon_fireaxe );
+//=============================================================================
+IMPLEMENT_NETWORKCLASS_ALIASED( TFCrowbar, DT_TFWeaponCrowbar )
+
+BEGIN_NETWORK_TABLE( CTFCrowbar, DT_TFWeaponCrowbar )
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFCrowbar )
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_crowbar, CTFCrowbar);
+PRECACHE_WEAPON_REGISTER( tf_weapon_crowbar );
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------

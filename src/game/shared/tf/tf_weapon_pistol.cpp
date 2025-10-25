@@ -54,6 +54,17 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_pistol_scout, CTFPistol_Scout );
 PRECACHE_WEAPON_REGISTER( tf_weapon_pistol_scout );
 //============================
+IMPLEMENT_NETWORKCLASS_ALIASED( TFPistol_Merc, DT_WeaponPistol_Merc )
+
+BEGIN_NETWORK_TABLE( CTFPistol_Merc, DT_WeaponPistol_Merc )
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFPistol_Merc )
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_pistol_mercenary, CTFPistol_Merc );
+PRECACHE_WEAPON_REGISTER( tf_weapon_pistol_mercenary );
+//============================
 IMPLEMENT_NETWORKCLASS_ALIASED( TFPistol_ScoutPrimary, DT_WeaponPistol_ScoutPrimary )
 
 BEGIN_NETWORK_TABLE( CTFPistol_ScoutPrimary, DT_WeaponPistol_ScoutPrimary )

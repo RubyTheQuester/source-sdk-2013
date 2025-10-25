@@ -14,12 +14,14 @@
 
 #ifdef CLIENT_DLL
 #define CTFFireAxe C_TFFireAxe
+#define CTFCrowbar C_TFCrowbar
 #endif
 
 //=============================================================================
 //
 // BrandingIron class.
 //
+//=============================================================================
 class CTFFireAxe : public CTFWeaponBaseMelee
 {
 public:
@@ -38,6 +40,27 @@ public:
 private:
 
 	CTFFireAxe( const CTFFireAxe & ) {}
+};
+
+//=============================================================================
+//
+// Crowbar class.
+//
+//=============================================================================
+class CTFCrowbar : public CTFWeaponBaseMelee
+{
+public:
+
+	DECLARE_CLASS( CTFCrowbar, CTFWeaponBaseMelee );
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	CTFCrowbar() {}
+	virtual int			GetWeaponID(void) const { return TF_WEAPON_CROWBAR; }
+
+private:
+
+	CTFCrowbar(const CTFCrowbar&) {}
 };
 
 #endif // TF_WEAPON_FIREAXE_H

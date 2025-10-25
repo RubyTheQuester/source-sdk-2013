@@ -22,6 +22,8 @@
 #define CTFSodaPopper C_TFSodaPopper
 #define CTFPEPBrawlerBlaster C_TFPEPBrawlerBlaster
 #define CTFShotgunBuildingRescue C_TFShotgunBuildingRescue
+#define CTFShotgun_Merc C_TFShotgun_Merc
+#define CTFShotgun_Super C_TFShotgun_Super
 #define CTFLeech C_TFLeech
 #endif
 
@@ -194,4 +196,33 @@ public:
 	virtual bool	IsViewModelFlipped( void );
 };
 
+
+class CTFShotgun_Merc : public CTFShotgun
+{
+public:
+	DECLARE_CLASS( CTFShotgun_Merc, CTFShotgun );
+	DECLARE_NETWORKCLASS(); 
+	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_MERCENARY; }
+
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableShotgunMerc[];
+};
+
+class CTFShotgun_Super : public CTFShotgun
+{
+public:
+	DECLARE_CLASS( CTFShotgun_Super, CTFShotgun );
+	DECLARE_NETWORKCLASS(); 
+	DECLARE_PREDICTABLE();
+
+	CTFShotgun_Super();
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableShotgunSuper[];
+
+	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SUPER_SHOTGUN; }
+};
 #endif // TF_WEAPON_SHOTGUN_H
