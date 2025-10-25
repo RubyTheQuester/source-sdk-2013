@@ -2828,8 +2828,7 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 	if ( GetPaintKitDefIndex( pEconItem, &nPaintkitDefindex ) )
 	{
 		auto pPaintkitItemDef = GetItemSchema()->GetPaintKitItemDefinition( nPaintkitDefindex );
-
-		if (pPaintkitItemDef == NULL)
+		if (pPaintkitItemDef == NULL) 
 			bIsHatOrDecorated = true;
 		
 		pItemDef = pPaintkitItemDef ? pPaintkitItemDef : pItemDef;
