@@ -22,15 +22,7 @@
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
-	
-	
-	"$envmap" "models/items/berserk_glow"
-	"$envmaptint" "[0 0 0]"
-	"$envmaptint_rage" "[1 0 0]"
-	"$envmaptint_orig" "[0 0 0]"
-	"$envmapfresnel" "1"	
 		
-	
 	"$rage" "1"
 	"$rage_compare" ".5"
 	"$phongfresnelranges_rage"	"[0 1 10]"
@@ -61,10 +53,6 @@
 		{
 			"srcVar1" "$yellow"
 			"resultVar" "$color2"
-		}
-		"RipAndTear"
-		{
-			"resultVar" "$rage"
 		}
 		"LessOrEqual"
 		{
