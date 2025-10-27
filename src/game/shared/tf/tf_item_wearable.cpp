@@ -547,7 +547,7 @@ bool CTFWearable::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 			if ( iBodyGroup == -1 )
 				continue;
 
-			::SetBodygroup( pDisguiseTarget->GetModelPtr(), iDisguiseBody, iBodyGroup, iState );
+			::SetBodygroup( pDisguiseTarget->GetModelPtr(), iDisguiseBody, iBodyGroup, iBody );
 		}
 
 		pTFOwner->m_Shared.SetDisguiseBody( iDisguiseBody );

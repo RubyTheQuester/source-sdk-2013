@@ -11050,6 +11050,13 @@ bool CTFPlayer::ShouldGib( const CTakeDamageInfo &info )
 		if ( iAlwaysGibOnCrit )
 			return true;
 	}
+	int iOverKillGib = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( info.GetWeapon(), iOverKillGib, gib_on_overkill);
+
+	if ( ( info.GetDamage() > GetMaxHealth() ) && iOverKillGib )
+	{
+			return true;
+	}
 
 	if ( info.GetDamageCustom() == TF_DMG_CUSTOM_CROC )
 		return true;

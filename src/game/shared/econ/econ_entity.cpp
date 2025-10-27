@@ -2049,15 +2049,18 @@ bool CEconEntity::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 	{
 		int iBody = 0;
 		const char *pszBodyGroup = pItemDef->GetModifiedBodyGroup( 0, i, iBody );
+
+		/* Why is this set up like this.
 		if ( iBody != iState )
 			continue;
+		*/
 
 		int iBodyGroup = pOwner->FindBodygroupByName( pszBodyGroup );
 
 		if ( iBodyGroup == -1 )
 			continue;
 
-		pOwner->SetBodygroup( iBodyGroup, iState );
+		pOwner->SetBodygroup( iBodyGroup, iBody);
 	}
 
 	// Handle per-style bodygroup hiding

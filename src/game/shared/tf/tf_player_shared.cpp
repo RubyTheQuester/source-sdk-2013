@@ -13067,13 +13067,20 @@ bool CTFPlayer::CanDisguise_OnKill( void )
 int	CTFPlayer::GetMaxAmmo( int iAmmoIndex, int iClassIndex /*= -1*/ )
 {
 	int iMax = ( iClassIndex == -1 ) ? m_PlayerClass.GetData()->m_aAmmoMax[iAmmoIndex] : GetPlayerClassData( iClassIndex )->m_aAmmoMax[iAmmoIndex];
+	int iMaxOverrideSecondary = 0;
+	int iMaxOverridePrimary = 0;
+
 	if ( iAmmoIndex == TF_AMMO_PRIMARY )
 	{
 		CALL_ATTRIB_HOOK_INT( iMax, mult_maxammo_primary );
+
+		CALL_ATTRIB_HOOK_INT( iMaxOverridePrimary, override_maxammo_primary );
 	}
 	else if ( iAmmoIndex == TF_AMMO_SECONDARY )
 	{
 		CALL_ATTRIB_HOOK_INT( iMax, mult_maxammo_secondary );
+
+		CALL_ATTRIB_HOOK_INT(iMaxOverrideSecondary, override_maxammo_secondary );
 	}
 	else if ( iAmmoIndex == TF_AMMO_METAL )
 	{
@@ -13087,6 +13094,16 @@ int	CTFPlayer::GetMaxAmmo( int iAmmoIndex, int iClassIndex /*= -1*/ )
 	{
 		// All classes by default can carry a max of 1 "Grenade3" which is being used as ACTIONSLOT Throwables
 		iMax = 1;
+	}
+
+	if ( iMaxOverrideSecondary != 0 )
+	{
+		iMax = iMaxOverrideSecondary;
+	}
+
+	if ( iMaxOverridePrimary != 0 )
+	{
+		iMax = iMaxOverridePrimary;
 	}
 
 	// Haste Powerup Rune adds multiplier to Max Ammo

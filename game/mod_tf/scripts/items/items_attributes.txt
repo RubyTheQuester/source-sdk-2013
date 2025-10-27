@@ -502,6 +502,39 @@
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
+		
+		"3545"
+		{
+			"name"	"gib overkill"
+			"attribute_class"	"gib_on_overkill"
+			"description_string"	"#Attrib_Overkill_Gib"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3546"
+		{
+			"name"	"maxammo primary override"
+			"attribute_class"	"override_maxammo_primary"
+			"description_string"	"#Attrib_MaxAmmo_Override"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3547"
+		{
+			"name"	"maxammo secondary override"
+			"attribute_class"	"override_maxammo_secondary"
+			"description_string"	"#Attrib_MaxAmmo_Override"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

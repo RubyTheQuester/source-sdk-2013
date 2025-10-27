@@ -127,6 +127,21 @@
 				"mercenary"	"1"
 			}
 			
+			"attributes"
+			{
+				"gib overkill"
+				{
+					"attribute_class"	"gib_on_overkill"
+					"value" "1"
+				}
+				
+				"maxammo primary override"
+				{
+					"attribute_class"	"override_maxammo_primary"
+					"value"	"16"
+				}
+			}
+			
 			"static_attrs"
 			{
 				"min_viewmodel_offset"				"5 -2 -10"
@@ -205,11 +220,12 @@
 			"model_player"	"models/weapons/v_models/v_revolver_dm.mdl"
 			"model_world"	"models/weapons/w_models/w_revolver_dm.mdl"
 			
-			"visuals"
+			"attributes"
 			{
-				"player_bodygroups"
+				"maxammo secondary override"
 				{
-					"bullets"		"1"
+					"attribute_class"	"override_maxammo_secondary"
+					"value"	"24"
 				}
 			}
 			
