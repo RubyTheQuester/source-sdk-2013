@@ -101,7 +101,7 @@ public:
 
 	// Creation.
 	static CTFGrenadePipebombProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
-		                                         const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iPipeBombType, float flMultDmg );
+		                                         const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iPipeBombType, float flMultDmg, bool bChinaLake = false );
 
 	static const char* GetPipebombClass( int iPipeBombType );
 
@@ -140,10 +140,13 @@ public:
 
 	virtual int		UpdateTransmitState() OVERRIDE;
 	virtual int		ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
+
+	virtual bool	ExplodeOnImpact( void );
 public:
 
 	bool		m_bFizzle;
 	bool		m_bWallShatter;
+	bool		m_bChinaLake;
 private:
 	
 	float		m_flMinSleepTime;

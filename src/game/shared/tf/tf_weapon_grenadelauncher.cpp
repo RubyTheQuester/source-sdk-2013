@@ -344,6 +344,16 @@ void CTFGrenadeLauncher::FireProjectileInternal( CTFPlayer* pTFPlayer )
 			// on contact detonations reset the damage to max
 			pProjectile->SetDamage( pProjectile->GetDamage() * flDetonationPenalty );
 		}
+
+		/*
+		int iChinaLake = 0;
+		CALL_ATTRIB_HOOK_INT( iChinaLake, grenade_always_explode_on_hit );
+		if ( iChinaLake )
+		{
+			pProjectile->m_bChinaLake = true;
+		}
+		*/
+
 	}
 #else
 	FireProjectile( pTFPlayer );

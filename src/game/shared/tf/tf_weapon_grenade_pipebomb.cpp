@@ -93,6 +93,7 @@ CTFGrenadePipebombProjectile::CTFGrenadePipebombProjectile()
 	s_iszTrainName  = AllocPooledString( "models/props_vehicles/train_enginecar.mdl" );
 	m_flDeflectedTime = 0.0f;
 	m_bWallShatter = false;
+	m_bChinaLake = false;
 	m_bDefensiveBomb = false;
 	m_bSendPlayerDestroyedEvent = true;
 	m_bCanTakeDamage = true;
@@ -432,7 +433,7 @@ const char* CTFGrenadePipebombProjectile::GetPipebombClass( int iPipeBombType )
 CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector &position, const QAngle &angles, 
 																    const Vector &velocity, const AngularImpulse &angVelocity, 
 																    CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, 
-																	int iPipeBombType, float flMultDmg )
+																	int iPipeBombType, float flMultDmg, bool bChinaLake )
 {
 	// Translate a projectile type into a pipebomb type.
 	int iPipeBombDetonateType;
@@ -475,6 +476,13 @@ CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector
 			// we'll do less damage. If we explode on contact, we'll restore this to full damage.
 			pGrenade->SetDamage( pGrenade->GetDamage() * TF_WEAPON_PIPEBOMB_TIMER_DMG_REDUCTION );
 		}
+
+		/*
+		if ( bChinaLake )
+		{
+			pGrenade->SetTouch(&CTFGrenadePipebombProjectile::PipebombTouch);
+		}
+		*/
 
 		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 
@@ -559,6 +567,7 @@ void CTFGrenadePipebombProjectile::Precache()
 	// Must add All custom Models here
 	iModel = PrecacheModel( "models/workshop/weapons/c_models/c_kingmaker_sticky/w_kingmaker_stickybomb.mdl" );
 	iModel = PrecacheModel( "models/workshop/weapons/c_models/c_quadball/w_quadball_grenade.mdl" );
+	iModel = PrecacheModel( "models/weapons/w_models/w_grenade_grenadelauncher_dm.mdl" );
 
 	PrecacheParticleSystem( "stickybombtrail_blue" );
 	PrecacheParticleSystem( "stickybombtrail_red" );
@@ -844,6 +853,15 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 	}
 }
 
+bool CTFGrenadePipebombProjectile::ExplodeOnImpact(void)
+{
+	CTFWeaponBase* pTFWeapon = dynamic_cast<CTFWeaponBase*>(GetOriginalLauncher());
+	if ( pTFWeapon && pTFWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY && ((m_flCreationTime + 0.05f) >= gpGlobals->curtime) )
+		return true;
+	else
+		return false;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -858,6 +876,15 @@ void CTFGrenadePipebombProjectile::VPhysicsCollision( int index, gamevcollisione
 
 	if ( !pHitEntity )
 		return;
+
+	if ( ExplodeOnImpact() )
+	{
+		SetThink( &CTFGrenadePipebombProjectile::Detonate );
+		SetNextThink(gpGlobals->curtime);
+
+		m_bTouched = true;
+		return;
+	}
 
 	if ( m_bWallShatter )
 	{
