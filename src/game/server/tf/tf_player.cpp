@@ -3096,8 +3096,6 @@ void CTFPlayer::PrecacheTFPlayer()
 	PrecacheParticleSystem( "dxhr_sniper_rail_blue" );
 	PrecacheParticleSystem( "dxhr_sniper_rail_red" );
 	PrecacheParticleSystem( "tfc_sniper_distortion_trail" );
-	PrecacheParticleSystem( "bullet_tracer_sniper_blue" );
-	PrecacheParticleSystem( "bullet_tracer_sniper_red" );
 
 	for ( int i=0; i<ARRAYSIZE( s_pszTauntRPSParticleNames ); ++i )
 	{
@@ -21352,13 +21350,15 @@ void CTFPlayer::InputIgnitePlayer( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Poison a player
+// Purpose: Infect a player
 //-----------------------------------------------------------------------------
 void CTFPlayer::InputPoisonPlayer( inputdata_t &inputdata )
 {
 	m_Shared.Poison( ToTFPlayer( inputdata.pActivator ), inputdata.value.Float() );
 }
-
+//-----------------------------------------------------------------------------
+// Purpose: DeInfect a player
+//-----------------------------------------------------------------------------
 void CTFPlayer::InputDePoisonPlayer( inputdata_t &inputdata )
 {
 	if ( m_Shared.InCond( TF_COND_POISON ) )

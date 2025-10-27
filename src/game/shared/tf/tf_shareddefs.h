@@ -1312,7 +1312,8 @@ inline bool IsDOTDmg( int iType )
 	if ( iType == TF_DMG_CUSTOM_BURNING ||
 		 iType == TF_DMG_CUSTOM_BURNING_FLARE ||
 		 iType == TF_DMG_CUSTOM_BURNING_ARROW ||
-		 iType == TF_DMG_CUSTOM_BLEEDING )
+		 iType == TF_DMG_CUSTOM_BLEEDING ||
+		 iType == TF_DMG_CUSTOM_POISON )
 	{
 		return true;
 	}

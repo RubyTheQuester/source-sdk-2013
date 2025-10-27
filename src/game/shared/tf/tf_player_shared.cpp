@@ -131,9 +131,10 @@ ConVar tf_mvm_bot_flag_carrier_movement_penalty( "tf_mvm_bot_flag_carrier_moveme
 //ConVar tf_scout_dodge_move_penalty_duration( "tf_scout_dodge_move_penalty_duration", "3.0", FCVAR_DEVELOPMENTONLY | FCVAR_REPLICATED );
 //ConVar tf_scout_dodge_move_penalty( "tf_scout_dodge_move_penalty", "0.5", FCVAR_DEVELOPMENTONLY | FCVAR_REPLICATED );
 
-ConVar tf_infection_debug("tf_infection_debug", "0", FCVAR_CHEAT | FCVAR_REPLICATED);
-ConVar tf_infection_range("tf_infection_range", "64", FCVAR_CHEAT | FCVAR_REPLICATED);
-ConVar tf_infection_pulse_time("tf_infection_pulse_time", "1.0", FCVAR_CHEAT | FCVAR_REPLICATED);
+ConVar tfmod_infection_spread_debug		( "tfmod_infection_spread_debug", "0", FCVAR_CHEAT | FCVAR_REPLICATED );
+ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "64", FCVAR_NOTIFY | FCVAR_REPLICATED,		"The range of infection spread pulse");
+ConVar tfmod_infection_spread_pulse_time( "tfmod_infection_spread_pulse_time", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How often the infection spread pulse happens" );
+ConVar tfmod_infection_spread_decrease	( "tfmod_infection_spread_decrease", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How much does the infection time decrease from carrier to viticm" );
 
 #ifdef GAME_DLL
 ConVar tf_boost_drain_time( "tf_boost_drain_time", "15.0", FCVAR_DEVELOPMENTONLY, "Time is takes for a full health boost to drain away from a player.", true, 0.1, false, 0 );
@@ -3021,17 +3022,16 @@ void CTFPlayerShared::ConditionGameRulesThink( void )
 		{
 			float m_flDamageMath = ( 8 - ( m_flPoisonDamageTaken / 5 ) );
 
-			if (m_flDamageMath > 2)
-			{
-				CTakeDamageInfo info( m_hPoisonAttacker, m_hPoisonAttacker, m_flDamageMath, DMG_SLASH | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_POISON );
+			//if (m_flDamageMath > 2)
+			//{
+				CTakeDamageInfo info( 
+					m_hPoisonAttacker, m_hPoisonAttacker, clamp(m_flDamageMath, 2, 8), 
+					DMG_SLASH | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_POISON 
+				);
 				m_pOuter->TakeDamage(info);
-			}
-			else
-			{
-				CTakeDamageInfo info( m_hPoisonAttacker, m_hPoisonAttacker, 2, DMG_SLASH | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_POISON );
-				m_pOuter->TakeDamage( info );
-			}
-			m_flPoisonTime = gpGlobals->curtime + 0.75f;
+			//}
+
+			m_flPoisonTime = gpGlobals->curtime + 2.0f;
 			m_flPoisonDamageTaken += 1;
 		}
 	}
@@ -6816,7 +6816,7 @@ void CTFPlayerShared::Burn( CTFPlayer *pAttacker, CTFWeaponBase *pWeapon, float 
 #endif // GAME_DLL
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose: Poisons a player
 //-----------------------------------------------------------------------------
 void CTFPlayerShared::Poison( CTFPlayer *pAttacker, float flTime )
 {
@@ -14480,7 +14480,7 @@ void CTFPlayerShared::PulseMedicRadiusHeal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Emits an area-of-effect heal around the medic
+// Purpose: Emits an area-of-effect poisons-spread around the infected
 //-----------------------------------------------------------------------------
 void CTFPlayerShared::PulseInfection(void)
 {
@@ -14490,9 +14490,9 @@ void CTFPlayerShared::PulseInfection(void)
 		if ( m_flInfectionCheckTime <= gpGlobals->curtime )
 		{
 			//bool bRevealed = false;
-			const int iRange = tf_infection_range.GetFloat();
-			float debugPulseLineTime = tf_infection_pulse_time.GetFloat() * 1.25;
-			int bDebug = tf_infection_debug.GetInt();
+			const int iRange = tfmod_infection_spread_range.GetFloat();
+			float debugPulseLineTime = tfmod_infection_spread_pulse_time.GetFloat() * 1.25;
+			int bDebug = tfmod_infection_spread_debug.GetInt();
 
 			CUtlVector<CTFPlayer *> vecPlayers;
 			CollectPlayers( &vecPlayers, m_pOuter->GetTeamNumber(), true);
@@ -14517,27 +14517,22 @@ void CTFPlayerShared::PulseInfection(void)
 					if ( trace.fraction < 1.0f )
 					{
 						if ( bDebug >= 1 )
-						{
 							NDebugOverlay::HorzArrow(m_pOuter->WorldSpaceCenter(), vecPlayers[i]->WorldSpaceCenter(), 1, 255, 255, 0, 255, true, debugPulseLineTime);
-						}
+						
 						continue;
 					}
 
-					vecPlayers[i]->m_Shared.Poison( m_hPoisonAttacker, m_pOuter->m_Shared.GetConditionDuration( TF_COND_POISON ) * 0.75 );
+					vecPlayers[i]->m_Shared.Poison( m_hPoisonAttacker, m_pOuter->m_Shared.GetConditionDuration( TF_COND_POISON ) * tfmod_infection_spread_decrease.GetFloat());
 
 
-					if ( bDebug >= 1)
-					{
+					if (bDebug >= 1)
 						NDebugOverlay::HorzArrow(m_pOuter->WorldSpaceCenter(), vecPlayers[i]->WorldSpaceCenter(), 1, 0, 255, 0, 255, true, debugPulseLineTime);
-					}
 				}
 				else if (bDebug >= 2)
-				{
 					NDebugOverlay::HorzArrow(m_pOuter->WorldSpaceCenter(), vecPlayers[i]->WorldSpaceCenter(), 1, 255, 0, 0, 255, true, debugPulseLineTime);
-				}
 			}
 
-			m_flInfectionCheckTime = gpGlobals->curtime + tf_infection_pulse_time.GetFloat();
+			m_flInfectionCheckTime = gpGlobals->curtime + tfmod_infection_spread_pulse_time.GetFloat();
 		}
 #endif	// GAME_DLL
 	}

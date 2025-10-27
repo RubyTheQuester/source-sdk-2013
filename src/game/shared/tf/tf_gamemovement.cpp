@@ -77,10 +77,10 @@ ConVar tf_movement_lost_footing_restick( "tf_movement_lost_footing_restick", "50
 ConVar tf_movement_lost_footing_friction( "tf_movement_lost_footing_friction", "0.1", FCVAR_REPLICATED | FCVAR_CHEAT,
                                           "Ground friction for players who have lost their footing" );
 
-ConVar	tf_duckjump("tf_duckjump", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow jumping while ducked");
+ConVar	tfmod_duckjump("tfmod_duckjump", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow jumping while ducked");
 
 #if defined (CLIENT_DLL)
-ConVar 	tf_jumpsound("tf_jumpsound", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Hough", true, 0, true, 2);
+ConVar 	tfmod_jumpsound("tfmod_jumpsound", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Hough", true, 0, true, 2);
 #endif
 
 extern ConVar cl_forwardspeed;
@@ -1090,13 +1090,13 @@ void CTFGameMovement::AirDash( void )
 }
 
 
-ConVar sv_enablebunnyhopping("sv_enablebunnyhopping", "0", FCVAR_REPLICATED, "Allow player speed to exceed maximum running speed");
-ConVar sv_autobunnyhopping("sv_autobunnyhopping", "0", FCVAR_REPLICATED, "Players automatically re-jump while holding jump button");
+ConVar sv_enablebunnyhopping( "sv_enablebunnyhopping", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow player speed to exceed maximum running speed" );
+ConVar sv_autobunnyhopping( "sv_autobunnyhopping", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Players automatically re-jump while holding jump button" );
 
 // Only allow bunny jumping up to 1.2x server / player maxspeed setting
-ConVar sv_bunnyhop_max_speed_factor("sv_bunnyhop_max_speed_factor", "1.2", FCVAR_REPLICATED, "If sv_enablebunnyhopping is 0, limit at this factor of max speed");
+ConVar sv_bunnyhop_max_speed_factor( "sv_bunnyhop_max_speed_factor", "1.2", FCVAR_REPLICATED | FCVAR_NOTIFY, "If sv_enablebunnyhopping is 0, limit at this factor of max speed" );
 
-ConVar sv_bunnyhop_max_speed_factor_merc("sv_bunnyhop_max_speed_factor_merc", "4", FCVAR_REPLICATED, "Merc's max speed bhop speed's factor");
+//ConVar sv_bunnyhop_max_speed_factor_merc("sv_bunnyhop_max_speed_factor_merc", "4", FCVAR_REPLICATED, "Merc's max speed bhop speed's factor");
 
 // Only allow bunny jumping up to 1.2x server / player maxspeed setting
 #define BUNNYJUMP_MAX_SPEED_FACTOR 1.2f
@@ -1115,7 +1115,10 @@ void CTFGameMovement::PreventBunnyJumping()
 		return;
 
 	// Speed at which bunny jumping is limited
-	float maxscaledspeed = ( bMercenary ? sv_bunnyhop_max_speed_factor_merc.GetFloat() : sv_bunnyhop_max_speed_factor.GetFloat() ) * player->m_flMaxspeed;
+	float maxscaledspeed = 
+		//( bMercenary ? sv_bunnyhop_max_speed_factor_merc.GetFloat() : sv_bunnyhop_max_speed_factor.GetFloat() ) 
+		sv_bunnyhop_max_speed_factor.GetFloat()
+		* player->m_flMaxspeed;
 	if ( maxscaledspeed <= 0.0f )
 		return;
 
@@ -1268,7 +1271,7 @@ bool CTFGameMovement::CheckJumpButton()
 
 	ToggleParachute();
 
-	if ( !tf_duckjump.GetBool() && (bMercenary == false) )
+	if ( !tfmod_duckjump.GetBool() && (bMercenary == false) )
 	{
 		// Cannot jump will ducked.
 		if (player->GetFlags() & FL_DUCKING)
@@ -1488,7 +1491,7 @@ bool CTFGameMovement::CheckJumpButton()
 			iClass = m_pTFPlayer->m_Shared.GetDisguiseClass();
 		}
 
-		int iJumpSound = tf_jumpsound.GetInt();
+		int iJumpSound = tfmod_jumpsound.GetInt();
 
 		if ( ( iJumpSound && iClass > 9 ) || iJumpSound == 2 )
 		{

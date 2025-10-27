@@ -20,7 +20,7 @@
 #endif
 
 ConVar tf_use_fixed_weaponspreads( "tf_use_fixed_weaponspreads", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "If set to 1, weapons that fire multiple pellets per shot will use a non-random pellet distribution." );
-ConVar tf_use_circular_weaponspreads("tf_use_circular_weaponspreads", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "If set to 1, weapons that fire multiple pellets per shot will use a true circular pellet distribution (for both random and fixed spread).");
+ConVar tfmod_use_circular_weaponspreads( "tfmod_use_circular_weaponspreads", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "If set to 1, weapons that fire multiple pellets per shot will use a true circular pellet distribution (for both random and fixed spread)." );
 
 // Client specific.
 #ifdef CLIENT_DLL
@@ -401,7 +401,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 					iSpread -= ARRAYSIZE( g_vecFixedWpnSpreadPellets );
 				}
 				float flScalar = 0.5f;
-				if (tf_use_circular_weaponspreads.GetBool())
+				if ( tfmod_use_circular_weaponspreads.GetBool() )
 				{
 					x = g_vecFixedWpnSpreadPelletsCircular[iSpread].x * flScalar;
 					y = g_vecFixedWpnSpreadPelletsCircular[iSpread].y * flScalar;
@@ -467,7 +467,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 			if ( flVariance != 0.f && flSpread != 0.f )
 			{
 				float flScalar = 1.0f;
-				if (tf_use_circular_weaponspreads.GetBool())
+				if ( tfmod_use_circular_weaponspreads.GetBool() )
 				{
 					float angle = M_PI * 2.0f * RandomFloat();
 					float radius = flScalar * FastSqrt(RandomFloat());
