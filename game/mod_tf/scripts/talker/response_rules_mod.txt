@@ -22,73 +22,40 @@ criterion "IsNotVictimMercenary" "victimclass" "!=Mercenary" "required" weight 0
 //////////////
 
 //Melees
-criterion "WeaponIsBerserk" "playerweapon" "tf_weapon_berserk" "required"
-criterion "WeaponIsClaws" "playerweapon" "tf_weapon_claws" "required"
-criterion "WeaponIsUmbrella" "playerweapon" "tf_weapon_umbrella" "required"
 criterion "WeaponIsCrowbar" "playerweapon" "tf_weapon_crowbar" "required"
-criterion "WeaponIsLeadPipe" "playerweapon" "tf_weapon_lead_pipe" "required"
-criterion "WeaponIsCombatKnife" "playerweapon" "tf_weapon_combatknife" "required"
-criterion "WeaponIsChainsaw" "playerweapon" "tf_weapon_chainsaw" "required"
-criterion "WeaponIsTFCCrowbar" "playerweapon" "tfc_weapon_crowbar" "required"
-criterion "WeaponIsTFCUmbrella" "playerweapon" "tfc_weapon_umbrella" "required"
 
 //Pistols
 criterion "WeaponIsPistolMercenary" "playerweapon" "tf_weapon_pistol_mercenary" "required"
-criterion "WeaponIsPistolAkimbo" "playerweapon" "tf_weapon_pistol_akimbo" "required"
 criterion "WeaponIsDMRevolver" "playerweapon" "tf_weapon_revolver_mercenary" "required"
 
 //Shotguns
-criterion "WeaponIsShotgunMercenary" "playerweapon" "tf_weapon_shotgun" "required"
-criterion "WeaponIsSuperShotgun" "playerweapon" "tf_weapon_supershotgun" "required"
-criterion "WeaponIsEternalShotgun" "playerweapon" "tf_weapon_eternalshotgun" "required"
+criterion "WeaponIsShotgunMercenary" "playerweapon" "tf_weapon_shotgun_mercenary" "required"
+criterion "WeaponIsSuperShotgun" "playerweapon" "tf_weapon_super_shotgun" "required"
 
 //Autos
-criterion "WeaponIsDMSMG" "playerweapon" "tf_weapon_smg_mercenary" "required"
 criterion "WeaponIsTommyGun" "playerweapon" "tf_weapon_tommygun" "required"
-criterion "WeaponIsGatlingGun" "playerweapon" "tf_weapon_gatlinggun" "required"
 
 //Long-Range
 criterion "WeaponIsAssaultRifle" "playerweapon" "tf_weapon_assaultrifle" "required"
-criterion "WeaponIsRailgun" "playerweapon" "tf_weapon_railgun" "required"
 
 //Wild-cards
 criterion "WeaponIsNailgun" "playerweapon" "tf_weapon_nailgun" "required"
-criterion "WeaponIsFlamethrowerDM" "playerweapon" "tf_weapon_flamethrower" "required"
-criterion "WeaponIsLightningGun" "playerweapon" "tf_weapon_lightning_gun" "required"
 
 //Explosives
-criterion "WeaponIsDynamiteBundle" "playerweapon" "tf_weapon_dynamite_bundle" "required"
 criterion "WeaponIsChinaLake" "playerweapon" "tf_weapon_grenadelauncher_mercenary" "required"
-criterion "WeaponIsBouncer" "playerweapon" "tf_weapon_bouncer" "required"
-criterion "WeaponIsDMRocketLauncher" "playerweapon" "tf_weapon_rocketlauncher_dm" "required"
-
-//Super Weapons
-criterion "WeaponIsGIB" "playerweapon" "tf_weapon_gib" "required"
-criterion "WeaponIsQuad" "playerweapon" "tf_weapon_super_rocketlauncher" "required"
+criterion "WeaponIsDMRocketLauncher" "playerweapon" "tf_weapon_rocketlauncher_mercenary" "required"
 
 /////////
 //Other//
 /////////
 
-criterion "WeaponIsNotShotgunMercenary" "playerweapon" "!=tf_weapon_shotgun" "required"
-criterion "WeaponIsNotGrenade" "playerweapon" "!=tf_weapon_grenadelauncher" "required"
+criterion "WeaponIsNotShotgunMercenary" "playerweapon" "!=tf_weapon_shotgun_mercenary" "required"
 criterion "WeaponIsNotDMRevolver" "playerweapon" "!=tf_weapon_revolver_mercenary" "required"
-criterion "WeaponIsNotOriginal" "playerweapon" "!=tf_weapon_rocketlauncher_dm" "required"
+criterion "WeaponIsNotOriginal" "playerweapon" "!=tf_weapon_rocketlauncher_mercenary" "required"
 criterion "WeaponIsNotDMGrenade" "playerweapon" "!=tf_weapon_grenadelauncher_mercenary" "required"
 criterion "WeaponIsNotPistolMercenary" "playerweapon" "!=tf_weapon_pistol_mercenary" "required"
-criterion "WeaponIsNotPistolAkimbo" "playerweapon" "!=tf_weapon_pistol_akimbo" "required"
-criterion "WeaponIsNotDynamiteBundle" "playerweapon" "!=tf_weapon_dynamite_bundle" "required"
-criterion "WeaponIsNotRocket" "playerweapon" "!=tf_weapon_rocketlauncher" "required"
 
 criterion "IsDamageBlast" "damagetype" "DMG_BLAST" "required" 
-
-criterion "IsBerserk" "poweruptype" "TF_COND_BERSERK" "required" 
-
-criterion "InPowerup" "inpowerup" "yes" "required" 
-
-criterion "GotKilled" "gotkilled" "true" "required" 
-
-criterion "NotKilled" "gotkilled" "!=true" "required" 
 
 criterion "ConceptPlayerTauntKnucklesCrack" 	"Concept" "TLK_TAUNT_KNUCKLES" 		required
 criterion "ConceptPlayerTauntSoClose" 			"Concept" "TLK_TAUNT_SO_CLOSE" 		required

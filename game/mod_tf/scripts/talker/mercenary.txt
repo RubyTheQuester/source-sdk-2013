@@ -850,18 +850,12 @@ Rule PlayerGoodJobMercenary
 
 Response PlayerJeersMercenary
 {
-	scene "scenes/Player/Mercenary/low/Jeers01.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers02.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers03.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers04.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers05.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers06.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers07.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers08.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers09.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers10.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers11.vcd" 
-	scene "scenes/Player/Mercenary/low/Jeers12.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization01.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization02.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization03.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization04.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization05.vcd" 
+	scene "scenes/Player/Mercenary/low/NegativeVocalization06.vcd" 
 }
 Rule PlayerJeersMercenary
 {

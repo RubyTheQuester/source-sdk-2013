@@ -25,10 +25,12 @@
 
 	"rndwave"			
 	{
-		"wave"		"vo/mercenary_paincrticialdeath01.wav"
-		"wave"		"vo/mercenary_paincrticialdeath02.wav"
-		"wave"		"vo/mercenary_paincrticialdeath03.wav"
-		"wave"		"vo/mercenary_paincrticialdeath04.wav"
+		"wave"		"vo/mercenary_PainSevere01.wav"
+		"wave"		"vo/mercenary_PainSevere02.wav"
+		"wave"		"vo/mercenary_PainSevere03.wav"
+		"wave"		"vo/mercenary_PainSevere04.wav"
+		"wave"		"vo/mercenary_PainSevere05.wav"
+		"wave"		"vo/mercenary_PainSevere06.wav"
 	}
 }
 

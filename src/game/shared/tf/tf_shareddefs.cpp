@@ -1893,32 +1893,35 @@ bool IsPlayingInvasionMap( void )
 
 const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] =
 {
-	"",
-	"../hud/leaderboard_class_scout",
-	"../hud/leaderboard_class_sniper",
-	"../hud/leaderboard_class_soldier",
-	"../hud/leaderboard_class_demo",
-	"../hud/leaderboard_class_medic",
-	"../hud/leaderboard_class_heavy",
-	"../hud/leaderboard_class_pyro",
-	"../hud/leaderboard_class_spy",
-	"../hud/leaderboard_class_engineer",
-	"../hud/leaderboard_class_mercenary",
-	"../hud/leaderboard_class_scout_d",
-	"../hud/leaderboard_class_sniper_d",
-	"../hud/leaderboard_class_soldier_d",
-	"../hud/leaderboard_class_demo_d",
-	"../hud/leaderboard_class_medic_d",
-	"../hud/leaderboard_class_heavy_d",
-	"../hud/leaderboard_class_pyro_d",
-	"../hud/leaderboard_class_spy_d",
-	"../hud/leaderboard_class_engineer_d",
-	"../hud/leaderboard_class_mercenary_d",
+	"", //1
+
+	"../hud/leaderboard_class_scout", //1
+	"../hud/leaderboard_class_sniper", //2
+	"../hud/leaderboard_class_soldier", //3
+	"../hud/leaderboard_class_demo", //4
+	"../hud/leaderboard_class_medic", //5
+	"../hud/leaderboard_class_heavy", //6
+	"../hud/leaderboard_class_pyro", //7
+	"../hud/leaderboard_class_spy", //8
+	"../hud/leaderboard_class_engineer", //9
+	"../hud/leaderboard_class_mercenary", //10
+
+	"../hud/leaderboard_class_scout_d", //1
+	"../hud/leaderboard_class_sniper_d", //2
+	"../hud/leaderboard_class_soldier_d", //3
+	"../hud/leaderboard_class_demo_d", //4
+	"../hud/leaderboard_class_medic_d", //5
+	"../hud/leaderboard_class_heavy_d", //6
+	"../hud/leaderboard_class_pyro_d", //7
+	"../hud/leaderboard_class_spy_d", //8
+	"../hud/leaderboard_class_engineer_d", //9
+	"../hud/leaderboard_class_mercenary_d", //10
 };
 
 const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 {
 	"",
+
 	"class_icons/class_icon_orange_scout",
 	"class_icons/class_icon_orange_sniper",
 	"class_icons/class_icon_orange_soldier",
@@ -1929,6 +1932,7 @@ const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 	"class_icons/class_icon_orange_spy",
 	"class_icons/class_icon_orange_engineer",
 	"../hud/leaderboard_class_mercenary",
+
 	"class_icons/class_icon_orange_scout_d",
 	"class_icons/class_icon_orange_sniper_d",
 	"class_icons/class_icon_orange_soldier_d",
@@ -1954,6 +1958,7 @@ const char *g_pszItemClassImagesRed[] =
 	"class_portraits/spy",			// TF_CLASS_SPY,
 	"class_portraits/engineer",		// TF_CLASS_ENGINEER,
 	"class_portraits/mercenary",		// TF_CLASS_MERCENARY,
+
 	"class_portraits/scout_grey",		// TF_CLASS_SCOUT,			
 	"class_portraits/sniper_grey",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_grey",		// TF_CLASS_SOLDIER,
@@ -1978,6 +1983,8 @@ const char *g_pszItemClassImagesBlue[] =
 	"class_portraits/pyro_blue",		// TF_CLASS_PYRO,
 	"class_portraits/spy_blue",			// TF_CLASS_SPY,
 	"class_portraits/engineer_blue",	// TF_CLASS_ENGINEER,
+	"class_portraits/mercenary_blue",		// TF_CLASS_MERCENARY,
+
 	"class_portraits/scout_blue_grey",		// TF_CLASS_SCOUT,			
 	"class_portraits/sniper_blue_grey",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_blue_grey",	// TF_CLASS_SOLDIER,
@@ -1987,6 +1994,7 @@ const char *g_pszItemClassImagesBlue[] =
 	"class_portraits/pyro_blue_grey",		// TF_CLASS_PYRO,
 	"class_portraits/spy_blue_grey",		// TF_CLASS_SPY,
 	"class_portraits/engineer_blue_grey",	// TF_CLASS_ENGINEER,
+	"class_portraits/mercenary_blue_grey",		// TF_CLASS_MERCENARY,
 };
 
 const char *g_pszCompetitiveMedalImages[] =
