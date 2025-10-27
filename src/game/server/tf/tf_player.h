@@ -345,7 +345,6 @@ public:
 	virtual void		ValidateCurrentObserverTarget( void );
 
 	void CheckUncoveringSpies( CTFPlayer *pTouchedPlayer );
-	void SpreadInfection( CTFPlayer *pTouchedPlayer );
 	void Touch( CBaseEntity *pOther );
 
 	virtual	void RefreshCollisionBounds( void );
