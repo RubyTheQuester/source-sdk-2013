@@ -750,7 +750,10 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 	}
 
 	//If we already touched a surface then we're not exploding on contact anymore.
-	if ( m_bTouched == true )
+	int iChinaLake = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(GetLauncher(), iChinaLake, grenade_always_explode_on_hit)
+
+	if ( m_bTouched == true && !iChinaLake )
 		return;
 
 	bool bExploded = false;

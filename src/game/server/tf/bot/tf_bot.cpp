@@ -4139,6 +4139,8 @@ bool CTFBot::IsContinuousFireWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_FLAREGUN:
 		case TF_WEAPON_JAR:
 		case TF_WEAPON_COMPOUND_BOW:
+		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
+		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 			return false;
 		};
 	}
@@ -4166,6 +4168,8 @@ bool CTFBot::IsExplosiveProjectileWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_GRENADELAUNCHER:
 		case TF_WEAPON_PIPEBOMBLAUNCHER:
 		case TF_WEAPON_JAR:
+		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
+		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 			return true;
 		};
 	}
@@ -4191,6 +4195,8 @@ bool CTFBot::IsBarrageAndReloadWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT:
 		case TF_WEAPON_GRENADELAUNCHER:
 		case TF_WEAPON_PIPEBOMBLAUNCHER:
+		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
+		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 		case TF_WEAPON_SCATTERGUN:
 			return true;
 		};

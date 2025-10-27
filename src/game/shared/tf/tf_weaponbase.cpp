@@ -2009,7 +2009,7 @@ bool CTFWeaponBase::ReloadSingly( void )
 
 			if ( SendWeaponAnim( ACT_VM_RELOAD ) )
 			{
-				if ( GetWeaponID() == TF_WEAPON_GRENADELAUNCHER )
+				if ( GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY)
 				{
 					SetReloadTimer( GetTFWpnData().m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeReload );
 				}
@@ -6379,10 +6379,27 @@ void CTFWeaponBase::FinishReload( void )
 		m_bInReload = false;
 		return;
 	}
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
 
-	BaseClass::FinishReload();
+	int iAttr = 0;
+	CALL_ATTRIB_HOOK_INT(iAttr, waste_clip);
 
-	CTFPlayer *pPlayer = GetTFPlayerOwner();
+	if (iAttr && pPlayer)
+	{
+		if (UsesClipsForAmmo1() && !m_bReloadsSingly)
+		{
+			int primary = MIN(GetMaxClip1() - m_iClip1, pPlayer->GetAmmoCount(m_iPrimaryAmmoType));
+			m_iClip1 += primary;
+
+			// Takes a whole clip worth of ammo to reload, causing us to lose whatever was chambered.
+			pPlayer->RemoveAmmo(GetMaxClip1(), m_iPrimaryAmmoType);
+		}
+	}
+	else
+	{
+		BaseClass::FinishReload();
+	}
+
 	if ( pPlayer )
 	{
 		int iAttr = 0;

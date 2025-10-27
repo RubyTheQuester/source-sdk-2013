@@ -15,6 +15,7 @@
 #ifdef CLIENT_DLL
 #define CTFGrenadeLauncher	C_TFGrenadeLauncher
 #define CTFCannon			C_TFCannon
+#define CTFGrenadeLauncher_Merc	C_TFGrenadeLauncher_Merc
 #endif
 
 #define TF_GRENADE_LAUNCHER_XBOX_CLIP 4
@@ -137,6 +138,19 @@ public:
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_CANNON; }
+};
+
+class CTFGrenadeLauncher_Merc : public CTFGrenadeLauncher
+{
+public:
+	DECLARE_CLASS( CTFGrenadeLauncher_Merc, CTFGrenadeLauncher );
+	DECLARE_NETWORKCLASS(); 
+	DECLARE_PREDICTABLE();
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableChinaLakeMerc[];
+
+	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_GRENADELAUNCHER_MERCENARY; }
 };
 
 #endif // TF_WEAPON_GRENADELAUNCHER_H

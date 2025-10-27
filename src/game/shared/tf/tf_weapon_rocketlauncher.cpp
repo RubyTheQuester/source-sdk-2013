@@ -117,13 +117,36 @@ END_NETWORK_TABLE()
 BEGIN_PREDICTION_DATA( CTFRocketLauncher_Mortar )
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher_mortar, CTFRocketLauncher_Mortar);
-PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher_mortar);
+LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher_mortar, CTFRocketLauncher_Mortar );
+PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher_mortar );
 
 
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC( CTFRocketLauncher_Mortar )
+END_DATADESC()
+#endif
+
+//=============================================================================
+//
+// Merc Rocket Launcher tables.
+//
+//=============================================================================
+IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_Merc, DT_WeaponRocketLauncher_Merc)
+
+BEGIN_NETWORK_TABLE( CTFRocketLauncher_Merc, DT_WeaponRocketLauncher_Merc)
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFRocketLauncher_Merc)
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher_mercenary, CTFRocketLauncher_Merc );
+PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher_mercenary );
+
+
+// Server specific.
+#ifndef CLIENT_DLL
+BEGIN_DATADESC( CTFRocketLauncher_Merc)
 END_DATADESC()
 #endif
 
@@ -186,6 +209,54 @@ BEGIN_DATADESC( CTFTranq )
 END_DATADESC()
 #endif
 
+
+acttable_t CTFRocketLauncher_Merc::m_acttableRocketLauncherMerc[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_ROCKETLAUNCHER, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_ROCKETLAUNCHER, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_ROCKETLAUNCHER, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_ROCKETLAUNCHER, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_ROCKETLAUNCHER, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_ROCKETLAUNCHER, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_ROCKETLAUNCHER, false },
+
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_ROCKETLAUNCHER, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_ROCKETLAUNCHER, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_ROCKETLAUNCHER, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_ROCKETLAUNCHER, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_ROCKETLAUNCHER, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_ROCKETLAUNCHER, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_ROCKETLAUNCHER, false },
+
+	{ ACT_MP_RELOAD_STAND, ACT_MERC_RELOAD_STAND_ROCKETLAUNCHER, false },
+	{ ACT_MP_RELOAD_CROUCH, ACT_MERC_RELOAD_CROUCH_ROCKETLAUNCHER, false },
+	{ ACT_MP_RELOAD_SWIM, ACT_MERC_RELOAD_SWIM_ROCKETLAUNCHER, false },
+	{ ACT_MP_RELOAD_AIRWALK, ACT_MERC_RELOAD_SWIM_ROCKETLAUNCHER, false },
+
+	{ ACT_MP_RELOAD_STAND_LOOP, ACT_MERC_RELOAD_STAND_ROCKETLAUNCHER_LOOP, false },
+	{ ACT_MP_RELOAD_CROUCH_LOOP, ACT_MERC_RELOAD_CROUCH_ROCKETLAUNCHER_LOOP, false },
+	{ ACT_MP_RELOAD_SWIM_LOOP, ACT_MERC_RELOAD_SWIM_ROCKETLAUNCHER_LOOP, false },
+	{ ACT_MP_RELOAD_AIRWALK_LOOP, ACT_MERC_RELOAD_SWIM_ROCKETLAUNCHER_LOOP, false },
+
+	{ ACT_MP_RELOAD_STAND_END, ACT_MERC_RELOAD_STAND_ROCKETLAUNCHER_END, false },
+	{ ACT_MP_RELOAD_CROUCH_END, ACT_MERC_RELOAD_CROUCH_ROCKETLAUNCHER_END, false },
+	{ ACT_MP_RELOAD_SWIM_END, ACT_MERC_RELOAD_SWIM_ROCKETLAUNCHER_END, false },
+	{ ACT_MP_RELOAD_AIRWALK_END, ACT_MERC_RELOAD_AIRWALK_ROCKETLAUNCHER_END, false },
+};
+
+acttable_t* CTFRocketLauncher_Merc::ActivityList(int& iActivityCount)
+{
+	if ( (GetTFPlayerOwner() != NULL) && GetTFPlayerOwner()->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY)
+	{
+		iActivityCount = ARRAYSIZE(m_acttableRocketLauncherMerc);
+		return m_acttableRocketLauncherMerc;
+	}
+	else
+	{
+		return BaseClass::ActivityList(iActivityCount);
+	}
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 

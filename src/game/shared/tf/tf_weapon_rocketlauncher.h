@@ -27,6 +27,7 @@
 #define CTFRocketLauncher_Mortar C_TFRocketLauncher_Mortar
 #define CTFCrossbow C_TFCrossbow
 #define CTFTranq C_TFTranq
+#define CTFRocketLauncher_Merc C_TFRocketLauncher_Merc
 #endif // CLIENT_DLL
 
 //=============================================================================
@@ -223,5 +224,24 @@ public:
 
 	CNetworkVar(float, m_flRegenerateDuration);
 	CNetworkVar(float, m_flLastUsedTimestamp);
+};
+
+// ------------------------------------------------------------------------------------------------------------------------
+class CTFRocketLauncher_Merc : public CTFRocketLauncher
+{
+public:
+	DECLARE_CLASS(CTFRocketLauncher_Merc, CTFRocketLauncher);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableRocketLauncherMerc[];
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_ROCKETLAUNCHER_MERCENARY; }
 };
 #endif // TF_WEAPON_ROCKETLAUNCHER_H

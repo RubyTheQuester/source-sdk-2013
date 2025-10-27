@@ -7131,6 +7131,7 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 			case TF_WEAPON_ROCKETLAUNCHER :
 			case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT :
 			case TF_WEAPON_PARTICLE_CANNON :
+			case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
 				if ( flRandomRangeVal > 0.5 )
 				{
 					flRandomDamage *= 0.5f;
@@ -7140,6 +7141,7 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 			case TF_WEAPON_GRENADELAUNCHER :
 			case TF_WEAPON_CANNON :
 			case TF_WEAPON_STICKBOMB:
+			case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 				if ( !( bitsDamage & DMG_NOCLOSEDISTANCEMOD ) )
 				{
 					flRandomDamage *= 0.2f;
@@ -13050,7 +13052,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 
 				if ( pBaseRocket->GetDeflected() )
 				{
-					if ( *iWeaponID == TF_WEAPON_ROCKETLAUNCHER || *iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT )
+					if ( *iWeaponID == TF_WEAPON_ROCKETLAUNCHER || *iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT  || *iWeaponID == TF_WEAPON_ROCKETLAUNCHER_MERCENARY )
 					{
 						killer_weapon_name = "deflect_rocket";
 					}
@@ -13178,7 +13180,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 			if ( pTFScorer )
 			{
 				CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFScorer->Weapon_GetWeaponByType( TF_WPN_TYPE_PRIMARY ) );
-				if ( pWeapon && ( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER ) && pWeapon->GetAttributeContainer() )
+				if ( pWeapon && ( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) && pWeapon->GetAttributeContainer() )
 				{
 					CEconItemView *pItem = pWeapon->GetAttributeContainer()->GetItem();
 					if ( pItem && pItem->GetStaticData() )
