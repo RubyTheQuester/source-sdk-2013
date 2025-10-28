@@ -14,9 +14,9 @@ WeaponData
 	"PunchAngle"			"12"
 	"BulletsPerShot"		"20"
 	"TimeFireDelay"			"0.4"
-	"TimeIdle"				"5.0"
+	"TimeIdle"				"0.8"
 	"TimeIdleEmpty"			"0.25"
-	"TimeReload"			"1.0"
+	"TimeReload"			"0.1"
 				
 	// Projectile Related
 	"ProjectileType"		"projectile_bullet"

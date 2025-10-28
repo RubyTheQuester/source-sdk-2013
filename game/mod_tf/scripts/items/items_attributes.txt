@@ -535,6 +535,28 @@
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
+		
+		"3548"
+		{
+			"name"	"waste clip"
+			"attribute_class"	"waste_clip"
+			"description_string"	"#Attrib_Wasteclip"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		
+		"3549"
+		{
+			"name"	"grenades always explode on contract"
+			"attribute_class"	"grenade_always_explode_on_hit"
+			"description_string"	"#Attrib_GrenadeContractHit"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

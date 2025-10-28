@@ -240,50 +240,64 @@
 }
 
 // ------------------------------------------------------------------------------------ //
-// QUAKE AXE
+// GRENADE LAUNCHER
 // ------------------------------------------------------------------------------------ //
 
-"Weapon_QuakeAxe.Miss"
+"Weapon_GrenadeLauncherDM.Single"
 {
 	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_64dB"
-	"volume"	".6"
-	"wave"		"weapons/cbar_miss1.wav"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chinalake/grenade_launcher_dm_shoot.wav"
 }
 
-"Weapon_QuakeAxe.MissCrit"
+"Weapon_GrenadeLauncherDM.SingleCrit"
 {
 	"channel"	"CHAN_WEAPON"
-	"soundlevel"	"SNDLVL_64dB"
-	"volume"	".6"
-	"wave"		"weapons/cbar_miss1_crit.wav"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/chinalake/grenade_launcher_dm_shoot_crit.wav"
 }
 
-"Weapon_QuakeAxe.HitFlesh"
+"Weapon_GrenadeLauncherDM.DrumLoad"
+{
+	"channel"		"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"		".4"
+	"wave"		")weapons/chinalake/grenade_launcher_dm_drum_load.wav"
+}
+
+"Weapon_GrenadeLauncherDM.Cock_Back"
 {
 	"channel"	"CHAN_ITEM"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"rndwave"
-	{
-		"wave"		"weapons/axe_hit_flesh1.wav"
-		"wave"		"weapons/axe_hit_flesh2.wav"
-		"wave"		"weapons/axe_hit_flesh3.wav"
-	}
-}
-
-"Weapon_QuakeAxe.HitWorld"
-{
-	"channel"	"CHAN_ITEM"
-	"soundlevel"	"SNDLVL_NORM"
-	"volume"	"1.0"
-	"wave"		"weapons/quake_axe_hitworld.wav"
-}
-
-"Weapon_QuakeAxe.Draw"
-{
-	"channel"	"CHAN_AUTO"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".5"
-	"wave"		"weapons/draw_melee.wav"
+	"wave"		")weapons/chinalake/grenade_launcher_dm_cock_back.wav"
+}
+
+"Weapon_GrenadeLauncherDM.Cock_Forward"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		")weapons/chinalake/grenade_launcher_dm_cock_forward.wav"
+}
+// ------------------------------------------------------------------------------------ //
+// QUAKE ROCKET LAUNCHER
+// ------------------------------------------------------------------------------------ //
+
+
+"Weapon_RPGMerc.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1"
+	"soundlevel"	"SNDLVL_94dB"
+	"wave"		")weapons/rocketlauncher/rocket_dm_shoot.wav"
+}
+
+"Weapon_RPGMerc.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"1"
+	"wave"		")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
 }
