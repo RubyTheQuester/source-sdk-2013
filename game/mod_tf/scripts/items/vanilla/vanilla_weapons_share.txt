@@ -10,7 +10,7 @@
 				"soldier"	"secondary"
 				"pyro"		"secondary"
 				"heavy"		"secondary"
-				"mercenary"	"primary"
+				"mercenary"	"secondary"
 			}
 		}
 		
@@ -22,7 +22,7 @@
 				"soldier"	"secondary"
 				"pyro"		"secondary"
 				"heavy"		"secondary"
-				"mercenary"	"primary"
+				"mercenary"	"secondary"
 			}
 		}
 		
@@ -42,6 +42,7 @@
 				"scout" "1"
 			}
 		}
+		
 		"weapon_melee_allclass"
 		{
 			"reskin" "1"

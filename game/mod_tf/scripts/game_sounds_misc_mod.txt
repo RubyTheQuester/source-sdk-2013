@@ -15,7 +15,7 @@
 "General.hop_boing" 
 {
 	"channel"	"CHAN_STATIC"
-	"volume"	"1"
+	"volume"	"0.25"
 	"pitch"		"100"
 	"soundlevel"  	"SNDLVL_85dB"
 	

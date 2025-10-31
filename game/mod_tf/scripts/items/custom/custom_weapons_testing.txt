@@ -231,7 +231,7 @@
 				"soldier"	"secondary"
 				"pyro"		"secondary"
 				"heavy"		"secondary"
-				"mercenary"	"primary"
+				"mercenary"	"secondary"
 			}
 			
 			"attributes"
