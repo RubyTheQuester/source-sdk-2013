@@ -60,6 +60,40 @@
 				"pyro" 		"1"
 			}
 		}
+		
+		"halloween2013_spellbook"
+		{
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+				"mercenary" "1"
+			}
+		}
+		
+		"powerup_bottle"
+		{
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+				"mercenary" "1"
+			}
+		}
 	}
 	
 	"items"
@@ -91,6 +125,23 @@
 			{
 				"engineer"	"1"
 				"scout" "1"
+			}
+		}
+		
+		"1152"
+		{
+			"used_by_classes"
+			{
+				"scout"		"1"
+				"sniper"	"1"
+				"soldier"	"1"
+				"demoman"	"1"
+				"medic"		"1"
+				"heavy"		"1"
+				"spy" 		"1"
+				"engineer" 	"1"
+				"pyro" 		"1"
+				"mercenary" "1"
 			}
 		}
 	}
