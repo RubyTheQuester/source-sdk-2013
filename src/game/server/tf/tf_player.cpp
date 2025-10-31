@@ -9009,7 +9009,8 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 	bool bIsSoldierRocketJumping = ( IsPlayerClass( TF_CLASS_SOLDIER ) && (pAttacker == this) && !(GetFlags() & FL_ONGROUND) && !(GetFlags() & FL_INWATER)) && (inputInfo.GetDamageType() & DMG_BLAST);
 	bool bIsDemomanPipeJumping = ( IsPlayerClass( TF_CLASS_DEMOMAN) && (pAttacker == this) && !(GetFlags() & FL_ONGROUND) && !(GetFlags() & FL_INWATER)) && (inputInfo.GetDamageType() & DMG_BLAST);
-	
+	bool bIsMercenaryExplosiveJumping = ( IsPlayerClass( TF_CLASS_MERCENARY ) && (pAttacker == this) && !(GetFlags() & FL_ONGROUND) && !(GetFlags() & FL_INWATER)) && (inputInfo.GetDamageType() & DMG_BLAST);
+
 	if ( bDebug )
 	{
 		Warning( "%s taking damage from %s, via %s. Damage: %.2f\n", GetDebugName(), info.GetInflictor() ? info.GetInflictor()->GetDebugName() : "Unknown Inflictor", pAttacker ? pAttacker->GetDebugName() : "Unknown Attacker", info.GetDamage() );
@@ -9249,12 +9250,12 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 		}
 	}
 
-	if ( bIsSoldierRocketJumping || bIsDemomanPipeJumping )
+	if ( bIsSoldierRocketJumping || bIsDemomanPipeJumping || bIsMercenaryExplosiveJumping )
 	{
 		int nJumpType = 0;
 
 		// If this is our own rocket, scale down the damage if we're rocket jumping
-		if ( bIsSoldierRocketJumping ) 
+		if ( bIsSoldierRocketJumping || bIsMercenaryExplosiveJumping )
 		{
 			float flDamage = info.GetDamage() * tf_damagescale_self_soldier.GetFloat();
 			info.SetDamage( flDamage );
@@ -10364,7 +10365,7 @@ void CTFPlayer::ApplyPushFromDamage( const CTakeDamageInfo &info, Vector vecDir 
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( info.GetWeapon(), flSelfPushMult, mult_dmgself_push_force );
 
 		
-		if ( IsPlayerClass( TF_CLASS_SOLDIER ) )
+		if ( IsPlayerClass( TF_CLASS_SOLDIER ) ||  IsPlayerClass( TF_CLASS_MERCENARY ) )
 		{
 			// Rocket Jump
 			if ( (info.GetDamageType() & DMG_BLAST) )
