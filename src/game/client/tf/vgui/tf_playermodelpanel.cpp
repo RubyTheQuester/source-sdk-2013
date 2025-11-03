@@ -1028,7 +1028,17 @@ void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 
 		if ( iAnimSlot == -1 )
 		{
-			iAnimSlot = pItemDef->GetLoadoutSlot( m_iCurrentClassIndex );
+			if ( 
+				( m_iCurrentClassIndex != TF_CLASS_MERCENARY ) || 
+				( (m_iCurrentClassIndex == TF_CLASS_MERCENARY) && Q_strcmp(pItemDef->GetItemClass(), "tf_weapon_shotgun") )
+				)
+			{
+				iAnimSlot = pItemDef->GetLoadoutSlot(m_iCurrentClassIndex);
+			}
+			else //TODO - THIS IS DOGSHIT, FUCKING FIX IT!!!!!!
+			{
+				iAnimSlot = TF_WPN_TYPE_ITEM1;
+			}
 		}
 
 		const CUtlVector<const char *>& vecWeaponTypeSubstrings = GetItemSchema()->GetWeaponTypeSubstrings();

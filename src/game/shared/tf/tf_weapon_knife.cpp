@@ -21,7 +21,7 @@
 #include "ilagcompensationmanager.h"
 #endif
 
-static ConVar tf_backstab_buff_length("tf_backstab_buff_length", "10.0", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_GAMEDLL, "The length of buffs granted by the backstab buff knife.");
+static ConVar tfmod_backstab_buff_length("tfomd_backstab_buff_length", "10.0", FCVAR_NOTIFY | FCVAR_GAMEDLL, "The length of buffs granted by the backstab buff knife.");
 
 //=============================================================================
 //
@@ -313,7 +313,7 @@ void CTFKnife::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 void CTFKnife::BackstabBuff(CTFPlayer* pVictim, CTFPlayer *pAttacker, int iVictimHealth, int iVictimRuneType)
 {
-	float fBackstabDuration = tf_backstab_buff_length.GetFloat();
+	float fBackstabDuration = tfmod_backstab_buff_length.GetFloat();
 
 	switch (m_hBackstabVictim->m_Shared.GetDesiredPlayerClassIndex())
 	{

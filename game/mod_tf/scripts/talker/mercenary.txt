@@ -115,11 +115,12 @@ Response PlayerCloakedSpyCivilianMercenary
 {
 	scene "scenes/Player/Mercenary/low/CloakedSpyIdentify11.vcd" 
 }
-Rule PlayerCloakedSpyCivilianMercenary
-{
-	criteria ConceptPlayerCloakedSpy IsMercenary IsOnCivilian
-	Response PlayerCloakedSpyCivilianMercenary
-}
+
+//Rule PlayerCloakedSpyCivilianMercenary
+//{
+//criteria ConceptPlayerCloakedSpy IsMercenary IsOnCivilian
+//Response PlayerCloakedSpyCivilianMercenary
+//}
 
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech
@@ -253,11 +254,12 @@ Response PlayerRespawnMercenary
 	scene "scenes/Player/Mercenary/low/Respawn19.vcd" 
 	scene "scenes/Player/Mercenary/low/Respawn20.vcd" 
 }
-Rule PlayerRespawnMercenary
-{
-	criteria ConceptPlayerRespawn 30PercentChance IsMercenary NotKilled
-	Response PlayerRespawnMercenary
-}
+
+//Rule PlayerRespawnMercenary
+//{
+//criteria ConceptPlayerRespawn 30PercentChance IsMercenary NotKilled
+//Response PlayerRespawnMercenary
+//}
 
 Response PlayerRespawnKilledMercenary
 {
@@ -282,11 +284,12 @@ Response PlayerRespawnKilledMercenary
 	scene "scenes/Player/Mercenary/low/Respawn19.vcd" 
 	scene "scenes/Player/Mercenary/low/Respawn20.vcd" 
 }
-Rule PlayerRespawnKilledMercenary
-{
-	criteria ConceptPlayerRespawn 30PercentChance IsMercenary GotKilled
-	Response PlayerRespawnKilledMercenary
-}
+
+//Rule PlayerRespawnKilledMercenary
+//{
+//criteria ConceptPlayerRespawn 30PercentChance IsMercenary GotKilled
+//Response PlayerRespawnKilledMercenary
+//}
 
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Combat
@@ -301,7 +304,7 @@ Response KilledPlayerManyMercenary
 }
 Rule KilledPlayerManyMercenary
 {
-	criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary IsWeaponNotMelee WeaponIsNotDMRevolver WeaponIsNotShotgunMercenary WeaponIsNotRocket WeaponIsNotGrenade WeaponIsNotOriginal WeaponIsNotDMGrenade WeaponIsNotDynamiteBundle WeaponIsNotPistolMercenary WeaponIsNotPistolAkimbo
+	criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsNotDMRevolver WeaponIsNotShotgunMercenary WeaponIsNotOriginal WeaponIsNotDMGrenade WeaponIsNotPistolMercenary
 	ApplyContext "MercenaryKillSpeech:1:10"
 	applycontexttoworld
 	Response KilledPlayerManyMercenary
@@ -338,13 +341,6 @@ Rule KilledPlayerManyMercenaryPistol
     applycontexttoworld
     Response KilledPlayerManyMercenaryPistol
 }
-Rule KilledPlayerManyMercenaryAkimboPistol
-{
-    criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsPistolAkimbo
-    ApplyContext "MercenaryKillSpeech:1:10"
-    applycontexttoworld
-    Response KilledPlayerManyMercenaryPistol
-}
 
 Response KilledPlayerManyMercenaryShotgun
 {
@@ -357,7 +353,7 @@ Response KilledPlayerManyMercenaryShotgun
 }
 Rule KilledPlayerManyMercenaryShotgun
 {
-    criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsShotgun
+    criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsShotgunMerc
     ApplyContext "MercenaryKillSpeech:1:10"
     applycontexttoworld
     Response KilledPlayerManyMercenaryShotgun
@@ -396,13 +392,6 @@ Rule KilledPlayerManyMercenaryGL
 Rule KilledPlayerManyMercenaryGLDM
 {
 	criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsChinaLake
-	ApplyContext "MercenaryKillSpeech:1:10"
-	applycontexttoworld
-	Response KilledPlayerManyMercenaryExplosive
-}
-Rule KilledPlayerManyMercenaryDynamite
-{
-	criteria ConceptKilledPlayer 30PercentChance KilledPlayerDelay MercenaryNotKillSpeech IsMercenary WeaponIsDynamiteBundle
 	ApplyContext "MercenaryKillSpeech:1:10"
 	applycontexttoworld
 	Response KilledPlayerManyMercenaryExplosive
@@ -926,11 +915,12 @@ Response PlayerBerserkMercenary
 	scene "scenes/Player/Mercenary/low/Berserk03.vcd" 
 	scene "scenes/Player/Mercenary/low/Berserk04.vcd" 
 }
-Rule PlayerBerserkMercenary
-{
-	criteria ConceptPlayerPositive IsMercenary IsBerserk
-	Response PlayerBerserkMercenary
-}
+
+//Rule PlayerBerserkMercenary
+//{
+//criteria ConceptPlayerPositive IsMercenary IsBerserk
+//Response PlayerBerserkMercenary
+//}
 
 Response PlayerPowerupSpentMercenary
 {
@@ -938,11 +928,12 @@ Response PlayerPowerupSpentMercenary
 	scene "scenes/Player/Mercenary/low/PowerupSpent02.vcd" 
 	scene "scenes/Player/Mercenary/low/PowerupSpent03.vcd" 
 }
-Rule PlayerPowerupSpentMercenary
-{
-	criteria ConceptPlayerNegative IsMercenary InPowerup
-	Response PlayerPowerupSpentMercenary
-}
+
+//Rule PlayerPowerupSpentMercenary
+//{
+//criteria ConceptPlayerNegative IsMercenary InPowerup
+//Response PlayerPowerupSpentMercenary
+//}
 
 Response PlayerTauntsMercenary
 {

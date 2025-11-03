@@ -146,6 +146,7 @@ rule DemomanTauntHandshake
 	{
 		scene "scenes/Player/Mercenary/low/taunt06_v1.vcd"
 	}
+	
 	///
 	/// RULES
 	///	
@@ -187,12 +188,7 @@ rule DemomanTauntHandshake
 		response MercenaryTauntBombScare
 	}
 	
-	//Knuckles Crack
-	rule MercenaryTauntEternalShotgun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsEternalShotgun
-		response MercenaryTauntKnockKnockKnuckles
-	}		
+	//Knuckles Crack	
 	rule MercenaryTauntSuperShotgun
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsSupershotgun
@@ -203,155 +199,38 @@ rule DemomanTauntHandshake
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsDMRocketLauncher
 		response MercenaryTauntKnockKnockKnuckles
 	}
-	rule MercenaryTauntBouncer
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsBouncer
-		response MercenaryTauntKnockKnockKnuckles
-	}
-	rule MercenaryTauntRailgun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsRailgun
-		response MercenaryTauntKnockKnockKnuckles
-	}	
-	rule MercenaryTauntGatlingGun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsGatlingGun
-		response MercenaryTauntKnockKnockKnuckles
-	}
-	rule MercenaryTauntLightningGun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsLightningGun
-		response MercenaryTauntKnockKnockKnuckles
-	}
+	
 	//So Close	
 	rule MercenaryTauntShotgunSecondary
 	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsShotgun
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsShotgunMerc
 		response MercenaryTauntSoClose
 	}
-	rule MercenaryTauntDynamitePack
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsDynamiteBundle
-		response MercenaryTauntSoClose
-	}
-	rule MercenaryTauntNailgun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsNailgun
-		response MercenaryTauntSoClose
-	}	
+	
 	rule MercenaryTauntChinaLake
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsChinaLake
 		response MercenaryTauntSoClose
 	}
-	rule MercenaryTauntTommyGun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsTommyGun
-		response MercenaryTauntSoClose
-	}
-	rule MercenaryTauntRailgun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsRailgun
-		response MercenaryTauntSoClose
-	}
-	rule MercenaryTauntAssault
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsAssaultRifle
-		response MercenaryTauntSoClose
-	}
-	rule MercenaryTauntNailgun
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsNailgun
-		response MercenaryTauntSoClose
-	}
-	rule MercenaryTauntDynamiteBundle
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsDynamiteBundle
-		response MercenaryTauntSoClose
-	}
+	
 	//Groovy
 	rule MercenaryTauntCrowbar
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsCrowbar
 		response MercenaryTauntGroovy
 	}
-	rule MercenaryTauntLeadpipe
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsLeadPipe
-		response MercenaryTauntGroovy
-	}
-	rule MercenaryTauntCombatKnife
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsCombatKnife
-		response MercenaryTauntGroovy
-	}
-	rule MercenaryTauntKnife
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsKnife
-		response MercenaryTauntGroovy
-	}
-	rule MercenaryTauntUmbrella
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsUmbrella
-		response MercenaryTauntGroovy
-	}
-	rule MercenaryTauntFlamethrower
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsFlamethrowerDM
-		response MercenaryTauntGroovy
-	}
 	
 	//Dead Meat
-	rule MercenaryTauntBerserk
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsBerserk
-		response MercenaryTauntDeadMeat
-	}
-	rule MercenaryTauntGIB
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsGIB
-		response MercenaryTauntDeadMeat
-	}
-	rule MercenaryTauntQuad
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsQuad
-		response MercenaryTauntDeadMeat
-	}
-	rule MercenaryTauntChainsaw
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsChainsaw
-		response MercenaryTauntDeadMeat
-	}
 	
 	//Bomb Scare
 	//NONE
 	
 	//Bond
-	rule MercenaryTauntPistol
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistol
-		response MercenaryTauntBond
-	}
-	rule MercenaryTauntScoutPistol
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolScout
-		response MercenaryTauntBond
-	}
 	rule MercenaryTauntPistolMercenary
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolMercenary
 		response MercenaryTauntBond
 	}
-	rule MercenaryTauntAkimboPistols
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsPistolAkimbo
-		response MercenaryTauntBond
-	}	
-	rule MercenaryTauntRevolver
-	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsRevolver
-		response MercenaryTauntBond
-	}	
 	rule MercenaryTauntDMRevolver
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsDMRevolver

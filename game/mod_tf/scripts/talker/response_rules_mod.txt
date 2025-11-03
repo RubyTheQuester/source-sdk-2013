@@ -29,7 +29,7 @@ criterion "WeaponIsPistolMercenary" "playerweapon" "tf_weapon_pistol_mercenary" 
 criterion "WeaponIsDMRevolver" "playerweapon" "tf_weapon_revolver_mercenary" "required"
 
 //Shotguns
-criterion "WeaponIsShotgun" "playerweapon" "tf_weapon_shotgun_mercenary" "required"
+criterion "WeaponIsShotgunMerc" "playerweapon" "tf_weapon_shotgun_mercenary" "required"
 criterion "WeaponIsSuperShotgun" "playerweapon" "tf_weapon_super_shotgun" "required"
 
 //Autos

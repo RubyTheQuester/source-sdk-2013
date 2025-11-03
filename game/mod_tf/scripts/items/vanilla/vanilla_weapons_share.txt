@@ -58,6 +58,7 @@
 				"medic"		"1"
 				"heavy"		"1"
 				"pyro" 		"1"
+				"mercenary" "1"
 			}
 		}
 		
