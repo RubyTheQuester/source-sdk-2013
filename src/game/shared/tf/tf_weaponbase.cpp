@@ -3506,6 +3506,7 @@ int CTFWeaponBase::GetWorldModelIndex( void )
 		if ( pszCustomTauntProp )
 		{
 			m_iWorldModelIndex = modelinfo->GetModelIndex( pszCustomTauntProp );
+			DevMsg("pszCustomTauntProp is real\n");
 		}
 		else
 		{
