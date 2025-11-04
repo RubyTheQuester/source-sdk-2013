@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$baseTexture" "backpack/weapons/c_models/c_handypartner/c_handypartner"
+	"$baseTexture" "backpack/weapons/c_models/c_handypartner/c_handypartner_large"
 	"$translucent" 1
-	$vertexcolor 1
+	"$vertexcolor" 1
 }
