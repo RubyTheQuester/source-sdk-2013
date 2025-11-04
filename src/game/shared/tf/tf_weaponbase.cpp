@@ -676,7 +676,7 @@ const char *CTFWeaponBase::GetViewModel( int iViewModel ) const
 
 			return pszHandModel;
 		}
-		else
+		else if ( pItem->GetStaticData()->ShouldAttachToHandsVModels() )
 		{
 			// Should always be valid, because players without classes shouldn't be carrying items
 			const char *pszModel = pItem->GetPlayerDisplayModel( pPlayer->GetPlayerClass()->GetClassIndex(), pPlayer->GetTeamNumber() );

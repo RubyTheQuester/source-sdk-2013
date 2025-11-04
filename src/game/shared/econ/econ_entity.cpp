@@ -1138,7 +1138,7 @@ void CEconEntity::UpdateAttachmentModels( void )
 	}
 
 	// Update the state of attachment models for this item
-	bool bItemNeedsAttachment = pItemDef;
+	bool bItemNeedsAttachment = pItemDef && ( pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly() || pItemDef->ShouldAttachToHandsVModels() );
 	if (bItemNeedsAttachment)
 	{
 		bool bShouldShowAttachment = false;
@@ -1170,7 +1170,13 @@ void CEconEntity::UpdateAttachmentModels( void )
 						iClass = pTFPlayer->GetPlayerClass()->GetClassIndex();
 					}
 #endif // defined( TF_DLL ) || defined( TF_CLIENT_DLL )
-					if (pEnt->InitializeAsClientEntity(pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly() ? pItem->GetPlayerDisplayModel(iClass, pOwner->GetTeamNumber()) : pTFPlayer->GetPlayerClass()->GetHandModelName(0), RENDER_GROUP_VIEW_MODEL_OPAQUE) == false)
+					if (
+						pEnt->InitializeAsClientEntity(
+
+							pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly()
+							? pItem->GetPlayerDisplayModel(iClass, pOwner->GetTeamNumber()) : pTFPlayer->GetPlayerClass()->GetHandModelName(0)
+
+							, RENDER_GROUP_VIEW_MODEL_OPAQUE) == false)
 						return;
 
 					m_hViewmodelAttachment = pEnt;
