@@ -660,120 +660,18 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 			int nGiveHealthOnHit = 0;
 			CALL_ATTRIB_HOOK_INT( nGiveHealthOnHit, add_give_health_to_teammate_on_hit );
 
-			//scaled by other attributes
-			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pTargetPlayer, nGiveHealthOnHit, mult_healing_from_medics);
-			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pTargetPlayer, nGiveHealthOnHit, mult_health_fromhealers);
-
-			CTFWeaponBase* pWeapon = pTargetPlayer->GetActiveTFWeapon();
-			if (pWeapon)
-			{
-				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, nGiveHealthOnHit, mult_health_fromhealers_penalty_active);
-
-				int iBlockHealing = 0;
-				CALL_ATTRIB_HOOK_INT_ON_OTHER(pWeapon, iBlockHealing, weapon_blocks_healing);
-				if (iBlockHealing)
-				{
-					nGiveHealthOnHit = 0;
-				}
-			}
-
 			if ( nGiveHealthOnHit != 0 )
 			{
-				
-				// Always keep at least 1 health for ourselves
-				nGiveHealthOnHit = Min( pPlayer->GetHealth() - 1, nGiveHealthOnHit);
-				int nHealthGiven = pTargetPlayer->TakeHealth( nGiveHealthOnHit, DMG_GENERIC );
-
-				if (nHealthGiven > 0)
-				{
-					IGameEvent* event = gameeventmanager->CreateEvent("player_healed");
-					if (event)
-					{
-						// HLTV event priority, not transmitted
-						event->SetInt("priority", 1);
-
-						// Healed by another player.
-						event->SetInt("patient", pTargetPlayer->GetUserID());
-						event->SetInt("healer", pPlayer->GetUserID());
-						event->SetInt("amount", nHealthGiven);
-						gameeventmanager->FireEvent(event);
-					}
-
-					event = gameeventmanager->CreateEvent("player_healonhit");
-					if (event)
-					{
-						event->SetInt("amount", nHealthGiven);
-						event->SetInt("entindex", pTargetPlayer->entindex());
-						item_definition_index_t healingItemDef = INVALID_ITEM_DEF_INDEX;
-						if (GetAttributeContainer() && GetAttributeContainer()->GetItem())
-						{
-							healingItemDef = GetAttributeContainer()->GetItem()->GetItemDefIndex();
-						}
-						event->SetInt("weapon_def_index", healingItemDef);
-						gameeventmanager->FireEvent(event);
-					}
-
-					CTF_GameStats.Event_PlayerHealedOther(pPlayer, nHealthGiven);
-				}
-
-				HealTeammate(pTargetPlayer, nHealthGiven, true);
+				HealTeammate( pTargetPlayer, nGiveHealthOnHit, true );
 			}
 
 			// Syringe_heal
 			int nGiveHealthOnHitMedic = 0;
-			CALL_ATTRIB_HOOK_INT(nGiveHealthOnHitMedic, syringe_heal);
+			CALL_ATTRIB_HOOK_INT( nGiveHealthOnHitMedic, syringe_heal );
 
-			//scaled by other attributes
-			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pTargetPlayer, nGiveHealthOnHitMedic, mult_healing_from_medics);
-			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pTargetPlayer, nGiveHealthOnHitMedic, mult_health_fromhealers);
-
-			if (pWeapon)
+			if ( nGiveHealthOnHitMedic != 0 )
 			{
-				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, nGiveHealthOnHitMedic, mult_health_fromhealers_penalty_active);
-
-				int iBlockHealing = 0;
-				CALL_ATTRIB_HOOK_INT_ON_OTHER(pWeapon, iBlockHealing, weapon_blocks_healing);
-				if (iBlockHealing)
-				{
-					nGiveHealthOnHitMedic = 0;
-				}
-			}
-
-			if (nGiveHealthOnHitMedic != 0)
-			{
-				int nHealthGiven = pTargetPlayer->TakeHealth(nGiveHealthOnHitMedic, DMG_GENERIC);
-
-				if (nHealthGiven > 0)
-				{
-					IGameEvent* event = gameeventmanager->CreateEvent("player_healed");
-					if (event)
-					{
-						// HLTV event priority, not transmitted
-						event->SetInt("priority", 1);
-
-						// Healed by another player.
-						event->SetInt("patient", pTargetPlayer->GetUserID());
-						event->SetInt("healer", pPlayer->GetUserID());
-						event->SetInt("amount", nHealthGiven);
-						gameeventmanager->FireEvent(event);
-					}
-
-					event = gameeventmanager->CreateEvent("player_healonhit");
-					if (event)
-					{
-						event->SetInt("amount", nHealthGiven);
-						event->SetInt("entindex", pTargetPlayer->entindex());
-						item_definition_index_t healingItemDef = INVALID_ITEM_DEF_INDEX;
-						if (GetAttributeContainer() && GetAttributeContainer()->GetItem())
-						{
-							healingItemDef = GetAttributeContainer()->GetItem()->GetItemDefIndex();
-						}
-						event->SetInt("weapon_def_index", healingItemDef);
-						gameeventmanager->FireEvent(event);
-					}
-
-					CTF_GameStats.Event_PlayerHealedOther(pPlayer, nHealthGiven);
-				}
+				HealTeammate( pTargetPlayer, nGiveHealthOnHitMedic, false );
 			}
 		}
 		else
@@ -1255,11 +1153,11 @@ char const *CTFWeaponBaseMelee::GetShootSound( int iIndex ) const
 	return BaseClass::GetShootSound(iIndex);
 }
 
-#ifndef CLIENT_DLL
+#ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: Healing bolt heal.
+// Purpose: THE ACTUAL HEALING FOR TEAMMATES
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseMelee::HealTeammate( CTFPlayer* pOther, float flHealth, bool bTakeAwayHealth )
+void CTFWeaponBaseMelee::HealTeammate(CTFPlayer* pOther, float flHealth, bool bTakeAwayHealth)
 {
 	if (!pOther)
 		return;
@@ -1269,72 +1167,48 @@ void CTFWeaponBaseMelee::HealTeammate( CTFPlayer* pOther, float flHealth, bool b
 	if (!pOwner)
 		return;
 
+	//scaled by other attributes
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pOther, flHealth, mult_healing_from_medics);
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pOther, flHealth, mult_health_fromhealers);
+
 	// Don't heal players using a weapon that blocks healing
 	CTFWeaponBase* pWeapon = pOther->GetActiveTFWeapon();
 	if (pWeapon)
 	{
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pWeapon, flHealth, mult_health_fromhealers_penalty_active);
+
 		int iBlockHealing = 0;
 		CALL_ATTRIB_HOOK_INT_ON_OTHER(pWeapon, iBlockHealing, weapon_blocks_healing);
 		if (iBlockHealing)
 			return;
 	}
 
-	// Scale this if needed
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pOther, flHealth, mult_healing_from_medics);
-
-	CTFWeaponBase* pActiveWeapon = pOther->GetActiveTFWeapon();
-	if (pActiveWeapon)
+	if (bTakeAwayHealth)
 	{
-		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pActiveWeapon, flHealth, mult_health_fromhealers_penalty_active);
-	}
+		int iActualHealed = 0;
+		int iHealthToAdd = flHealth;
 
-	int iActualHealed = pOther->TakeHealth(flHealth, DMG_GENERIC);
-	if (iActualHealed <= 0)
-		return;
+		iHealthToAdd = clamp( iHealthToAdd, 0, pOther->m_Shared.GetMaxBuffedHealth() - pOther->GetHealth() );
 
-	// Play an impact sound.
-	// ImpactSound("Weapon_Arrow.ImpactFleshCrossbowHeal");
+		// Always keep at least 1 health for ourselves
+		iHealthToAdd = Min( pOwner->GetHealth() - 1, iHealthToAdd);
+		iActualHealed = pOther->TakeHealth( iHealthToAdd, DMG_IGNORE_MAXHEALTH);
 
-	CTF_GameStats.Event_PlayerHealedOther(pOwner, flHealth);
-
-	IGameEvent* event = gameeventmanager->CreateEvent("player_healed");
-	if (event)
-	{
-		// HLTV event priority, not transmitted
-		event->SetInt("priority", 1);
-
-		// Healed by another player.
-		event->SetInt("patient", pOther->GetUserID());
-		event->SetInt("healer", pOwner->GetUserID());
-		event->SetInt("amount", flHealth);
-		gameeventmanager->FireEvent(event);
-	}
-
-	event = gameeventmanager->CreateEvent("player_healonhit");
-	if (event)
-	{
-		event->SetInt("amount", flHealth);
-		event->SetInt("entindex", pOther->entindex());
-		item_definition_index_t healingItemDef = INVALID_ITEM_DEF_INDEX;
-		if (pWeapon && pWeapon->GetAttributeContainer() && pWeapon->GetAttributeContainer()->GetItem())
+		if (iActualHealed > 0 )
 		{
-			healingItemDef = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
+				// Subtract health given from my own
+				CTakeDamageInfo info( pOwner, pOwner, this, iActualHealed, DMG_GENERIC | DMG_PREVENT_PHYSICS_FORCE );
+				pOwner->TakeDamage( info );
 		}
-		event->SetInt("weapon_def_index", healingItemDef);
-		gameeventmanager->FireEvent(event);
 	}
-
-	event = gameeventmanager->CreateEvent("crossbow_heal");
-	if (event)
+	else
 	{
-		event->SetInt("healer", pOwner->GetUserID());
-		event->SetInt("target", pOther->GetUserID());
-		event->SetInt("amount", flHealth);
-		gameeventmanager->FireEvent(event);
-	}
+		int iActualHealed = 0;
+		int iHealthToAdd = flHealth;
 
-	if ( bTakeAwayHealth != true )
-	{
+		iHealthToAdd = clamp(iHealthToAdd, 0, pOther->m_Shared.GetMaxBuffedHealth() - pOther->GetHealth());
+		iActualHealed = pOther->TakeHealth(iHealthToAdd, DMG_IGNORE_MAXHEALTH);
+
 		// Add ubercharge based on amount healed
 		CWeaponMedigun* pMedigun = static_cast<CWeaponMedigun*>(pOwner->Weapon_OwnsThisID(TF_WEAPON_MEDIGUN));
 		if (pMedigun)
@@ -1346,8 +1220,12 @@ void CTFWeaponBaseMelee::HealTeammate( CTFPlayer* pOther, float flHealth, bool b
 			// Ubercharge rate is based on the medigun's heal rate, then scaled based on last combat time (same rule as the medigun's heal rate)
 			pMedigun->AddCharge((iActualHealed / flGainRate) * gpGlobals->frametime);
 		}
-
-		pOther->m_Shared.AddCond(TF_COND_HEALTH_OVERHEALED, 1.2f);
 	}
+
+	pOwner->SpeakConceptIfAllowed( MP_CONCEPT_MEDIC_STOPPEDHEALING, pOwner->IsAlive() ? "healtarget:alive" : "healtarget:dead" );
+	pOther->SpeakConceptIfAllowed( MP_CONCEPT_HEALTARGET_STOPPEDHEALING );
+
+	pOther->m_Shared.AddCond(TF_COND_HEALTH_OVERHEALED, 1.2f);
+	//game event stuff here.
 }
 #endif
