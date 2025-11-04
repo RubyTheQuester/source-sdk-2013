@@ -306,9 +306,10 @@ void CTFStickBomb::Detonate(bool bTaunting)
 			int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD | DMG_MELEE;
 			if ( IsCurrentAttackACrit() )
 				dmgType |= DMG_CRITICAL;
-
+			
 			float flDamage = 75.0f;
 			CALL_ATTRIB_HOOK_FLOAT( flDamage, mult_dmg );
+
 
 			if (bTaunting)
 			{
@@ -319,7 +320,7 @@ void CTFStickBomb::Detonate(bool bTaunting)
 
 			float flRadius = 100.f;
 			CALL_ATTRIB_HOOK_FLOAT( flRadius, mult_explosion_radius );
-
+			
 			CTFRadiusDamageInfo radiusinfo( &info, explosion, flRadius );
 			TFGameRules()->RadiusDamage( radiusinfo );
 
