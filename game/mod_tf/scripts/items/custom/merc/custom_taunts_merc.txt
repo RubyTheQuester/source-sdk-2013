@@ -1,0 +1,197 @@
+"items_game"
+{	
+	"items"
+	{
+		"35000"
+		{
+			"name"	"Merc BombScare"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_BombScare"
+			"item_description"	"#TF_Merc_Taunt_BombScare_Dec"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"	"backpack/player/items/all_class/taunt_spent_well"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_bombscare.vcd"
+				}
+				
+				"custom_taunt_prop_per_class"
+				{
+					"mercenary"		"models/props_taunts/grenade_frag.mdl"
+				}
+			}
+		}
+		
+		"35001"
+		{
+			"name"	"Merc Bond"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_Bond"
+			"item_description"	"#TF_Merc_Taunt_Bond_Dec"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"		"backpack/workshop/player/items/engineer/taunt_texan_trickshot/taunt_texan_trickshot"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_bond.vcd"
+				}
+			}
+		}
+		
+		"35002"
+		{
+			"name"	"Merc Deadmeat"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_DeadMeat"
+			"item_description"	"#TF_Merc_Taunt_DeadMeat_Dec"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"	"backpack/player/items/all_class/taunt_i_see_you"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_deadmeat.vcd"
+				}
+			}
+		}
+		
+		"35003"
+		{
+			"name"	"Merc Groovy"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_Groovy"
+			"item_description"	"#TF_Merc_Taunt_Groovy_Dec"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"	"backpack/player/items/all_class/taunt_battin_thousand"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_groovy.vcd"
+				}
+			}
+		}
+		
+		"35004"
+		{
+			"name"	"Merc Knuckles"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_Knuckles"
+			"item_description"	"#TF_Merc_Taunt_Knuckles_Dec"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"	"backpack/player/items/all_class/taunt_skullcracker"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_knuckles.vcd"
+				}
+			}
+		}
+		
+		"35005"
+		{
+			"name"	"Merc So Close"
+			
+			"prefab"	"taunt"
+
+			"show_in_armory"	"1"
+			
+			"item_name"			"#TF_Merc_Taunt_SoClose"
+			"item_description"	"#TF_Merc_Taunt_SoClose_Desc"
+
+			"item_quality"	"normal"
+			
+			"image_inventory"	"backpack/player/items/all_class/all_laugh_taunt"
+			
+			"customitem" "1"
+			
+			"used_by_classes"
+			{
+				"mercenary"		"1"
+			}
+			
+			"taunt"
+			{
+				"custom_taunt_scene_per_class"
+				{
+					"mercenary"		"scenes/player/mercenary/low/taunt_soclose.vcd"
+				}
+			}
+		}
+		// END OF THE OVERALL ITEMS LINE
+	}
+}

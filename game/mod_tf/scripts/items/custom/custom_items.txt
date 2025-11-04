@@ -3,7 +3,12 @@
 #base custom_weapons_testing.txt
 #base custom_weapons_oddity.txt
 #base custom_weapons_reskin.txt
-#base custom_weapons_merc.txt
+
+#base merc/custom_prefabs_merc.txt
+#base merc/custom_weapons_merc.txt
+#base merc/custom_cosmetics_merc.txt
+#base merc/custom_taunts_merc.txt
+
 
 "items_game"
 {
