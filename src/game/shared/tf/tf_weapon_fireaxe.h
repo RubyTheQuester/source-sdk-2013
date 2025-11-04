@@ -15,6 +15,7 @@
 #ifdef CLIENT_DLL
 #define CTFFireAxe C_TFFireAxe
 #define CTFCrowbar C_TFCrowbar
+#define CTFMedkit C_TFMedkit
 #endif
 
 //=============================================================================
@@ -63,4 +64,27 @@ private:
 	CTFCrowbar(const CTFCrowbar&) {}
 };
 
+//=============================================================================
+//
+// Medkit class.
+//
+//=============================================================================
+class CTFMedkit : public CTFWeaponBaseMelee
+{
+public:
+
+	DECLARE_CLASS(CTFMedkit, CTFWeaponBaseMelee);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	CTFMedkit();
+	virtual void		PrimaryAttack(void);
+	virtual int			GetWeaponID(void) const { return TF_WEAPON_MEDKIT; }
+	void				SwingMiss( CTFPlayer* pPlayer );
+
+private:
+	EHANDLE				m_hVictim;
+
+	CTFMedkit(const CTFMedkit&) {}
+};
 #endif // TF_WEAPON_FIREAXE_H
