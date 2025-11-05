@@ -190,3 +190,83 @@
 	"volume"	"1.0"
 	"wave"		"weapons/sixshooter/six_shooter_shoot_crit.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// Deputy
+// ------------------------------------------------------------------------------------ //
+"Weapon_Deputy.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	//"wave"		"weapons/deputy/pistol_shoot.wav"
+	"wave"		"weapons/foxhound/revolver_shoot.wav"
+}
+
+"Weapon_Deputy.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	//"wave"		"weapons/deputy/pistol_shoot_crit.wav"
+	"wave"		"weapons/foxhound/revolver_shoot_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Shared Revolver
+// ------------------------------------------------------------------------------------ //
+"Weapon_SharedRevolver.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/shared_revolver/revolver_shoot.wav"
+}
+
+"Weapon_SharedRevolver.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/shared_revolver/revolver_shoot_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Gentle End
+// ------------------------------------------------------------------------------------ //
+"Weapon_GentleEnd.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/gentle_end/revolver_shoot.wav"
+}
+
+"Weapon_GentleEnd.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/gentle_end/revolver_shoot_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Foxhound
+// ------------------------------------------------------------------------------------ //
+"Weapon_Foxhound.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	//"wave"		"weapons/foxhound/revolver_shoot.wav"
+	"wave"		"weapons/deputy/pistol_shoot.wav"
+}
+
+"Weapon_Foxhound.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	//"wave"		"weapons/foxhound/revolver_shoot_crit.wav"
+	"wave"		"weapons/deputy/pistol_shoot_crit.wav"
+}

@@ -39,10 +39,10 @@
 			{
 				"sound_melee_hit"			"Crowbar.HitFlesh"
 				"sound_melee_hit_world"		"Crowbar.HitWorld"
-				"sound_melee_miss"			"Weapon_Machete.Miss"
-				"sound_burst"				"Weapon_Machete.MissCrit"
+				"melee_hit_world"			"Weapon_Crowbar_TFC.Melee_HitWorld"
+				"burst"						"Weapon_Crowbar_TFC.MissCrit"
 			}
-			
+
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 			
@@ -55,7 +55,6 @@
 				"medic"		"1"
 				"heavy"		"1"
 				"pyro" 		"1"
-				
 				"spy" 		"1"
 				"engineer" 	"1"
 			}
