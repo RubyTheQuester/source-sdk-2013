@@ -16,6 +16,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/chest/doomarmor"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_doomarmor/merc_doomarmor.mdl"
 			
 			"customitem" "1"
@@ -43,6 +45,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/hats/doomguy"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/doomguy/doomguy.mdl"
 			
 			"customitem" "1"
@@ -62,6 +66,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/chest/merc_overalls"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_engineer_overalls/merc_engineer_overalls.mdl"
 			
 			"customitem" "1"
@@ -92,6 +98,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/hats/western_hat"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/western_hat/western_hat.mdl"
 			
 			"customitem" "1"
@@ -112,6 +120,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/chest/bvest"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_bvest/merc_bvest.mdl"
 			
 			"customitem" "1"
@@ -139,6 +149,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/hats/bhelm"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_bhelm/merc_bhelm.mdl"
 			
 			"customitem" "1"
@@ -158,6 +170,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/pants/merc_socks"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_pants_socks/merc_pants_socks.mdl"
 			
 			"customitem" "1"
@@ -168,6 +182,7 @@
 				{
 					"leftleg"			"1"
 					"rightleg"			"1"
+					"pockets"			"1"
 				}
 			}
 		}
@@ -186,6 +201,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/chest/flak_jacket"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_flak_jacket/merc_flak_jacket.mdl"
 			
 			"customitem" "1"
@@ -213,6 +230,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack\gloves\merc_flglovesicon"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_flgloves/merc_flgloves.mdl"
 			
 			"customitem" "1"
@@ -242,6 +261,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack/hats/race"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					"models/player/items/mercenary/merc_race/merc_race.mdl"
 			
 			"customitem" "1"

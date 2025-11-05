@@ -207,10 +207,17 @@
 					"attribute_class"	"mod_air_control_blast_jump"
 					"value" "3.0"
 				}
+				
 				"cancel falling damage"
 				{
 					"attribute_class"	"cancel_falling_damage"
 					"value" "1"
+				}
+				
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-25"
 				}
 			}
 			
@@ -247,6 +254,16 @@
 				{
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"	"1"
+				}
+				"boots falling stomp"
+				{
+					"attribute_class"	"boots_falling_stomp"
+					"value"				"1"
+				}
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value"			"0.5"
 				}
 			}
 			

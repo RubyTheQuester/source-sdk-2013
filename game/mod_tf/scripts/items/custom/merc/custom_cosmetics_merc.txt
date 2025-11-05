@@ -16,6 +16,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack\chest\vestless"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					""
 			
 			"customitem" "1"
@@ -43,6 +45,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack\chest\pocketless"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					""
 			
 			"customitem" "1"
@@ -71,6 +75,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack\gloves\fingerless"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					""
 			
 			"customitem" "1"
@@ -102,6 +108,8 @@
 			"item_quality"	"normal"
 			
 			"image_inventory"				"backpack\gloves\bare"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
 			"model_player"					""
 			
 			"customitem" "1"
