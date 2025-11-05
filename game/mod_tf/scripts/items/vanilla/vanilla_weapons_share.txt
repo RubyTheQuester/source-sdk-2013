@@ -26,6 +26,28 @@
 			}
 		}
 		
+		"weapon_reserve_shooter"
+		{
+			"used_by_classes"
+			{
+				"soldier"	"1"
+				"pyro"		"1"
+				"mercenary"	"1"
+			}
+		}
+		
+		"weapon_trenchgun"
+		{
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"pyro" 		"secondary"
+				"soldier" 	"secondary"
+				"heavy" 	"secondary"
+				"mercenary"	"secondary"
+			}
+		}
+		
 		"weapon_gunboats"
 		{
 			"used_by_classes"
@@ -34,6 +56,7 @@
 				"demoman"	"primary"
 			}
 		}
+		
 		"weapon_winger_pistol"
 		{
 			"used_by_classes"
@@ -58,7 +81,6 @@
 				"medic"		"1"
 				"heavy"		"1"
 				"pyro" 		"1"
-				"mercenary" "1"
 			}
 		}
 		
