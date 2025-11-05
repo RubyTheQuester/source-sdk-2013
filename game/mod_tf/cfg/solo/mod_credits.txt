@@ -112,21 +112,13 @@ DESCRIPTION INFO_OPTIONS
 	
 	"credit2_11"
 	{
-		"Sniper Tracer Particles Material - Team Fortress 2 Classic Team"
-		"https://steamcommunity.com/sharedfiles/filedetails/?id=313583108"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_12"
-	{
 		"Enhanced Rockets - Various People"
 		"https://forums.alliedmods.net/showthread.php?t=294325"
 		{ BOOL }
 		{ "1" }
 	}
 	
-	"credit2_13"
+	"credit2_12"
 	{
 		"Double Trouble - HAUU on gamebanana"
 		"https://gamebanana.com/mods/560082"
@@ -134,7 +126,7 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit2_14"
+	"credit2_13"
 	{
 		"The Pacificateur for Mashers Engineering pack  - Uncle Doe on gamebanana"
 		"https://gamebanana.com/mods/621952"
@@ -142,10 +134,26 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit2_15"
+	"credit2_14"
 	{
 		"The Pacificateur  - Zero Tsu on gamebanana"
 		"https://gamebanana.com/mods/466065"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_15"
+	{
+		"Fallout New Vegas Revoler Sounds Pack - Ploopyandproud"
+		"https://gamebanana.com/sounds/20485"
+		{ BOOL }
+		{ "1" }
+	}
+	
+	"credit2_16"
+	{
+		"Open Fortress Team - Merc and all his models and sounds"
+		"https://openfortress.fun/"
 		{ BOOL }
 		{ "1" }
 	}

@@ -88,6 +88,16 @@
 			"item_name"	"#TF_Weapon_LeadPipe"
 			
 			"item_slot"	"melee"
+			"anim_slot"		"melee_allclass"
+			
+			//"model_player"			"models/weapons/v_models/v_lead_pipe.mdl"
+			//"model_world"			"models/weapons/w_models/w_leadpipe_merc.mdl"
+				
+			"model_player"			"models/weapons/w_models/w_leadpipe_merc.mdl"
+			"model_world"			"models/weapons/w_models/w_leadpipe_merc.mdl"
+			
+			"attach_to_hands"				"1"
+			"model_attach_to_hands"			"0"
 			
 			"used_by_classes"
 			{
@@ -116,6 +126,12 @@
 					"attribute_class"	"mult_dmg"
 					"value"	"1.63"
 				}
+				
+				"gib overkill"
+				{
+					"attribute_class"	"gib_on_overkill"
+					"value" "1"
+				}
 			}
 			
 			"customitem" "1"
@@ -133,8 +149,31 @@
 				"mercenary"	"1"
 			}
 			
+			"attributes"
+			{
+				"syringe heal"
+				{
+					"attribute_class"	"syringe_heal"
+					"value" "36"
+				}
+				
+				"infection"
+				{
+					"attribute_class"	"can_infect"
+					"value" "30"
+				}
+				
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+			
 			"customitem" "1"
 		}
+		
+		
 		// EQUIPMENT 
 		
 		"34850"
@@ -208,79 +247,6 @@
 				{
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"	"1"
-				}
-			}
-			
-			"customitem" "1"
-		}
-		
-		"34852"
-		{
-			"name"		"Backpack Ammo"
-			"prefab"	"weapon_merc_equipment"
-			
-			"item_name"	"#TF_Weapon_Backpack_Ammo"
-			
-			"item_slot"	"equipment"
-			
-			"image_inventory"	"backpack/workshop/player/items/sniper/xms_sniper_commandobackpack/xms_sniper_commandobackpack"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"	"models/workshop/player/items/sniper/xms_sniper_commandobackpack/xms_sniper_commandobackpack.mdl"
-			"extra_wearable" "models/workshop/player/items/sniper/xms_sniper_commandobackpack/xms_sniper_commandobackpack.mdl"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
-			
-			"attributes"
-			{
-				"ammo regen"
-				{
-					"attribute_class"	"addperc_ammo_regen"
-					"value"	"0.25"
-				}
-			}
-			
-			"customitem" "1"
-		}
-		
-		"34853"
-		{
-			"name"		"Backpack Health"
-			"prefab"	"weapon_medigun"
-			
-			"item_name"	"#TF_Weapon_Backpack_Health"
-			
-			"item_slot"	"equipment"
-			
-			"image_inventory"	"backpack/player/items/medic/hwn_medic_misc2"
-			"model_player"	"models/player/items/medic/hwn_medic_misc2.mdl"
-			"extra_wearable" "models/workshop/player/items/sniper/xms_sniper_commandobackpack/xms_sniper_commandobackpack.mdl"
-
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			
-			
-			"item_slot"		"equipment"
-			"anim_slot"		"FORCE_NOT_USED"
-			
-			"item_quality"	"normal"
-			
-			"act_as_wearable" "1"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
-			
-			"attributes"
-			{
-				"lunchbox adds minicrits"
-				{
-					"attribute_class"	"set_weapon_mode"
-					"value" "10"
 				}
 			}
 			

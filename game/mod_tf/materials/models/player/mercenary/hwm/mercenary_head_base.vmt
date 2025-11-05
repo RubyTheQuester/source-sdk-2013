@@ -22,11 +22,6 @@
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
-		
-	"$rage" "1"
-	"$rage_compare" ".5"
-	"$phongfresnelranges_rage"	"[0 1 10]"
-	"$phongfresnelranges_orig"	"[.3 1 8]"	
 	
 	"$yellow" "0"
 	
@@ -53,38 +48,6 @@
 		{
 			"srcVar1" "$yellow"
 			"resultVar" "$color2"
-		}
-		"LessOrEqual"
-		{
-			"lessEqualVar"	"$phongfresnelranges"
-			"greaterVar"	"$phongfresnelranges_orig"
-			"srcVar1"		"$rage"
-			"srcVar2"		"$rage_compare"
-			"resultVar"		"$phongfresnelranges"
-		}
-		"LessOrEqual"
-		{
-			"lessEqualVar"	"$envmaptint"
-			"greaterVar"	"$envmaptint_orig"
-			"srcVar1"		"$rage"
-			"srcVar2"		"$rage_compare"
-			"resultVar"		"$envmaptint"
-		}
-		"LessOrEqual"
-		{
-			"lessEqualVar"	"$phongfresnelranges"
-			"greaterVar"	"$phongfresnelranges_rage"
-			"srcVar1"		"$rage_compare"
-			"srcVar2"		"$rage"
-			"resultVar"		"$phongfresnelranges"
-		}
-		"LessOrEqual"
-		{
-			"lessEqualVar"	"$envmaptint"
-			"greaterVar"	"$envmaptint_rage"
-			"srcVar1"		"$rage_compare"
-			"srcVar2"		"$rage"
-			"resultVar"		"$envmaptint"
 		}
 	}
 }

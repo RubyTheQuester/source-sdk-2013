@@ -8,12 +8,6 @@
 			
 			"prefab"	"weapon_merc_wearable"
 			
-			"item_class"	"tf_wearable"
-
-			"show_in_armory"	"1"
-			
-			"item_type_name"	"#TF_Wearable_CosmeticItem"
-			
 			"item_name"			"#TF_Merc_Vest_None"
 			"item_description"	"#TF_Merc_Vest_None_Desc"
 			
@@ -21,17 +15,10 @@
 			"equip_region"	"grenades"
 			"item_quality"	"normal"
 			
-			"image_inventory"				"backpack/crafting/pile_of_junk"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"					"models/player/items/scout/scout_nohat.mdl"
+			"image_inventory"				"backpack\chest\vestless"
+			"model_player"					""
 			
 			"customitem" "1"
-			
-			"used_by_classes"
-			{
-				"mercenary"		"1"
-			}
 			
 			"visuals"
 			{
@@ -40,10 +27,6 @@
 					"vest"			"1"
 				}
 			}
-			
-			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
-			"drop_sound" 		"ui/item_hat_drop.wav"
-			
 		}
 		
 		"34901"
@@ -52,12 +35,6 @@
 			
 			"prefab"	"weapon_merc_wearable"
 			
-			"item_class"	"tf_wearable"
-
-			"show_in_armory"	"1"
-			
-			"item_type_name"	"#TF_Wearable_CosmeticItem"
-			
 			"item_name"			"#TF_Merc_Vest_Poucheless"
 			"item_description"	"#TF_Merc_Vest_Poucheless_Desc"
 			
@@ -65,17 +42,10 @@
 			"equip_region"	"grenades"
 			"item_quality"	"normal"
 			
-			"image_inventory"				"backpack/crafting/pile_of_junk"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
+			"image_inventory"				"backpack\chest\pocketless"
 			"model_player"					""
 			
 			"customitem" "1"
-			
-			"used_by_classes"
-			{
-				"mercenary"		"1"
-			}
 			
 			"visuals"
 			{
@@ -85,9 +55,6 @@
 				}
 			}
 			
-			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
-			"drop_sound" 		"ui/item_hat_drop.wav"
-			
 		}
 		
 		"34902"
@@ -96,12 +63,6 @@
 			
 			"prefab"	"weapon_merc_wearable"
 			
-			"item_class"	"tf_wearable"
-
-			"show_in_armory"	"1"
-			
-			"item_type_name"	"#TF_Wearable_CosmeticItem"
-			
 			"item_name"			"#TF_Merc_Gloves_Fingerless"
 			"item_description"	"#TF_Merc_Gloves_Fingerless_Desc"
 			
@@ -109,17 +70,10 @@
 			"equip_region"	"medic_gloves"
 			"item_quality"	"normal"
 			
-			"image_inventory"				"backpack/crafting/pile_of_junk"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
+			"image_inventory"				"backpack\gloves\fingerless"
 			"model_player"					""
 			
 			"customitem" "1"
-			
-			"used_by_classes"
-			{
-				"mercenary"		"1"
-			}
 			
 			"visuals"
 			{
@@ -130,9 +84,6 @@
 				}
 			}
 			
-			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
-			"drop_sound" 		"ui/item_hat_drop.wav"
-			
 		}
 		
 		"34903"
@@ -142,10 +93,6 @@
 			"prefab"	"weapon_merc_wearable"
 			
 			"item_class"	"tf_wearable"
-
-			"show_in_armory"	"1"
-			
-			"item_type_name"	"#TF_Wearable_CosmeticItem"
 			
 			"item_name"			"#TF_Merc_Gloves_None"
 			"item_description"	"#TF_Merc_Gloves_None_Desc"
@@ -154,17 +101,10 @@
 			"equip_region"	"medic_gloves"
 			"item_quality"	"normal"
 			
-			"image_inventory"				"backpack/crafting/pile_of_junk"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
+			"image_inventory"				"backpack\gloves\bare"
 			"model_player"					""
 			
 			"customitem" "1"
-			
-			"used_by_classes"
-			{
-				"mercenary"		"1"
-			}
 			
 			"visuals"
 			{
@@ -175,11 +115,7 @@
 				}
 			}
 			
-			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
-			"drop_sound" 		"ui/item_hat_drop.wav"
-			
 		}
-		
 		// END OF THE OVERALL ITEMS LINE
 	}
 }

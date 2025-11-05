@@ -286,7 +286,6 @@
 // QUAKE ROCKET LAUNCHER
 // ------------------------------------------------------------------------------------ //
 
-
 "Weapon_RPGMerc.Single"
 {
 	"channel"	"CHAN_WEAPON"
@@ -300,4 +299,48 @@
 	"channel"	"CHAN_WEAPON"
 	"volume"	"1"
 	"wave"		")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
+}
+
+/ ------------------------------------------------------------------------------------ //
+// Medkit
+// ------------------------------------------------------------------------------------ //
+
+"Weapon_Medkit.Draw"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".7"
+	"wave"		"weapons/draw_melee.wav"
+}
+
+"Weapon_Medkit.Miss"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"wave"		")items/medshotno1.wav"
+}
+
+"Weapon_Medkit.MissCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_64dB"
+	"volume"	".6"
+	"wave"		"items/medshotno1.wav"
+}
+
+"Weapon_Medkit.HitFlesh"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"items/medshot4.wav"
+}
+
+"Weapon_Medkit.HitWorld"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"common/null.wav"
 }
