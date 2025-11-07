@@ -21,7 +21,7 @@
 #include "ilagcompensationmanager.h"
 #endif
 
-static ConVar tfmod_backstab_buff_length("tfomd_backstab_buff_length", "10.0", FCVAR_NOTIFY | FCVAR_GAMEDLL, "The length of buffs granted by the backstab buff knife.");
+static ConVar tfmod_backstab_buff_length("tfmod_backstab_buff_length", "10.0", FCVAR_NOTIFY | FCVAR_GAMEDLL, "The length of buffs granted by the backstab buff knife.");
 
 //=============================================================================
 //
