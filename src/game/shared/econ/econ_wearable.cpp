@@ -489,13 +489,13 @@ public:
 		}
 		else if ( tfmod_force_color_paint.GetBool() ) {
 
-			//float r = floorf(tfmod_paint_tint_red.GetFloat()) / 255.0f;
-			//float g = floorf(tfmod_paint_tint_green.GetFloat()) / 255.0f;
-			//float b = floorf(tfmod_paint_tint_blue.GetFloat()) / 255.0f;
+			float r = floorf(tfmod_color_r.GetFloat()) / 255.0f;
+			float g = floorf(tfmod_color_g.GetFloat()) / 255.0f;
+			float b = floorf(tfmod_color_b.GetFloat()) / 255.0f;
 
-			//m_pResult->SetVecValue(r, g, b);
+			m_pResult->SetVecValue(r, g, b);
 
-			//return;
+			return;
 		}
 
 		Vector vResult = Vector( 0, 0, 0 );
