@@ -59,7 +59,7 @@
 		"34601"
 		{
 			"name"				"Healer Sapper"
-			"prefab"			"moditem_oddity_prefab weapon_sapper"
+			"prefab"			"moditem_testing_prefab weapon_sapper"
 			
 			"item_class"		"tf_weapon_sapper"
 
@@ -75,7 +75,7 @@
 				"sapper damage leaches health"
 				{
 					"attribute_class"	"sapper_damage_leaches_health"
-					"value" "1"
+					"value" "5"
 				}
 				"sapper health penalty"
 				{
@@ -298,6 +298,175 @@
 					"value"				"0.50"
 				}
 			}
+		}
+		
+		"34607"
+		{
+			"name"	"Health Drink"
+			"prefab"	"moditem_testing_prefab weapon_scout_drink"
+			"item_name"	"#TF_EnergyDrink_Healthy"
+			"item_description"	"#TF_EnergyDrink_Healthy_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_secondary"
+			"model_player"	"models/weapons/c_models/c_energy_drink/c_energy_drink.mdl"
+			
+			"customitem" "1"
+			
+			"static_attrs"
+			{
+				"item_meter_charge_rate"	"15"
+			}
+			
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
+				"charge recharge rate increased"
+				{
+					"attribute_class"	"charge_recharge_rate"
+					"value"	"1.25"
+				}
+			}
+		}
+		
+		"34608"
+		{
+			"name"				"Dynamite Sapper"
+			"prefab"			"moditem_testing_prefab weapon_sapper"
+			
+			"item_class"		"tf_weapon_sapper"
+
+			"item_name"			"#TF_Dynamite_Sapper"
+			"item_description"	"#TF_Dynamite_Sapper_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_pda"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"sapper_explodes_on_det"
+				{
+					"attribute_class"	"sapper_explodes_on_det"
+					"value" "1"
+				}
+			}
+		}
+		
+		"34609"
+		{
+			"name"				"Reflect Bat"
+			"prefab"			"moditem_testing_prefab weapon_bat"
+
+			"item_name"			"#TF_Reflect_Bat"
+			"item_description"	"#TF_Reflect_Bat_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_melee"
+			
+			"propername"		"1"
+			
+			"static_attrs"
+			{
+				"single wep deploy time decreased"		"0.8"
+			}
+			
+			"attributes"
+			{
+				"sword deflect"
+				{
+					"attribute_class"	"sword_deflect"
+					"value" "1"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.1"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.75"
+				}
+			}
+		}
+		
+		"34610"
+		{
+			"name"				"Syringe Shotgun"
+			"prefab"			"moditem_testing_prefab weapon_syringegun"
+
+			"item_name"			"#TF_Syringegun_Shotgun"
+			"item_description"	"#TF_Syringegun_Shotgun_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"bullets per shot bonus hack"
+				{
+					"attribute_class" 	"mult_bullets_per_shot_hack"
+					"value" "9"
+				}
+				
+				"hidden primary max ammo bonus"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"	"1.8"
+				}
+				
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "1.35"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"2"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.5"
+				}
+				
+				"projectile spread angle penalty"
+				{
+					"attribute_class"	"projectile_spread_angle"
+					"value"	"3"
+				}
+				
+				"reload time increased hidden"
+				{
+					"attribute_class"	"mult_reload_time_hidden"
+					"value" "1.5"
+				}
+			}
+		}
+		
+		"34611"
+		{
+			"name"				"Syringe Hitscan"
+			"prefab"			"moditem_testing_prefab weapon_syringegun"
+			
+			"item_class"		"tf_weapon_smg_medic"
+			
+			"item_name"			"#TF_Syringegun_Hitscan"
+			"item_description"	"#TF_Syringegun_Hitscan_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"propername"		"1"
 		}
 		
 		//END OF THE LINE

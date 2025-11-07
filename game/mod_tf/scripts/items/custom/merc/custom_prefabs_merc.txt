@@ -102,6 +102,7 @@
 			
 			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
 			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"particle_suffix"		"pistol"
 		}
 		
 		"weapon_super_shotgun"

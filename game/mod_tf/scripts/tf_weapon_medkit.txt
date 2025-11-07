@@ -9,10 +9,10 @@ WeaponData
 	"ITEM_FLAG_NOITEMPICKUP" 	"1"
 
 	// Attributes TF
-	"Damage"			"9"
+	"Damage"			"10"
 	"TimeFireDelay"			"0.5"
 	"SmackDelay"		"0.0"
-	"TimeIdle"			"5.0"
+	"TimeIdle"			"0.0"
 				
 	// Ammo & Clip
 	"primary_ammo"			"None"

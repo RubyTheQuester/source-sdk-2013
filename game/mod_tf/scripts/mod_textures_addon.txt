@@ -843,5 +843,14 @@
 				"width"		"96"
 				"height"	"32"
 		}
+		"telefrag"
+		{
+				"dfile"	"HUD/d_images_of"
+				"dnegfile" "HUD/dneg_images_of"
+				"x"		"201"
+				"y"		"209"
+				"width"		"51"
+				"height"	"47"
+		}
 	}
 }

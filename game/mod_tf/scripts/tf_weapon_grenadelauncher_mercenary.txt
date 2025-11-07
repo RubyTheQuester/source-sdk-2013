@@ -4,7 +4,7 @@ WeaponData
 	"printname"		"#TF_Weapon_GrenadeLauncher_Mercenary"
 	"BuiltRightHanded"	"0"
 	"weight"		"19"
-	"WeaponType"		"secondary"
+	"WeaponType"		"primary"
 	"ITEM_FLAG_NOITEMPICKUP" 	"1"	
 
 	// Attributes TF

@@ -557,6 +557,29 @@
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
+		
+		"3550"
+		{
+			"name"	"sapper_explodes_on_det"
+			"attribute_class"	"sapper_explodes_on_det"
+			"description_string"	"#Attrib_Sapper_Dynamite"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3551"
+		{
+			"name"	"bullets per shot bonus hack"
+			"attribute_class"	"mult_bullets_per_shot_hack"
+			"description_string"	"#Attrib_BulletsPerShot_Bonus"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}
