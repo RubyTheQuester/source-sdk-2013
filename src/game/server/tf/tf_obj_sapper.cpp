@@ -111,6 +111,9 @@ void CObjectSapper::Spawn()
 
 	SetSolid( SOLID_NONE );
 
+#ifndef STAGING_ONLY	
+	m_bIsRinging = false;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -305,6 +308,25 @@ void CObjectSapper::OnGoActive( void )
 			m_flSelfDestructTime = gpGlobals->curtime + flTime;
 		}
 
+#ifndef STAGING_ONLY	
+		/*
+		if ( pBuilder )
+		{
+			float flExplodeOnTimer = 0;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flExplodeOnTimer, sapper_explodes_on_timer )
+			{
+				if ( flExplodeOnTimer != 0 )
+				{
+					// timer is based on health of the object
+					// Sappers normally do 25dps
+					float flTimer = pEntity->GetMaxHealth() * 0.04f;
+					m_flSelfDestructTime = gpGlobals->curtime + flExplodeOnTimer;
+				}
+			}
+		}
+		*/
+#endif
+
 	}
 
 	UTIL_SetSize( this, SAPPER_MINS, SAPPER_MAXS );
@@ -355,6 +377,35 @@ void CObjectSapper::DetachObjectFromObject( void )
 	{
 		pParent->OnRemoveSapper();
 
+#ifndef STAGING_ONLY
+		CTFPlayer *pBuilder = GetBuilder();
+		if ( pBuilder && pParent->GetHealth() < 0 )
+		{
+			// Attr on Det
+			float flExplodeOnTimer = 0;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flExplodeOnTimer, sapper_explodes_on_det );
+
+			if ( flExplodeOnTimer )
+			{
+				float flDamage = pParent->GetMaxHealth() * 1.5;
+				Vector vecOrigin = GetAbsOrigin();
+
+				// Use the building as the det position			
+				CTakeDamageInfo detInfo;
+				detInfo.SetDamage( flDamage );
+				detInfo.SetAttacker( this );
+				detInfo.SetInflictor( this );
+				detInfo.SetDamageType( DMG_BLAST );
+
+				// Generate Large Radius Damage
+				float flRadius = 200.0f;
+				CTFRadiusDamageInfo radiusinfo( &detInfo, vecOrigin, flRadius, NULL, flRadius );
+				TFGameRules()->RadiusDamage( radiusinfo );
+
+				DispatchParticleEffect( "explosionTrail_seeds_mvm", vecOrigin, GetAbsAngles() );
+			}
+		}
+#endif
 	}
 
 	BaseClass::DetachObjectFromObject();
@@ -419,6 +470,16 @@ const char* CObjectSapper::GetSapperSoundName( void )
 			}
 		}
 
+#ifndef STAGING_ONLY
+		// // Attr on Det
+		float flExplodeOnTimer = 0;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(GetBuilder(), flExplodeOnTimer, sapper_explodes_on_det);
+		if (flExplodeOnTimer)
+		{
+			EmitSound("Weapon_Sapper.Timer");
+			return "WeaponDynamiteSapper.TickTock";
+		}
+#endif
 
 		if ( !pchModelName )
 		{
@@ -545,6 +606,50 @@ void CObjectSapper::SapperThink( void )
 				}
 			}
 
+#ifndef STAGING_ONLY
+			if ( !m_bIsRinging && pObject->GetHealth() < 60.0f )
+			{
+				int iDetonate = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( pBuilder, iDetonate, sapper_explodes_on_det );
+				if ( iDetonate )
+				{
+					EmitSound( "WeaponDynamiteSapper.BellRing" );
+					m_bIsRinging = true;
+				}
+			}
+			
+			/*
+			float flExplodeOnTimer = 0;
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flExplodeOnTimer, sapper_explodes_on_timer );
+
+			if ( flExplodeOnTimer != 0 && m_flSelfDestructTime < gpGlobals->curtime )
+			//if ( flExplodeOnTimer )
+			{
+				float flDamage = pObject->GetMaxHealth() * 1.5;
+				Explode();
+				DestroyObject();
+
+				Vector vecOrigin = GetAbsOrigin();
+
+				// Use the building as the det position			
+				CTakeDamageInfo detInfo;
+				detInfo.SetDamage( flDamage );
+				detInfo.SetAttacker( this );
+				detInfo.SetInflictor( this );
+				detInfo.SetDamageType( DMG_BLAST );
+
+				// Destroy the building by doubly applying damage
+				pObject->TakeDamage( detInfo );
+
+				// Generate Large Radius Damage
+				float flRadius = 200.0f;	// same as pipebomb launcher
+				CTFRadiusDamageInfo radiusinfo( &detInfo, vecOrigin, flRadius, NULL, flRadius );
+				TFGameRules()->RadiusDamage( radiusinfo );
+
+				DispatchParticleEffect( "explosionTrail_seeds_mvm", vecOrigin, GetAbsAngles() );
+			}
+			*/
+#endif			
 		}
 	}
 

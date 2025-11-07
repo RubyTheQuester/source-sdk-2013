@@ -6305,6 +6305,7 @@ int CTFRadiusDamageInfo::ApplyToEntity( CBaseEntity *pEntity )
 			case TF_WEAPON_GRENADELAUNCHER :
 			case TF_WEAPON_CANNON :
 			case TF_WEAPON_STICKBOMB :
+			case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 				flAdjustedDamage *= 0.75f;
 				break;
 		}
@@ -12874,6 +12875,10 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 	{
 		killer_weapon_name = "tf_weapon_bleed_kill";
 	}
+	else if (info.GetDamageCustom() == TF_DMG_CUSTOM_POISON)
+	{
+		killer_weapon_name = "poison";
+		}
 	else if ( info.GetDamageCustom() == TF_DMG_CUSTOM_PLAYER_SENTRY )
 	{
 		int nGigerCounter = 0; 
@@ -13180,7 +13185,9 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 			if ( pTFScorer )
 			{
 				CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFScorer->Weapon_GetWeaponByType( TF_WPN_TYPE_PRIMARY ) );
-				if ( pWeapon && ( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) && pWeapon->GetAttributeContainer() )
+				if ( pWeapon && 
+					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) 
+					&& pWeapon->GetAttributeContainer() )
 				{
 					CEconItemView *pItem = pWeapon->GetAttributeContainer()->GetItem();
 					if ( pItem && pItem->GetStaticData() )
@@ -22359,7 +22366,7 @@ bool CTFGameRules::CanUpgradeWithAttrib( CTFPlayer *pPlayer, int iWeaponSlot, at
 			{
 				return bMinigun;
 			}
-			else if ( iWeaponID == TF_WEAPON_GRENADELAUNCHER && pWeapon && pWeapon->AutoFiresFullClipAllAtOnce() )
+			else if ( ( iWeaponID == TF_WEAPON_GRENADELAUNCHER && iWeaponID == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) && pWeapon && pWeapon->AutoFiresFullClipAllAtOnce() )
 			{
 				return false;
 			}

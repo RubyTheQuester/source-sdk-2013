@@ -773,7 +773,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
 				return imperfectAimSpot;
 			}
 
-			if ( myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) ||
+			if ( myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) || myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER_MERCENARY ) ||
 				 myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) )
 			{
 				Vector toThreat = subject->GetAbsOrigin() - me->GetAbsOrigin();
@@ -1320,6 +1320,8 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 			if ( !myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER ) &&
 				!myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER ) &&
 				!myWeapon->IsWeapon( TF_WEAPON_PIPEBOMBLAUNCHER ) &&
+				!myWeapon->IsWeapon( TF_WEAPON_GRENADELAUNCHER_MERCENARY ) &&
+				!myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER_MERCENARY ) &&
 				!myWeapon->IsWeapon( TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
 			{
 				// firing would just waste ammo, so don't

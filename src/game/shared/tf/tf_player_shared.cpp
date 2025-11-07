@@ -132,6 +132,7 @@ ConVar tf_mvm_bot_flag_carrier_movement_penalty( "tf_mvm_bot_flag_carrier_moveme
 //ConVar tf_scout_dodge_move_penalty( "tf_scout_dodge_move_penalty", "0.5", FCVAR_DEVELOPMENTONLY | FCVAR_REPLICATED );
 
 ConVar tfmod_infection_spread_debug		( "tfmod_infection_spread_debug", "0", FCVAR_CHEAT | FCVAR_REPLICATED );
+ConVar tfmod_infection_spread_type		( "tfmod_infection_spread_type", "1", FCVAR_NOTIFY | FCVAR_REPLICATED,			"How the math for infection damage is down");
 ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "64", FCVAR_NOTIFY | FCVAR_REPLICATED,		"The range of infection spread pulse");
 ConVar tfmod_infection_spread_pulse_time( "tfmod_infection_spread_pulse_time", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How often the infection spread pulse happens" );
 ConVar tfmod_infection_spread_decrease	( "tfmod_infection_spread_decrease", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How much does the infection time decrease from carrier to viticm" );
@@ -3020,19 +3021,41 @@ void CTFPlayerShared::ConditionGameRulesThink( void )
 	{
 		if ( gpGlobals->curtime >= m_flPoisonTime )
 		{
-			float m_flDamageMath = ( 8 - ( m_flPoisonDamageTaken / 5 ) );
+			float m_flPoisonMath = 0;
+			float m_flDamageMath = 10;
 
-			//if (m_flDamageMath > 2)
-			//{
-				CTakeDamageInfo info( 
-					m_hPoisonAttacker, m_hPoisonAttacker, clamp(m_flDamageMath, 2, 8), 
-					DMG_SLASH | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_POISON 
-				);
-				m_pOuter->TakeDamage(info);
-			//}
+			if ( tfmod_infection_spread_type.GetInt() == 1)
+			{
+				m_flPoisonMath = (0.1 - ( m_flPoisonDamageTaken ) );
+				m_flDamageMath = ( m_pOuter->GetMaxHealth() * ( clamp(m_flPoisonMath, 0.01, 0.5) ) );
+
+				/* 
+				DevMsg("==========\nPlayer: %s\nMax Health = %i - Current Health = %i\nm_flPoisonMath = %f - Damage Done = %f\n==========\n", 
+					m_pOuter->GetPlayerName(), 
+					m_pOuter->GetMaxHealth(), m_pOuter->GetHealth(),
+					clamp( m_flPoisonMath, 0.0, 0.1 ), clamp( round( m_flDamageMath ), 2, 50 ) );
+				*/
+
+			}
+			else if (tfmod_infection_spread_type.GetInt() == 2) {
+				m_flDamageMath = (m_pOuter->GetMaxHealth() * 0.1);
+
+				/*
+				DevMsg("==========\nPlayer: %s\nMax Health = %i - Current Health = %i\n==========\n",
+					m_pOuter->GetPlayerName(),
+					m_pOuter->GetMaxHealth(), m_pOuter->GetHealth());
+				*/
+			}
+
+
+			CTakeDamageInfo info( 
+				m_hPoisonAttacker, m_hPoisonAttacker, clamp(m_flDamageMath, 2, 50), 
+				DMG_SLASH | DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_POISON 
+			);
+			m_pOuter->TakeDamage(info);
 
 			m_flPoisonTime = gpGlobals->curtime + 2.0f;
-			m_flPoisonDamageTaken += 1;
+			m_flPoisonDamageTaken += 0.01;
 		}
 	}
 
@@ -10859,6 +10882,8 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 	if ( !GameRules() )
 		return 0.0f;
 
+	//See about using this for spywalk
+
 	int playerclass = GetPlayerClass()->GetClassIndex();
 
 	// Spectators can move while in Classic Observer mode
@@ -13067,20 +13092,24 @@ bool CTFPlayer::CanDisguise_OnKill( void )
 int	CTFPlayer::GetMaxAmmo( int iAmmoIndex, int iClassIndex /*= -1*/ )
 {
 	int iMax = ( iClassIndex == -1 ) ? m_PlayerClass.GetData()->m_aAmmoMax[iAmmoIndex] : GetPlayerClassData( iClassIndex )->m_aAmmoMax[iAmmoIndex];
+	float flMaxPrimary = 1.0f;
+	float flMaxSecondary = 1.0f;
 	int iMaxOverrideSecondary = 0;
 	int iMaxOverridePrimary = 0;
 
 	if ( iAmmoIndex == TF_AMMO_PRIMARY )
 	{
 		CALL_ATTRIB_HOOK_INT( iMax, mult_maxammo_primary );
+		CALL_ATTRIB_HOOK_FLOAT( flMaxPrimary, mult_maxammo_primary );
 
 		CALL_ATTRIB_HOOK_INT( iMaxOverridePrimary, override_maxammo_primary );
 	}
 	else if ( iAmmoIndex == TF_AMMO_SECONDARY )
 	{
 		CALL_ATTRIB_HOOK_INT( iMax, mult_maxammo_secondary );
+		CALL_ATTRIB_HOOK_FLOAT( flMaxSecondary, mult_maxammo_secondary);
 
-		CALL_ATTRIB_HOOK_INT(iMaxOverrideSecondary, override_maxammo_secondary );
+		CALL_ATTRIB_HOOK_INT( iMaxOverrideSecondary, override_maxammo_secondary );
 	}
 	else if ( iAmmoIndex == TF_AMMO_METAL )
 	{
@@ -13098,12 +13127,12 @@ int	CTFPlayer::GetMaxAmmo( int iAmmoIndex, int iClassIndex /*= -1*/ )
 
 	if ( iMaxOverrideSecondary != 0 )
 	{
-		iMax = iMaxOverrideSecondary;
+		iMax = iMaxOverrideSecondary * flMaxSecondary;
 	}
 
 	if ( iMaxOverridePrimary != 0 )
 	{
-		iMax = iMaxOverridePrimary;
+		iMax = iMaxOverridePrimary * flMaxPrimary;
 	}
 
 	// Haste Powerup Rune adds multiplier to Max Ammo

@@ -151,18 +151,13 @@ void CTFBat::Smack( void )
 	BaseClass::Smack();
 
 #ifdef GAME_DLL
-	if ( BatDeflects() )
-	{
-#ifdef TF_RAID_MODE
-		if ( TFGameRules()->IsRaidMode() )
-		{
-		}
-		else
-#endif // TF_RAID_MODE
+		int iCanDeflect = 0;
+		CALL_ATTRIB_HOOK_INT(iCanDeflect, sword_deflect);
+
+		if (iCanDeflect == 1)
 		{
 			DeflectProjectiles();
 		}
-	}
 #endif
 }
 

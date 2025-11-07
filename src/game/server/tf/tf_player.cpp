@@ -19161,7 +19161,24 @@ void CTFPlayer::DoTauntAttack( void )
 				float flDropDeadTime = ( 100.f / tf_scout_energydrink_consume_rate.GetFloat() ) + 1.f;	// Just in case.  Normally over in 8 seconds.
 
 				CTFLunchBox *pLunchbox = static_cast< CTFLunchBox* >( pActiveWeapon );
-				if ( pLunchbox && pLunchbox->GetLunchboxType() == LUNCHBOX_ADDS_MINICRITS )
+				if ( pLunchbox && pLunchbox->GetLunchboxType() == LUNCHBOX_CHOCOLATE_BAR )
+				{
+					// Then heal the player
+					int iHeal = 75;
+
+					int iHealType = DMG_GENERIC;
+					float flHealScale = 1.0f;
+					CALL_ATTRIB_HOOK_FLOAT(flHealScale, lunchbox_healing_scale);
+					iHeal = iHeal * flHealScale;
+
+					int iHealed = TakeHealth(iHeal, iHealType);
+
+					if (iHealed > 0)
+					{
+						CTF_GameStats.Event_PlayerHealedOther(this, iHealed);
+					}
+				}
+				else if ( pLunchbox && pLunchbox->GetLunchboxType() == LUNCHBOX_ADDS_MINICRITS )
 				{
 					m_Shared.AddCond( TF_COND_ENERGY_BUFF, flDropDeadTime );
 				}
