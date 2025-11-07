@@ -125,7 +125,7 @@ ConVar cl_gunlowerspeed( "cl_gunlowerspeed", "2", FCVAR_CLIENTDLL | FCVAR_CHEAT 
 ConVar tf_use_min_viewmodels( "tf_use_min_viewmodels", "0", FCVAR_ARCHIVE, "Use minimized viewmodels." );
 
 ConVar tf_viewmodels_offset_override( "tf_viewmodels_offset_override", "", FCVAR_CHEAT, "If set, this will override the position of all viewmodels. Usage 'x y z'" );
-ConVar tf_viewmodel_cloak_tint("tf_viewmodel_cloak_tint", "0", FCVAR_ARCHIVE, "Allow viewmodels to be tinted while cloaked.");
+ConVar tfmod_viewmodel_cloak_tint("tfmod_viewmodel_cloak_tint", "0", FCVAR_ARCHIVE, "Allow viewmodels to be tinted while cloaked.");
 #endif
 
 void CTFViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, const QAngle& eyeAngles )
@@ -590,7 +590,7 @@ void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 			pPlayer = ToTFPlayer( pVM->GetOwner() );
 
 			// Viewmodels do not tint unless otherwise specified
-			bool bViewmodelTint = tf_viewmodel_cloak_tint.GetBool();
+			bool bViewmodelTint = tfmod_viewmodel_cloak_tint.GetBool();
 
 			if (!bViewmodelTint)
 			{
