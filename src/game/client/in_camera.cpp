@@ -922,8 +922,8 @@ void SetFirstPersonCommand()
 
 // TF allows servers to push people into first/thirdperson, for mods
 #ifdef TF_CLIENT_DLL
-static ConCommand thirdperson( "thirdperson", ::CAM_ToThirdPerson, "Switch to thirdperson camera.", FCVAR_CHEAT | FCVAR_SERVER_CAN_EXECUTE );
-static ConCommand firstperson( "firstperson", ::CAM_ToFirstPerson, "Switch to firstperson camera.", FCVAR_SERVER_CAN_EXECUTE );
+static ConCommand thirdperson("thirdperson", ::SetThirdPersonCommand, "Switch to thirdperson camera.", FCVAR_SERVER_CAN_EXECUTE);
+static ConCommand firstperson("firstperson", ::SetFirstPersonCommand, "Switch to firstperson camera.", FCVAR_SERVER_CAN_EXECUTE);
 #else
 static ConCommand thirdperson( "thirdperson", ::CAM_ToThirdPerson, "Switch to thirdperson camera.", FCVAR_CHEAT );
 static ConCommand firstperson( "firstperson", ::CAM_ToFirstPerson, "Switch to firstperson camera." );
