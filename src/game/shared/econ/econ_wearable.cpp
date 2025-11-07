@@ -466,6 +466,12 @@ RenderGroup_t CEconWearable::GetRenderGroup()
 
 ConVar tfmod_econ_allow_paint_tint("tfmod_econ_allow_paint_tint", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
 
+ConVar tfmod_force_color_paint("tfmod_force_color_paint", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
+
+ConVar tfmod_color_r("tfmod_color_r", "127", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Sets Item Tint Red channel value", true, -1, true, 255);
+ConVar tfmod_color_g("tfmod_color_g", "127", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Sets Item Tint Green channel value", true, -1, true, 255);
+ConVar tfmod_color_b("tfmod_color_b", "127", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Sets Item Tint Blue channel value", true, -1, true, 255);
+
 //-----------------------------------------------------------------------------
 // Purpose: Wearable tint colors
 //-----------------------------------------------------------------------------
@@ -480,6 +486,16 @@ public:
 		{
 			m_pResult->SetVecValue(0, 0, 0);
 			return;
+		}
+		else if ( tfmod_force_color_paint.GetBool() ) {
+
+			//float r = floorf(tfmod_paint_tint_red.GetFloat()) / 255.0f;
+			//float g = floorf(tfmod_paint_tint_green.GetFloat()) / 255.0f;
+			//float b = floorf(tfmod_paint_tint_blue.GetFloat()) / 255.0f;
+
+			//m_pResult->SetVecValue(r, g, b);
+
+			//return;
 		}
 
 		Vector vResult = Vector( 0, 0, 0 );
