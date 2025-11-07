@@ -464,7 +464,7 @@ RenderGroup_t CEconWearable::GetRenderGroup()
 	return BaseClass::GetRenderGroup();
 }
 
-ConVar econ_allow_paint_tint("econ_allow_paint_tint", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
+ConVar tfmod_econ_allow_paint_tint("tfmod_econ_allow_paint_tint", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
 
 //-----------------------------------------------------------------------------
 // Purpose: Wearable tint colors
@@ -476,7 +476,7 @@ public:
 	{
 		Assert( m_pResult );
 
-		if (!econ_allow_paint_tint.GetBool())
+		if (!tfmod_econ_allow_paint_tint.GetBool())
 		{
 			m_pResult->SetVecValue(0, 0, 0);
 			return;
