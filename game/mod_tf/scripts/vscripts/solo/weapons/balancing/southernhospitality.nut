@@ -14,7 +14,8 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a1.SetFloat("value", 0.5)
 	
 	local a2 = attrib.GetKey("bleeding duration", true)
-	a2.SetString("bleeding_duration","mult_dmg")
+	a2.SetString("attribute_class","bleeding_duration")
 	a2.SetInt("value", 6)
+	
 	prefab.SetString("item_quality","moditem_rebalance")
 })
