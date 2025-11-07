@@ -376,6 +376,8 @@ public:
 	int		GetDesiredDisguiseClass( void )	const	{ return m_nDesiredDisguiseClass; }
 	int		GetDesiredDisguiseTeam( void ) const	{ return m_nDesiredDisguiseTeam; }
 	bool	WasLastDisguiseAsOwnTeam( void ) const	{ return m_bLastDisguisedAsOwnTeam; }
+
+	bool	IsSpyWalk( void ) const;
 	// Josh: Hack for not including c_tf_player.h in replay code
 	// as it causes a bunch of issues with redefines.
 #ifndef REPLAY_SOURCE_FILE

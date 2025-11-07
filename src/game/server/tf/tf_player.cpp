@@ -1788,17 +1788,7 @@ void CTFPlayer::TFPlayerThink()
 */
 	if (m_Shared.InCond(TF_COND_DISGUISED) ) 
 	{
-		if ( (m_nButtons & IN_SPYWALK) && !m_bSpyWalk)
-		{
-			TeamFortress_SetSpeed();
-			m_bSpyWalk = true;
-		}
-		else if ( !(m_nButtons & IN_SPYWALK) && m_bSpyWalk )
-		{
-			TeamFortress_SetSpeed();
-			m_bSpyWalk = false;
-		}
-		//Is this even smart.
+		TeamFortress_SetSpeed();
 	}
 
 	SetContextThink( &CTFPlayer::TFPlayerThink, gpGlobals->curtime, "TFPlayerThink" );

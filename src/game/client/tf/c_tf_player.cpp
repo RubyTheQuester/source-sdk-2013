@@ -7853,7 +7853,7 @@ void C_TFPlayer::ClientPlayerRespawn( void )
 
 		// Release the duck toggle key
 		KeyUp( &in_ducktoggle, NULL ); 
-		KeyUp( &in_spywalktoggle, NULL ); 
+		KeyUp( &in_spywalktoggle, NULL );
 
 		IGameEvent *event = gameeventmanager->CreateEvent( "localplayer_respawn" );
 		if ( event )

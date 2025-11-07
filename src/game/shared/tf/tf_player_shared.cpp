@@ -137,6 +137,8 @@ ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "64", FCV
 ConVar tfmod_infection_spread_pulse_time( "tfmod_infection_spread_pulse_time", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How often the infection spread pulse happens" );
 ConVar tfmod_infection_spread_decrease	( "tfmod_infection_spread_decrease", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How much does the infection time decrease from carrier to viticm" );
 
+ConVar tfmod_spywalk_invest( "tfmod_spywalk_invest", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "If set; while disguised, you will walk at normal walk speed instead of the disguised class's walk speed" );
+
 #ifdef GAME_DLL
 ConVar tf_boost_drain_time( "tf_boost_drain_time", "15.0", FCVAR_DEVELOPMENTONLY, "Time is takes for a full health boost to drain away from a player.", true, 0.1, false, 0 );
 #ifdef _DEBUG
@@ -8199,6 +8201,14 @@ bool CTFPlayerShared::IsStealthed( void ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
+bool CTFPlayerShared::IsSpyWalk(void) const
+{
+	return ( (m_pOuter->m_nButtons & IN_SPYWALK) ? true : false);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 bool CTFPlayerShared::CanBeDebuffed( void ) const
 {
 	if ( IsInvulnerable() )
@@ -10882,8 +10892,6 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 	if ( !GameRules() )
 		return 0.0f;
 
-	//See about using this for spywalk
-
 	int playerclass = GetPlayerClass()->GetClassIndex();
 
 	// Spectators can move while in Classic Observer mode
@@ -10925,7 +10933,7 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 	}
 	else if ( 
 		m_Shared.InCond( TF_COND_DISGUISED ) && !m_Shared.IsStealthed() 
-		&& !(m_nButtons & IN_SPYWALK) // replace this with something better.
+		&& ( !m_Shared.IsSpyWalk() != tfmod_spywalk_invest.GetBool() )
 		)
 	{
 		float flMaxDisguiseSpeed = GetPlayerClassData( m_Shared.GetDisguiseClass() )->m_flMaxSpeed;

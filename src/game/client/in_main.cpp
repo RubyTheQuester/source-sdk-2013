@@ -546,11 +546,13 @@ void IN_ScoreUp( const CCommand &args )
 
 void IN_SpyWalkDown(const CCommand& args)
 {
+	DevMsg("Hold Spywalk - Pressed\n");
 	KeyDown(&in_spywalk, args[1]);
 }
 
 void IN_SpyWalkUp(const CCommand& args)
 {
+	DevMsg("Hold Spywalk - Release\n");
 	KeyUp(&in_spywalk, args[1]);
 	in_cancel = 0;
 }
@@ -569,13 +571,15 @@ void IN_DuckToggle(const CCommand& args)
 
 void IN_SpyWalkToggle(const CCommand& args)
 {
-	if (::input->KeyState(&in_spywalk))
+	if (::input->KeyState(&in_spywalktoggle))
 	{
-		KeyUp(&in_spywalk, args[1]);
+		DevMsg("Toggle Spywalk - Release\n");
+		KeyUp(&in_spywalktoggle, args[1]);
 	}
 	else
 	{
-		KeyDown(&in_spywalk, args[1]);
+		DevMsg("Toggle Spywalk - Pressed\n");
+		KeyDown(&in_spywalktoggle, args[1]);
 	}
 }
 
@@ -1518,6 +1522,11 @@ int CInput::GetButtonBits( int bResetState )
 	if ( KeyState(&in_ducktoggle) )
 	{
 		bits |= IN_DUCK;
+	}
+
+	if (KeyState(&in_spywalktoggle))
+	{
+		bits |= IN_SPYWALK;
 	}
 
 	// Cancel is a special flag

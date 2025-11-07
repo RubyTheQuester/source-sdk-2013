@@ -506,6 +506,9 @@ public:
 	int JumpSoundOption( void ) { return m_iJumpSoundOption; }
 	void SetJumpSoundOption( int iJumpSoundOption ) { m_iJumpSoundOption = iJumpSoundOption; }	
 
+	int SpyWalkOption(void) { return m_iSpyWalkOption; }
+	void SetSpyWalkOption(int iSpyWalkOption) { m_iSpyWalkOption = iSpyWalkOption; }
+
 	virtual void	ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet );
 
 	virtual bool CanHearAndReadChatFrom( CBasePlayer *pPlayer );
@@ -1303,6 +1306,7 @@ private:
 	bool				m_bAutoReload;
 
 	int					m_iJumpSoundOption;
+	int					m_iSpyWalkOption;
 
 	bool				m_bForceItemRemovalOnRespawn;
 
