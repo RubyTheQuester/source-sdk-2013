@@ -19154,7 +19154,7 @@ void CTFPlayer::DoTauntAttack( void )
 				if ( pLunchbox && pLunchbox->GetLunchboxType() == LUNCHBOX_CHOCOLATE_BAR )
 				{
 					// Then heal the player
-					int iHeal = 75;
+					int iHeal = 25;
 
 					int iHealType = DMG_GENERIC;
 					float flHealScale = 1.0f;
