@@ -421,7 +421,7 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 	float flHealScale = 1.0f;
 	CALL_ATTRIB_HOOK_FLOAT( flHealScale, lunchbox_healing_scale );
 	iHeal = iHeal * flHealScale;
-
+		
 	int iHealed = pPlayer->TakeHealth( iHeal, iHealType );
 
 	if ( iHealed > 0 )

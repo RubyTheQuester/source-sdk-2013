@@ -345,7 +345,8 @@ void CTFKnife::BackstabBuff(CTFPlayer* pVictim, CTFPlayer *pAttacker, int iVicti
 		}
 		case TF_CLASS_HEAVYWEAPONS:
 		{
-			pAttacker->m_Shared.AddCond(TF_COND_DEFENSEBUFF, fBackstabDuration);
+			pAttacker->m_Shared.AddCond(TF_COND_MEDIGUN_UBER_BULLET_RESIST, fBackstabDuration);
+			pAttacker->AddCustomAttribute("dmg taken from bullet reduced", 0.1f, fBackstabDuration);
 			break;
 		}
 		case TF_CLASS_ENGINEER:

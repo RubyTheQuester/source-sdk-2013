@@ -21,7 +21,7 @@ enum lunchbox_weapontypes_t
 {
 	LUNCHBOX_STANDARD = 0,		// Careful, can be the Scout BONK drink, or the Heavy sandvich.
 	LUNCHBOX_CHOCOLATE_BAR,
-	LUNCHBOX_ADDS_MINICRITS,
+	LUNCHBOX_ADDS_MINICRITS,	//Steak or Minicrits
 	LUNCHBOX_STANDARD_ROBO,
 	LUNCHBOX_STANDARD_FESTIVE,
 	LUNCHBOX_ADDS_AMMO,

@@ -59,6 +59,16 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_charged_smg, CTFChargedSMG );
 PRECACHE_WEAPON_REGISTER( tf_weapon_charged_smg );
 
+// ---------- Medic SMG -------------
+
+CREATE_SIMPLE_WEAPON_TABLE( TFSMG_MEDIC, tf_weapon_smg_medic )
+
+// Server specific.
+#ifndef CLIENT_DLL
+BEGIN_DATADESC( CTFSMG_MEDIC )
+END_DATADESC()
+#endif
+
 //=============================================================================
 //
 // Weapon SMG functions.

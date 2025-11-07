@@ -159,8 +159,21 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	CBaseEntity* pProj = FireProjectile( pPlayer );
-	ModifyProjectile( pProj );
+	int nBulletsPerShot = 0;
+	CALL_ATTRIB_HOOK_INT(nBulletsPerShot, mult_bullets_per_shot_hack );
+
+	if (nBulletsPerShot != 0)
+	{
+		for (int i = 0; i < nBulletsPerShot; i++)
+		{
+			CBaseEntity* pProj = FireProjectile(pPlayer);
+			ModifyProjectile(pProj);
+		}
+	}
+	else {
+		CBaseEntity* pProj = FireProjectile( pPlayer );
+		ModifyProjectile( pProj );
+	}
 
 	if ( !UsesClipsForAmmo1() )
 	{

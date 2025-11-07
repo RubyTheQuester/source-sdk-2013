@@ -856,7 +856,10 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 bool CTFGrenadePipebombProjectile::ExplodeOnImpact(void)
 {
 	CTFWeaponBase* pTFWeapon = dynamic_cast<CTFWeaponBase*>(GetOriginalLauncher());
-	if ( pTFWeapon && pTFWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY && ((m_flCreationTime + 0.05f) >= gpGlobals->curtime) )
+	if ( pTFWeapon && 
+		pTFWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY && 
+		( ( m_flCreationTime + 0.05f ) >= gpGlobals->curtime ) 
+		)
 		return true;
 	else
 		return false;

@@ -632,7 +632,7 @@ void CTFKatana::Smack(void)
 	}
 
 	int iCanPush = 0;
-	CALL_ATTRIB_HOOK_INT(iCanPush, sword_deflect);
+	CALL_ATTRIB_HOOK_INT(iCanPush, sword_push);
 
 	if (iCanPush == 1)
 	{

@@ -14,6 +14,7 @@
 #ifdef CLIENT_DLL
 #define CTFSMG C_TFSMG
 #define CTFChargedSMG C_TFChargedSMG
+#define CTFSMG_MEDIC C_TFSMG_MEDIC
 #endif
 
 //=============================================================================
@@ -89,5 +90,26 @@ private:
 	CTFChargedSMG( const CTFChargedSMG & ) {}
 };
 
+//=============================================================================
+//
+// TF Weapon Sub-machine gun, but for medic
+//
+class CTFSMG_MEDIC : public CTFSMG
+{
+public:
+	DECLARE_CLASS( CTFSMG_MEDIC, CTFSMG );
+	DECLARE_NETWORKCLASS(); 
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	CTFSMG_MEDIC() {}
+	~CTFSMG_MEDIC() {}
+
+	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SMG_MEDIC; }
+};
 
 #endif // TF_WEAPON_SMG_H
