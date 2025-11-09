@@ -8870,6 +8870,7 @@ void HandleRageGain( CTFPlayer *pPlayer, unsigned int iRequiredBuffFlags, float 
 
 // we want to ship this...do not remove
 ConVar tf_debug_damage( "tf_debug_damage", "0", FCVAR_CHEAT );
+extern ConVar tfmod_disable_fall_damage;
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -9048,6 +9049,11 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			if ( pOther && pOther->GetTeamNumber() != GetTeamNumber() )
 			{
 				float flStompDamage = 10.0f + info.GetDamage() * 3.f;
+
+				if ( tfmod_disable_fall_damage.GetBool() )
+				{
+					float flStompDamage = 10.0f + ( pOther->GetMaxHealth() * 0.1f ) * 3.f;
+				}
 
 				CTakeDamageInfo infoInner( this, this, GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_SECONDARY ), flStompDamage, DMG_FALL, TF_DMG_CUSTOM_BOOTS_STOMP );
 				pOther->TakeDamage( infoInner );

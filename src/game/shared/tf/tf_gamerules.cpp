@@ -13992,7 +13992,8 @@ void CTFGameRules::ClientDisconnected( edict_t *pClient )
 // Falling damage stuff.
 #define TF_PLAYER_MAX_SAFE_FALL_SPEED	650		
 
-ConVar tf_fall_damage_disablespread( "tf_fall_damage_disablespread", "0", FCVAR_NONE );
+ConVar tf_fall_damage_disablespread( "tf_fall_damage_disablespread", "1", FCVAR_REPLICATED, "Disable the randomizion spread of fall damage\n");
+ConVar tfmod_disable_fall_damage( "tfmod_disable_fall_damage", "0", FCVAR_REPLICATED, "Disable fall damage all together\n" );
 
 float CTFGameRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 {
@@ -14032,7 +14033,7 @@ float CTFGameRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 
 		int iCancelFallingDamage = 0;
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, iCancelFallingDamage, cancel_falling_damage );
-		if ( iCancelFallingDamage > 0 )
+		if ( iCancelFallingDamage > 0  || tfmod_disable_fall_damage.GetBool() )
 			flFallDamage = 0;
 
 		return flFallDamage;
