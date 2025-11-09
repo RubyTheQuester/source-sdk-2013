@@ -114,6 +114,7 @@ void CTFBaseRocket::Precache( void )
 	BaseClass::Precache();
 	PrecacheParticleSystem( "Explosion_ShockWave_01" );
 	PrecacheParticleSystem( "ExplosionCore_Wall_Jumper" );
+	PrecacheParticleSystem( "rocket_explosion_classic" );
 	PrecacheModel( MINI_ROCKETS_MODEL );
 }
 
@@ -468,6 +469,7 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	}
 
 	int iNoSelfBlastDamage = 0;
+	int iOriginal = 0;
 	CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( GetOriginalLauncher() );
 	if ( pWeapon )
 	{
@@ -477,6 +479,12 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		if ( iNoSelfBlastDamage )
 		{
 			iCustomParticleIndex = GetParticleSystemIndex( "ExplosionCore_Wall_Jumper" );
+		}
+
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iOriginal, centerfire_projectile);
+		if ( iOriginal )
+		{
+			iCustomParticleIndex = GetParticleSystemIndex( "rocket_explosion_classic" );
 		}
 	}
 	

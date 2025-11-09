@@ -114,6 +114,13 @@ void C_TFProjectile_Rocket::CreateTrails( void )
 						ParticleProp()->Create( "rockettrail_airstrike_line", PATTACH_POINT_FOLLOW, iAttachment );
 					}
 				}
+
+				int iOriginal = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iOriginal, centerfire_projectile );
+				{
+					ParticleProp()->Create( "rocket_trail_classic", PATTACH_POINT_FOLLOW, iAttachment );
+					bUsingCustom = true;
+				}
 			}
 		}
 	}
@@ -128,17 +135,37 @@ void C_TFProjectile_Rocket::CreateTrails( void )
 
 	if ( m_bCritical )
 	{
-		switch( GetTeamNumber() )
+		int iOriginal = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iOriginal, centerfire_projectile );
+		if (iOriginal)
 		{
-		case TF_TEAM_BLUE:
-			pEffect = ParticleProp()->Create( "critical_rocket_blue", PATTACH_ABSORIGIN_FOLLOW );
-			break;
-		case TF_TEAM_RED:
-			pEffect = ParticleProp()->Create( "critical_rocket_red", PATTACH_ABSORIGIN_FOLLOW );
-			break;
-		default:
-			pEffect = ParticleProp()->Create( "eyeboss_projectile", PATTACH_ABSORIGIN_FOLLOW );
-			break;
+			switch (GetTeamNumber())
+			{
+			case TF_TEAM_BLUE:
+				pEffect = ParticleProp()->Create("rocket_trail_classic_crit_blue", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			case TF_TEAM_RED:
+				pEffect = ParticleProp()->Create("rocket_trail_classic_crit_red", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			default:
+				pEffect = ParticleProp()->Create("eyeboss_projectile", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			}
+		}
+		else 
+		{
+			switch (GetTeamNumber())
+			{
+			case TF_TEAM_BLUE:
+				pEffect = ParticleProp()->Create("critical_rocket_blue", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			case TF_TEAM_RED:
+				pEffect = ParticleProp()->Create("critical_rocket_red", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			default:
+				pEffect = ParticleProp()->Create("eyeboss_projectile", PATTACH_ABSORIGIN_FOLLOW);
+				break;
+			}
 		}
 	}
 }
@@ -156,6 +183,13 @@ const char *C_TFProjectile_Rocket::GetTrailParticleName( void )
 		if ( iNoSelfBlastDamage )
 		{
 			return "rockettrail_RocketJumper";
+		}
+
+		int iOriginal = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iOriginal, centerfire_projectile);
+		if ( iOriginal )
+		{
+			return "rocket_trail_classic";
 		}
 	}
 	

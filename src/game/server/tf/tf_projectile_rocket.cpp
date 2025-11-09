@@ -68,6 +68,10 @@ void CTFProjectile_Rocket::Precache()
 	PrecacheParticleSystem( "rockettrail" );
 	PrecacheParticleSystem( "rockettrail_RocketJumper" );
 
+	PrecacheParticleSystem( "rocket_trail_classic" );	
+	PrecacheParticleSystem( "rocket_trail_classic_crit_blue" );
+	PrecacheParticleSystem( "rocket_trail_classic_crit_red" );
+
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_blackbox.mdl");
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_directhit.mdl");
 	iModel = PrecacheModel("models/enhancedrockets2/w_rocket_original.mdl");
