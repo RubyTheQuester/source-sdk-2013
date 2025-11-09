@@ -20,6 +20,7 @@
 
 #if defined(TF_CLIENT_DLL)
 #include "c_tf_player.h"
+#include "c_baseviewmodel.h"
 #include "tf_gamerules.h"
 #include "c_playerresource.h"
 #include "tf_shareddefs.h"
@@ -863,7 +864,7 @@ int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
 	{
 		isFlipped = !isFlipped;
 	}
-	if ( isFlipped != m_bAlwaysFlip )
+	if ( TeamFortress_ShouldFlipClientViewModel() != m_bAlwaysFlip )
 	{
 		pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
 	}
