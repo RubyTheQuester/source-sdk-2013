@@ -10843,7 +10843,7 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetAutoRezoom( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autorezoom" ) ) > 0 );
 	pTFPlayer->SetAutoReload( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autoreload" ) ) > 0 );
 
-	pTFPlayer->SetJumpSoundOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) );
+	pTFPlayer->SetJumpSoundOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
 	pTFPlayer->SetSpyWalkOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invest" ) ) > 0 );
 
 	// keep track of their tf_remember_lastswitched value
