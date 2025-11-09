@@ -549,9 +549,6 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 	float fGravityProjectile = 0;
 	CALL_ATTRIB_HOOK_FLOAT( fGravityProjectile, projectile_has_gravity );
 
-	//int fBouncyProjectile = 0;
-	//	CALL_ATTRIB_HOOK_INT( fBouncyProjectile, projectile_bounce );
-
 	if ( pProjectile )
 	{
 		pProjectile->SetCritical( IsCurrentAttackACrit() );

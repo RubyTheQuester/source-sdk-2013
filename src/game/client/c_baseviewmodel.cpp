@@ -102,11 +102,11 @@ bool TeamFortress_ShouldFlipClientViewModel( void )
 		C_TFPlayer *pSpecTarget = ToTFPlayer( UTIL_PlayerByIndex( GetSpectatorTarget() ) );
 		if ( pSpecTarget )
 		{
-			return pSpecTarget->m_bFlipViewModels;
+			return tf_mirrormode.GetBool() != pSpecTarget->m_bFlipViewModels;
 		}
 	}
 
-	return cl_flipviewmodels.GetBool();
+	return tf_mirrormode.GetBool() != cl_flipviewmodels.GetBool();
 }
 #endif //TF_CLIENT_DLL
 
@@ -229,11 +229,6 @@ bool C_BaseViewModel::ShouldFlipViewModel()
 	CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
 	if ( pWeapon )
 	{
-		bool isFlipped = cl_flipviewmodels.GetBool();
-		if ( tf_mirrormode.GetBool() )
-		{
-			isFlipped = !isFlipped;
-		}
 		
 		return pWeapon->m_bFlipViewModel != TeamFortress_ShouldFlipClientViewModel();
 	}

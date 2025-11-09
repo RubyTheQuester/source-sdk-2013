@@ -859,11 +859,6 @@ int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
 {
 #ifdef TF_CLIENT_DLL
 	CMatRenderContextPtr pRenderContext( materials );
-	bool isFlipped = cl_flipviewmodels.GetBool();
-	if ( tf_mirrormode.GetBool() )
-	{
-		isFlipped = !isFlipped;
-	}
 	if ( TeamFortress_ShouldFlipClientViewModel() != m_bAlwaysFlip )
 	{
 		pRenderContext->CullMode( MATERIAL_CULLMODE_CW );

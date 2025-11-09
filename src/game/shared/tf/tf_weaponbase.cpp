@@ -5630,11 +5630,6 @@ bool CTFWeaponBase::IsViewModelFlipped( void )
 		return true;
 	}
 #else
-	bool isFlipped = cl_flipviewmodels.GetBool();
-	if ( tf_mirrormode.GetBool() )
-	{
-		isFlipped = !isFlipped;
-	}
 	if ( m_bFlipViewModel != TeamFortress_ShouldFlipClientViewModel() )
 	{
 		return true;
@@ -6837,11 +6832,6 @@ void CTFWeaponBase::AddStatTrakModel( CEconItemView *pItem, int nStatTrakType, A
 				pStatTrakEnt->m_nSkin = nSkin;
 				m_viewmodelStatTrakAddon = pStatTrakEnt;
 				
-				bool isFlipped = cl_flipviewmodels.GetBool();
-				if ( tf_mirrormode.GetBool() )
-				{
-					isFlipped = !isFlipped;
-				}
 				if ( TeamFortress_ShouldFlipClientViewModel() )
 				{
 					pStatTrakEnt->SetBodygroup( 1, 1 ); // use a special mirror-image stattrak module that appears correct for lefties

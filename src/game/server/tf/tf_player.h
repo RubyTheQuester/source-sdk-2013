@@ -1022,7 +1022,7 @@ public:
 
 	int					m_iOldStunFlags;
 
-	bool				m_bFlipViewModels;
+	//bool				m_bFlipViewModels;
 	bool				m_bSpyWalk;
 	
 	CNetworkVar( bool, m_bFlipViewModels );
