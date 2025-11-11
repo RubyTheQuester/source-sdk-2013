@@ -9052,7 +9052,7 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 				if ( tfmod_disable_fall_damage.GetBool() )
 				{
-					float flStompDamage = 10.0f + ( pOther->GetMaxHealth() * 0.1f ) * 3.f;
+					flStompDamage = 10.0f + ( pOther->GetMaxHealth() * 0.1f ) * 3.f;
 				}
 
 				CTakeDamageInfo infoInner( this, this, GetEquippedWearableForLoadoutSlot( LOADOUT_POSITION_SECONDARY ), flStompDamage, DMG_FALL, TF_DMG_CUSTOM_BOOTS_STOMP );
@@ -18623,6 +18623,14 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 			m_iTauntAttack = TAUNTATK_ENGINEER_ARM_IMPALE;
 		}
 	}
+	else if ( IsPlayerClass(TF_CLASS_MERCENARY) )
+	{
+		if ( !V_stricmp( szResponse, "scenes/player/mercenary/low/taunt_bond.vcd" ) )
+		{
+			m_flTauntAttackTime = gpGlobals->curtime + 1.55;
+			m_iTauntAttack = TAUNTATK_MERC_BOND;
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -19795,10 +19803,32 @@ void CTFPlayer::DoTauntAttack( void )
 				{
 					if (pTarget->TakeDamage(CTakeDamageInfo(this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_CLUB | DMG_MELEE)))
 					{
-						DevMsg("Test\n");
 						pBomb->SetBroken( true );
 					}
 				}
+			}
+		}
+	}
+	else if ( iTauntAttack == TAUNTATK_MERC_BOND )
+	{
+		// Heavy "High Noon" attack
+		Vector vecForward;
+ 		AngleVectors( EyeAngles(), &vecForward );
+		Vector vecEnd = EyePosition() + vecForward * 500;
+
+		trace_t tr;
+		UTIL_TraceLine( EyePosition(), vecEnd, ( MASK_SOLID | CONTENTS_HITBOX ), this, COLLISION_GROUP_PLAYER, &tr );
+//		DebugDrawLine( EyePosition(), vecEnd, 0, 0, 255, true, 3.0f );
+
+		if ( tr.fraction < 1.0 )
+		{
+			CBaseEntity *pEnt = tr.m_pEnt;
+
+			if ( pEnt && pEnt->IsPlayer() && pEnt->GetTeamNumber() > LAST_SHARED_TEAM && pEnt->GetTeamNumber() != GetTeamNumber() )
+			{
+				// Launch them up a little
+				AngleVectors( QAngle(-45, m_angEyeAngles[YAW], 0), &vecForward );
+				pEnt->TakeDamage( CTakeDamageInfo( this, this, GetActiveTFWeapon(), vecForward * 25000, WorldSpaceCenter(), 500.0f, DMG_BULLET, TF_DMG_CUSTOM_TAUNTATK_BOND) );
 			}
 		}
 	}

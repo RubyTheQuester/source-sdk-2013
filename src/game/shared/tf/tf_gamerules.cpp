@@ -13064,6 +13064,10 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 	{
 		killer_weapon_name = "tf_weapon_taunt_trickshot";
 	}
+	else if ( info.GetDamageCustom() == TF_DMG_CUSTOM_TAUNTATK_BOND )
+	{
+		killer_weapon_name = "tf_weapon_taunt_mercenary";
+	}
 	else if ( pScorer && pInflictor && ( pInflictor == pScorer ) )
 	{
 		// If this is not a suicide
