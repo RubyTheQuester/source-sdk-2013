@@ -907,19 +907,6 @@ static ConCommand startcamout( "+camout", CAM_OutDown );
 static ConCommand camout( "-camout", CAM_OutUp );
 static ConCommand thirdperson_mayamode( "thirdperson_mayamode", ::CAM_ToThirdPerson_MayaMode, "Switch to thirdperson Maya-like camera controls.", FCVAR_CHEAT );
 
-
-#ifdef TF_CLIENT_DLL
-void SetThirdPersonCommand()
-{
-	cl_thirdperson.SetValue(true);
-}
-
-void SetFirstPersonCommand()
-{
-	cl_thirdperson.SetValue(false);
-}
-#endif
-
 // TF allows servers to push people into first/thirdperson, for mods
 #ifdef TF_CLIENT_DLL
 static ConCommand thirdperson( "thirdperson", ::CAM_ToThirdPerson, "Switch to thirdperson camera.", FCVAR_CHEAT | FCVAR_SERVER_CAN_EXECUTE );
