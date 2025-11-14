@@ -1250,8 +1250,8 @@ void ClientModeShared::FireGameEvent( IGameEvent *event )
 			char szLocalized[256];
 			g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalized, szLocalized, sizeof(szLocalized) );
 
-			//hudChat->Printf( CHAT_FILTER_SERVERMSG, "%s", szLocalized );
-			Msg( "%s\n", szLocalized );
+			hudChat->Printf( CHAT_FILTER_SERVERMSG, "%s", szLocalized );
+			//Msg( "%s\n", szLocalized );
 		}
 	}
 	else if ( Q_strcmp( "achievement_earned", eventname ) == 0 )
