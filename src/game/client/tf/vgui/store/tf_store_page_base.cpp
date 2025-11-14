@@ -117,7 +117,7 @@ void CTFStorePageBase::GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<
 		}
 	}
 
-	if ( pDef->CanBeUsedByAllClasses() )
+	if ( pDef->CanBeUsedByAllClassesButMerc() )
 		pVecFilters->AddToTail( FILTER_ALLCLASS_ITEMS );
 
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )

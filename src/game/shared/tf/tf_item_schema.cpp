@@ -984,7 +984,7 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 		}
 
 		// add "all_class" if applicable
-		if ( CanBeUsedByAllClasses() )
+		if ( CanBeUsedByAllClassesButMerc() )
 		{
 			KeyValues *pKVAllClassKey = new KeyValues( "all_class", "all_class", "1" );
 			pClasses->AddSubKey( pKVAllClassKey );
@@ -1370,7 +1370,19 @@ bool CTFItemDefinition::CanBeUsedByAllClasses( void ) const
 	}
 	return true;
 }
-
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CTFItemDefinition::CanBeUsedByAllClassesButMerc( void ) const
+{
+	// Ain't counting merc or civ for this
+	for ( int iClass = 1; iClass < (LOADOUT_COUNT-2); iClass++ )
+	{
+		if ( !CanBeUsedByClass(iClass) )
+			return false;
+	}
+	return true;
+}
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------

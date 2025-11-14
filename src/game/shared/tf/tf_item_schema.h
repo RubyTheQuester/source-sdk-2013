@@ -258,6 +258,7 @@ public:
 	void		FilloutSlotUsage( CBitVec<LOADOUT_COUNT> *pBV ) const;
 	bool		CanBeUsedByClass( int iClass ) const { return iClass == GEconItemSchema().GetAccountIndex() ? m_eEquipType == EQUIP_TYPE_ACCOUNT : m_vbClassUsability.IsBitSet( iClass ); }
 	bool		CanBeUsedByAllClasses( void ) const;
+	bool		CanBeUsedByAllClassesButMerc( void ) const;
 	EEquipType_t	GetEquipType( void ) const { return m_eEquipType; }
 	bool		CanBePlacedInSlot( int nSlot ) const;
 	const char	*GetPlayerDisplayModel( int iClass ) const	{ Assert( iClass >= 0 && iClass < LOADOUT_COUNT ); return m_pszPlayerDisplayModel[iClass]; }

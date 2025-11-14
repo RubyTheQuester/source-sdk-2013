@@ -1139,7 +1139,7 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 		return;
 
 	// Class usage
-	if ( pDef->CanBeUsedByAllClasses() )
+	if ( pDef->CanBeUsedByAllClassesButMerc() )
 	{
 		if ( pDef->GetBundleInfo() != NULL )
 		{

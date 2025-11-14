@@ -34,8 +34,6 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Weapons",		// ARMFILT_WEAPONS,
 	"#ArmoryFilter_MiscItems",		// ARMFILT_MISCITEMS,
 	"#ArmoryFilter_ActionItems",	// ARMFILT_ACTIONITEMS,
-	"#ArmoryFilter_CraftItems",		// ARMFILT_CRAFTITEMS,
-	"#ArmoryFilter_Tools",			// ARMFILT_TOOLS,
 	"#ArmoryFilter_AllClass",		// ARMFILT_CLASS_ALL,
 	"#ArmoryFilter_Scout",			// ARMFILT_CLASS_SCOUT,
 	"#ArmoryFilter_Sniper",			// ARMFILT_CLASS_SNIPER,
@@ -46,13 +44,16 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Pyro",			// ARMFILT_CLASS_PYRO,
 	"#ArmoryFilter_Spy",			// ARMFILT_CLASS_SPY,
 	"#ArmoryFilter_Engineer",		// ARMFILT_CLASS_ENGINEER,
-	"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
 
+	"#ArmoryFilter_Mercenary",		// ARMFILT_CLASS_MERCENARY,
 	"#ArmoryFilter_Customitems",	// ARMFILT_CUSTOMITEMS,
 	"#ArmoryFilter_Taunts",			// ARMFILT_TAUNT,
 
 	"",								// ARMFILT_NUM_IN_DROPDOWN
 	"Not Used",						// ARMFILT_CUSTOM
+	"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
+	"#ArmoryFilter_CraftItems",		// ARMFILT_CRAFTITEMS,
+	"#ArmoryFilter_Tools",			// ARMFILT_TOOLS,
 };
 
 //-----------------------------------------------------------------------------
@@ -812,7 +813,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 
 	case ARMFILT_CLASS_ALL:
 		{
-			bInList = pDef->CanBeUsedByAllClasses();
+			bInList = pDef->CanBeUsedByAllClassesButMerc();
 			break;
 		}
 
@@ -825,6 +826,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 	case ARMFILT_CLASS_PYRO:
 	case ARMFILT_CLASS_SPY:
 	case ARMFILT_CLASS_ENGINEER:
+	case ARMFILT_CLASS_MERCENARY:
 		{
 			// Don't show class/slot usage for class/slot tokens
 			if ( pDef->GetItemClass() && !V_strcmp( pDef->GetItemClass(), "class_token" ) )
