@@ -126,6 +126,7 @@ void CObjectSapper::Precache()
 	Precache( "c_p2rec.mdl" );
 	Precache( "c_sapper_xmas.mdl" );
 	Precache( "c_breadmonster_sapper.mdl" );
+	Precache( "c_clock_sapper.mdl" );
 
 	PrecacheScriptSound( "Weapon_Sapper.Plant" );
 	PrecacheScriptSound( "Weapon_Sapper.Timer" );
