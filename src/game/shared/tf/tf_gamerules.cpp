@@ -10880,7 +10880,9 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetAutoReload( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autoreload" ) ) > 0 );
 
 	pTFPlayer->SetJumpSoundOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
-	pTFPlayer->SetSpyWalkOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invest" ) ) > 0 );
+	DevMsg("NERD 1\n");
+	pTFPlayer->SetSpyWalkOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
+	DevMsg("NERD 2\n");
 
 	// keep track of their tf_remember_lastswitched value
 	pTFPlayer->SetRememberActiveWeapon( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_remember_activeweapon" ) ) > 0 );
