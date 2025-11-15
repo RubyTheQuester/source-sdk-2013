@@ -2312,6 +2312,8 @@ m_bSoloItem(false),
 m_bIsReskin(false),
 m_bUsableByBots(true),
 
+m_bSoloItemArmory(false),
+
 m_pszItemLogClassname( NULL ),
 m_pszItemIconClassname( NULL ),
 m_pszDatabaseAuditTable( NULL ),
@@ -3189,6 +3191,8 @@ bool CEconItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString
 	m_bSoloItem = m_pKVItem->GetInt( "customitem", 0 ) != 0;
 	m_bIsReskin = m_pKVItem->GetInt( "reskin", 0 ) != 0;
 	m_bUsableByBots = m_pKVItem->GetInt( "usable_by_bots", 1 ) != 0;
+
+	m_bSoloItemArmory = m_pKVItem->GetInt("customitem_armory", 0) != 0;
 
 	m_pszItemLogClassname = m_pKVItem->GetString( "item_logname", NULL );
 	m_pszItemIconClassname = m_pKVItem->GetString( "item_iconname", NULL );

@@ -845,7 +845,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 
 	case ARMFILT_CUSTOMITEMS:
 		{
-			bInList = pDef->IsSoloItem();
+			bInList = pDef->IsSoloItemArmory();
 			break;
 		}
 

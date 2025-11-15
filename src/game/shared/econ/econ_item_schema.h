@@ -1284,6 +1284,7 @@ public:
 	bool		IsSoloItem( void ) const			{ return m_bSoloItem; }
 	bool		CanBeUsedByBots(void) const			{ return m_bUsableByBots; }
 	bool		IsReskin(void) const				{ return m_bIsReskin; }
+	bool		IsSoloItemArmory(void) const		{ return m_bSoloItemArmory; }
 
 	bool		IsBundle( void ) const				{ return m_BundleInfo != NULL; }
 	bool		HasProperName( void ) const			{ return m_bProperName; }
@@ -1621,6 +1622,7 @@ private:
 	bool			m_bSoloItem;
 	bool			m_bIsReskin;
 	bool			m_bUsableByBots;
+	bool			m_bSoloItemArmory;
 
 	bool			m_bImported;
 
