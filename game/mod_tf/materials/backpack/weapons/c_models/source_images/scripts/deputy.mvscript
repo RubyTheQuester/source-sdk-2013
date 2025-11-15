@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_deputy\c_deputy.mdl"
+	"LoadModel"		"models\weapons\c_models\c_deputy\c_deputy.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"109.075 -4.63133 3.88514"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

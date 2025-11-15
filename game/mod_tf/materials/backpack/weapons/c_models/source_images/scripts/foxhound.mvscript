@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_foxhound_pacificateur\c_foxhound_pacificateur.mdl"
+	"LoadModel"		"models\weapons\c_models\c_foxhound_pacificateur\c_foxhound_pacificateur.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"86.2956 -5.22534 -0.0636142"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

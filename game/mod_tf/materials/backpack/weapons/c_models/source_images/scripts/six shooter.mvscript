@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_sixshooter\c_sixshooter.mdl"
+	"LoadModel"		"models\weapons\c_models\c_sixshooter\c_sixshooter.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"59.8925 -3.18488 -0.475321"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

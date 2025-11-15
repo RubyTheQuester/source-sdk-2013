@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_doublepump\c_doublepump.mdl"
+	"LoadModel"		"models\weapons\c_models\c_doublepump\c_doublepump.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"189.596 -9.55131 -1.26293"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_handy_builder\c_handy_builder.mdl"
+	"LoadModel"		"models\weapons\c_models\c_handy_builder\c_handy_builder.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"94.7018 1.83796 1.40769"
 	"SetCameraAngles"		"53.2592 154.549 -154.24"

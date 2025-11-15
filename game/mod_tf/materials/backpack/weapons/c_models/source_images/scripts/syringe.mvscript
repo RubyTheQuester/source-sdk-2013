@@ -1,9 +1,9 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_syringe\c_syringe.mdl"
+	"LoadModel"		"models\weapons\c_models\c_syringe\c_syringe.mdl"
 	"SetAppWindowSize"		"1936 1096"
-	"SetCameraOrigin"		"147.26 -4.79782 -5.00495"
-	"SetCameraAngles"		"30.2 -35.0993 13.211"
+	"SetCameraOrigin"		"151.721 -7.26781 -5.41991"
+	"SetCameraAngles"		"32.7 -58.4076 0.923608"
 	"SetCameraFOV"		"10.000000"
 	"SetCameraAspectCorrection"		"1.000000"
 	"SetLightType"		"2 0"

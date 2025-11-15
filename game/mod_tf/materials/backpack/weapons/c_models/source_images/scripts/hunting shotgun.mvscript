@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_shotgun_full\c_shotgun_full.mdl"
+	"LoadModel"		"models\weapons\c_models\c_shotgun_full\c_shotgun_full.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"202.96 -9.3781 -2.01797"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_full_frontier\c_full_frontier.mdl"
+	"LoadModel"		"models\weapons\c_models\c_full_frontier\c_full_frontier.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"205.987 -9.35682 -2.15815"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_pacificateur\c_pacificateur.mdl"
+	"LoadModel"		"models\weapons\c_models\c_pacificateur\c_pacificateur.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"92.2956 -5.22536 -0.0636171"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"Models\c_broken_steel\c_broken_steel.mdl"
+	"LoadModel"		"models\weapons\c_models\c_broken_steel\c_broken_steel.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"164.086 -13.0242 -1.28706"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"Models\c_classic_force\c_classic_force.mdl"
+	"LoadModel"		"models\weapons\c_models\c_classic_force\c_classic_force.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"225.259 0.447084 3.14092"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"

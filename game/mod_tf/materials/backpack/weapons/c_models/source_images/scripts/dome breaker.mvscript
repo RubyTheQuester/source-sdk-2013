@@ -1,6 +1,6 @@
 "ModelViewerScript"
 {
-	"LoadModel"		"models\c_dome_breaker\c_dome_breaker.mdl"
+	"LoadModel"		"models\weapons\c_models\c_dome_breaker\c_dome_breaker.mdl"
 	"SetAppWindowSize"		"1936 1096"
 	"SetCameraOrigin"		"206.194 5.17336 2.60974"
 	"SetCameraAngles"		"13.5983 -50.9386 -16.1569"
