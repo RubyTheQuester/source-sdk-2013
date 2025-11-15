@@ -13284,12 +13284,22 @@ void CTFPlayer::DropHealthPack( const CTakeDamageInfo &info, bool bEmpty )
 		pMedKit->DropSingleInstance( vecVelocity, this, 0 );
 	}
 }
+
+ConVar tfmod_allow_drophealth("tfmod_allow_drophealth", "1", FCVAR_NOTIFY, "Allow use of DropAmmo command");
+ConVar tfmod_allow_dropammo("tfmod_allow_dropammo", "1", FCVAR_NOTIFY, "Allow use of DropHealth command");
+
+ConVar tfmod_allow_drophealth_free("tfmod_allow_drophealth_free", "0", FCVAR_NOTIFY | FCVAR_CHEAT, "DropAmmo command will be free, and not take away ammo once done" );
+ConVar tfmod_allow_dropammo_free("tfmod_allow_dropammo_free", "0", FCVAR_NOTIFY | FCVAR_CHEAT, "DropHealth command will be free, and not take away health once done" );
+
 //-----------------------------------------------------------------------------
 // Purpose: CC Command to drop ammopack
 //-----------------------------------------------------------------------------
 void CC_DropAmmo(void)
 {
 	CTFPlayer* pPlayer = ToTFPlayer(UTIL_GetCommandClient());
+
+	if ( !tfmod_allow_dropammo.GetBool() )
+		return;
 
 	if (!pPlayer)
 		return;
@@ -13307,6 +13317,9 @@ void CC_DropHealth(void)
 {
 	CTFPlayer* pPlayer = ToTFPlayer(UTIL_GetCommandClient());
 
+	if ( !tfmod_allow_drophealth.GetBool() )
+		return;
+
 	if (!pPlayer)
 		return;
 
@@ -13317,6 +13330,7 @@ void CC_DropHealth(void)
 }
 static ConCommand dropammo("dropammo", CC_DropAmmo, "Drop some reserve ammo.");
 static ConCommand drophealth("drophealth", CC_DropHealth, "Drop some blood.");
+
 //-----------------------------------------------------------------------------
 // Purpose: Player uses own ammo to throw down small ammopack
 //-----------------------------------------------------------------------------
@@ -13334,67 +13348,69 @@ void CTFPlayer::DropAmmoPackCommand()
 		return;
 	}
 
-	int i;
-	int iNumHealers = m_Shared.GetNumHealers();
-	for (i = 0; i < iNumHealers; i++)
+	if ( !tfmod_allow_dropammo_free.GetBool() )
 	{
-		if (m_Shared.HealerIsDispenser(i))
+		int i;
+		int iNumHealers = m_Shared.GetNumHealers();
+		for (i = 0; i < iNumHealers; i++)
 		{
+			if (m_Shared.HealerIsDispenser(i))
+			{
+				this->EmitSound("Player.DenyWeaponSelection");
+				return;
+			}
+		}
+
+		float fAmmoPackRatio = 0.2;
+
+		int iMaxPrimary = GetMaxAmmo(TF_AMMO_PRIMARY);
+		int iMaxSecondary = GetMaxAmmo(TF_AMMO_SECONDARY);
+		int iMaxMetal = GetMaxAmmo(TF_AMMO_METAL);
+
+		int iCurrentPrimary = GetAmmoCount(TF_AMMO_PRIMARY);
+		int iCurrentSecondary = GetAmmoCount(TF_AMMO_SECONDARY);
+		int iCurrentMetal = GetAmmoCount(TF_AMMO_METAL);
+
+		int m_iMaxPrimaryRemoval = ceil(iMaxPrimary * fAmmoPackRatio);
+		int m_iMaxSecondaryRemoval = ceil(iMaxSecondary * fAmmoPackRatio);
+		int m_iMaxMetalRemoval = ceil(iMaxMetal * fAmmoPackRatio);
+
+		//( 100.0f * flPackRatio )
+		//( 100.0f * fAmmoPackRatio )
+		int iCloak = m_Shared.m_flCloakMeter;
+		int m_iCloakRemoval = clamp(iCloak - (100.0f * fAmmoPackRatio), 0.0f, 100.0f);
+
+
+		if ((iCurrentPrimary >= m_iMaxPrimaryRemoval) && (iCurrentSecondary >= m_iMaxSecondaryRemoval))
+		{
+			if (IsPlayerClass(TF_CLASS_SPY) && (m_iCloakRemoval >= 20.0f))
+			{
+				m_Shared.m_flCloakMeter = m_iCloakRemoval; //What the fuck is this.
+			}
+			else if (IsPlayerClass(TF_CLASS_SPY))
+			{
+				this->EmitSound("Player.DenyWeaponSelection");
+				return;
+			}
+
+			if (IsPlayerClass(TF_CLASS_ENGINEER) && (iCurrentMetal >= m_iMaxMetalRemoval))
+			{
+				RemoveAmmo(m_iMaxMetalRemoval, TF_AMMO_METAL);
+			}
+			else if (IsPlayerClass(TF_CLASS_ENGINEER))
+			{
+				this->EmitSound("Player.DenyWeaponSelection");
+				return;
+			}
+
+			RemoveAmmo(m_iMaxPrimaryRemoval, TF_AMMO_PRIMARY);
+			RemoveAmmo(m_iMaxSecondaryRemoval, TF_AMMO_SECONDARY);
+		}
+		else {
 			this->EmitSound("Player.DenyWeaponSelection");
 			return;
 		}
 	}
-
-	float fAmmoPackRatio = 0.2;
-
-	int iMaxPrimary = GetMaxAmmo(TF_AMMO_PRIMARY);
-	int iMaxSecondary = GetMaxAmmo(TF_AMMO_SECONDARY);
-	int iMaxMetal = GetMaxAmmo(TF_AMMO_METAL);
-
-	int iCurrentPrimary = GetAmmoCount(TF_AMMO_PRIMARY);
-	int iCurrentSecondary = GetAmmoCount(TF_AMMO_SECONDARY);
-	int iCurrentMetal = GetAmmoCount(TF_AMMO_METAL);
-
-	int m_iMaxPrimaryRemoval = ceil(iMaxPrimary * fAmmoPackRatio);
-	int m_iMaxSecondaryRemoval = ceil(iMaxSecondary * fAmmoPackRatio);
-	int m_iMaxMetalRemoval = ceil(iMaxMetal * fAmmoPackRatio);
-
-	//( 100.0f * flPackRatio )
-	//( 100.0f * fAmmoPackRatio )
-	int iCloak = m_Shared.m_flCloakMeter;
-	int m_iCloakRemoval = clamp(iCloak - (100.0f * fAmmoPackRatio), 0.0f, 100.0f);
-
-
-	if ( (iCurrentPrimary >= m_iMaxPrimaryRemoval) && (iCurrentSecondary >= m_iMaxSecondaryRemoval) )
-	{
-		if ( IsPlayerClass(TF_CLASS_SPY) && (m_iCloakRemoval >= 20.0f) )
-		{
-			m_Shared.m_flCloakMeter = m_iCloakRemoval; //What the fuck is this.
-		}
-		else if ( IsPlayerClass(TF_CLASS_SPY) )
-		{
-			this->EmitSound("Player.DenyWeaponSelection");
-			return;
-		}
-
-		if (IsPlayerClass(TF_CLASS_ENGINEER) && (iCurrentMetal >= m_iMaxMetalRemoval))
-		{
-			RemoveAmmo(m_iMaxMetalRemoval, TF_AMMO_METAL);
-		}
-		else if (IsPlayerClass(TF_CLASS_ENGINEER))
-		{
-			this->EmitSound("Player.DenyWeaponSelection");
-			return;
-		}
-
-		RemoveAmmo(m_iMaxPrimaryRemoval, TF_AMMO_PRIMARY);
-		RemoveAmmo(m_iMaxSecondaryRemoval, TF_AMMO_SECONDARY);
-	}
-	else {
-		this->EmitSound("Player.DenyWeaponSelection");
-		return;
-	}
-
 	// Throw out the ammo pack
 	Vector vecSrc = EyePosition() + Vector(0, 0, -8);
 	QAngle angForward = EyeAngles() + QAngle(-10, 0, 0);
@@ -13427,24 +13443,27 @@ void CTFPlayer::DropHealthKitCommand()
 		return;
 	}
 
-	if (m_Shared.GetNumHealers() > 0)
+	if ( !tfmod_allow_drophealth_free.GetBool() )
 	{
-		this->EmitSound("Player.DenyWeaponSelection");
-		return;
-	}
+		if (m_Shared.GetNumHealers() > 0)
+		{
+			this->EmitSound("Player.DenyWeaponSelection");
+			return;
+		}
 
-	float fHealthKitRatio = 0.2;
-	int m_iHealthRemoval_Amount = ceil(GetMaxHealth() * fHealthKitRatio);
+		float fHealthKitRatio = 0.2;
+		int m_iHealthRemoval_Amount = ceil(GetMaxHealth() * fHealthKitRatio);
 
-	if (
-		GetHealth() > (GetHealth() - m_iHealthRemoval_Amount)
-		)
-	{
-		TakeDamage(CTakeDamageInfo(this, this, m_iHealthRemoval_Amount, DMG_PREVENT_PHYSICS_FORCE));
-	}
-	else {
-		this->EmitSound("Player.DenyWeaponSelection");
-		return;
+		if (
+			GetHealth() > (GetHealth() - m_iHealthRemoval_Amount)
+			)
+		{
+			TakeDamage(CTakeDamageInfo(this, this, m_iHealthRemoval_Amount, DMG_PREVENT_PHYSICS_FORCE));
+		}
+		else {
+			this->EmitSound("Player.DenyWeaponSelection");
+			return;
+		}
 	}
 
 	// Throw out the health kit
