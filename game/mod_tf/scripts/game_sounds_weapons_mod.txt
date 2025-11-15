@@ -199,8 +199,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	//"wave"		"weapons/deputy/pistol_shoot.wav"
-	"wave"		"weapons/foxhound/revolver_shoot.wav"
+	"wave"		"weapons/deputy/pistol_shoot.wav"
 }
 
 "Weapon_Deputy.SingleCrit"
@@ -208,8 +207,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	//"wave"		"weapons/deputy/pistol_shoot_crit.wav"
-	"wave"		"weapons/foxhound/revolver_shoot_crit.wav"
+	"wave"		"weapons/deputy/pistol_shoot_crit.wav"
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -258,8 +256,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	//"wave"		"weapons/foxhound/revolver_shoot.wav"
-	"wave"		"weapons/deputy/pistol_shoot.wav"
+	"wave"		"weapons/foxhound/pistol_shoot.wav"
 }
 
 "Weapon_Foxhound.SingleCrit"
@@ -267,6 +264,5 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	//"wave"		"weapons/foxhound/revolver_shoot_crit.wav"
-	"wave"		"weapons/deputy/pistol_shoot_crit.wav"
+	"wave"		"weapons/foxhound/pistol_shoot_crit.wav"
 }

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_clock_sapper/c_clock_sapper"
+	"$translucent" 1
+	"$vertexcolor" 1
+}

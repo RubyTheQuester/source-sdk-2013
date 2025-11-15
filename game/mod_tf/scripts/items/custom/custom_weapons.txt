@@ -312,7 +312,7 @@
 				"syringe heal"
 				{
 					"attribute_class"	"syringe_heal"
-					"value" "36"
+					"value" "65"
 				}
 				
 				"fire rate bonus"
@@ -497,6 +497,144 @@
 			}
 		}
 		
+		
+		"34456"
+		{
+			"name"	"Pacificateur"
+			"prefab"	"moditem_prefab weapon_revolver"
+			
+			"item_name"	"#TF_Weapon_Pacificateur"
+			"item_description"	"#TF_Weapon_Pacificateur_desc"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_pacificateur/c_pacificateur"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"32"
+			"model_player"					"models/weapons/c_models/c_pacificateur/c_pacificateur.mdl"
+			
+			"used_by_classes"
+			{
+				"spy" "secondary"
+				"engineer" "secondary"
+			}
+			
+			"model_player_per_class"
+			{
+				"spy"	"models/weapons/c_models/c_pacificateur/c_pacificateur.mdl"
+				"engineer"	"models/weapons/c_models/c_pacificateur/c_pacificateur_engineer.mdl"
+			}
+			
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.8"
+				}
+				"dmg bonus vs buildings"
+				{
+					"attribute_class"	"mult_dmg_vs_buildings"
+					"value"	"1.75"
+				}
+				"damage applies to sappers"
+				{
+					"attribute_class"	"set_dmg_apply_to_sapper"
+					"value"	"1"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"	"Weapon_SharedRevolver.Single"
+				"sound_burst"		"Weapon_SharedRevolver.SingleCrit"
+			}	
+		}
+		
+		"34457"
+		{
+			"name"				"Handy Partner"
+			"prefab"			"moditem_prefab weapon_pda"
+			
+			"item_name"			"#TF_Weapon_HandyPartner"
+			"item_description"	"#TF_Weapon_HandyPartner_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_handypartner/c_handypartner"
+			"model_player"					"models/weapons/c_models/c_handy_builder/c_handy_builder.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
+			"attributes"
+			{
+				"mod pda builds minidispenser"
+				{
+					"attribute_class"	"allows_building_mini_dispenser"
+					"value" 	"1" 
+				}
+				
+				"engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"
+					"value" 	"5" 
+				}
+			}
+		}
+		
+		"34458"
+		{
+			"name"	"Broken Steel"
+			"prefab"	"moditem_prefab weapon_shotgun"
+			
+			"item_name"	"#TF_Weapon_BrokenSteel"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_broken_steel/c_broken_steel"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_broken_steel/c_broken_steel.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+				"soldier"	"secondary"
+				"pyro"		"secondary"
+				"heavy"		"secondary"
+				"mercenary"	"secondary"
+			}
+			
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "1.1"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"0.9"
+				}
+				"Reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.25"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_BrokenSteel.Single"
+				"sound_burst"			"Weapon_BrokenSteel.SingleCrit"
+				"sound_reload"			"Weapon_BrokenSteel.Reload"
+			}
+		}
 		//END OF THE LINE
 	}
 }

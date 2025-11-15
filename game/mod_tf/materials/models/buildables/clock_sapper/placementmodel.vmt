@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"models/buildables/clock_sapper/placementmodel"
+	"$surfaceprop"	"no_decal"
+	"$translucent"	1
+	"$model"		1
+	"$nocull"		1
+}

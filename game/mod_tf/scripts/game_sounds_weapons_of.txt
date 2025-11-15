@@ -296,9 +296,10 @@
 
 "Weapon_RPGMerc.SingleCrit"
 {
-	"channel"	"CHAN_WEAPON"
-	"volume"	"1"
-	"wave"		")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1"
+	"soundlevel"	"SNDLVL_94dB"
+	"wave"			")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
 }
 
 / ------------------------------------------------------------------------------------ //

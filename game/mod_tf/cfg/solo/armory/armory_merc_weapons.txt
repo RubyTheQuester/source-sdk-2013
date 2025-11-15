@@ -1,0 +1,35 @@
+armory_config
+{
+	"TF_WEAPON_REVOLVER_MERCENARY"
+	{
+		Cost 0
+	}
+	"TF_WEAPON_SHOTGUN_MERCENARY"
+	{
+		Cost 0
+	}
+	"TF_WEAPON_ROCKETLAUNCHER_MERCENARY"
+	{
+		Cost 0
+	}
+	"TF_WEAPON_GRENADELAUNCHER_MERCENARY"
+	{
+		Cost 0
+	}
+	"Leadpipe"
+	{
+		Cost 0
+	}
+	"Medkit"
+	{
+		Cost 0
+	}
+	"Long Fall Boots"
+	{
+		Cost 0
+	}
+	"Bootleg Gunboats"
+	{
+		Cost 0
+	}
+}

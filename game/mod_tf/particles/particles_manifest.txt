@@ -104,4 +104,5 @@ particles_manifest
 		"file"		"!particles/smissmas2024_unusuals.pcf"
 		"file"		"!particles/summer2025_unusuals.pcf"
 		"file"		"!particles/sniper_tracer.pcf"
+		"file"		"!particles/classic_rocket_trail.pcf"
 }

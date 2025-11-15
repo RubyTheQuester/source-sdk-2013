@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_slam_drink/c_slam_drink"
+	"$translucent" 1
+	$vertexcolor 1
+}

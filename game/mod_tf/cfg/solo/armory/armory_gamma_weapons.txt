@@ -73,10 +73,6 @@ armory_config
 	{
 		Cost 0
 	}
-	"Bouncer"
-	{
-		Cost 0
-	}
 	"RPG"
 	{
 		Cost 0
@@ -94,4 +90,26 @@ armory_config
 	{
 		Cost 0
 	}
+	
+	"Health Drink"
+	{
+		Cost 0
+	}
+	"Dynamite Sapper"
+	{
+		Cost 0
+	}
+	"Reflect Bat"
+	{
+		Cost 0
+	}
+	"Syringe Hitscan"
+	{
+		Cost 0
+	}
+	"Bombard"
+	{
+		Cost 0
+	}
+
 }

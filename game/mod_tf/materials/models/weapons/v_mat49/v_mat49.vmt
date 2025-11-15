@@ -1,0 +1,40 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/v_mat49/v_mat49"
+	"$bumpmap" "models/weapons/v_mat49/v_mat49_normal"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.15 .5 1]"
+	"$halflambert" "1"
+	"$basemapalphaphongmask" "1"
+	
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	
+	// Glow
+	$glowcolor 1
+
+	"Proxies"
+	{
+		"invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

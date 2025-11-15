@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models\weapons\w_grenadelauncher/w_grenade_dm_red"
+	"$baseTexture" "models\weapons\w_grenade_grenadelauncher\w_grenade_dm_red"
 	"$selfillum" "1"
 	"$glowcolor" "1"
 	"$phong" "1"

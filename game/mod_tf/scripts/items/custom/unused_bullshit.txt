@@ -40,3 +40,61 @@
 				}
 			}
 		}
+		
+		"34610"
+		{
+			"name"				"Syringe Shotgun"
+			"prefab"			"moditem_testing_prefab weapon_syringegun"
+
+			"item_name"			"#TF_Syringegun_Shotgun"
+			"item_description"	"#TF_Syringegun_Shotgun_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"bullets per shot bonus hack"
+				{
+					"attribute_class" 	"mult_bullets_per_shot_hack"
+					"value" "9"
+				}
+				
+				"hidden primary max ammo bonus"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"	"1.8"
+				}
+				
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "1.35"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"2"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.5"
+				}
+				
+				"projectile spread angle penalty"
+				{
+					"attribute_class"	"projectile_spread_angle"
+					"value"	"3"
+				}
+				
+				"reload time increased hidden"
+				{
+					"attribute_class"	"mult_reload_time_hidden"
+					"value" "1.5"
+				}
+			}
+		}
