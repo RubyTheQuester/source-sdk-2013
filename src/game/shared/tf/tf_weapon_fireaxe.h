@@ -78,10 +78,20 @@ public:
 	DECLARE_PREDICTABLE();
 
 	CTFMedkit();
-	virtual void		PrimaryAttack(void);
 	virtual int			GetWeaponID(void) const { return TF_WEAPON_MEDKIT; }
+
+	virtual void		PrimaryAttack(void);
 	void				SwingMiss( CTFPlayer* pPlayer );
 
+	virtual void		SecondaryAttack( void );
+	virtual bool		UsesPrimaryAmmo() OVERRIDE;
+
+	const char*			GetEffectLabelText(void) { return "#TF_ENERGYDRINK"; }
+	float				GetProgress(void) { return GetEffectBarProgress(); }
+	virtual float		InternalGetEffectBarRechargeTime(void) { return 30.0f; }
+
+	// Prevent spamming with resupply cabinets: only 1 thrown at a time
+	EHANDLE		m_hThrownPowerup;
 private:
 	EHANDLE				m_hVictim;
 

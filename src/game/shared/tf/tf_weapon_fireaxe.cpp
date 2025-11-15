@@ -16,6 +16,7 @@
 #else
 #include "tf_player.h"
 #include "tf_gamestats.h"
+#include "entity_healthkit.h"
 #endif
 
 #ifdef GAME_DLL
@@ -149,5 +150,66 @@ void CTFMedkit::SwingMiss( CTFPlayer* pPlayer )
 	// Set next attack times.
 	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
 
-	WeaponSound( MELEE_MISS );
+	WeaponSound( MELEE_HIT_WORLD );
+}
+
+#define LUNCHBOX_DROPPED_MINS	Vector( -17, -17, -10 )
+#define LUNCHBOX_DROPPED_MAXS	Vector( 17, 17, 10 )
+
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFMedkit::SecondaryAttack(void)
+{
+	CTFPlayer* pPlayer = ToTFPlayer(GetPlayerOwner());
+	if (!pPlayer)
+		return;
+
+	if (!HasAmmo())
+		return;
+
+#ifndef CLIENT_DLL
+
+	if (m_hThrownPowerup)
+	{
+		UTIL_Remove(m_hThrownPowerup);
+	}
+
+	// Throw out the medikit
+	Vector vecSrc = pPlayer->EyePosition() + Vector( 0, 0, -8 );
+	QAngle angForward = pPlayer->EyeAngles() + QAngle( -10, 0, 0 );
+
+	CHealthKit* pMedKit = assert_cast<CHealthKit*>( CBaseEntity::Create( "item_healthkit_medium", vecSrc, angForward, pPlayer ) );
+
+	if (pMedKit)
+	{
+		Vector vecForward, vecRight, vecUp;
+		AngleVectors(angForward, &vecForward, &vecRight, &vecUp);
+		Vector vecVelocity = vecForward * 500.0;
+
+		pMedKit->SetModel( "models/items/plate.mdl" );
+
+		pMedKit->SetAbsAngles( vec3_angle );
+		pMedKit->SetSize( LUNCHBOX_DROPPED_MINS, LUNCHBOX_DROPPED_MAXS );
+
+		// the thrower has to wait 0.3 to pickup the powerup (so he can throw it while running forward)
+		pMedKit->DropSingleInstance( vecVelocity, pPlayer, 0.3 );
+	}
+
+	m_hThrownPowerup = pMedKit;
+#endif
+
+	pPlayer->RemoveAmmo( m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_iAmmoPerShot, m_iPrimaryAmmoType );
+	//g_pGameRules->SwitchToNextBestWeapon( pPlayer, this );
+
+	//pPlayer->m_Shared.SetItemChargeMeter( LOADOUT_POSITION_MELEE, 0.f );
+	StartEffectBarRegen();
+}
+
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CTFMedkit::UsesPrimaryAmmo(void)
+{
+	return CBaseCombatWeapon::UsesPrimaryAmmo();
 }

@@ -37,6 +37,7 @@
 #include "tf_weapon_slap.h"
 #include "tf_weapon_bottle.h"
 #include "tf_weapon_pistol.h"
+#include "tf_weapon_fireaxe.h"
 
 #include <vgui_controls/ImagePanel.h>
 
@@ -353,6 +354,10 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 	case TF_CLASS_MEDIC:
 		DECLARE_ITEM_EFFECT_METER( CWeaponMedigun, TF_WEAPON_MEDIGUN, true, "resource/UI/HudItemEffectMeter_Scout.res" );
 		DECLARE_ITEM_EFFECT_METER( CTFBonesaw, TF_WEAPON_BONESAW, false, "resource/UI/HUDItemEffectMeter_Organs.res" );
+		break;
+
+	case TF_CLASS_MERCENARY:
+		DECLARE_ITEM_EFFECT_METER( CTFMedkit, TF_WEAPON_MEDKIT, true, "resource/UI/HudItemEffectMeter_Scout.res" );
 		break;
 	}
 

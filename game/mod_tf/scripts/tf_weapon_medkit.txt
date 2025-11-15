@@ -3,19 +3,21 @@ WeaponData
 	// Attributes Base
 	"printname"			"#TF_Weapon_Crowbar"
 	"BuiltRightHanded"		"0"
-	"MeleeWeapon"			"1"
 	"weight"			"1"
 	"WeaponType"		"melee"
 	"ITEM_FLAG_NOITEMPICKUP" 	"1"
 
+	"AutoSwitchTo"			"1"
+	"MeleeWeapon"			"1"
+	
 	// Attributes TF
 	"Damage"			"10"
 	"TimeFireDelay"			"0.5"
-	"SmackDelay"		"0.0"
-	"TimeIdle"			"0.0"
+	"SmackDelay"		"0.1"
+	"TimeIdle"			"5.0"
 				
 	// Ammo & Clip
-	"primary_ammo"			"None"
+	"primary_ammo"			"TF_AMMO_GRENADES1"
 	"secondary_ammo"		"None"
 
 	// Buckets.
