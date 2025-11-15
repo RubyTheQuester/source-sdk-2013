@@ -673,6 +673,34 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 			{
 				HealTeammate( pTargetPlayer, nGiveHealthOnHitMedic, false );
 			}
+
+			// clear_effects
+			bool bStatusEffectRemover = 0;
+			CALL_ATTRIB_HOOK_INT( bStatusEffectRemover, clear_effects );
+
+			if (bStatusEffectRemover != 0 )
+			{
+				// Healthkits also contain a fire blanket.
+				if ( pTargetPlayer->m_Shared.InCond( TF_COND_BURNING ) )
+				{
+					pTargetPlayer->m_Shared.RemoveCond(TF_COND_BURNING);
+				}
+				// and sutures
+				if ( pTargetPlayer->m_Shared.InCond( TF_COND_BLEEDING ) )
+				{
+					pTargetPlayer->m_Shared.RemoveCond( TF_COND_BLEEDING );
+				}
+				// and cures plague
+				if ( pTargetPlayer->m_Shared.InCond( TF_COND_PLAGUE ) )
+				{
+					pTargetPlayer->m_Shared.RemoveCond( TF_COND_PLAGUE );
+				}
+				// and cures poison
+				if ( pTargetPlayer->m_Shared.InCond( TF_COND_POISON ) )
+				{
+					pTargetPlayer->m_Shared.RemoveCond( TF_COND_POISON );
+				}
+			}
 		}
 		else
 		{
