@@ -3,43 +3,38 @@
 	"$baseTexture" "models\weapons\v_supershotgun_mercenary/v_supershotgun_wraps"
 	
 	"$bumpmap" "dev/flat_normal"
-	"$glowcolor" "1"
 	"$phong" "1"
 	"$phongexponent" "24"
 	"$phongboost" "0.2"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
 
-	// "$basemapalphaphongmask" "1"
-
-	"$rimlight" "1"
-	"$rimlightexponent" "20"	
-	"$rimlightboost" ".2"
-
-
+	"$halflambert" "1"
+	
 	// Cloaking
 	"$cloakPassEnabled" "1"
+	
+	// Glow
+	"$glowcolor" "1"
+		
 	"Proxies"
 	{
-		"weapon_invis"
+		"invis"
 		{
 		}
 		"ModelGlowColor"
 		{
-			"resultVar""$glowcolor"
+			"resultVar" "$glowcolor"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$selfillumtint"
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$color2"
-		}
-		"spy_invis"
-		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
 		}
 	}
 }

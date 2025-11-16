@@ -2,44 +2,43 @@
 {
 	"$baseTexture" "models\weapons\w_rocketlauncher\w_rocketlauncher_dm"
 	
-
-	"$glowcolor" "1"
 	"$phong" "1"
 	"$phongexponent" "24"
 	"$phongboost" "7"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
 
+	"$halflambert" "1"
 	"$basemapalphaphongmask" "1"
 
 	"$rimlight" "1"
 	"$rimlightexponent" "20"	
 	"$rimlightboost" ".4"
 
-
 	// Cloaking
 	"$cloakPassEnabled" "1"
+	
+	// Glow
+	$glowcolor 1
+
 	"Proxies"
 	{
-		"weapon_invis"
+		"invis"
 		{
 		}
 		"ModelGlowColor"
 		{
-			"resultVar""$glowcolor"
+			"resultVar" "$glowcolor"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$selfillumtint"
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$color2"
-		}
-		"spy_invis"
-		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
 		}
 	}
 }

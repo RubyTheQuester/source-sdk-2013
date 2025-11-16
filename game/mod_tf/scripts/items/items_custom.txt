@@ -45,6 +45,8 @@
 			"show_in_armory"	"1"
 			"customitem" 		"1"
 			
+			"customitem_armory" 		"1"
+			
 			"item_quality"	"moditem"
 			"min_ilevel"	"5"
 			"max_ilevel"	"5"
@@ -73,6 +75,8 @@
 		{
 			"prefab" "moditem_prefab"
 			"usable_by_bots" "0"
+			
+			"customitem" 		"0"
 			
 			"item_quality"	"rarity2"
 			"min_ilevel"	"0"

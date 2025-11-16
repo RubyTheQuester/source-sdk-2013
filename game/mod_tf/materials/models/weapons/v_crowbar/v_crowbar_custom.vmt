@@ -1,6 +1,7 @@
 "VertexLitGeneric"
 {
 	"$basetexture"	"models/weapons/w_crowbar/crowbar_custom"
+	
 	"$surfaceprop"	"metal"
 	"$bumpmap"	"models/weapons/w_crowbar/crowbar_normal"
 	"$lightwarptexture"		"models/player/pyro/pyro_lightwarp"

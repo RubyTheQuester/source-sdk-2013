@@ -8,41 +8,38 @@
 	"$phongboost" "2"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.1 .5 1]"
-	"$halflambert" "1"
-
 	
+	"$halflambert" "1"
+	"$basemapalphaphongmask" "1"
 	
 	"$rimlight" "1"						
 	"$rimlightexponent" "3"				
 	"$rimlightboost" ".50"
 
-	"360?$color2" "[ 0.5 0.5 0.5 ]"
-	
-	"$glowcolor" "1"
-	
+	// Cloaking
 	"$cloakPassEnabled" "1"
 	
+	// Glow
+	$glowcolor 1
+
 	"Proxies"
 	{
-		"weapon_invis"
+		"invis"
 		{
 		}
 		"ModelGlowColor"
 		{
-			"resultVar""$glowcolor"
+			"resultVar" "$glowcolor"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$selfillumtint"
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$color2"
-		}
-		"spy_invis"
-		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
 		}
 	}
 }

@@ -176,6 +176,12 @@
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
 				}
+				
+				"clear_effects"
+				{
+					"attribute_class"	"clear_effects"
+					"value" "1"
+				}
 			}
 			
 			"customitem" "1"

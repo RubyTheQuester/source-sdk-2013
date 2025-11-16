@@ -12,9 +12,9 @@ WeaponData
 	
 	// Attributes TF
 	"Damage"			"10"
-	"TimeFireDelay"			"0.5"
-	"SmackDelay"		"0.1"
-	"TimeIdle"			"5.0"
+	"TimeFireDelay"			"0.4"
+	"SmackDelay"		"0.0"
+	"TimeIdle"			"0.0"
 				
 	// Ammo & Clip
 	"primary_ammo"			"TF_AMMO_GRENADES1"

@@ -1,8 +1,9 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\weapons\w_grenade_grenadelauncher\w_grenade_dm"
+
 	"$normalmapalphaenvmapmask" 1
-	"$glowcolor" "1"
+	
 	"$envmaptint" "[1 .8 .2]"
 	"$envmapfresnel" "1"
 	"$fresnelreflection" "1"
@@ -14,36 +15,37 @@
 	"$lightwarptexture" "models\buildables\sentry1\Sentry1_lightwarp"
 	"$phongfresnelranges" "[.3 1 8]"
 
-	 "$basemapalphaphongmask" "1"
+	"$halflambert" "1"
+	"$basemapalphaphongmask" "1"
 
 	"$rimlight" "1"
 	"$rimlightexponent" "4"	
 	"$rimlightboost" "1"
 
-
 	// Cloaking
 	"$cloakPassEnabled" "1"
+	
+	// Glow
+	$glowcolor 1
+
 	"Proxies"
 	{
-		"weapon_invis"
+		"invis"
 		{
 		}
 		"ModelGlowColor"
 		{
-			"resultVar""$glowcolor"
+			"resultVar" "$glowcolor"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$selfillumtint"
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
 		}
 		"Equals"
 		{
-			"srcVar1"	"$glowcolor"
-			"resultVar"	"$color2"
-		}
-		"spy_invis"
-		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
 		}
 	}
 }

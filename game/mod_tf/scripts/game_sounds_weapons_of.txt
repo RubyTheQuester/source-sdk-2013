@@ -319,7 +319,9 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		")items/medshotno1.wav"
+	//"wave"		")items/medshotno1.wav"
+	//"wave"			"weapons/hl1/cbar_hit1.wav"
+	"wave"		"common/null.wav"
 }
 
 "Weapon_Medkit.MissCrit"
@@ -327,7 +329,8 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		"items/medshotno1.wav"
+	//"wave"		"items/medshotno1.wav"
+	"wave"		"common/null.wav"
 }
 
 "Weapon_Medkit.HitFlesh"
@@ -343,5 +346,6 @@
 	"channel"	"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_NORM"
 	"volume"	"1.0"
-	"wave"		"common/null.wav"
+	//"wave"		"common/null.wav"
+	"wave"		"items/medshotno1.wav"
 }
