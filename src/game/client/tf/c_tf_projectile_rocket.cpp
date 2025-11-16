@@ -117,6 +117,7 @@ void C_TFProjectile_Rocket::CreateTrails( void )
 
 				int iOriginal = 0;
 				CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iOriginal, centerfire_projectile );
+				if ( iOriginal )
 				{
 					ParticleProp()->Create( "rocket_trail_classic", PATTACH_POINT_FOLLOW, iAttachment );
 					bUsingCustom = true;
