@@ -36,4 +36,5 @@
 			"srcVar1"  "$glowcolor"
 			"resultVar" "$color2"
 		}
+	}
 }

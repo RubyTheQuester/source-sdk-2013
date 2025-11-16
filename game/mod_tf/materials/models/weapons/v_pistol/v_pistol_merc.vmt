@@ -13,8 +13,9 @@
 	// Cloaking
 	"$cloakPassEnabled" "1"
 	
-	"$glowcolor" "1"
-		
+	// Glow
+	$glowcolor 1
+
 	"Proxies"
 	{
 		"invis"
