@@ -1,7 +1,6 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\weapons\v_supershotgun_mercenary/v_shells_ssg"
-	
 	"$bumpmap" "dev/flat_normal"
 
 	"$phong" "1"
@@ -12,6 +11,11 @@
 	
 	"$halflambert" "1"
 	"$basemapalphaphongmask" "1"
+	
+	"$rimlight" "1"						
+	"$rimlightexponent" "2"				
+	"$rimlightboost" "5"
+	"$rimmask" "1"
 	
 	// Cloaking
 	"$cloakPassEnabled" "1"

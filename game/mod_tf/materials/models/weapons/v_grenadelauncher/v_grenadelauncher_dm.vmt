@@ -4,13 +4,15 @@
 	"$bumpmap" "models\weapons\v_grenadelauncher\v_grenadelauncher_dm_normal"
 
 	"$phong" "1"
-	"$phongexponent" "24"
-	"$phongboost" "5"	
+	"$phongexponent" "20"
+	"$phongboost" "4"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
 
 	"$halflambert" "1"
-	"$basemapalphaphongmask" "1"
+	
+	"$basephongexponent" "15"
+	"$basephongboost" "3"
 	
 	"$rimlight" "1"
 	"$rimlightexponent" "3"	

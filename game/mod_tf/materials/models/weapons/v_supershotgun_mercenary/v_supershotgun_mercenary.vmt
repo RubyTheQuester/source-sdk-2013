@@ -1,23 +1,34 @@
 "VertexLitGeneric"
 {
 	"$baseTexture" "models\weapons\v_supershotgun_mercenary/v_supershotgun_mercenary"
+	"$BASEMAPALPHAPHONGMASK" "1"
 
 	"$phong" "1"
-	"$phongexponent" "24"
-	"$phongboost" "5"	
+	"$phongexponent" "25"
+	"$phongboost" "12"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
 
-	"$halflambert" "1"
-	
-	// Cloaking
-	"$cloakPassEnabled" "1"
-	
+	"$rimlight" "1"
+	"$rimlightexponent" "10"	
+	"$rimlightboost" ".175"
+
 	// Glow
 	"$glowcolor" "1"
-		
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+
+	"$yellow" "0"
+
 	"Proxies"
 	{
+		"AnimatedWeaponSheen"
+		{
+			"animatedtexturevar" 		"$sheenmapmask"
+			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+			"animatedtextureframerate" 		"40"
+		}
 		"invis"
 		{
 		}
@@ -35,7 +46,18 @@
 			"srcVar1"  "$glowcolor"
 			"resultVar" "$color2"
 		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
 	}
+
 }
 
 
