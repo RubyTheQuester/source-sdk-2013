@@ -1450,7 +1450,7 @@ bool CTFGameMovement::CheckJumpButton()
 				continue;
 
 			// Don't send to players which have it disabled
-			if ( !pTemp->JumpSoundOption() )
+			if ( !pTemp->GetJumpSoundOption() )
 				continue;
 
 			// Don't broadcast to the jumping player ( handled clientside )
@@ -1461,7 +1461,7 @@ bool CTFGameMovement::CheckJumpButton()
 			{
 				// Don't send to players if this class is the base 9
 				// and we dont have all class jump sounds enabled
-				if (iClass <= 9 && pTemp->JumpSoundOption() != 2)
+				if (iClass <= 9 && pTemp->GetJumpSoundOption() != 2)
 					continue;
 
 				filterTeammate.AddRecipient(pTemp);
@@ -1470,7 +1470,7 @@ bool CTFGameMovement::CheckJumpButton()
 			{
 				// Don't send to players if this class is the base 9
 				// and we dont have all class jump sounds enabled
-				if (iDisguiseClass <= 9 && pTemp->JumpSoundOption() != 2)
+				if (iDisguiseClass <= 9 && pTemp->GetJumpSoundOption() != 2)
 					continue;
 
 				filterEnemy.AddRecipient(pTemp);
@@ -1479,11 +1479,6 @@ bool CTFGameMovement::CheckJumpButton()
 
 		m_pTFPlayer->EmitSound( filterTeammate, m_pTFPlayer->entindex(), GetPlayerClassData( iClass )->GetJumpSound() );
 		m_pTFPlayer->EmitSound( filterEnemy, m_pTFPlayer->entindex(), GetPlayerClassData( iDisguiseClass )->GetJumpSound() );
-		
-		//m_pTFPlayer->EmitSound( filterTeammate, m_pTFPlayer->entindex(), "Mercenary.Jumpsound" );
-		//m_pTFPlayer->EmitSound( filterEnemy, m_pTFPlayer->entindex(), "Mercenary.Jumpsound" );
-		// 
-		//"Mercenary.Jumpsound"
 #else
 		int iClass = m_pTFPlayer->GetPlayerClass()->GetClassIndex();
 		if (m_pTFPlayer->m_Shared.InCond(TF_COND_DISGUISED) && m_pTFPlayer->IsEnemyPlayer())
