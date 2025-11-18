@@ -134,7 +134,7 @@ ConVar tf_mvm_bot_flag_carrier_movement_penalty( "tf_mvm_bot_flag_carrier_moveme
 
 ConVar tfmod_infection_spread_debug		( "tfmod_infection_spread_debug", "0", FCVAR_CHEAT | FCVAR_REPLICATED );
 ConVar tfmod_infection_spread_type		( "tfmod_infection_spread_type", "1", FCVAR_NOTIFY | FCVAR_REPLICATED,			"How the math for infection damage is down");
-ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "128", FCVAR_NOTIFY | FCVAR_REPLICATED,		"The range of infection spread pulse");
+ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "96", FCVAR_NOTIFY | FCVAR_REPLICATED,		"The range of infection spread pulse");
 ConVar tfmod_infection_spread_pulse_time( "tfmod_infection_spread_pulse_time", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How often the infection spread pulse happens" );
 ConVar tfmod_infection_spread_decrease	( "tfmod_infection_spread_decrease", "1.25", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How much does the infection time decrease from carrier to viticm" );
 
