@@ -180,13 +180,8 @@ void CTFBaseRocket::Spawn( void )
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), bBouncer, projectile_bounce);
 	if ( bBouncer )
 	{
-		// smaller, cube bounding box so we rest on the ground
-		Vector min = Vector( -2, -2, -2 );
-		Vector max = Vector( 2, 2, 2 );
-
-		SetSize( min, max );
-
 		SetTouch( &CTFBaseRocket::BouncyRocketTouch );
+		SetThink( &CTFBaseRocket::BouncyFlyThink );
 	}
 	else
 	{
@@ -385,6 +380,7 @@ void CTFBaseRocket::BouncyRocketTouch( CBaseEntity *pOther )
 
 	// Verify a correct "other."
 	Assert(pOther);
+
 	bool bShield = pOther->IsCombatItem() && !InSameTeam(pOther);
 	if (pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) && !bShield)
 		return;
@@ -397,37 +393,31 @@ void CTFBaseRocket::BouncyRocketTouch( CBaseEntity *pOther )
 		return;
 	}
 
-	Vector vecTestVelocity;
-	// m_vecAngVelocity = Vector (300, 300, 300);
-
-	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
-	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity. 
-	// trimming the Z velocity a bit seems to help quite a bit.
-	vecTestVelocity = GetAbsVelocity(); 
-	vecTestVelocity.z *= 0.45;
-
-	if (GetFlags() & FL_ONGROUND)
+	if (pTrace->m_pEnt->IsWorld())
 	{
-		// add a bit of static friction
-		// SetAbsVelocity( GetAbsVelocity() * 0.8 );
-
-		// SetSequence( random->RandomInt( 1, 1 ) ); // FIXME: missing tumble animations
-	}
-	else
-	{
-		// play bounce sound
-		//BounceSound();
+		return;
 	}
 
-	m_flPlaybackRate = GetAbsVelocity().Length() / 200.0;
-	if (GetPlaybackRate() > 1.0)
-	{
-		m_flPlaybackRate = 1;
-	}
-	else if (GetPlaybackRate() < 0.5)
-	{
-		m_flPlaybackRate = 0;
-	}
+	trace_t trace;
+	memcpy(&trace, pTrace, sizeof(trace_t));
+	Explode(&trace, pOther);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFBaseRocket::BouncyFlyThink(void)
+{
+	//DevMsg("Test 1 - x = %.02f,  y = %.02f  z = %.02f,\n", GetAbsVelocity().x, GetAbsVelocity().y, GetAbsVelocity().z);
+
+	//QAngle angles = GetAbsAngles();
+
+	//QAngle m_rotationVector = QAngle(GetAbsVelocity().x, GetAbsVelocity().y, GetAbsVelocity().z);
+
+	//rotation
+	//SetAbsAngles(m_rotationVector);
+
+	SetNextThink( gpGlobals->curtime + 0.05f );
 }
 
 //-----------------------------------------------------------------------------

@@ -96,10 +96,12 @@ public:
 	static CTFBaseRocket *Create( CBaseEntity *pLauncher, const char *szClassname, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL );	
 
 	virtual void	RocketTouch( CBaseEntity *pOther );
-	virtual void	BouncyRocketTouch( CBaseEntity *pOther );
 	virtual void	Explode( trace_t *pTrace, CBaseEntity *pOther );
 	void			CheckForStunOnImpact( CTFPlayer* pTarget );
 	int				GetStunLevel( void );
+
+	virtual void	BouncyRocketTouch(CBaseEntity* pOther);
+	virtual void	BouncyFlyThink(void);
 
 	virtual bool	ShouldNotDetonate( void );
 	virtual void	Destroy( bool bBlinkOut = true, bool bBreakRocket = false ) OVERRIDE;
