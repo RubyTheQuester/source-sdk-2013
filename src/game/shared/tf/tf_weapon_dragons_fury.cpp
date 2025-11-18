@@ -152,6 +152,11 @@ CBaseEntity* CTFWeaponFlameBall::FireProjectile( CTFPlayer *pPlayer )
 	{
 		fRight *= -1;
 	}
+
+	if ( DoesFireCenterProjectile() )
+	{
+		fRight = 0;
+	}
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	// Shoot from the right location
 	vecSrc = vecSrc + (vecUp * -9.0f) + (vecRight * 7.0f) + (vecForward * 3.0f);

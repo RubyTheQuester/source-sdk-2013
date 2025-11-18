@@ -10879,11 +10879,6 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetAutoRezoom( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autorezoom" ) ) > 0 );
 	pTFPlayer->SetAutoReload( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_autoreload" ) ) > 0 );
 
-	pTFPlayer->SetJumpSoundOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
-	DevMsg("NERD 1\n");
-	pTFPlayer->SetSpyWalkOption( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
-	DevMsg("NERD 2\n");
-
 	// keep track of their tf_remember_lastswitched value
 	pTFPlayer->SetRememberActiveWeapon( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_remember_activeweapon" ) ) > 0 );
 	pTFPlayer->SetRememberLastWeapon( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tf_remember_lastswitched" ) ) > 0 );
@@ -10895,6 +10890,11 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->SetDefaultFOV( iFov );
 
 	pTFPlayer->m_bFlipViewModels = Q_strcmp( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ), "1" ) == 0;
+
+	// Figure out why this fucks with bots.
+	pTFPlayer->SetJumpSound( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
+	pTFPlayer->SetSpywalkInvert( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
+	pTFPlayer->SetFireCenterProjectile( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_fire_center_projectile" ) ) > 0 );
 }
 
 //-----------------------------------------------------------------------------

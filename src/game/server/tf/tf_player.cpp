@@ -986,6 +986,10 @@ CTFPlayer::CTFPlayer()
 	m_bHudClassAutoKill = false;
 	m_bMedigunAutoHeal = false;
 
+	m_bFireCenterProjectiles = false;
+	m_bSpyWalk = false;
+	m_iJumpSoundOption = 1;
+
 	m_vecLastDeathPosition = Vector( FLT_MAX, FLT_MAX, FLT_MAX );
 
 	SetDesiredPlayerClassIndex( TF_CLASS_UNDEFINED );
@@ -1018,7 +1022,6 @@ CTFPlayer::CTFPlayer()
 	m_iLastWeaponSlot = 1;
 	m_iNumberofDominations = 0;
 	m_bFlipViewModels = false;
-	m_bSpyWalk = false;
 	m_iBlastJumpState = 0;
 	m_flBlastJumpLandTime = 0;
 	m_fMaxHealthTime = -1;

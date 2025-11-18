@@ -44,6 +44,10 @@ extern ConVar tf_medigun_autoheal;
 extern ConVar cl_autorezoom;
 extern ConVar cl_autoreload;
 
+extern ConVar tfmod_jumpsound;
+extern ConVar tfmod_spywalk_invert;
+extern ConVar tfmod_fire_center_projectile;
+
 enum EBonusEffectFilter_t
 {
 	kEffectFilter_AttackerOnly,
@@ -294,6 +298,10 @@ public:
 	bool			GetMedigunAutoHeal( void ){ return tf_medigun_autoheal.GetBool(); }
 	bool			ShouldAutoRezoom( void ){ return cl_autorezoom.GetBool(); }
 	bool			ShouldAutoReload( void ){ return cl_autoreload.GetBool(); }
+
+	bool			GetJumpSoundOption( void ) { return tfmod_jumpsound.GetBool(); }
+	bool			GetSpywalkInvert( void ) { return tfmod_spywalk_invert.GetBool(); }
+	bool			GetFireCenterProjectile( void ) { return tfmod_fire_center_projectile.GetBool(); }
 
 	void			GetTargetIDDataString( bool bIsDisguised, OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes, bool &bIsAmmoData, bool &bIsKillStreakData );
 
@@ -664,6 +672,10 @@ public:
 	bool			m_bArenaSpectator;
 
 	bool			m_bFlipViewModels;
+
+	bool m_bFireCenterProjectiles;
+	bool m_bSpyWalk;
+	int	m_iJumpSoundOption;
 
 	bool			m_bIsMiniBoss;
 	bool			m_bIsABot;

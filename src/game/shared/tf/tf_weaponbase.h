@@ -489,6 +489,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
 	virtual bool		HideWhileStunned( void ) { return true; }
 
 	virtual bool IsViewModelFlipped( void );
+	virtual bool DoesFireCenterProjectile(void);
 
 	virtual int			GetMaxHealthMod() { return 0; }
 

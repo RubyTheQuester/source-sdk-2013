@@ -1852,6 +1852,9 @@ void CTFWeaponBase::AbortReload( void )
 	}
 }
 
+#ifdef TF_CLIENT_DLL
+ConVar tfmod_fire_center_projectile("tfmod_fire_center_projectile", "0", FCVAR_USERINFO | FCVAR_ARCHIVE, "Fires projectile center.");
+#endif
 
 //-----------------------------------------------------------------------------
 // Is the weapon reloading right now?
@@ -5642,6 +5645,30 @@ bool CTFWeaponBase::IsViewModelFlipped( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+bool CTFWeaponBase::DoesFireCenterProjectile( void )
+{
+	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
+	if ( !pPlayer )
+		return false;
+
+#ifdef GAME_DLL
+	if (  pPlayer->GetFireCenterProjectile() == true)
+	{
+		return true;
+	}
+#else
+
+#endif
+
+	int nCenterFireProjectile = 0;
+	CALL_ATTRIB_HOOK_INT( nCenterFireProjectile, centerfire_projectile );
+
+	return ( nCenterFireProjectile != 0 );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 void CTFWeaponBase::ReapplyProvision( void )
 {
 	// Disguise items never provide
@@ -5688,9 +5715,7 @@ void CTFWeaponBase::GetProjectileFireSetup( CTFPlayer *pPlayer, Vector vecOffset
 		vecOffset.y *= -1;
 	}
 
-	int iCenterFireProjectile = 0;
-	CALL_ATTRIB_HOOK_INT( iCenterFireProjectile, centerfire_projectile );
-	if ( iCenterFireProjectile == 1 )
+	if ( DoesFireCenterProjectile() )
 	{
 		vecOffset.y = 0;
 	}

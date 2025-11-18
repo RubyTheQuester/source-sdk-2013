@@ -944,6 +944,12 @@ void CTFSpellBook::TossJarThink( void )
 	{
 		fRight *= -1;
 	}
+
+	if ( DoesFireCenterProjectile() )
+	{
+		fRight = 0;
+	}
+
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	// Make spell toss position at the hand
 	vecSrc = vecSrc + ( vecUp * -9.0f ) + ( vecRight * fRight ) + ( vecForward * 3.0f );

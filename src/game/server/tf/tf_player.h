@@ -503,11 +503,14 @@ public:
 	bool ShouldAutoReload( void ){ return m_bAutoReload; }
 	void SetAutoReload( bool bAutoReload ) { m_bAutoReload = bAutoReload; }
 
-	int JumpSoundOption( void ) { return m_iJumpSoundOption; }
-	void SetJumpSoundOption( int iJumpSoundOption ) { m_iJumpSoundOption = iJumpSoundOption; }	
+	int GetJumpSoundOption( void ) { return m_iJumpSoundOption; }
+	void SetJumpSound( int iJumpSoundOption ) { m_iJumpSoundOption = iJumpSoundOption; }
 
-	int SpyWalkOption(void) { return m_iSpyWalkOption; }
-	void SetSpyWalkOption(int iSpyWalkOption) { m_iSpyWalkOption = iSpyWalkOption; }
+	int GetSpywalkInvert(void) { return m_bSpyWalk; }
+	void SetSpywalkInvert( bool bSpyWalkOption ) { m_bSpyWalk = bSpyWalkOption; }
+
+	bool GetFireCenterProjectile( void ){ return m_bFireCenterProjectiles; }
+	void SetFireCenterProjectile( bool bFireCenterProjectile) { m_bFireCenterProjectiles = bFireCenterProjectile; }
 
 	virtual void	ModifyOrAppendCriteria( AI_CriteriaSet& criteriaSet );
 
@@ -1022,9 +1025,6 @@ public:
 
 	int					m_iOldStunFlags;
 
-	//bool				m_bFlipViewModels;
-	bool				m_bSpyWalk;
-	
 	CNetworkVar( bool, m_bFlipViewModels );
 
 	int					m_iBlastJumpState;
@@ -1310,8 +1310,10 @@ private:
 	bool				m_bAutoRezoom;	// does the player want to re-zoom after each shot for sniper rifles
 	bool				m_bAutoReload;
 
+	bool				m_bFireCenterProjectiles;
+	bool				m_bSpyWalk;
 	int					m_iJumpSoundOption;
-	int					m_iSpyWalkOption;
+
 
 	bool				m_bForceItemRemovalOnRespawn;
 

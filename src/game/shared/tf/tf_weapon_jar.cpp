@@ -178,6 +178,12 @@ void CTFJar::TossJarThink( void )
 	{
 		fRight *= -1;
 	}
+
+	if ( DoesFireCenterProjectile() )
+	{
+		fRight = 0;
+	}
+
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	vecSrc +=  vecForward * 16.0f + vecRight * fRight + vecUp * -6.0f;
 
