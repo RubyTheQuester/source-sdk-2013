@@ -176,7 +176,22 @@ void CTFBaseRocket::Spawn( void )
 	SetGravity( 0.0f );
 
 	// Setup the touch and think functions.
-	SetTouch( &CTFBaseRocket::RocketTouch );
+	int bBouncer = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), bBouncer, projectile_bounce);
+	if ( bBouncer )
+	{
+		// smaller, cube bounding box so we rest on the ground
+		Vector min = Vector( -2, -2, -2 );
+		Vector max = Vector( 2, 2, 2 );
+
+		SetSize( min, max );
+
+		SetTouch( &CTFBaseRocket::BouncyRocketTouch );
+	}
+	else
+	{
+		SetTouch( &CTFBaseRocket::RocketTouch );
+	}
 	SetNextThink( gpGlobals->curtime );
 
 	AddFlag( FL_GRENADE );
@@ -358,6 +373,61 @@ void CTFBaseRocket::RocketTouch( CBaseEntity *pOther )
 	trace_t trace;
 	memcpy( &trace, pTrace, sizeof( trace_t ) );
 	Explode( &trace, pOther );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFBaseRocket::BouncyRocketTouch( CBaseEntity *pOther )
+{
+	if ( pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) )
+		return;
+
+	// Verify a correct "other."
+	Assert(pOther);
+	bool bShield = pOther->IsCombatItem() && !InSameTeam(pOther);
+	if (pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) && !bShield)
+		return;
+
+	// Handle hitting skybox (disappear).
+	const trace_t* pTrace = &CBaseEntity::GetTouchTrace();
+	if (pTrace->surface.flags & SURF_SKY)
+	{
+		UTIL_Remove(this);
+		return;
+	}
+
+	Vector vecTestVelocity;
+	// m_vecAngVelocity = Vector (300, 300, 300);
+
+	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
+	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity. 
+	// trimming the Z velocity a bit seems to help quite a bit.
+	vecTestVelocity = GetAbsVelocity(); 
+	vecTestVelocity.z *= 0.45;
+
+	if (GetFlags() & FL_ONGROUND)
+	{
+		// add a bit of static friction
+		// SetAbsVelocity( GetAbsVelocity() * 0.8 );
+
+		// SetSequence( random->RandomInt( 1, 1 ) ); // FIXME: missing tumble animations
+	}
+	else
+	{
+		// play bounce sound
+		//BounceSound();
+	}
+
+	m_flPlaybackRate = GetAbsVelocity().Length() / 200.0;
+	if (GetPlaybackRate() > 1.0)
+	{
+		m_flPlaybackRate = 1;
+	}
+	else if (GetPlaybackRate() < 0.5)
+	{
+		m_flPlaybackRate = 0;
+	}
 }
 
 //-----------------------------------------------------------------------------

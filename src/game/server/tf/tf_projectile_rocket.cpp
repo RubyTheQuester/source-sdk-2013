@@ -154,7 +154,128 @@ void CTFProjectile_Rocket::RocketTouch( CBaseEntity *pOther )
 		}
 	}
 }
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFProjectile_Rocket::ResolveFlyCollisionCustom(trace_t& trace, Vector& vecMove)
+{
+	// Verify that we have an entity.
+	CBaseEntity* pEntity = trace.m_pEnt;
+	Assert(pEntity);
 
+	//Assume all surfaces have the same elasticity
+	float flSurfaceElasticity = 1.0;
+
+	//Don't bounce off of players with perfect elasticity
+	if ( pEntity && pEntity->IsPlayer() )
+	{
+		if ( GetTeamNumber() != pEntity->GetTeamNumber() )
+		{
+			const trace_t* pTrace = &CBaseEntity::GetTouchTrace();
+
+			trace_t trace;
+			memcpy( &trace, pTrace, sizeof( trace_t ) );
+			Explode( &trace, pEntity);
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
+	flTotalElasticity = clamp( flTotalElasticity, 0.0f, 0.9f );
+
+	// NOTE: A backoff of 2.0f is a reflection
+	Vector vecAbsVelocity;
+	PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, 2.0f );
+	vecAbsVelocity *= flTotalElasticity;
+
+	// Get the total velocity (player + conveyors, etc.)
+	VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecMove );
+	float flSpeedSqr = DotProduct( vecMove, vecMove );
+
+	// Stop if on ground.
+	if ( trace.plane.normal.z > 0.7f )			// Floor
+	{
+		SetAbsVelocity( vecAbsVelocity );
+
+		if ( flSpeedSqr < ( 30 * 30 ) )
+		{
+			if ( pEntity->IsStandable() )
+			{
+				SetGroundEntity( pEntity );
+			}
+
+			// Reset velocities.
+			SetAbsVelocity( vec3_origin );
+			SetLocalAngularVelocity( vec3_angle );
+
+			//align to the ground so we're not standing on end
+			QAngle angle;
+			VectorAngles( trace.plane.normal, angle );
+
+			// rotate randomly in yaw
+			angle[1] = random->RandomFloat( 0, 360 );
+
+			SetAbsAngles( angle );
+
+			const trace_t* pTrace = &CBaseEntity::GetTouchTrace();
+
+			trace_t trace;
+			memcpy(&trace, pTrace, sizeof(trace_t));
+			Explode(&trace, pEntity);
+		}
+		else
+		{
+			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
+			Vector vecBaseDir = GetBaseVelocity();
+			VectorNormalize( vecBaseDir );
+			float flScale = vecDelta.Dot( vecBaseDir );
+
+			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecMove ); 
+			VectorMA( vecMove, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecMove );
+			PhysicsPushEntity( vecMove, &trace );
+		}
+	}
+	else
+	{
+		// If we get *too* slow, we'll stick without ever coming to rest because
+		// we'll get pushed down by gravity faster than we can escape from the wall.
+		if ( flSpeedSqr < ( 30 * 30 ) )
+		{
+			// Reset velocities.
+			SetAbsVelocity( vec3_origin );
+			SetLocalAngularVelocity( vec3_angle );
+		}
+		else
+		{
+			SetAbsVelocity( vecAbsVelocity );
+		}
+	}
+
+	//BounceSound();
+
+	if ( m_nBounces > 20 )
+	{
+		//failsafe detonate after 20 bounces
+		SetAbsVelocity( vec3_origin );
+
+		const trace_t* pTrace = &CBaseEntity::GetTouchTrace();
+
+		trace_t trace;
+		memcpy( &trace, pTrace, sizeof(trace_t) );
+		Explode( &trace, pEntity );
+
+		SetNextThink( gpGlobals->curtime );
+		SetMoveType( MOVETYPE_NONE );
+	}
+	else
+	{
+		m_nBounces++;
+	}
+
+}
 //-----------------------------------------------------------------------------
 // Purpose: Rocket was deflected.
 //-----------------------------------------------------------------------------

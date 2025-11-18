@@ -52,9 +52,13 @@ public:
 private:
 	CBaseHandle m_Scorer;
 	CNetworkVar( bool,	m_bCritical );
+	CNetworkVar( int, m_nBounces );
 	bool m_bDirectHit;
 	bool m_bEyeBallRocket;
 	bool m_bSpell;
+
+	//Custom collision to allow for constant elasticity on hit surfaces
+	virtual void ResolveFlyCollisionCustom(trace_t& trace, Vector& vecVelocity);
 };
 
 #endif	//TF_PROJECTILE_ROCKET_H
