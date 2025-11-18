@@ -520,6 +520,11 @@ void CTFWeaponBaseGun::FireBullet( CTFPlayer *pPlayer )
 		IsCurrentAttackACrit() );
 }
 
+ConVar tfmod_debug_gravity_rocket_projectile(				"tfmod_debug_gravity_rocket_projectile", "0", FCVAR_REPLICATED | FCVAR_CHEAT,				"who up degging their bug");
+ConVar tfmod_debug_gravity_rocket_projectile_gravity(		"tfmod_debug_gravity_rocket_projectile_gravity", "1", FCVAR_REPLICATED | FCVAR_CHEAT,		"who up degging their bug" );
+ConVar tfmod_debug_gravity_rocket_projectile_friction(		"tfmod_debug_gravity_rocket_projectile_friction", "1", FCVAR_REPLICATED | FCVAR_CHEAT ,		"who up degging their bug" );
+ConVar tfmod_debug_gravity_rocket_projectile_elasticity(	"tfmod_debug_gravity_rocket_projectile_elasticity", "1", FCVAR_REPLICATED | FCVAR_CHEAT ,	"who up degging their bug" );
+
 //-----------------------------------------------------------------------------
 // Purpose: Fire a rocket
 //-----------------------------------------------------------------------------
@@ -557,7 +562,27 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 		if ( fGravityProjectile )
 		{
 			pProjectile->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_CUSTOM );
-			pProjectile->SetGravity( fGravityProjectile );
+
+			//pProjectile->SetGravity(0.4f/*BaseClass::GetGrenadeGravity()*/);
+			//pProjectile->SetFriction(0.2f/*BaseClass::GetGrenadeFriction()*/);
+			//pProjectile->SetElasticity(0.45f/*BaseClass::GetGrenadeElasticity()*/);
+
+			float fProjectileFriction = 1;
+			CALL_ATTRIB_HOOK_FLOAT( fProjectileFriction, projectile_friction );
+
+			float fProjectileElasticity = 1;
+			CALL_ATTRIB_HOOK_FLOAT(fProjectileElasticity, projectile_elasticity);
+
+			pProjectile->SetGravity(fGravityProjectile);
+			pProjectile->SetFriction(fProjectileFriction);
+			pProjectile->SetElasticity(fProjectileElasticity);
+
+			if ( tfmod_debug_gravity_rocket_projectile.GetBool() )
+			{
+				pProjectile->SetGravity(tfmod_debug_gravity_rocket_projectile_gravity.GetFloat());
+				pProjectile->SetFriction(tfmod_debug_gravity_rocket_projectile_friction.GetFloat());
+				pProjectile->SetElasticity(tfmod_debug_gravity_rocket_projectile_elasticity.GetFloat());
+			}
 		}
 	}
 
@@ -693,6 +718,12 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 	{
 		fRight *= -1;
 	}
+
+	if ( DoesFireCenterProjectile() )
+	{
+		fRight = 0;
+	}
+
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	vecSrc +=  vecForward * 16.0f + vecRight * fRight + vecUp * -6.0f;
 
