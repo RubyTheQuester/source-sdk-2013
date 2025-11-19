@@ -20,5 +20,5 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a2.SetString("attribute_class","mult_dmg")
 	a2.SetFloat("value", 0.5)
 	
-	prefab.SetString("item_quality","moditem_rebalance")
+	prefab.SetString("item_quality","moditem_newstats")
 })
