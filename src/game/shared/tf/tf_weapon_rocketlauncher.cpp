@@ -150,6 +150,30 @@ BEGIN_DATADESC( CTFRocketLauncher_Merc)
 END_DATADESC()
 #endif
 
+
+//=============================================================================
+//
+// Bouncer tables.
+//
+//=============================================================================
+IMPLEMENT_NETWORKCLASS_ALIASED( TFBouncer, DT_WeaponBouncer)
+
+BEGIN_NETWORK_TABLE( CTFBouncer, DT_WeaponBouncer)
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFBouncer)
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_bouncer, CTFBouncer);
+PRECACHE_WEAPON_REGISTER( tf_weapon_bouncer );
+
+
+// Server specific.
+#ifndef CLIENT_DLL
+BEGIN_DATADESC( CTFBouncer )
+END_DATADESC()
+#endif
+
 //=============================================================================
 //
 // Crossbow tables.

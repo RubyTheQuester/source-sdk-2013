@@ -25,6 +25,7 @@
 #define CTFRocketLauncher_DirectHit C_TFRocketLauncher_DirectHit
 #define CTFRocketLauncher_AirStrike C_TFRocketLauncher_AirStrike
 #define CTFRocketLauncher_Mortar C_TFRocketLauncher_Mortar
+#define CTFBouncer C_TFBouncer
 #define CTFCrossbow C_TFCrossbow
 #define CTFTranq C_TFTranq
 #define CTFRocketLauncher_Merc C_TFRocketLauncher_Merc
@@ -243,5 +244,21 @@ public:
 	static acttable_t m_acttableRocketLauncherMerc[];
 
 	virtual int		GetWeaponID(void) const { return TF_WEAPON_ROCKETLAUNCHER_MERCENARY; }
+};
+
+// ------------------------------------------------------------------------------------------------------------------------
+class CTFBouncer : public CTFRocketLauncher
+{
+public:
+	DECLARE_CLASS(CTFBouncer, CTFRocketLauncher);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_BOUNCER; }
 };
 #endif // TF_WEAPON_ROCKETLAUNCHER_H
