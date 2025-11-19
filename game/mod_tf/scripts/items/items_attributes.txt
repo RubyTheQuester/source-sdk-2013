@@ -591,6 +591,50 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3553"
+		{
+			"name"	"kill_combo_fire_rate_boost"
+			"attribute_class"	"kill_combo_fire_rate_boost"
+			"description_string"	"#Attrib_KillCombo_Rate_Boost"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3554"
+		{
+			"name"	"projectile heat seek"
+			"attribute_class"	"mod_projectile_heat_seek_power"
+			"description_string"	"#Attrib_Heat_Seek_Power"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3555"
+		{
+			"name"	"projectile friction"
+			"attribute_class"	"projectile_friction"
+			"description_string"	"#Attrib_Projectile_Gravity_Friction"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3556"
+		{
+			"name"	"projectile elasticity"
+			"attribute_class"	"projectile_elasticity"
+			"description_string"	"#Attrib_Projectile_Gravity_Elasticity"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

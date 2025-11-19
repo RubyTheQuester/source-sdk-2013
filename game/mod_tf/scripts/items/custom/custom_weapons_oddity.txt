@@ -7,7 +7,7 @@
 			"name"		"Dispenser Spy"
 			"prefab"	"moditem_oddity_prefab weapon_knife"
 			
-			"item_name"		"#TF_Dispenser_Knife"
+			"item_name"		"#TF_Weapon_Dispenser_Knife"
 			
 			"propername"		"1"
 			

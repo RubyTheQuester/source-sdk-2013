@@ -12,7 +12,7 @@ WeaponData
 	
 	// Attributes TF
 	"Damage"			"10"
-	"TimeFireDelay"			"0.4"
+	"TimeFireDelay"			"0.6"
 	"SmackDelay"		"0.0"
 	"TimeIdle"			"0.0"
 				

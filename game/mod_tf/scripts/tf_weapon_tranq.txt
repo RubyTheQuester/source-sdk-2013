@@ -9,7 +9,7 @@ WeaponData
 	
 	// Primary Attributes.
 	"Damage"		"25"
-	"Range"			"0"
+	"Range"			"4096"
 	"BulletsPerShot"	"1"
 	"Spread"		"0.0"
 	"TimeFireDelay"		"0.23"

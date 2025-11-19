@@ -9,8 +9,8 @@
 			
 			"item_class"		"tf_weapon_sapper"
 
-			"item_name"			"#TF_Healer_Sapper"
-			"item_description"	"#TF_Healer_Sapper_Desc"
+			"item_name"			"#TF_Weapon_Healer_Sapper"
+			"item_description"	"#TF_Weapon_Healer_Sapper_Desc"
 			
 			"image_inventory"				"backpack/crafting/token_pda"
 			
@@ -131,46 +131,15 @@
 			}
 		}
 		
-		"34603"
-		{
-			"name"	"RPG"
-			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
-			
-			"item_name"	"#TF_Weapon_RPG"
-			
-			"customitem" "1"
-			
-			"image_inventory"				"backpack/crafting/token_primary"
-			
-			"attributes"
-			{
-				"has gravity"
-				{
-					"attribute_class"	"projectile_has_gravity"
-					"value" "1"
-				}
-				
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"				"1.20"
-				}
-				
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.50"
-				}
-			}
-		}
+		//RPG WAS HERE "34603"
 		
 		"34604"
 		{
 			"name"	"Health Drink"
 			"prefab"	"moditem_testing_prefab weapon_scout_drink"
 			
-			"item_name"	"#TF_EnergyDrink_Healthy"
-			"item_description"	"#TF_EnergyDrink_Healthy_Desc"
+			"item_name"			"#TF_Weapon_EnergyDrink_Healthy"
+			"item_description"	"#TF_Weapon_EnergyDrink_Healthy_Desc"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_slam_drink/c_slam_drink"
 			"model_player"					"models/weapons/c_models/c_slam_drink/c_slam_drink.mdl"
@@ -205,8 +174,8 @@
 			
 			"item_class"		"tf_weapon_sapper"
 
-			"item_name"			"#TF_Dynamite_Sapper"
-			"item_description"	"#TF_Dynamite_Sapper_Desc"
+			"item_name"			"#TF_Weapon_Dynamite_Sapper"
+			"item_description"	"#TF_Weapon_Dynamite_Sapper_Desc"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_clock_sapper/c_clock_sapper"
 			"model_player"					"models/weapons/c_models/c_clock_sapper/c_clock_sapper.mdl"
@@ -240,8 +209,8 @@
 			"name"				"Reflect Bat"
 			"prefab"			"moditem_testing_prefab weapon_bat"
 
-			"item_name"			"#TF_Reflect_Bat"
-			"item_description"	"#TF_Reflect_Bat_Desc"
+			"item_name"			"#TF_Weapon_Reflect_Bat"
+			"item_description"	"#TF_Weapon_Reflect_Bat_Desc"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_tennisracket/c_tennisracket"
 			"model_player"					"models/weapons/c_models/c_tennisracket/c_tennisracket.mdl"
@@ -282,8 +251,8 @@
 			
 			"item_class"		"tf_weapon_smg_medic"
 			
-			"item_name"			"#TF_Syringegun_Hitscan"
-			"item_description"	"#TF_Syringegun_Hitscan_Desc"
+			"item_name"			"#TF_Weapon_Syringegun_Hitscan"
+			"item_description"	"#TF_Weapon_Syringegun_Hitscan_Desc"
 			
 			"anim_slot"		"item2"
 			
@@ -392,6 +361,237 @@
 					"ACT_PRIMARY_VM_INSPECT_START"		"ACT_PRIMARY_ALT1_VM_INSPECT_START"
 					"ACT_PRIMARY_VM_INSPECT_IDLE"		"ACT_PRIMARY_ALT1_VM_INSPECT_IDLE"
 					"ACT_PRIMARY_VM_INSPECT_END"		"ACT_PRIMARY_ALT1_VM_INSPECT_END"
+				}
+			}
+		}
+		
+		"34609"
+		{
+			"name"			"Sovereign"
+			"prefab" 		"moditem_testing_prefab weapon_revolver"
+			"item_class"	"tf_weapon_tranq"
+			
+			"item_name"			"#TF_Weapon_Sovereign"
+		
+			"propername"		"0"
+
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"5 0 -6"
+			}
+			
+			"attributes"
+			{
+				"override projectile type"
+				{
+					"attribute_class"	"override_projectile_type"
+					"value"				"1"
+				}
+				
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "2"
+				}
+				
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+				
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.5"
+				}
+				
+				"decapitate type"
+				{
+					"attribute_class"	"decapitate_type"
+					"value"	"1"
+				}
+			}
+
+			
+			"visuals"
+			{
+				"sound_single_shot" "Weapon_Ambassador.Single"
+				"sound_burst" 		"Weapon_Ambassador.SingleCrit"
+				
+				"styles"
+				{
+					"0"
+					{
+						"skin_red"		"0"
+						"skin_blu"		"1"
+					}
+				}
+			}
+
+			"visuals_red"
+			{
+				"sound_single_shot" "Weapon_Ambassador.Single"
+				"sound_burst" 		"Weapon_Ambassador.SingleCrit"
+				"muzzle_flash"		"muzzle_bignasty"
+				"tracer_effect"		"sniper_tracer_full"
+			}
+			
+			"visuals_blu"
+			{
+				"sound_single_shot" "Weapon_Ambassador.Single"
+				"sound_burst" 		"Weapon_Ambassador.SingleCrit"
+				"muzzle_flash"		"muzzle_bignasty"
+				"tracer_effect"		"sniper_tracer_full"
+			}
+		}
+		
+		"34603"
+		{
+		
+			"name"		"RPG"
+			"prefab"	"moditem_testing_prefab weapon_rocketlauncher"
+			
+			"item_name"	"#TF_Weapon_RPG"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"attributes"
+			{
+				"has gravity"
+				{
+					"attribute_class"	"projectile_has_gravity"
+					"value" "1"
+				}
+				
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"1.25"
+				}
+				
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.25"
+				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"	"Weapon_RPG_BlackBox.Single"
+				"sound_burst"		"Weapon_RPG_BlackBox.SingleCrit"
+				"sound_special1"	"Weapon_RPG_BlackBox.Explode"
+			}
+			
+		}
+		
+		"34610"
+		{
+		
+			"name"			"Bouncer"
+			"prefab"		"moditem_testing_prefab weapon_grenade_launcher"
+			
+			"item_name"	"#TF_Weapon_Bouncer"
+			"item_description"	"#TF_Weapon_Bouncer_Desc"
+			
+			"customitem" "1"
+			
+			"item_iconname"	"bouncer"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			"attributes"
+			{
+				"override projectile type"
+				{
+					"attribute_class"	"override_projectile_type"
+					"value"				"2"
+				}
+				
+				"has gravity"
+				{
+					"attribute_class"	"projectile_has_gravity"
+					"value" "2"
+				}
+				
+				"bouncer"
+				{
+					"attribute_class"	"projectile_bounce"
+					"value" "1"
+				}
+				
+				"projectile elasticity"
+				{
+					"attribute_class"	"projectile_elasticity"
+					"value" "0.7"
+				}
+				
+				//"custom projectile model"
+				//{
+				//	"attribute_class"	"custom_projectile_model"
+				//	"value"				"models/weapons/w_models/w_cannonball.mdl"
+				//}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_TackyGrenadier.Single"
+				"sound_burst"			"Weapon_TackyGrenadier.SingleCrit"
+				"sound_special1"		"Weapon_Airstrike.Explosion"
+			}
+			
+		}
+		
+		"34611"
+		{
+			"name"	"Heat-seeking Flaregun"
+			"prefab"	"moditem_testing_prefab weapon_flaregun"
+			
+			"item_name"	"#TF_Weapon_HeatSeeker"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_secondary"
+			
+			"attributes"
+			{
+				"projectile heat seek"
+				{
+					"attribute_class"	"mod_projectile_heat_seek_power"
+					"value" "2000"
+				}
+			}
+		}
+		
+		"34612"
+		{
+			"name"				"KillCombo Fire Rate"
+			"prefab"			"moditem_testing_prefab weapon_minigun"
+			
+			"item_name"			"#TF_Weapon_KillCombo"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			
+			"attributes"
+			{
+				"kill_combo_fire_rate_boost"
+				{
+					"attribute_class"	"kill_combo_fire_rate_boost"
+					"value" "0.15"
 				}
 			}
 		}
