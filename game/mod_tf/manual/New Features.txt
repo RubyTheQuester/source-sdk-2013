@@ -1,0 +1,120 @@
+///======================================///
+///====New Features brought by TFSOLO====///
+///======================================///
+
+- Items Vscript System
+- - Allow for all the vanilla weapon balances you see
+
+- Gamemode changes
+- - Allows for forcing maps to change their gamemode
+
+- Campaign System
+
+- Map selection thing
+
+- Mini missions thing
+
+- Custom Items
+
+- Armory
+- - Allows buying of items tha are not owned by the player
+
+- Various Cvars
+- - Basically anything you see when pressing the create game button
+
+///========================================///
+///====New Features brought by Comtress====///
+///========================================///
+
+- Spy Revolver Crosshair thing
+
+- Bunnyhop related convars
+
+- mp_disable_respawn_times 2
+- - Allows for true instant respawn
+
+- tfmod_use_circular_weaponspreads 
+- - Makes the fixed spread pattern way fucking better and circular
+
+- tfmod_disable_fall_damage 
+- - What do you think
+
+- Sandman changes
+
+///====================================================///
+///====New Features brought by TF2 SDK Pull Requsts====///
+///====================================================///
+
+- tfmod_viewmodel_cloak_tint
+- - Allow viewmodels to be tinted while cloaked.
+
+- tfmod_econ_allow_paint_tint 
+- - Allows the ability to disable paints all together
+
+///=============================================///
+///====New Features brought by Open Fortress====///
+///=============================================///
+
+- John DMMan
+- - Models, Textures, Sounds
+
+- tfmod_jumpsound
+- - hough
+
+- Medkit base code
+
+- China Lake mechainces
+- - Blast Jump
+- - Pills always det on touch
+
+- Speaker Files Things
+- - The only reason why Merc can even talk
+
+///============================================///
+///====New Features brought by Pre-Fortress====///
+///===========================================///
+
+- Medic SMG
+- - Third Person Animations
+- - First Person Animations
+
+///=================================================///
+///====New Features brought by Valve (Beta-slop)====///
+///=================================================///
+
+- Mini Dispenser
+
+- Speedpads
+
+
+///===========================================///
+///====New Features brought by Mx Shlromby====///
+///===========================================///
+
+- Spywalk
+- - Allows spy to walk at normal speed while disguised
+- - toggle_spywalk and +spywalk can be bound for this
+- - tfmod_spywalk_invert wil revert it so spywalk make you walk at disguised class walkspeed
+
+- Drop Ammopack
+- - Allows player to drop a small ammo pack at the cost of their own ammo
+- - tfmod_allow_dropammo can be set to 0 to disable this feature outright
+- - tfmod_allow_dropammo_free allows for no ammo to be used for dropping ammo packs, because fuck the entity limit and balance
+
+- Drop Healthkit
+- - Allows player to drop a small health kit at the cost of their own health
+- - tfmod_allow_drophealth can be set to 0 to disable this feature outright
+- - tfmod_allow_drophealth_free allows for no health to be used for dropping health kits, because fuck the entity limit and balance
+
+- tfmod_fire_center_projectile 
+- - Allows the player to fire from the center of their screen for all* projectiles (*Mx Shlromby hasn't made it work with all projectiles yet)
+
+- tfmod_force_color_paint 
+- - Allows the user to force all paintable items to be a color as designated by the tfmod_color commands (tfmod_color_r, tfmod_color_g, tfmod_color_b)
+
+- Infection condition
+- - Given by getting hit by the medkit or syringe
+- - Spread from player to player via contact
+- - Can not be healed unless by syringe or medkit or resupply
+- - Deals damage based off max HP and lessen over time
+

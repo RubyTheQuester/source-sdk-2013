@@ -1,0 +1,183 @@
+///======================///
+///====Shared Weapons====///
+///======================///
+- Family Business
+- - Shared to Soldier, Engineer, Pyro
+
+- Gunboats
+- - Shared to Demoman
+
+- Mantreads
+- - Shared to Demoman
+
+- Winger
+- - Shared to Engineer
+
+- Pretty Boy Pocket Pistol
+- - Shared to Engineer
+
+- All class Melees
+- - Shared with Spy and Engineer
+
+///==========================///
+///====Rebalanced Weapons====///
+///==========================///
+
+- Ambassador
+- - No crit fall off
+
+- Axtinguisher
+- - Reverted to old version
+
+- Baby Face Blaster
+- - Less boost lost on hit
+- - Jumps only lose 10% of boost
+
+- Bison
+- - +100% projectile speed
+- - +50% clip size
+
+- Bufffalo Steak Sandvich
+- - Removed damage vulverability
+
+- Caber 
+- - Regenerates over 30 seconds
+- - Removed swing speed delay
+- - Removed deploy time delay
+- - Demoman now no longer holds back in his taunt
+
+- Cleaner Carbine 
+- - Removed fire rate penalty
+- - 20% more accurate
+- - -40% clip size
+
+- Dalokohsbar
+- - 50% faster taunt speed when held because TF2 Code is stupid
+- - Heals only up to 50 HP because Mx Shlromby is stupid
+
+- Enforcer 
+- - 20% more damage while undisguised instead of disguised
+
+- Gas Passer
+- - Pyro now remembers to grab the gas passer when they spawn
+
+- Liberty Launcher
+- - Changed damage penalty to only be 15% less
+
+- Pomson
+- - +100% projectile speed
+- - +50% clip size
+- - Projectile penetrates enemy targets
+- - Removed anti-class features that were less than useless
+
+- Sandman
+- - Scout now doesn't want to die more when equipping this item (Mx Shlromby talked to him about it)
+- - -50% slower swing speed
+- - Moonshoots are easier to hit and will give back the ball and reserve a crit within the melee
+- - - This applies to the wrap assian too
+
+- Sandvich (all lunchbox items)
+- - Heavy now have a pocket just for sandwiches (Mx Shlromby gave him new pants)
+
+- Shortstop
+- - Scout isn't depressed while using the shortshot causing a slow reload speed
+
+- Sniper Rifles (all)
+- - Fires a tracer because Mx Shlromby is a sniper main (huh)
+
+- Southern Hospitality
+- - Removed fire damage increase
+- - 50% damage penalty
+- - Increased bleed duration to 6
+- - Can random crit again for some reason
+
+- Ubersaw
+- - Medic now wants to die more when equipping this item
+
+- Warrior Spirit
+- - Removed damage vulverability
+- - 15% movement speed penalty while active
+
+- Your Eternal Reward 
+- - Removed cloak drain penalty
+
+///==========================///
+///====Overhauled Weapons====///
+///=========================///
+
+- Backscatter 
+- - Renamed to 3lb Trigger because of the new stats
+- - 90% more accurate
+- - 10% less damage
+- - -34% clipsize
+
+- Bread Bite 
+- - +50% faster swing speed
+- - On hit: gain up to 15% health
+- - -65% damage penalty
+
+- C.A.P.P.E.R
+- - 25% slower fire rate
+- - Secondary fire grants mini-crits for 8 seconds
+- - Damage fills meter
+- - No Reload
+- - Only deals 20% damage against buildings
+
+- Fortified Compound
+- - Explosion the impact site of an arrow after 3 seconds
+- - 20% less damage
+
+- Scottish Handshake 
+- - 25% damage bonus when at less than 50% of max HP
+- - 25% damage penalty when at above 50% of max HP
+- - Demoman nows want to share his drink with others... A bit forcefully.
+
+- Iron Curtain 
+- - +20% bullets per shot
+- - 10% more accurate
+- - 20% damage penalty
+- - 50% slower firing speed
+
+- Nessie's Nine Iron
+- - Is now a functioning golf club
+
+- Quackenbirdt
+- - Grants thrown liquid immunity on wearer
+- - Grants ability to breath underwater on wearer
+- - Grants full swimming mastery on wearer
+- - No cloak while cloaked
+- - -35% Cloak gain from ammo pack penalty
+
+- Eviction Notice
+- - +40% faster swing speed
+- - On hit: bleed for 2 seconds
+- - -50% damage penalty
+
+- Pipboy 
+- - Made into a PDA
+- - +20 metal regenerated every 5 seconds on wearer
+- - 10% slower move speed on wearer
+
+- Robo-Sandvich
+- - Eat to gain health and ammo
+- - 50% increase in charge recharge rate
+- - -66% healing effect penalty
+
+-  Snack-Attack
+- - Sapper can not be applied to buildings
+- - Sappers can be applied to players
+- - When applying a sapper, stuns players in a radius around the sapped players
+- - Sapped players can not move or attack, and can be backstabbed from any angle
+- - 25% slower deploy speed
+
+- Enthusiast's Timepiece
+- - Can only be deployed if cloak meter is full
+- - When deployed, fling wearer into the air and rapidly become invisible.
+- - Can attack while deployed, attacking will reveal wearer and holster the weapon
+- - Holster empties cloak meter
+
+- Wanga Prick
+- - +33% cloak drain rate
+- -  10% slwoer move speed on wearer
+- - -10 max health on wearer
+- - On backstab, gain buff based off class backstabbed
