@@ -2579,6 +2579,7 @@ void CWeaponMedigun::UpdateEffects( void )
 	if ( pLocalPlayer == pFiringPlayer )
 	{
 		pEffectOwner = pLocalPlayer->GetRenderedWeaponModel();
+		//Fuck ass Bug
 	}
 
 	// If we're still healing and our owner changed, then we did something
