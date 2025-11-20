@@ -2,22 +2,18 @@
 {
 	"$baseTexture" "models\weapons\v_grenadelauncher\v_grenadelauncher_dm"
 	"$bumpmap" "models\weapons\v_grenadelauncher\v_grenadelauncher_dm_normal"
-
+	
 	"$phong" "1"
-	"$phongexponent" "20"
-	"$phongboost" "4"	
+	"$phongexponent" "50"
+	"$phongboost" "1.25"	
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
-
-	"$halflambert" "1"
-	
-	"$basephongexponent" "15"
-	"$basephongboost" "3"
-	
 	"$rimlight" "1"
-	"$rimlightexponent" "3"	
-	"$rimlightboost" ".50"
-
+	"$rimlightexponent" "5"	
+	"$rimlightboost" "2"
+	
+	"$ambientocclusion" "1"
+	
 	// Cloaking
 	"$cloakPassEnabled" "1"
 	

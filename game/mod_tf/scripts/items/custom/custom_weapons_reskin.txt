@@ -88,7 +88,7 @@
 		"34502"
 		{
 			"name"	"Full Frontier"
-			"prefab" "moditem_reskin_prefab weapon_shotgun"
+			"prefab" "moditem_reskin_prefab weapon_shotgun_multiclass"
 			
 			"propername"		"0"
 			
@@ -116,7 +116,7 @@
 		"34503"
 		{
 			"name"	"Stock Hunting Shotgun"
-			"prefab" "moditem_reskin_prefab weapon_shotgun"
+			"prefab" "moditem_reskin_prefab weapon_shotgun_multiclass"
 			
 			"propername"		"0"
 			

@@ -3,16 +3,18 @@
 	"$baseTexture" "models\weapons\v_supershotgun_mercenary/v_supershotgun_mercenary"
 	"$BASEMAPALPHAPHONGMASK" "1"
 
-	"$phong" "1"
-	"$phongexponent" "25"
-	"$phongboost" "12"	
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"2.5"
+	"$phongexponent"	"50"
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
+	"$rimlight" "0.5"
+	"$rimlightexponent" "2.5"	
+	"$rimlightboost" "1.5"
 
-	"$rimlight" "1"
-	"$rimlightexponent" "10"	
-	"$rimlightboost" ".175"
-
+	"$ambientocclusion" "1"
+	
 	// Glow
 	"$glowcolor" "1"
 
@@ -23,12 +25,6 @@
 
 	"Proxies"
 	{
-		"AnimatedWeaponSheen"
-		{
-			"animatedtexturevar" 		"$sheenmapmask"
-			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
-			"animatedtextureframerate" 		"40"
-		}
 		"invis"
 		{
 		}
@@ -57,7 +53,6 @@
 			"resultVar" "$color2"
 		}
 	}
-
 }
 
 

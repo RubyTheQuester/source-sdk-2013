@@ -10,8 +10,6 @@
 	"$phongfresnelranges"	"[.1 .5 1]"
 	"$halflambert" "1"
 
-	
-	
 	"$rimlight" "1"						
 	"$rimlightexponent" "3"				
 	"$rimlightboost" ".50"

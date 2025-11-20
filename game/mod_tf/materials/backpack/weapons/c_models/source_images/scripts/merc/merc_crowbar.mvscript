@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\weapons\w_models\w_crowbar.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"196.84 -5.72136 7.04991"
+	"SetCameraAngles"		"36.7499 -25.7926 28.8339"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"6.4 -149.2 -43.8 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"ref"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

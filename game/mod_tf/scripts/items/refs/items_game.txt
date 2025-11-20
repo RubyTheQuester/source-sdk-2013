@@ -24963,6 +24963,7 @@
 					"value"	"1"
 				}
 			}
+			
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
 		}

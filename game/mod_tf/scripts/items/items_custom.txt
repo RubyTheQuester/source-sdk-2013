@@ -47,9 +47,28 @@
 			
 			"customitem_armory" 		"1"
 			
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
 			"item_quality"	"moditem"
 			"min_ilevel"	"5"
 			"max_ilevel"	"5"
+		}
+		
+		"moditem_merc_prefab"
+		{
+			"prefab" "moditem_prefab"
+			
+			"attach_to_hands"				"0"
+			"model_attach_to_hands"			"1"
+			
+			"min_ilevel"	"1"
+			"max_ilevel"	"1"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
 		}
 		
 		"moditem_testing_prefab"

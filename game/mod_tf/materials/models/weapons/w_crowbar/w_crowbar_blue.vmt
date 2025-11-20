@@ -4,27 +4,28 @@
 	"$surfaceprop"	"metal"
 	"$bumpmap"	"models/weapons/w_crowbar/crowbar_normal"
 	
-	"$phong" "1"
-	"$phongexponent" "24"
-	"$phongboost" "5"	
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"2.5"
+	"$phongexponent"	"50"
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
-
-	"$halflambert" "1"
-	"$basemapalphaphongmask" "1"
-	
 	"$rimlight" "1"
-	"$rimlightexponent" "3"	
-	"$rimlightboost" ".50"
+	"$rimlightexponent" "5"	
+	"$rimlightboost" "3"
+
+	"$ambientocclusion" "1"
+
+	"$glowcolor" "1"
 
 	// Cloaking
 	"$cloakPassEnabled" "1"
-	
-	// Glow
-	$glowcolor 1
+
+	"$yellow" "0"
 
 	"Proxies"
 	{
+		//"vm_invis"
 		"invis"
 		{
 		}
@@ -41,6 +42,19 @@
 		{
 			"srcVar1"  "$glowcolor"
 			"resultVar" "$color2"
+		}
+		"YellowLevel"
+		{
+			"resultVar" "$yellow"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
+			"resultVar" "$color2"
+		}
+     	"WeaponSkin"
+		{
 		}
 	}
 }

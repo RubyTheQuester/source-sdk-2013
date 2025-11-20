@@ -2,19 +2,18 @@
 {
 	"$basetexture"	"models\weapons\w_revolver\w_revolver_dm"
 	
-	"$phong" "1"
-	"$phongexponent" "25"
-	"$phongboost" "5"	
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"2.5"
+	"$phongexponent"	"50"
 	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
 	"$phongfresnelranges"	"[.25 .5 1]"
-	"$halflambert" "1"
-
-	"$basemapalphaphongmask" "1"
+	"$rimlight" "1"
+	"$rimlightexponent" "5"	
+	"$rimlightboost" "3"
 	
-	"$rimlight" "1"						
-	"$rimlightexponent" "3"				
-	"$rimlightboost" ".50"
-
+	"$ambientocclusion" "1"
+	
 	// Cloaking
 	"$cloakPassEnabled" "1"
 	
@@ -23,6 +22,7 @@
 
 	"Proxies"
 	{
+		//"vm_invis"
 		"invis"
 		{
 		}
@@ -38,6 +38,12 @@
 		"Equals"
 		{
 			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+		"Multiply"
+		{
+			"srcVar1" "$color2"
+			"srcVar2" "$yellow"
 			"resultVar" "$color2"
 		}
 	}

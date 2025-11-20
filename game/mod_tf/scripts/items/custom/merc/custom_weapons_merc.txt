@@ -4,41 +4,48 @@
 	{
 		"34800"
 		{
-			"name"		"TF_WEAPON_CROWBAR"
-			"prefab"	"weapon_crowbar"
+			"name"		"Mercenary Crowbar"
+			"prefab"	"moditem_merc_prefab weapon_crowbar"
 			
 			"baseitem" "1"
+			"customitem" "0"
+			
+			"item_quality"	"normal"
 		}
 		
 		"34801"
 		{
-			"name"		"TF_WEAPON_PISTOL_MERCENARY"
-			"prefab"	"weapon_pistol_merc"
+			"name"		"Mercenary Pistol"
+			"prefab"	"moditem_merc_prefab weapon_pistol_merc"
 			
 			"baseitem" "1"
+			"customitem" "0"
+			
+			"item_quality"	"normal"
 		}
 		
 		"34802"
 		{
-			"name"		"TF_WEAPON_SUPER_SHOTGUN"
-			"prefab"	"weapon_super_shotgun"
+			"name"		"Super-Shotgun"
+			"prefab"	"moditem_merc_prefab weapon_super_shotgun"
 			
 			"baseitem" "1"
 			"customitem" "0"
+			
+			"item_quality"	"normal"
 		}
 		
 		"34803"
 		{
-			"name"		"TF_WEAPON_REVOLVER_MERCENARY"
-			"prefab"	"weapon_revolver_merc"
+			"name"		"Mercenary Revolver"
+			"prefab"	"moditem_merc_prefab weapon_revolver_merc"
 			
-			"customitem" "1"
 		}
 		
 		"34804"
 		{
-			"name"		"TF_WEAPON_SHOTGUN_MERCENARY"
-			"prefab"	"weapon_shotgun"
+			"name"		"Mercenary Shotgun"
+			"prefab"	"moditem_merc_prefab weapon_shotgun"
 			
 			"hidden"	"1"
 			
@@ -48,53 +55,83 @@
 			{
 				"mercenary"	"1"
 			}
-			
-			"customitem" 	"1"
 		}
 
 		"34805"
 		{
-			"name"		"TF_WEAPON_ROCKETLAUNCHER_MERCENARY"
-			"prefab"	"weapon_rocketlauncher_merc"
+			"name"		"Mercenary Rocket Launcher"
+			"prefab"	"moditem_merc_prefab weapon_rocketlauncher_merc"
 	
 			"item_slot"	"primary"
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
 			
-			"customitem" "1"
+			"attributes"
+			{
+				"Projectile speed increased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"	"1.8"
+				}
+				
+				"damage bonus"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"1.25"
+				}
+				
+				"mod mini-crit airborne"
+				{
+					"attribute_class"	"mini_crit_airborne"
+					"value" "1"
+				}
+			}
 		}
 		
 		"34806"
 		{
-			"name"		"TF_WEAPON_GRENADELAUNCHER_MERCENARY"
-			"prefab"	"weapon_grenadelauncher_merc"
+			"name"		"China Lake"
+			"prefab"	"moditem_merc_prefab weapon_grenadelauncher_merc"
 
 			"item_slot"	"primary"
 			
 			"item_logname"	"grenadelauncher_mercenary"
 			"item_iconname"	"grenadelauncher_mercenary"
 			
-			"used_by_classes"
+			"attributes"
 			{
-				"mercenary"	"1"
+				"Blast radius decreased"
+				{
+					"attribute_class"	"mult_explosion_radius"
+					"value"				"0.85"
+				}
+				
+				"grenade no bounce"
+				{
+					"attribute_class"	"grenade_no_bounce"
+					"value"	"1"
+				}
+				
+				"fuse bonus"
+				{
+					"attribute_class" "fuse_mult"
+					"value" "0.7"
+				}
 			}
 			
-			"customitem" "1"
 		}
 		
 		"34807"
 		{
-			"name"		"Leadpipe"
-			"prefab"	"weapon_crowbar"
+			"name"		"Mercenary Leadpipe"
+			"prefab"	"moditem_merc_prefab weapon_crowbar"
 			
 			"item_name"	"#TF_Weapon_LeadPipe"
 			
-			"item_slot"	"melee"
+			"item_slot"		"melee"
 			"anim_slot"		"melee_allclass"
 			
 			"item_iconname"	"lead_pipe"
+			
+			"image_inventory" "backpack/weapons/c_models/merc/c_leadpipe/c_leadpipe"
 			
 			//"model_player"			"models/weapons/v_models/v_lead_pipe.mdl"
 			//"model_world"			"models/weapons/w_models/w_leadpipe_merc.mdl"
@@ -104,11 +141,6 @@
 			
 			"attach_to_hands"				"1"
 			"model_attach_to_hands"			"0"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
 			
 			"attributes"
 			{
@@ -139,23 +171,16 @@
 					"value" "1"
 				}
 			}
-			
-			"customitem" "1"
 		}
 		
 		"34808"
 		{
-			"name"		"Medkit"
-			"prefab"	"weapon_medkit"
+			"name"		"Mercenary Medkit"
+			"prefab"	"moditem_merc_prefab weapon_medkit"
 			
 			"item_slot"	"melee"
 			
 			"item_iconname"	"tfc_weapon_medkit"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
 			
 			"attributes"
 			{
@@ -183,8 +208,6 @@
 					"value" "1"
 				}
 			}
-			
-			"customitem" "1"
 		}
 		
 		
@@ -192,22 +215,15 @@
 		
 		"34850"
 		{
-			"name"		"Long Fall Boots"
-			"prefab"	"weapon_merc_equipment"
+			"name"		"Mercenary Fall Boots"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
 			"item_name"	"#TF_Weapon_FallBoots"
 			
 			"item_slot"	"equipment"
 			
 			"image_inventory"	"backpack/workshop/player/items/soldier/mantreads/mantreads"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
 			"model_player"		"models/workshop/player/items/soldier/mantreads/mantreads.mdl"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
 			
 			"attributes"
 			{
@@ -234,22 +250,18 @@
 					"value" "-25"
 				}
 			}
-			
-			"customitem" "1"
 		}
 		
 		"34851"
 		{
-			"name"		"Bootleg Gunboats"
-			"prefab"	"weapon_merc_equipment"
+			"name"		"Mercenary Gunboats"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
 			"item_name"	"#TF_Weapon_Gunboats_Merc"
 			
 			"item_slot"	"equipment"
 			
 			"image_inventory"	"backpack/weapons/c_models/c_rocketboots_soldier"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
 			"model_player"		"models/weapons/c_models/c_rocketboots_soldier.mdl"
 			
 			"used_by_classes"
@@ -259,16 +271,18 @@
 			
 			"attributes"
 			{
-				"rocket jump damage reduction"
-				{
-					"attribute_class"	"rocket_jump_dmg_reduction"
-					"value" "0.4"
-				}
 				"allowed in medieval mode"
 				{
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"	"1"
 				}
+				
+				"rocket jump damage reduction"
+				{
+					"attribute_class"	"rocket_jump_dmg_reduction"
+					"value" "0.4"
+				}
+				
 				"boots falling stomp"
 				{
 					"attribute_class"	"boots_falling_stomp"
@@ -281,8 +295,6 @@
 					"value"	"0.5"
 				}
 			}
-			
-			"customitem" "1"
 		}
 		
 		// END OF THE OVERALL ITEMS LINE

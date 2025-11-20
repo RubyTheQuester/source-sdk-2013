@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\weapons\w_models\w_grenadelauncher_dm.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"164.469 -6.44939 -4.90194"
+	"SetCameraAngles"		"15.1631 -45.9043 -14.7065"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"31.7 -116.2 168.1 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"ref"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}

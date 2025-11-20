@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/merc/c_medkit/c_medkit_large"
+	$translucent 1
+}

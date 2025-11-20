@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\weapons\w_models\w_classic_medkit.mdl"
+	"SetAppWindowSize"		"1936 1096"
+	"SetCameraOrigin"		"76.8792 0.641877 0.980703"
+	"SetCameraAngles"		"-42.6367 -37.3943 -4.21804"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"54.7 174.5 86.8 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}
