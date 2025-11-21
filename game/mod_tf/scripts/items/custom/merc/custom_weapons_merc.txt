@@ -51,6 +51,12 @@
 			
 			"item_slot"	"secondary"
 			
+			//"model_player"	"models/weapons/v_models/v_shotgun_merc.mdl"
+			"model_player"	"models/weapons/c_models/c_shotgun/c_shotgun.mdl"
+			
+			"attach_to_hands"				"1"
+			"model_attach_to_hands"			"0"
+			
 			"used_by_classes"
 			{
 				"mercenary"	"1"
@@ -64,24 +70,18 @@
 	
 			"item_slot"	"primary"
 			
+			"static_attrs"
+			{
+				"single wep deploy time decreased"		"0.85"
+				"switch from wep deploy time decreased"	"0.85"
+			}
+			
 			"attributes"
 			{
 				"Projectile speed increased"
 				{
 					"attribute_class"	"mult_projectile_speed"
 					"value"	"1.8"
-				}
-				
-				"damage bonus"
-				{
-					"attribute_class"	"mult_dmg"
-					"value"	"1.25"
-				}
-				
-				"mod mini-crit airborne"
-				{
-					"attribute_class"	"mini_crit_airborne"
-					"value" "1"
 				}
 			}
 		}
@@ -102,12 +102,6 @@
 				{
 					"attribute_class"	"mult_explosion_radius"
 					"value"				"0.85"
-				}
-				
-				"grenade no bounce"
-				{
-					"attribute_class"	"grenade_no_bounce"
-					"value"	"1"
 				}
 				
 				"fuse bonus"
@@ -232,6 +226,7 @@
 					"attribute_class"	"allowed_in_medieval_mode"
 					"value"	"1"
 				}
+				
 				"mod_air_control_blast_jump"
 				{
 					"attribute_class"	"mod_air_control_blast_jump"

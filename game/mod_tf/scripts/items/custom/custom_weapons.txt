@@ -66,12 +66,6 @@
 			{
 				"weapon_stattrak_module_scale"			"0.497"
 				"min_viewmodel_offset"					"10 0 -6"
-			}
-			
-			"static_attrs"
-			{
-				"weapon_stattrak_module_scale"			"0.497"
-				"min_viewmodel_offset"					"10 0 -6"
 				"single wep deploy time decreased"		"0.7"
 				"switch from wep deploy time decreased"	"0.7"
 			}

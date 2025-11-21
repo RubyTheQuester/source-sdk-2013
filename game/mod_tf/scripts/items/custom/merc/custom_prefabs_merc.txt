@@ -126,7 +126,6 @@
 			
 			"image_inventory"	"backpack/weapons/w_models/w_shotgun"
 
-			"model_player"	"models/weapons/v_models/v_shotgun_merc.mdl"
 			"model_world"	"models/weapons/c_models/c_shotgun/c_shotgun.mdl"
 			
 			"used_by_classes"
