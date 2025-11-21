@@ -246,6 +246,10 @@ float CTFRevolver::GetWeaponSpread( void )
 }
 
 #ifdef CLIENT_DLL
+static ConVar tfmod_revolver_dynamic_crosshair("tfmod_revolver_dynamic_crosshair", "1", FCVAR_ARCHIVE, "Use a dynamic crosshair to show accuracy on the revolver.");
+#endif
+
+#ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -257,7 +261,7 @@ void CTFRevolver::GetWeaponCrosshairScale(float& flScale)
 
 	BaseClass::GetWeaponCrosshairScale(flScale);
 
-	if (true)//tf_revolver_dynamic_crosshair.GetBool())
+	if ( tfmod_revolver_dynamic_crosshair.GetBool() )
 	{
 		const bool bCanHeadShot = CanHeadshot();
 		float flHeadShotCooldown = 1.0f;
