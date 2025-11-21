@@ -801,11 +801,20 @@ bool CTFMinigun::CanHolster( void ) const
 			return true;
 	}
 
-	if ( GetActivity() == ACT_MP_ATTACK_STAND_POSTFIRE )
+	if ( bCanHolster )
 	{
-		if ( !IsViewModelSequenceFinished() )
-		{
+		if ( m_iWeaponState == AC_STATE_STARTFIRING || m_iWeaponState == AC_STATE_FIRING )
 			return false;
+	}
+	else
+	{
+		if ( m_iWeaponState > AC_STATE_IDLE )
+			return false;
+
+		if ( GetActivity() == ACT_MP_ATTACK_STAND_POSTFIRE || GetActivity() == ACT_PRIMARY_ATTACK_STAND_POSTFIRE )
+		{
+			if ( !IsViewModelSequenceFinished() )
+				return false;
 		}
 	}
 
