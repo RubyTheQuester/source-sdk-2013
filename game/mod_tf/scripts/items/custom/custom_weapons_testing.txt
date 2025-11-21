@@ -596,6 +596,47 @@
 			}
 		}
 		
+		"34613"
+		{
+			"name"	"Councilman"
+			"prefab" " moditem_testing_prefab weapon_revolver_engineer"
+			
+			"propername"		"0"
+			
+			"item_name"		"#TF_Weapon_Councilman"
+			"item_description"	"#TF_Weapon_Councilman_Desc"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -6"
+				"crit_dmg_falloff"			"1"
+			}
+			
+			"attributes"
+			{
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.85"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.2"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
+		
 		//END OF THE LINE
 	}
 }
