@@ -61,6 +61,12 @@ rule DemomanTauntHandshake
 }
 // Ullapool Caber taunt - from unused Bottle taunt.
 
+rule MedicTauntMedicSMG
+{
+	criteria ConceptPlayerTaunt IsMedic WeaponIsMedicSMG
+	response MedicTauntPrimary
+}
+	
 //============================================================================================================
 //Mercenary
 //============================================================================================================
@@ -220,7 +226,14 @@ rule DemomanTauntHandshake
 		response MercenaryTauntGroovy
 	}
 	
+	rule MercenaryTauntMedkit
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsMedkit
+		response MercenaryTauntGroovy
+	}
+	
 	//Dead Meat
+	//NONE
 	
 	//Bomb Scare
 	//NONE

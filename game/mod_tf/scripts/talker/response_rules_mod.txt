@@ -7,6 +7,8 @@ criterion "WeaponIsTranq" "playerweapon" "tf_weapon_tranq" "required"
 
 criterion "WeaponIsHandshake" "item_name" "The Scottish Handshake" "required" weight 10
 
+criterion "WeaponIsMedicSMG" "playerweapon" "tf_weapon_smg_medic" "required"
+
 //============================================================================================================
 //START OPEN FORTRESS
 //------------------------------------------------------------------------------------------------------------
@@ -23,6 +25,7 @@ criterion "IsNotVictimMercenary" "victimclass" "!=Mercenary" "required" weight 0
 
 //Melees
 criterion "WeaponIsCrowbar" "playerweapon" "tf_weapon_crowbar" "required"
+criterion "WeaponIsMedkit" "playerweapon" "tf_weapon_medkit" "required"
 
 //Pistols
 criterion "WeaponIsPistolMercenary" "playerweapon" "tf_weapon_pistol_mercenary" "required"
