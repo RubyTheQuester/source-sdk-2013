@@ -5822,8 +5822,9 @@ void CTFPlayerShared::OnAddPoison(void)
 {
 #ifdef CLIENT_DLL
 
-	m_pOuter->m_pPoisonEffect = m_pOuter->ParticleProp()->Create("powerup_plague_carrier", PATTACH_ABSORIGIN_FOLLOW);
+	m_pOuter->m_pPoisonEffect = m_pOuter->ParticleProp()->Create("infection_floating_specs", PATTACH_ABSORIGIN_FOLLOW);
 
+	m_pOuter->ParticleProp()->AddControlPoint( m_pOuter->m_pPoisonEffect, 1, m_pOuter, PATTACH_ABSORIGIN_FOLLOW );
 #endif // CLIENT_DLL
 }
 

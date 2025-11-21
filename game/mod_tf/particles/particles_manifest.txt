@@ -105,4 +105,5 @@ particles_manifest
 		"file"		"!particles/summer2025_unusuals.pcf"
 		"file"		"!particles/sniper_tracer.pcf"
 		"file"		"!particles/classic_rocket_trail.pcf"
+		"file"		"!particles/medic_infection.pcf"
 }
