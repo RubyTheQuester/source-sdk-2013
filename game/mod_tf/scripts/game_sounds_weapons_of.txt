@@ -6,7 +6,7 @@
 	"channel"	"CHAN_STATIC"
 	"volume"	"0.35"
 	"soundlevel"	"SNDLVL_NORM"
-	"wave"		"weapons/dmpistol/pistol_clipout.wav"
+	"wave"		")weapons/dmpistol/pistol_clipout.wav"
 }
 
 "Weapon_Pistol.SlideBack"
@@ -14,7 +14,7 @@
 	"channel"	"CHAN_STATIC"
 	"volume"	"1.0"
 	"soundlevel"	"SNDLVL_NORM"
-	"wave"		"weapons/dmpistol/pistol_slideback.wav"
+	"wave"		")weapons/dmpistol/pistol_slideback.wav"
 }
 
 "Weapon_Pistol.SlideForward"
@@ -22,7 +22,7 @@
 	"channel"	"CHAN_STATIC"
 	"volume"	"1.0"
 	"soundlevel"	"SNDLVL_NORM"
-	"wave"		"weapons/dmpistol/pistol_slideforward.wav"
+	"wave"		")weapons/dmpistol/pistol_slideforward.wav"
 }
 
 "Weapon_Pistol.ReloadScout"
@@ -30,7 +30,7 @@
 	"channel"	"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".5"
-	"wave"		"weapons/pistol_reload_scout.wav"
+	"wave"		")weapons/pistol_reload_scout.wav"
 }
 
 "Weapon_Pistol.WorldReload"
@@ -38,7 +38,7 @@
 	"channel"		"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"		".5"
-	"wave"		"weapons/pistol_worldreload.wav"
+	"wave"		")weapons/pistol_worldreload.wav"
 }
 
 "Weapon_PistolDM.Single"
@@ -46,7 +46,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		"weapons/dmpistol/pistol_dm_shoot.wav"
+	"wave"		")weapons/dmpistol/pistol_dm_shoot.wav"
 }
 
 "Weapon_PistolDM.SingleCrit"
@@ -54,7 +54,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		"weapons/dmpistol/pistol_dm_shoot_crit.wav"
+	"wave"		")weapons/dmpistol/pistol_dm_shoot_crit.wav"
 }
 
 "Weapon_PistolDM.WorldReload"
@@ -62,7 +62,7 @@
 	"channel"		"CHAN_ITEM"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"		".5"
-	"wave"		"weapons/dmpistol/pistol_worldreload_merc.wav"
+	"wave"		")weapons/dmpistol/pistol_worldreload_merc.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // Six Shooter
@@ -72,7 +72,7 @@
 	"channel"	"CHAN_AUTO"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".5"
-	"wave"		"weapons/sixshooter/draw_six_shooter.wav"
+	"wave"		")weapons/sixshooter/draw_six_shooter.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // SUPER SHOTGUN
@@ -83,7 +83,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		"weapons/supershotgun/supershotgun_shoot.wav"
+	"wave"		")weapons/supershotgun/supershotgun_shoot.wav"
 }
 
 "Weapon_SuperShotGun.SingleCrit"
@@ -91,7 +91,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
-	"wave"		"weapons/supershotgun/supershotgun_shoot_crit.wav"
+	"wave"		")weapons/supershotgun/supershotgun_shoot_crit.wav"
 }
 
 "Weapon_SuperShotGun.TubeOpen"
@@ -100,7 +100,7 @@
 	"volume"	"1"
 	"soundlevel"	"SNDLVL_NORM"
 
-	"wave"		"weapons/supershotgun/supershotgun_tube_open.wav"
+	"wave"		")weapons/supershotgun/supershotgun_tube_open.wav"
 }
 
 "Weapon_SuperShotGun.ShellsIn"
@@ -109,7 +109,7 @@
 	"volume"	"1"
 	"soundlevel"	"SNDLVL_NORM"
 
-	"wave"		"weapons/supershotgun/supershotgun_shells_in.wav"
+	"wave"		")weapons/supershotgun/supershotgun_shells_in.wav"
 }
 
 "Weapon_SuperShotGun.TubeClose"
@@ -118,7 +118,7 @@
 	"volume"	"1"
 	"soundlevel"	"SNDLVL_NORM"
 
-	"wave"		"weapons/supershotgun/supershotgun_tube_close.wav"
+	"wave"		")weapons/supershotgun/supershotgun_tube_close.wav"
 }
 
 "Weapon_SuperShotGun.WorldReload"
@@ -127,7 +127,7 @@
 	"volume"	"1"
 	"soundlevel"	"SNDLVL_NORM"
 
-	"wave"		"weapons/supershotgun/supershotgun_worldreload.wav"
+	"wave"		")weapons/supershotgun/supershotgun_worldreload.wav"
 }
 // ------------------------------------------------------------------------------------ //
 // CROWBAR
@@ -138,7 +138,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		"weapons/crowbar/cbar_miss1.wav"
+	"wave"		")weapons/crowbar/cbar_miss1.wav"
 }
 
 "Weapon_Crowbar.HitFlesh"
@@ -148,9 +148,9 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/crowbar/cbar_hitbod1.wav"
-		"wave"		"weapons/crowbar/cbar_hitbod2.wav"
-		"wave"		"weapons/crowbar/cbar_hitbod3.wav"
+		"wave"		")weapons/crowbar/cbar_hitbod1.wav"
+		"wave"		")weapons/crowbar/cbar_hitbod2.wav"
+		"wave"		")weapons/crowbar/cbar_hitbod3.wav"
 	}
 }
 
@@ -161,8 +161,8 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/crowbar/cbar_hit1.wav"
-		"wave"		"weapons/crowbar/cbar_hit2.wav"
+		"wave"		")weapons/crowbar/cbar_hit1.wav"
+		"wave"		")weapons/crowbar/cbar_hit2.wav"
 	}
 }
 
@@ -175,8 +175,8 @@
 
 	"rndwave"
 	{
-		"wave"		"weapons/crowbar/crowbar_impact1.wav"
-		"wave"		"weapons/crowbar/crowbar_impact2.wav"
+		"wave"		")weapons/crowbar/crowbar_impact1.wav"
+		"wave"		")weapons/crowbar/crowbar_impact2.wav"
 	}
 }
 
@@ -189,7 +189,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		"weapons/hl1/cbar_miss1.wav"
+	"wave"		")weapons/hl1/cbar_miss1.wav"
 }
 
 
@@ -198,7 +198,7 @@
 	"channel"	"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
-	"wave"		"weapons/hl1/cbar_miss1_crit.wav"
+	"wave"		")weapons/hl1/cbar_miss1_crit.wav"
 }
 
 "Weapon_Crowbar_TFC.HitFlesh"
@@ -208,9 +208,9 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/hl1/cbar_hitbod1.wav"
-		"wave"		"weapons/hl1/cbar_hitbod2.wav"
-		"wave"		"weapons/hl1/cbar_hitbod3.wav"
+		"wave"		")weapons/hl1/cbar_hitbod1.wav"
+		"wave"		")weapons/hl1/cbar_hitbod2.wav"
+		"wave"		")weapons/hl1/cbar_hitbod3.wav"
 	}
 }
 
@@ -221,8 +221,8 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/hl1/cbar_hit1.wav"
-		"wave"		"weapons/hl1/cbar_hit2.wav"
+		"wave"		")weapons/hl1/cbar_hit1.wav"
+		"wave"		")weapons/hl1/cbar_hit2.wav"
 	}
 }
 
@@ -234,8 +234,8 @@
 
 	"rndwave"
 	{
-		"wave"		"weapons/hl1/cbar_hit1.wav"
-		"wave"		"weapons/hl1/cbar_hit2.wav"
+		"wave"		")weapons/hl1/cbar_hit1.wav"
+		"wave"		")weapons/hl1/cbar_hit2.wav"
 	}
 }
 
@@ -311,7 +311,7 @@
 	"channel"	"CHAN_AUTO"
 	"soundlevel"	"SNDLVL_74dB"
 	"volume"	".7"
-	"wave"		"weapons/draw_melee.wav"
+	"wave"		")weapons/draw_melee.wav"
 }
 
 "Weapon_Medkit.Miss"
@@ -320,7 +320,7 @@
 	"soundlevel"	"SNDLVL_64dB"
 	"volume"	".6"
 	//"wave"		")items/medshotno1.wav"
-	//"wave"			"weapons/hl1/cbar_hit1.wav"
+	//"wave"			")weapons/hl1/cbar_hit1.wav"
 	"wave"		"common/null.wav"
 }
 

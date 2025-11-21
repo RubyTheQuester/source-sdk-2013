@@ -32,4 +32,5 @@ game_sounds_manifest
 	
 	"precache_file"		"scripts/game_sounds_vo_of.txt"
 	"precache_file"		"scripts/game_sounds_weapons_of.txt"
+	"precache_file"		"scripts/game_sounds_weapons_pf.txt"
 }

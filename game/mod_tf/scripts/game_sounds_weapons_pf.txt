@@ -1,0 +1,43 @@
+// ------------------------------------------------------------------------------------ //
+// Mat 49
+// ------------------------------------------------------------------------------------ //
+"Weapon_SMG_Medic.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_80dB"
+	"volume"	"1.0"
+	"wave"		")weapons/medic_smg/med_smg_shoot.wav"
+}
+
+"Weapon_SMG_Medic.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_80dB"
+	"volume"	"1.0"
+	"wave"		")weapons/medic_smg/med_smg_shoot_crit.wav"
+}
+
+"Weapon_SMG_Medic.WorldReload"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.35"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		"weapons/smg_worldreload.wav"
+}
+
+"Weapon_SMG_Medic.Draw"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/medic_smg/draw_secondary.wav"
+}
+
+"Weapon_SMG_Medic.StockPull"
+{
+	"channel"	"CHAN_AUTO"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".5"
+	"wave"		"weapons/medic_smg/scatter_gun_double_shells_out.wav"
+}
