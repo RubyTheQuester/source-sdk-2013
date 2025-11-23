@@ -350,7 +350,7 @@ ActionResult< CTFBot >	CTFBotTacticalMonitor::Update( CTFBot *me, float interval
 		}
 		else
 		{
-			isHurt = me->m_Shared.InCond( TF_COND_BURNING ) || ( (float)me->GetHealth() / (float)me->GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
+			isHurt = ( me->m_Shared.InCond( TF_COND_BURNING ) || me->m_Shared.InCond( TF_COND_POISON ) ) || ( (float)me->GetHealth() / (float)me->GetMaxHealth() ) < tf_bot_health_ok_ratio.GetFloat();
 		}
 
 		if ( isHurt && CTFBotGetHealth::IsPossible( me ) )

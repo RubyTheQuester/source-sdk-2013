@@ -341,6 +341,9 @@ bool CTFBotMedicHeal::IsStable( CTFPlayer *patient ) const
 	if ( patient->m_Shared.InCond( TF_COND_BURNING ) )
 		return false;
 
+	if ( patient->m_Shared.InCond( TF_COND_POISON ) )
+		return false;
+
 	if ( patient->m_Shared.InCond( TF_COND_BLEEDING ) )
 		return false;
 

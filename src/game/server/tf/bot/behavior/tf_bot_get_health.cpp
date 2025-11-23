@@ -145,7 +145,7 @@ bool CTFBotGetHealth::IsPossible( CTFBot *me )
 	float t = ( healthRatio - tf_bot_health_critical_ratio.GetFloat() ) / ( tf_bot_health_ok_ratio.GetFloat() - tf_bot_health_critical_ratio.GetFloat() );
 	t = clamp( t, 0.0f, 1.0f );
 
-	if ( me->m_Shared.InCond( TF_COND_BURNING ) )
+	if ( me->m_Shared.InCond( TF_COND_BURNING ) ||  me->m_Shared.InCond( TF_COND_POISON ) )
 	{
 		// on fire - get health now
 		t = 0.0f;
