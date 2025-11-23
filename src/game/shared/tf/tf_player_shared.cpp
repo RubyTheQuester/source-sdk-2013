@@ -138,7 +138,7 @@ ConVar tfmod_infection_spread_range		( "tfmod_infection_spread_range", "96", FCV
 ConVar tfmod_infection_spread_pulse_time( "tfmod_infection_spread_pulse_time", "1.0", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How often the infection spread pulse happens" );
 ConVar tfmod_infection_spread_decrease	( "tfmod_infection_spread_decrease", "1.25", FCVAR_NOTIFY | FCVAR_REPLICATED,	"How much does the infection time decrease from carrier to viticm" );
 
-ConVar tfmod_spywalk_invert( "tfmod_spywalk_invert", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "If set; while disguised, you will walk at normal walk speed instead of the disguised class's walk speed" );
+static ConVar tfmod_spywalk_invert( "tfmod_spywalk_invert", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "If set; while disguised, you will walk at normal walk speed instead of the disguised class's walk speed" );
 
 #ifdef GAME_DLL
 ConVar tf_boost_drain_time( "tf_boost_drain_time", "15.0", FCVAR_DEVELOPMENTONLY, "Time is takes for a full health boost to drain away from a player.", true, 0.1, false, 0 );
@@ -11679,6 +11679,11 @@ void CTFPlayerShared::HealthKitPickupEffects( int iHealthGiven /*= 0*/ )
 	if ( InCond( TF_COND_PLAGUE ) )
 	{
 		RemoveCond( TF_COND_PLAGUE );
+	}
+	// and cures infection
+	if ( InCond( TF_COND_POISON ) )
+	{
+		RemoveCond(TF_COND_POISON);
 	}
 
 	// Spawns a number on the player's health bar in the HUD, and also

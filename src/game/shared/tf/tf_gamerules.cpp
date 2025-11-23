@@ -10892,8 +10892,9 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	pTFPlayer->m_bFlipViewModels = Q_strcmp( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ), "1" ) == 0;
 
 	// Figure out why this fucks with bots.
-	pTFPlayer->SetJumpSound( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
-	pTFPlayer->SetSpywalkInvert( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
+	//pTFPlayer->SetJumpSound( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
+	//pTFPlayer->SetSpywalkInvert( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
+
 	pTFPlayer->SetFireCenterProjectile( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_fire_center_projectile" ) ) > 0 );
 }
 

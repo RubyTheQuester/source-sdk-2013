@@ -1853,7 +1853,7 @@ void CTFWeaponBase::AbortReload( void )
 }
 
 #ifdef TF_CLIENT_DLL
-ConVar tfmod_fire_center_projectile("tfmod_fire_center_projectile", "0", FCVAR_USERINFO | FCVAR_ARCHIVE, "Fires projectile center.");
+static ConVar tfmod_fire_center_projectile("tfmod_fire_center_projectile", "0", FCVAR_USERINFO | FCVAR_ARCHIVE, "Fires projectile center.");
 #endif
 
 //-----------------------------------------------------------------------------
@@ -5642,6 +5642,8 @@ bool CTFWeaponBase::IsViewModelFlipped( void )
 	return false;
 }
 
+extern ConVar tfmod_fire_center_projectile;
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -5652,7 +5654,7 @@ bool CTFWeaponBase::DoesFireCenterProjectile( void )
 		return false;
 
 #ifdef GAME_DLL
-	if (  pPlayer->GetFireCenterProjectile() == true)
+	if ( pPlayer->GetFireCenterProjectile() == true)
 	{
 		return true;
 	}

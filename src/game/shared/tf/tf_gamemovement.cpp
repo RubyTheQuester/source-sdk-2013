@@ -80,7 +80,7 @@ ConVar tf_movement_lost_footing_friction( "tf_movement_lost_footing_friction", "
 ConVar	tfmod_duckjump("tfmod_duckjump", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Allow jumping while ducked");
 
 #if defined (CLIENT_DLL)
-ConVar 	tfmod_jumpsound("tfmod_jumpsound", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Hough", true, 0, true, 2);
+static ConVar	tfmod_jumpsound("tfmod_jumpsound", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_USERINFO, "Hough", true, 0, true, 2);
 #endif
 
 extern ConVar cl_forwardspeed;
