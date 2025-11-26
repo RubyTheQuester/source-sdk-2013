@@ -2558,6 +2558,7 @@ void CWeaponMedigun::ClientThink()
 	{
 		ForceHealingTargetUpdate();
 	}
+	//TODO - FIGURE OUT WHY THIS REPEATS SO OFTEN - Ruby
 
 	if ( pFiringPlayer->m_Shared.IsEnteringOrExitingFullyInvisible() )
 	{
@@ -2578,8 +2579,10 @@ void CWeaponMedigun::UpdateEffects( void )
 	C_BaseEntity *pEffectOwner = this;
 	if ( pLocalPlayer == pFiringPlayer )
 	{
+		//TODO - FIX THIS FUCKASS MEDIGUN BUG - Ruby
 		pEffectOwner = pLocalPlayer->GetRenderedWeaponModel();
-		//Fuck ass Bug
+
+		//pEffectOwner = pLocalPlayer->GetActiveWeapon();
 	}
 
 	// If we're still healing and our owner changed, then we did something
