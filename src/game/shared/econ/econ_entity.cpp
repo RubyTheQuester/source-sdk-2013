@@ -1134,7 +1134,9 @@ void CEconEntity::UpdateAttachmentModels( void )
 	}
 
 	// Update the state of attachment models for this item
-	bool bItemNeedsAttachment = pItemDef && ( pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly() || pItemDef->ShouldAttachToHandsVModels() );
+	bool bItemNeedsAttachment = pItemDef && ( pItemDef->ShouldAttachToHands() || pItemDef->ShouldAttachToHandsVMOnly()
+		|| pItemDef->ShouldAttachToHandsVModels()
+		);
 	if (bItemNeedsAttachment)
 	{
 		bool bShouldShowAttachment = false;

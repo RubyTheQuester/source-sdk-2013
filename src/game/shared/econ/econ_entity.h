@@ -112,14 +112,15 @@ public:
 	virtual int				DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags );
 
 	// Attachments
-	bool					WantsToOverrideViewmodelAttachments(void) 
-	{ 
-		// { return (m_hViewmodelAttachment != NULL && GetAttributeContainer()->GetItem()->GetStaticData()->ShouldAttachToHands()); }
+	bool					WantsToOverrideViewmodelAttachments(void) { return (m_hViewmodelAttachment != NULL && GetAttributeContainer()->GetItem()->GetStaticData()->ShouldAttachToHands()); }
+	/* 
+	{
 		return (
 			(m_hViewmodelAttachment != NULL) && 
 			GetAttributeContainer()->GetItem()->GetStaticData()->ShouldAttachToHandsVModels()
 			); 
 	}
+	*/
 	virtual int				LookupAttachment( const char *pAttachmentName );
 	virtual bool			GetAttachment( const char *szName, Vector &absOrigin ) { return BaseClass::GetAttachment(szName,absOrigin); }
 	virtual bool			GetAttachment( const char *szName, Vector &absOrigin, QAngle &absAngles ) { return BaseClass::GetAttachment(szName,absOrigin,absAngles); }
