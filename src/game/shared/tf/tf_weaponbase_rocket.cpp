@@ -181,12 +181,20 @@ void CTFBaseRocket::Spawn( void )
 	if ( bBouncer )
 	{
 		SetTouch( &CTFBaseRocket::BouncyRocketTouch );
-		SetThink( &CTFBaseRocket::BouncyFlyThink );
 	}
 	else
 	{
 		SetTouch( &CTFBaseRocket::RocketTouch );
 	}
+
+	int bGravity = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), bGravity, projectile_has_gravity);
+
+	if ( bGravity )
+	{
+		SetThink( &CTFBaseRocket::GravityFlyThink );
+	}
+
 	SetNextThink( gpGlobals->curtime );
 
 	AddFlag( FL_GRENADE );
@@ -270,7 +278,6 @@ int CTFBaseRocket::DrawModel( int flags )
 // Server specific functions.
 //
 #else
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -406,17 +413,18 @@ void CTFBaseRocket::BouncyRocketTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::BouncyFlyThink(void)
+void CTFBaseRocket::GravityFlyThink(void)
 {
-	//DevMsg("Test 1 - x = %.02f,  y = %.02f  z = %.02f,\n", GetAbsVelocity().x, GetAbsVelocity().y, GetAbsVelocity().z);
+	QAngle angForward;
+	VectorAngles( GetAbsVelocity(), angForward );
+	SetAbsAngles( angForward );
 
-	//QAngle angles = GetAbsAngles();
+	DevMsg( 2,  "==========GravityFlyThink Start==========\n" );
+	DevMsg( 2,  "Velocity - x = %.02f, y = %.02f, z = %.02f\n", GetAbsVelocity().x, GetAbsVelocity().y, GetAbsVelocity().z );
+	DevMsg( 2,  "Angles - x = %.02f, y = %.02f, z = %.02f\n",	GetAbsAngles().x,	GetAbsAngles().y,	GetAbsAngles().z );
+	DevMsg( 2,  "===========GravityFlyThink End===========\n" );
 
-	//QAngle m_rotationVector = QAngle(GetAbsVelocity().x, GetAbsVelocity().y, GetAbsVelocity().z);
-
-	//rotation
-	//SetAbsAngles(m_rotationVector);
-
+	//lol
 	SetNextThink( gpGlobals->curtime + 0.05f );
 }
 

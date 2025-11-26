@@ -101,7 +101,7 @@ public:
 	int				GetStunLevel( void );
 
 	virtual void	BouncyRocketTouch(CBaseEntity* pOther);
-	virtual void	BouncyFlyThink(void);
+	virtual void	GravityFlyThink(void);
 
 	virtual bool	ShouldNotDetonate( void );
 	virtual void	Destroy( bool bBlinkOut = true, bool bBreakRocket = false ) OVERRIDE;

@@ -198,6 +198,10 @@ void CTFProjectile_Rocket::ResolveFlyCollisionCustom(trace_t& trace, Vector& vec
 	// Stop if on ground.
 	if ( trace.plane.normal.z > 0.7f )			// Floor
 	{
+		// Verify that we have an entity.
+		CBaseEntity *pEntity = trace.m_pEnt;
+		Assert( pEntity );
+
 		SetAbsVelocity( vecAbsVelocity );
 
 		if ( flSpeedSqr < ( 30 * 30 ) )
@@ -233,7 +237,7 @@ void CTFProjectile_Rocket::ResolveFlyCollisionCustom(trace_t& trace, Vector& vec
 			VectorNormalize( vecBaseDir );
 			float flScale = vecDelta.Dot( vecBaseDir );
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecMove ); 
+			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecMove );
 			VectorMA( vecMove, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecMove );
 			PhysicsPushEntity( vecMove, &trace );
 		}
