@@ -377,6 +377,12 @@
 
 			"image_inventory"				"backpack/crafting/token_primary"
 			
+			"model_world"					"models/weapons/c_models/c_biggun/c_biggun.mdl"
+			"model_player"					"models\weapons\v_models\v_biggun.mdl"
+			
+			"attach_to_hands"				"0"
+			"model_attach_to_hands"			"1"
+			
 			"static_attrs"
 			{
 				"min_viewmodel_offset"					"5 0 -6"
@@ -408,16 +414,16 @@
 					"value"	"0"
 				}
 				
-				"reload time increased"
-				{
-					"attribute_class"	"mult_reload_time"
-					"value"	"1.5"
-				}
-				
 				"decapitate type"
 				{
 					"attribute_class"	"decapitate_type"
 					"value"	"1"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
 				}
 			}
 
@@ -553,48 +559,9 @@
 			
 		}
 		
-		"34611"
-		{
-			"name"	"Heat-seeking Flaregun"
-			"prefab"	"moditem_testing_prefab weapon_flaregun"
-			
-			"item_name"	"#TF_Weapon_HeatSeeker"
-			
-			"customitem" "1"
-			
-			"image_inventory"				"backpack/crafting/token_secondary"
-			
-			"attributes"
-			{
-				"projectile heat seek"
-				{
-					"attribute_class"	"mod_projectile_heat_seek_power"
-					"value" "2000"
-				}
-			}
-		}
+		//"34611"
 		
-		"34612"
-		{
-			"name"				"KillCombo Fire Rate"
-			"prefab"			"moditem_testing_prefab weapon_minigun"
-			
-			"item_name"			"#TF_Weapon_KillCombo"
-			
-			"propername"		"1"
-			
-			"image_inventory"				"backpack/crafting/token_primary"
-			
-			
-			"attributes"
-			{
-				"kill_combo_fire_rate_boost"
-				{
-					"attribute_class"	"kill_combo_fire_rate_boost"
-					"value" "0.15"
-				}
-			}
-		}
+		//"34612"
 		
 		"34613"
 		{
@@ -605,6 +572,9 @@
 			
 			"item_name"		"#TF_Weapon_Councilman"
 			"item_description"	"#TF_Weapon_Councilman_Desc"
+			
+			"image_inventory"				"backpack/crafting/token_secondary"
+			"model_player"					"models/weapons/c_models/c_councilman/c_councilman.mdl"
 			
 			"static_attrs"
 			{
@@ -634,6 +604,12 @@
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
 				}
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot" "Weapon_Councilman.Single"
+				"sound_burst" 		"Weapon_Councilman.SingleCrit"
 			}
 		}
 		

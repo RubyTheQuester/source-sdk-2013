@@ -196,18 +196,28 @@
 // ------------------------------------------------------------------------------------ //
 "Weapon_Deputy.Single"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		"weapons/deputy/pistol_shoot.wav"
+	"rndwave"
+	{
+		"wave"		")weapons/deputy/revolver_engi_shoot1.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot2.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot3.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot4.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot5.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot6.wav"
+	}
 }
 
 "Weapon_Deputy.SingleCrit"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"		"CHAN_WEAPON"
 	"soundlevel"	"SNDLVL_94dB"
-	"volume"	"1.0"
-	"wave"		"weapons/deputy/pistol_shoot_crit.wav"
+	"rndwave"
+	{
+		"wave"		")weapons/deputy/revolver_engi_shoot_crit1.wav"
+		"wave"		")weapons/deputy/revolver_engi_shoot_crit2.wav"
+	}
 }
 
 // ------------------------------------------------------------------------------------ //
@@ -265,4 +275,23 @@
 	"soundlevel"	"SNDLVL_94dB"
 	"volume"	"1.0"
 	"wave"		"weapons/foxhound/pistol_shoot_crit.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// Councilman
+// ------------------------------------------------------------------------------------ //
+"Weapon_Councilman.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/councilman/pistol_shoot.wav"
+}
+
+"Weapon_Councilman.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/councilman/pistol_shoot_crit.wav"
 }

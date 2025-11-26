@@ -98,3 +98,46 @@
 				}
 			}
 		}
+		
+		//"34611"
+		{
+			"name"	"Heat-seeking Flaregun"
+			"prefab"	"moditem_testing_prefab weapon_flaregun"
+			
+			"item_name"	"#TF_Weapon_HeatSeeker"
+			
+			"customitem" "1"
+			
+			"image_inventory"				"backpack/crafting/token_secondary"
+			
+			"attributes"
+			{
+				"projectile heat seek"
+				{
+					"attribute_class"	"mod_projectile_heat_seek_power"
+					"value" "2000"
+				}
+			}
+		}
+		
+		//"34612"
+		{
+			"name"				"KillCombo Fire Rate"
+			"prefab"			"moditem_testing_prefab weapon_minigun"
+			
+			"item_name"			"#TF_Weapon_KillCombo"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			
+			
+			"attributes"
+			{
+				"kill_combo_fire_rate_boost"
+				{
+					"attribute_class"	"kill_combo_fire_rate_boost"
+					"value" "0.15"
+				}
+			}
+		}
