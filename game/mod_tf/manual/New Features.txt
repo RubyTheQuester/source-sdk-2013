@@ -14,13 +14,21 @@
 
 - Mini missions thing
 
-- Custom Items
+- Custom Items System
 
 - Armory
 - - Allows buying of items tha are not owned by the player
 
 - Various Cvars
 - - Basically anything you see when pressing the create game button
+
+- This mod
+- - This mod is a branch of TFSOLO's code, building off what they has done.
+
+///========================================================///
+///====New Features brought by Source SDK 2013 BDS Base====///
+///========================================================///
+- TF Bot Randomized Weapons
 
 ///========================================///
 ///====New Features brought by Comtress====///
@@ -77,6 +85,8 @@
 - Medic SMG
 - - Third Person Animations
 - - First Person Animations
+
+- Infection Placeholder Particles
 
 ///=================================================///
 ///====New Features brought by Valve (Beta-slop)====///
