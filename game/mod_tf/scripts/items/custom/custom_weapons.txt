@@ -295,6 +295,9 @@
 			"item_type_name"	"#TF_WeaponType_Syringe"
 			"item_description"	"#TF_Weapon_Syringe_Desc"
 			
+			"item_logname"	"syringe"
+			"item_iconname"	"syringe"
+			
 			"image_inventory"				"backpack\weapons\c_models\c_syringe/c_syringe"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
@@ -317,7 +320,7 @@
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.1"
+					"value"	"0.5"
 				}
 				
 				"infection"
@@ -346,8 +349,6 @@
 			"prefab" "moditem_prefab weapon_sniperrifle"
 			
 			"item_name"	"#TF_Weapon_Walkabout"
-			
-			"customitem" "1"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_classic_force/c_classic_force"
 			"image_inventory_size_w"		"128"
@@ -395,8 +396,6 @@
 			"prefab"	"moditem_prefab weapon_shotgun"
 			
 			"item_name"	"#TF_Weapon_DoubleTrouble"
-			
-			"customitem" "1"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_doubletrouble/c_doubletrouble"
 			"image_inventory_size_w"		"128"
@@ -505,7 +504,6 @@
 			"item_name"	"#TF_Weapon_Pacificateur"
 			"item_description"	"#TF_Weapon_Pacificateur_desc"
 			
-			"customitem" "1"
 			
 			"image_inventory"				"backpack/weapons/c_models/c_pacificateur/c_pacificateur"
 			"image_inventory_size_w"		"128"
@@ -592,8 +590,6 @@
 			
 			"item_name"	"#TF_Weapon_BrokenSteel"
 			
-			"customitem" "1"
-			
 			"image_inventory"				"backpack/weapons/c_models/c_broken_steel/c_broken_steel"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
@@ -632,6 +628,208 @@
 				"sound_single_shot"		"Weapon_BrokenSteel.Single"
 				"sound_burst"			"Weapon_BrokenSteel.SingleCrit"
 				"sound_reload"			"Weapon_BrokenSteel.Reload"
+			}
+		}
+		
+		"34459"
+		{
+			"name"				"SpeedPad"
+			"prefab"			"moditem_testing_prefab weapon_pda"
+			
+			"item_name"			"#TF_Weapon_SpeedPad"
+			"item_description"	"#TF_Weapon_SpeedPad_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_speedpad/c_speedpad"
+			"model_player"					"models/weapons/c_models/c_speedpda/c_speedpda.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			
+			"attributes"
+			{
+				"mod weapon builds speedpad"
+				{
+					"attribute_class"	"teleporter_is_speedpad"
+					"value" 	"1" 
+				}
+				
+				"engineer teleporter build rate multiplier"
+				{
+					"attribute_class"	"teleporter_build_rate_multiplier"
+					"value" 	"5" 
+				}
+			}
+			
+		}
+		
+		"34460"
+		{
+			"name"	"Health Drink"
+			"prefab"	"moditem_prefab weapon_scout_drink"
+			
+			"item_name"			"#TF_Weapon_EnergyDrink_Healthy"
+			"item_description"	"#TF_Weapon_EnergyDrink_Healthy_Desc"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_slam_drink/c_slam_drink"
+			"model_player"					"models/weapons/c_models/c_slam_drink/c_slam_drink.mdl"
+			
+			"static_attrs"
+			{
+				"item_meter_charge_rate"	"15"
+			}
+			
+			"attributes"
+			{
+				"lunchbox adds minicrits"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
+				"charge recharge rate increased"
+				{
+					"attribute_class"	"charge_recharge_rate"
+					"value"	"1.25"
+				}
+			}
+		}
+		
+		"34461"
+		{
+			"name"				"Mobile Minigun"
+			"prefab"			"moditem_testing_prefab weapon_minigun"
+			
+			"item_name"			"#TF_Weapon_MobileMinigun"
+			"item_description"	"#TF_Weapon_MobileMinigun_Desc"
+			
+			"propername"		"1"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_heavy_artillery/c_heavy_artillery"
+			"model_player"					"models/weapons/c_models/c_heavyartillery/c_heavyartillery.mdl"
+			
+			"used_by_classes"
+			{
+				"heavy"	"1"
+			}
+			
+			"attributes"
+			{
+				"minigun spinup time decreased"
+				{
+					"attribute_class"	"mult_minigun_spinup_time"
+					"value" "0.25"
+				}
+
+				"minigun no spin sounds"
+				{
+					"attribute_class"	"minigun_no_spin_sounds"
+					"value" "1"
+				}
+
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"	"0.5"
+				}
+
+				"aiming movespeed increased"
+				{
+					"attribute_class"	"mult_player_aiming_movespeed"
+					"value"	"1.33"
+				}
+
+				"duckwalk deployed"
+				{
+					"attribute_class"	"allow_duckwalks_deployed"
+					"value"	"1"
+				}
+				
+				"jump deployed"
+				{
+					"attribute_class"	"allow_jump_while_deployed"
+					"value"	"1"
+				}
+			}
+		}
+		
+		"34462"
+		{
+			"name"				"Reflect Bat"
+			"prefab"			"moditem_testing_prefab weapon_bat"
+
+			"item_name"			"#TF_Weapon_Reflect_Bat"
+			"item_description"	"#TF_Weapon_Reflect_Bat_Desc"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_tennisracket/c_tennisracket"
+			"model_player"					"models/weapons/c_models/c_tennisracket/c_tennisracket.mdl"
+			
+			"propername"		"1"
+			
+			"static_attrs"
+			{
+				"single wep deploy time decreased"		"0.8"
+			}
+			
+			"attributes"
+			{
+				"sword deflect"
+				{
+					"attribute_class"	"sword_deflect"
+					"value" "1"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.1"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.75"
+				}
+			}
+		}
+		
+		"34463"
+		{
+			"name"				"Dynamite Sapper"
+			"prefab"			"moditem_testing_prefab weapon_sapper"
+			
+			"item_class"		"tf_weapon_sapper"
+
+			"item_name"			"#TF_Weapon_Dynamite_Sapper"
+			"item_description"	"#TF_Weapon_Dynamite_Sapper_Desc"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_clock_sapper/c_clock_sapper"
+			"model_player"					"models/weapons/c_models/c_clock_sapper/c_clock_sapper.mdl"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"sapper_explodes_on_det"
+				{
+					"attribute_class"	"sapper_explodes_on_det"
+					"value" "1"
+				}
+				
+				"sapper health penalty"
+				{
+					"attribute_class"	"mult_sapper_health"
+					"value" "0.5"
+				}
+				
+				"sapper damage bonus"
+				{
+					"attribute_class"	"mult_sapper_damage"
+					"value" "2"
+				}
 			}
 		}
 		//END OF THE LINE

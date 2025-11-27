@@ -43,8 +43,8 @@
 		"moditem_prefab"
 		{
 			"show_in_armory"	"1"
-			"customitem" 		"1"
 			
+			"customitem" 				"0"
 			"customitem_armory" 		"1"
 			
 			"image_inventory_size_w"		"128"

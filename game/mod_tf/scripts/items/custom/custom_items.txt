@@ -1,10 +1,11 @@
 #base custom_weapons.txt
 #base custom_prefabs.txt
 #base custom_weapons_testing.txt
-#base custom_weapons_oddity.txt
 #base custom_weapons_reskin.txt
 
 #base merc/custom_items_merc.txt
+
+//#base custom_weapons_oddity.txt
 
 "items_game"
 {
