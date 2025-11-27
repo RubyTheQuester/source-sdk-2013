@@ -1,0 +1,37 @@
+armory_config
+{
+	
+	//==================================//
+	//=============Standard=============//
+	//==================================//
+	
+	"Merc BombScare"
+	{
+		Cost 0
+	}
+	
+	"Merc Bond"
+	{
+		Cost 0
+	}
+	
+	"Merc Deadmeat"
+	{
+		Cost 0
+	}
+	
+	"Merc Groovy"
+	{
+		Cost 0
+	}
+	
+	"Merc Knuckles"
+	{
+		Cost 0
+	}
+	
+	"Merc So Close"
+	{
+		Cost 0
+	}
+}

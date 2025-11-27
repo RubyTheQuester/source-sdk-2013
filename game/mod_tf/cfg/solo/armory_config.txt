@@ -4,6 +4,7 @@
 
 #base armory/merc/armory_merc_weapons.txt
 #base armory/merc/armory_merc_comestics.txt
+#base armory/merc/armory_merc_taunts.txt
 
 #base armory/valve/armory_valve_weapons.txt
 #base armory/valve/armory_valve_cosmetics.txt
@@ -14,7 +15,6 @@
 #base armory/community/armory_community_taunts.txt
 
 #base armory/solo/armory_solo_tools.txt
-
 
 //#base armory/valve/armory_valve_decorated.txt
 
