@@ -132,4 +132,28 @@ armory_config
 	{
 		Cost 0
 	}
+	
+	//=================================//
+	//=============Reskins=============//
+	//=================================//
+	
+	"Crowbar"
+	{
+		Cost 0
+	}
+	
+	"Six Shooter"
+	{
+		Cost 0
+	}
+	
+	"Full Frontier"
+	{
+		Cost 0
+	}
+	
+	"Stock Hunting Shotgun"
+	{
+		Cost 0
+	}
 }
