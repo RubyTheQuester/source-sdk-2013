@@ -1,0 +1,81 @@
+armory_config
+{
+	
+	//==================================//
+	//=============Standard=============//
+	//==================================//
+	
+	"Merc Vest None"
+	{
+		Cost 0
+	}
+	
+	"Merc Vest Poucheless"
+	{
+		Cost 0
+	}
+	
+	"Merc Gloves Fingerless"
+	{
+		Cost 0
+	}
+	
+	"Merc Gloves None"
+	{
+		Cost 0
+	}
+	
+	//===============================//
+	//=============Extra=============//
+	//===============================//
+	
+	"Doom Vest"
+	{
+		Cost 0
+	}
+	
+	"Doom Helmet"
+	{
+		Cost 0
+	}
+	
+	"Engineer Overalls"
+	{
+		Cost 0
+	}
+	
+	"Western Hat"
+	{
+		Cost 0
+	}
+	
+	"BlackMesa Vest"
+	{
+		Cost 0
+	}
+	
+	"BlackMesa Helmet"
+	{
+		Cost 0
+	}
+	
+	"Pants Socks"
+	{
+		Cost 0
+	}
+	
+	"Flak Jacket"
+	{
+		Cost 0
+	}
+	
+	"Fingerless Gloves Alt"
+	{
+		Cost 0
+	}
+	
+	"Race Helmet"
+	{
+		Cost 0
+	}
+}

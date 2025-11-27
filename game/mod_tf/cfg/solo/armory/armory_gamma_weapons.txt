@@ -1,92 +1,75 @@
 armory_config
 {
+	//================================//
+	//=============Normal=============//
+	//================================//
+	
 	"Foxhound"
 	{
 		Cost 0
 	}
+	
 	"Deputy"
 	{
 		Cost 0
 	}
+	
 	"Ballestar"
 	{
 		Cost 0
 	}
+	
 	"Gentle End"
 	{
 		Cost 0
 	}
-	"Crowbar"
-	{
-		Cost 0
-	}
+	
 	"Resistant Vest"
 	{
 		Cost 0
 	}
+	
 	"Mortar Launcher"
 	{
 		Cost 0
 	}
+	
 	"Syringe"
 	{
 		Cost 0
 	}
+	
 	"Walkabout"
 	{
 		Cost 0
 	}
+	
 	"Double Trouble"
 	{
 		Cost 0
 	}
-
+	
 	"Tranquilizer"
 	{
 		Cost 0
 	}
-	"Sniper Rifle Aim Charge"
-	{
-		Cost 0
-	}
+	
 	"Pacificateur"
 	{
 		Cost 0
 	}
-	"Healer Sapper"
-	{
-		Cost 0
-	}
+	
 	"Handy Partner"
 	{
 		Cost 0
 	}
-	"SpeedPad"
-	{
-		Cost 0
-	}
-	"Assault Cannon"
-	{
-		Cost 0
-	}
+	
 	"Broken Steel"
 	{
 		Cost 0
 	}
-	"RPG"
-	{
-		Cost 0
-	}
 	
-	"Six Shooter"
-	{
-		Cost 0
-	}
-	"Full Frontier"
-	{
-		Cost 0
-	}
-	"Stock Hunting Shotgun"
+	"SpeedPad"
 	{
 		Cost 0
 	}
@@ -95,21 +78,58 @@ armory_config
 	{
 		Cost 0
 	}
-	"Dynamite Sapper"
+	
+	"Mobile Minigun"
 	{
 		Cost 0
 	}
+	
 	"Reflect Bat"
 	{
 		Cost 0
 	}
-	"Syringe Hitscan"
+	
+	"Dynamite Sapper"
 	{
 		Cost 0
 	}
+	
+	//==============================//
+	//=============Test=============//
+	//==============================//
+	
+	"Healer Sapper"
+	{
+		Cost 0
+	}
+	
+	"Medic SMG"
+	{
+		Cost 0
+	}
+	
 	"Bombard"
 	{
 		Cost 0
 	}
-
+	
+	"Sovereign"
+	{
+		Cost 0
+	}
+	
+	"RPG"
+	{
+		Cost 0
+	}
+	
+	"Bouncer"
+	{
+		Cost 0
+	}
+	
+	"Councilman"
+	{
+		Cost 0
+	}
 }
