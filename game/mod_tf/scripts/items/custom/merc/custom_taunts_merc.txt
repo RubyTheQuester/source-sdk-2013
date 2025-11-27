@@ -6,7 +6,7 @@
 		{
 			"name"	"Merc BombScare"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			
@@ -40,7 +40,7 @@
 		{
 			"name"	"Merc Bond"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			
@@ -69,7 +69,7 @@
 		{
 			"name"	"Merc Deadmeat"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			
@@ -98,7 +98,7 @@
 		{
 			"name"	"Merc Groovy"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			
@@ -127,7 +127,7 @@
 		{
 			"name"	"Merc Knuckles"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			
@@ -156,7 +156,7 @@
 		{
 			"name"	"Merc So Close"
 			
-			"prefab"	"taunt"
+			"prefab"	"moditem_merc_prefab taunt"
 
 			"show_in_armory"	"1"
 			

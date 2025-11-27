@@ -3,6 +3,8 @@
 #base custom_cosmetics_merc.txt
 #base custom_taunts_merc.txt
 
+#base custom_cosmetics_extra_merc.txt
+
 "items_game"
 {
 

@@ -216,7 +216,17 @@
 		"tranq_dart"
 		{
 				"dfile"	"HUD/d_images_pf"
-				"dnegfile"	"HUD/d_images_pf"
+				"dnegfile"	"HUD/dneg_images_pf"
+				"x"		"0"
+				"y"		"32"
+				"width"		"96"
+				"height"	"32"
+		}
+		
+		"tranq"
+		{
+				"dfile"	"HUD/d_images_pf"
+				"dnegfile"	"HUD/dneg_images_pf"
 				"x"		"0"
 				"y"		"32"
 				"width"		"96"

@@ -279,7 +279,7 @@
 		
 		"weapon_merc_wearable"
 		{
-			"prefab"	"valve base_hat"
+			"prefab"	"valve base_hat moditem_merc_prefab"
 			
 			"item_class"	"tf_wearable"
 
@@ -290,9 +290,6 @@
 			"item_slot"		"head"
 			"item_quality"	"normal"
 			
-			"show_in_armory"	"1"
-			"customitem" 				"0"
-			"customitem_armory" 		"1"
 			
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
@@ -321,7 +318,6 @@
 			"image_inventory"	"backpack/weapons/c_models/c_rocketboots_soldier"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
-			//"model_player"		"models/weapons/c_models/c_rocketboots_soldier.mdl"
 			
 			"act_as_wearable" "1"
 			
