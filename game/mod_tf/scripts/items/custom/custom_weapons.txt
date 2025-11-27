@@ -446,7 +446,9 @@
 			"prefab" 		"moditem_prefab weapon_revolver"
 			"item_class"	"tf_weapon_tranq"
 			
-			"item_name"	"#TF_Weapon_Tranq"
+			"item_name"			"#TF_Weapon_Tranq"
+			"item_description"	"#TF_Weapon_Tranq_Desc"
+			
 			"item_type_name"	"#TF_Weapon_Tranq"
 		
 			"propername"		"0"
