@@ -167,7 +167,7 @@
 		
 			"propername"		"0"
 
-			"image_inventory"				"backpack/crafting/token_primary"
+			"image_inventory"				"backpack/weapons/c_models/c_biggun/c_biggun"
 			
 			"model_world"					"models/weapons/c_models/c_biggun/c_biggun.mdl"
 			"model_player"					"models\weapons\v_models\v_biggun.mdl"
@@ -357,7 +357,7 @@
 			"item_name"		"#TF_Weapon_Councilman"
 			"item_description"	"#TF_Weapon_Councilman_Desc"
 			
-			"image_inventory"				"backpack/crafting/token_secondary"
+			"image_inventory"				"backpack/weapons/c_models/c_councilman/c_councilman"
 			"model_player"					"models/weapons/c_models/c_councilman/c_councilman.mdl"
 			
 			"static_attrs"
