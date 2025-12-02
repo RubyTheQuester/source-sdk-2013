@@ -2279,19 +2279,28 @@ void CTFWeaponBase::SetReloadTimer( float flReloadTime )
 	CALL_ATTRIB_HOOK_FLOAT( flReloadTime, fast_reload );
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pPlayer, flReloadTime, hwn_mult_reload_time );
 
-	//int iPanicAttack = 0;
-	//CALL_ATTRIB_HOOK_INT( iPanicAttack, panic_attack );
-	//if ( iPanicAttack ) 
-	//{
-	//	if ( pPlayer->GetHealth() < pPlayer->GetMaxHealth() * 0.33f )
-	//	{
-	//		flReloadTime *= 0.3f;
-	//	}
-	//	else if ( pPlayer->GetHealth() < pPlayer->GetMaxHealth() * 0.66f )
-	//	{
-	//		flReloadTime *= 0.6f;
-	//	}
-	//}
+	int iPanicAttack = 0;
+	CALL_ATTRIB_HOOK_INT( iPanicAttack, panic_attack );
+	if ( iPanicAttack ) 
+	{
+		if ( pPlayer->GetHealth() < pPlayer->GetMaxHealth() * 0.33f )
+		{	
+			flReloadTime *= 0.3f;
+		}
+		else if ( pPlayer->GetHealth() < pPlayer->GetMaxHealth() * 0.66f )
+		{
+			flReloadTime *= 0.6f;
+		}
+	}
+
+	// Some weapons change fire delay based on player's health
+	float flReducedHealthBonus = 1.0f;
+	CALL_ATTRIB_HOOK_FLOAT( flReducedHealthBonus, mult_reload_time_with_reduced_health );
+	if ( flReducedHealthBonus != 1.0f )
+	{
+		flReducedHealthBonus = RemapValClamped( pPlayer->HealthFraction(), 0.2f, 0.9f, flReducedHealthBonus, 1.0f );
+		flReloadTime *= flReducedHealthBonus;
+	}
 
 	// Haste Powerup Rune adds multiplier to reload time.
 	if ( pPlayer->m_Shared.GetCarryingRuneType() == RUNE_HASTE )

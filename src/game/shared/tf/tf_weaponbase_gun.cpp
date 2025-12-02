@@ -760,12 +760,12 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 		pProjectile->SetCritical( IsCurrentAttackACrit() );
 		pProjectile->SetLauncher( this );
 
-		//float flFizzle = 0;
-		//CALL_ATTRIB_HOOK_FLOAT( flFizzle, stickybomb_fizzle_time );
-		//if ( flFizzle )
-		//{
-		//	pProjectile->SetDetonateTimerLength( flFizzle );
-		//}
+		float flFizzle = 0;
+		CALL_ATTRIB_HOOK_FLOAT( flFizzle, stickybomb_fizzle_time );
+		if ( flFizzle )
+		{
+			pProjectile->SetDetonateTimerLength( flFizzle );
+		}
 		CAttribute_String attrCustomModelName;
 		GetCustomProjectileModel( &attrCustomModelName );
 		if ( attrCustomModelName.has_value() )
