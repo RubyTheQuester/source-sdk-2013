@@ -505,20 +505,17 @@ FodyWeavers.xsd
 *.ain
 *.vdf
 
-/game/tf
-
-game/mod_tf/cfg/local_loadout.txt
-game/mod_tf/cfg/server_blacklist.txt
-game/mod_tf/cfg/settings.scr
-game/mod_tf/GameState.txt
-game/mod_tf/ServerConfig.vdf
-game/mod_tf/stats.txt
-game/mod_tf/voice_ban.dt
-game/mod_tf/media/viewed.res
-game/mod_tf/tf2_playerstats.dmx
-game/mod_tf/cfg/user.scr
-game/platform/config/InGameDialogConfig.vdf
-game/mod_tf.zip
+local_loadout.txt
+server_blacklist.txt
+settings.scr
+GameState.txt
+ServerConfig.vdf
+stats.txt
+voice_ban.dt
+viewed.res
+tf2_playerstats.dmx
+user.scr
+InGameDialogConfig.vdf
 
 /game/mod_tf/custom
 /game/mod_tf/downloadlists
@@ -529,22 +526,18 @@ game/mod_tf.zip
 
 /game/mod_tf/scripts/vscripts/solo/balancing/unused
 /game/mod_tf/scripts/items/tfsolo
-
 /game/mod_tf/scripts/items/gold
-/game/mod_tf/scripts/items/tfsolo
 
-/game/mod_tf/cfg/local_loadout_*.txt
-/game/mod_tf/cfg/solo/save_*.txt
-game/mod_tf/cfg/solo/save_73117512.txt
-game/mod_tf/scriptdata/merc/merc_bloodthirst/savedata.nut
-game/mod_tf/scriptdata/merc/merc_headhunt/savedata.nut
-game/mod_tf/cfg/solo/save_73117512.txt
-game/mod_tf/workshop_localcache.txt
+local_loadout_*.txt
+save_*.txt
+save_73117512.txt
+savedata.nut
+workshop_localcache.txt
 *.7z
 /game/mod_tf/campaigns/pd_atom_smash
 /game/mod_tf/test
 /game/mod_tf/scripts/talker/ref
 /game/mod_tf/sound/weapons/of
 /game/mod_tf/test_custom
-game/mod_tf/maps/dev_pvp_arena.bsp
-game/mod_tf/maps/tr_target_fb.bsp
+/game/mod_tf/maps/dev_pvp_arena.bsp
+/game/mod_tf/maps/tr_target_fb.bsp
