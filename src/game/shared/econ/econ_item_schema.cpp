@@ -129,6 +129,10 @@ const char *g_EffectTypes[NUM_EFFECT_TYPES] =
 	"neutral",		// ATTRIB_EFFECT_NEUTRAL = 0,
 	"positive",		// ATTRIB_EFFECT_POSITIVE,
 	"negative",		// ATTRIB_EFFECT_NEGATIVE,
+
+	"community",		// ATTRIB_EFFECT_COMMUNITY,
+	"mod",				// ATTRIB_EFFECT_MOD,
+	"custom",			// ATTRIB_EFFECT_CUSTOM,
 };
 
 //-----------------------------------------------------------------------------

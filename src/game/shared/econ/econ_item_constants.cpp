@@ -323,6 +323,10 @@ CSchemaColorDefHandle g_AttribColorDefs[] =
 
 	CSchemaColorDefHandle( "desc_strange" ),			// ATTRIB_COL_STRANGE
 	CSchemaColorDefHandle( "desc_unusual" ),			// ATTRIB_COL_UNUSUAL
+
+	CSchemaColorDefHandle( "desc_attrib_commnuity" ),		// ATTRIB_COL_COMMUNITY
+	CSchemaColorDefHandle( "desc_attrib_sourcemod" ),		// ATTRIB_COL_SOURCEMOD
+	CSchemaColorDefHandle( "desc_attrib_custommod" ),		// ATTRIB_COL_CUSTOMMOD
 };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_AttribColorDefs ) == NUM_ATTRIB_COLORS );

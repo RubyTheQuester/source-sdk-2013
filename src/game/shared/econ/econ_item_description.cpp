@@ -3474,6 +3474,10 @@ static attrib_colors_t GetAttributeDefaultColor( const CEconItemAttributeDefinit
 	case ATTRIB_EFFECT_NEGATIVE:		return ATTRIB_COL_NEGATIVE;
 	case ATTRIB_EFFECT_STRANGE:			return ATTRIB_COL_STRANGE;
 	case ATTRIB_EFFECT_UNUSUAL:			return ATTRIB_COL_UNUSUAL;
+
+	case ATTRIB_EFFECT_COMMUNITY:			return ATTRIB_COL_COMMUNITY;
+	case ATTRIB_EFFECT_SOURCEMOD:			return ATTRIB_COL_SOURCEMOD;
+	case ATTRIB_EFFECT_CUSTOMITEM:			return ATTRIB_COL_CUSTOMITEM;
 	}
 
 	// we don't know
