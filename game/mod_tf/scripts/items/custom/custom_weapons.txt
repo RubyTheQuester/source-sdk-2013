@@ -43,6 +43,11 @@
 					"attribute_class"	"mult_postfiredelay"
 					"value"	"0.5"
 				}
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "1"
+				}
 			}
 			
 			"visuals"
