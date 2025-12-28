@@ -373,16 +373,19 @@
 					"attribute_class"	"set_weapon_mode"
 					"value"	"1"
 				}
+				
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
 					"value" "0.85"
 				}
+				
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"	"1.2"
 				}
+				
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
@@ -394,6 +397,148 @@
 			{
 				"sound_single_shot" "Weapon_Councilman.Single"
 				"sound_burst" 		"Weapon_Councilman.SingleCrit"
+			}
+		}
+		
+		"34607"
+		{
+			"name"	"Blast Shield"
+			"prefab" " moditem_testing_prefab tf_wearable_demoshield"
+			"item_class"		"tf_wearable_demoshield"
+			
+			"propername"		"0"
+			
+			"item_name"		"#TF_Weapon_BlastShield"
+			"item_description"	"#TF_Weapon_BlastShield_Desc"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_targe/c_targe"
+			"model_player"	"models/weapons/c_models/c_targe/c_targe.mdl"
+			
+			"item_slot"		"secondary"
+			"equip_region"	"arms"
+			"anim_slot"		"FORCE_NOT_USED"
+			
+			"item_logname"	"demoshield"
+			"item_iconname"	"demoshield"
+			
+			"act_as_wearable" "1"
+			"attach_to_hands"	"0"
+			"attach_to_hands_vm_only"	"1"
+			
+			"used_by_classes"
+			{
+				"demoman"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"rocket jump damage reduction"
+				{
+					"attribute_class"	"rocket_jump_dmg_reduction"
+					"value" "0.4"
+				}
+				
+				"dmg taken from blast reduced"
+				{
+					"attribute_class"	"mult_dmgtaken_from_explosions"
+					"value"			"0.8"
+				}
+				
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"	"2"
+				}
+			}
+			
+			"mouse_pressed_sound"	"ui/item_wood_pole_pickup.wav"
+			"drop_sound"		"ui/item_wood_pole_drop.wav"
+			"xifier_class_remap"	"weapon_targe"
+		}
+		
+		"34608"
+		{
+			"name"	"Panic-Attack Cool"
+			"prefab"	"moditem_testing_prefab weapon_shotgun"
+			
+			"item_name"	"#TF_Weapon_Shotgun_Panic"
+			
+			"image_inventory"				"backpack/crafting/token_Secondary"
+			"model_player"	"models/workshop/weapons/c_models/c_trenchgun/c_trenchgun.mdl"
+			
+			"used_by_classes"
+			{
+				"engineer"		"1"
+			}
+			
+			"attributes"
+			{
+				"clip size penalty HIDDEN"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"	"0.75"
+				}
+				
+				// This causes auto fire
+				//"auto fires when full"
+				//{
+				//	"attribute_class"	"auto_fires_when_full"
+				//	"value"	"1"
+				//}
+				
+				// This causes the reload thing
+				//"auto fires full clip penalty"
+				//{
+				//	"attribute_class" 	"auto_fires_full_clip"
+				//	"value" "1"
+				//}
+				
+				"fire rate bonus with reduced health"
+				{
+					"attribute_class" 	"mult_postfiredelay_with_reduced_health"
+					"value" "0.25"
+				}
+				
+				"reload time decreased with reduced health"
+				{
+					"attribute_class" 	"mult_reload_time_with_reduced_health"
+					"value" "0.30"
+				}
+				
+				//"panic_attack"
+				//{
+				//	"attribute_class"	"panic_attack"
+				//	"value"	"1"
+				//}
+				
+				"panic_attack_negative"
+				{
+					"attribute_class" 	"panic_attack_negative"
+					"value" "1.5"
+				}
+				
+				//"Reload time decreased"
+				//{
+				//	"attribute_class"	"mult_reload_time"
+				//	"value"	"0.66"
+				//}
+			}
+			
+			"used_by_classes"
+			{
+				"engineer"	"primary"
+			}
+			
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_BackShot_Shotty.Single"
+				"sound_burst"			"Weapon_BackShot_Shotty.SingleCrit"
 			}
 		}
 		

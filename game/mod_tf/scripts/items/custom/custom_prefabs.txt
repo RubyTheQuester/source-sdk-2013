@@ -4,8 +4,8 @@
 	{
 		"weapon_revolver_engineer"
 		{
-			"enabled"	"1"
-			"item_class"	"tf_weapon_revolver"
+			"enabled"		"1"
+			"item_class"	"tf_weapon_revolver_secondary"
 			
 			"tags"
 			{

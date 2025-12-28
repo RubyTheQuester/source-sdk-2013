@@ -24,5 +24,10 @@ Scheme
 		
 		"ItemArmory_6"						"61 157 70 255"
 		"ItemArmory_6_GreyedOut"			"62 107 52 255"
+		
+		
+		"ItemAttrib_Commnuity"					"255 0 220 255"
+		"ItemAttrib_SourceMod"					"0 255 255 255"
+		"ItemAttrib_Mod"						"72 0 255 255"
 	}
 }

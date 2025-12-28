@@ -796,6 +796,16 @@
 					"value"	"1.75"
 				}
 			}
+			
+			"visuals"
+			{
+				"sound_melee_hit"		"Weapon_BaseballBat.HitFlesh"
+				"sound_melee_hit_world"	"Weapon_BaseballBat.HitWorld"
+				"sound_special2"		"Weapon_BaseballBat.HitBall"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_wood_pole_pickup.wav"
+			"drop_sound"		"ui/item_wood_pole_drop.wav"
 		}
 		
 		"34463"

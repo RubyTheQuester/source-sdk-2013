@@ -75,15 +75,6 @@
 				"single wep deploy time decreased"		"0.85"
 				"switch from wep deploy time decreased"	"0.85"
 			}
-			
-			"attributes"
-			{
-				"Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"	"1.8"
-				}
-			}
 		}
 		
 		"34806"
