@@ -74,6 +74,15 @@
 				"single wep deploy time decreased"		"0.7"
 			}
 			
+			"attributes"
+			{
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "8"
+				}
+			}
+			
 			"visuals"
 			{
 				"sound_single_shot"	"Weapon_Deputy.Single"
@@ -133,6 +142,12 @@
 					"attribute_class"	"provide_on_active"
 					"value" "1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "3"
+				}
 			}
 		}
 		
@@ -176,6 +191,12 @@
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "2"
 				}
 			}
 			
@@ -223,6 +244,12 @@
 				{
 					"attribute_class"	"mult_dmgtaken_from_explosions"
 					"value"			"0.80"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "9"
 				}
 			}
 		}
@@ -286,6 +313,12 @@
 					"attribute_class"	"disable_fancy_class_select_anim"
 					"value"	"1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "2"
+				}
 			}
 		}
 		
@@ -345,6 +378,12 @@
 					"attribute_class"	"clear_effects"
 					"value" "1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "5"
+				}
 			}
 		}
 		
@@ -392,6 +431,12 @@
 					"attribute_class"	"mod_sniper_no_charge"
 					"value" "1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "2"
+				}
 			}
 		}
 		
@@ -433,6 +478,12 @@
 				{
 					"attribute_class"	"mult_reload_time"
 					"value"	"0.75"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "3"
 				}
 			}
 			
@@ -484,6 +535,12 @@
 				{
 					"attribute_class"	"fires_slow_tranq"
 					"value" "1"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "4"
 				}
 			}
 			
@@ -547,6 +604,12 @@
 					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"	"1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "1"
+				}
 			}
 			
 			"visuals"
@@ -586,6 +649,12 @@
 				{
 					"attribute_class"	"dispenser_build_rate_multiplier"
 					"value" 	"5" 
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "10"
 				}
 			}
 		}
@@ -628,6 +697,12 @@
 					"attribute_class"	"mult_reload_time"
 					"value"	"1.25"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "2"
+				}
 			}
 			
 			"visuals"
@@ -669,6 +744,12 @@
 					"attribute_class"	"teleporter_build_rate_multiplier"
 					"value" 	"5" 
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "0"
+				}
 			}
 			
 		}
@@ -701,6 +782,12 @@
 				{
 					"attribute_class"	"charge_recharge_rate"
 					"value"	"1.25"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "3"
 				}
 			}
 		}
@@ -760,6 +847,12 @@
 					"attribute_class"	"allow_jump_while_deployed"
 					"value"	"1"
 				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "0"
+				}
 			}
 		}
 		
@@ -799,6 +892,12 @@
 				{
 					"attribute_class"	"mult_postfiredelay"
 					"value"	"1.75"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "11"
 				}
 			}
 			
@@ -846,6 +945,12 @@
 				{
 					"attribute_class"	"mult_sapper_damage"
 					"value" "2"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "0"
 				}
 			}
 		}

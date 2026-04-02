@@ -30,6 +30,12 @@
 					"attribute_class"	"mult_player_movespeed"
 					"value"	"0.90"
 				}
+				
+				"is custom mod item"
+				{
+					"attribute_class"  "is_custom_mod_item"
+					"value"			   "1"
+				}
 			}
 		}
 		

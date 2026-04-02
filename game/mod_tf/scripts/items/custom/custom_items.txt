@@ -17,7 +17,7 @@
 		"account_first_valid_item_slot" "0"
 		"account_last_valid_item_slot"	"3"		
 		"first_valid_item_slot"			"0"	
-		"last_valid_item_slot"		"18"
+		"last_valid_item_slot"			"18"
 		"num_item_presets"				"4"
 	}
 }

@@ -669,6 +669,18 @@
 			"is_user_generated"	"4"
 		}
 		
+		"3560"
+		{
+			"name"	"is custom mod item"
+			"attribute_class"	"is_custom_mod_item"
+			"description_string"	"#Attrib_CustomItem_Value"			
+			"description_format"	"value_is_from_lookup_table"
+			"hidden"	"0"
+			"effect_type"	"custom"
+			"stored_as_integer"	"0"		
+			"is_user_generated"	"5"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

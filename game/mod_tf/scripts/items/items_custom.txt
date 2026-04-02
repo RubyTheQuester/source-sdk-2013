@@ -147,17 +147,17 @@
 		"is community contributed item"
 		{
 			"0"			"#Attrib_CommunityItem_Test"
-			"1"			"#Attrib_CustomItem_Credit_1"
-			"2"			"#Attrib_CustomItem_Credit_2"
-			"3"			"#Attrib_CustomItem_Credit_3"
-			"4"			"#Attrib_CustomItem_Credit_4"
-			"5"			"#Attrib_CustomItem_Credit_5"
-			"6"			"#Attrib_CustomItem_Credit_6"
-			"7"			"#Attrib_CustomItem_Credit_7"
-			"8"			"#Attrib_CustomItem_Credit_8"
-			"9"			"#Attrib_CustomItem_Credit_9"
-			"10"		"#Attrib_CustomItem_Credit_10"
-			"11"		"#Attrib_CustomItem_Credit_11"
+			"1"			"#Attrib_CommunityItem_Credit_1"
+			"2"			"#Attrib_CommunityItem_Credit_2"
+			"3"			"#Attrib_CommunityItem_Credit_3"
+			"4"			"#Attrib_CommunityItem_Credit_4"
+			"5"			"#Attrib_CommunityItem_Credit_5"
+			"6"			"#Attrib_CommunityItem_Credit_6"
+			"7"			"#Attrib_CommunityItem_Credit_7"
+			"8"			"#Attrib_CommunityItem_Credit_8"
+			"9"			"#Attrib_CommunityItem_Credit_9"
+			"10"		"#Attrib_CommunityItem_Credit_10"
+			"11"		"#Attrib_CommunityItem_Credit_11"
 		}
 		
 		"is sourcemod mod item"
@@ -166,6 +166,14 @@
 			"1"			"#Attrib_ModItem_Credit_OpenFortress"
 			"2"			"#Attrib_ModItem_Credit_PreFortress"
 			"3"			"#Attrib_ModItem_Credit_3"
+		}
+		
+		"is custom mod item"
+		{
+			"0"			"#Attrib_CustomItem_Test"
+			"1"			"#Attrib_CustomItem_Credit_1"
+			"2"			"#Attrib_CustomItem_Credit_2"
+			"3"			"#Attrib_CustomItem_Credit_3"
 		}
 	}
 }

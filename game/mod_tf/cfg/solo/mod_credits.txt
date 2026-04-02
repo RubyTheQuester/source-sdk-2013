@@ -26,7 +26,7 @@ DESCRIPTION INFO_OPTIONS
 	
 	"category2"
 	{
-		"Models, Textures, Sounds"
+		"Models and Textures"
 		{ CATEGORY }
 	}
 	
@@ -72,45 +72,13 @@ DESCRIPTION INFO_OPTIONS
 	
 	"credit2_6"
 	{
-		"Tranquilizer Gun Port - EnergyPixel on gamebanana"
-		"https://gamebanana.com/mods/198287"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_7"
-	{
-		"Syringe Port - DatOneSpy on gamebanana"
-		"https://gamebanana.com/mods/197578"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_8"
-	{
-		"Classic Crowbar - SilentFox3 on gamebanana"
-		"https://gamebanana.com/mods/198771"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_9"
-	{
-		"Nine Iron Golf Club Sounds - SilentFox3 on gamebanana"
-		"https://gamebanana.com/mods/40389"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_10"
-	{
 		"Sniper Tracer Particles Material - Team Fortress 2 Classic Team"
 		"https://tf2classic.com/"
 		{ BOOL }
 		{ "1" }
 	}
 	
-	"credit2_11"
+	"credit2_7"
 	{
 		"Enhanced Rockets - Various People"
 		"https://forums.alliedmods.net/showthread.php?t=294325"
@@ -118,23 +86,15 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit2_12"
+	"credit2_8"
 	{
-		"Double Trouble - HAUU on gamebanana"
+		"Double Trouble - Haau on gamebanana"
 		"https://gamebanana.com/mods/560082"
 		{ BOOL }
 		{ "1" }
 	}
 	
-	"credit2_13"
-	{
-		"The Pacificateur for Mashers Engineering pack  - Uncle Doe on gamebanana"
-		"https://gamebanana.com/mods/621952"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_14"
+	"credit2_9"
 	{
 		"The Pacificateur  - Zero Tsu on gamebanana"
 		"https://gamebanana.com/mods/466065"
@@ -142,15 +102,7 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit2_15"
-	{
-		"Fallout New Vegas Revoler Sounds Pack - Ploopyandproud"
-		"https://gamebanana.com/sounds/20485"
-		{ BOOL }
-		{ "1" }
-	}
-	
-	"credit2_16"
+	"credit2_10"
 	{
 		"Open Fortress Team - Merc and all his models and sounds"
 		"https://openfortress.fun/"
@@ -158,13 +110,81 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
+	"credit2_11"
+	{
+		"The Deputy - NeoDement"
+		"https://steamcommunity.com/id/neodement"
+		{ BOOL }
+		{ "1" }
+	}
+	
 	"category3"
+	{
+		"Sounds"
+		{ CATEGORY }
+	}
+	
+	"credit3_1"
+	{
+		"Nine Iron Golf Club Sounds - SilentFox3 on gamebanana"
+		"https://gamebanana.com/mods/40389"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"credit3_2"
+	{
+		"Fallout New Vegas Revoler Sounds Pack - Ploopyandproud"
+		"https://gamebanana.com/sounds/20485"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"category4"
+	{
+		"Ports"
+		{ CATEGORY }
+	}
+	
+	"credit4_1"
+	{
+		"Tranquilizer Gun Port - EnergyPixel on gamebanana"
+		"https://gamebanana.com/mods/198287"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"credit4_2"
+	{
+		"Syringe Port - DatOneSpy on gamebanana"
+		"https://gamebanana.com/mods/197578"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"credit4_3"
+	{
+		"Classic Crowbar - SilentFox3 on gamebanana"
+		"https://gamebanana.com/mods/198771"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"credit4_5"
+	{
+		"The Pacificateur for Mashers Engineering pack  - Uncle Doe on gamebanana"
+		"https://gamebanana.com/mods/621952"
+		{ BOOL }
+		{ "1" }
+	}
+
+	"category5"
 	{
 		"Campaign - Headhunt"
 		{ CATEGORY }
 	}
 	
-	"credit3_1"
+	"credit5_1"
 	{
 		"Campaign by BetaM"
 		"https://www.youtube.com/BetaM"
@@ -172,7 +192,7 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"credit3_2"
+	"credit5_2"
 	{
 		"Ed voiced by bwab"
 		"https://steamcommunity.com/profiles/76561198871068952"
@@ -180,13 +200,13 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 	
-	"category4"
+	"category6"
 	{
 		"Campaign - Bloodthirst"
 		{ CATEGORY }
 	}
 	
-	"credit4_1"
+	"credit6_1"
 	{
 		"Campaign by BetaM"
 		"https://www.youtube.com/BetaM"

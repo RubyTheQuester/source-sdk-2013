@@ -64,7 +64,7 @@ IncludeScript("solo/weapons/reskin/handshake.nut")				//Unsure
 IncludeScript("solo/weapons/reskin/bootlegger.nut") 			//Design stats
 
 //-Heavy-//
-IncludeScript("solo/weapons/reskin/ironcurtain.nut") 			// Unsure
+//IncludeScript("solo/weapons/reskin/ironcurtain.nut") 			// Unsure
 IncludeScript("solo/weapons/reskin/fishcake.nut")				// Design stats
 IncludeScript("solo/weapons/reskin/robosandvich.nut") 			// Design stats
 IncludeScript("solo/weapons/reskin/apocofists.nut") 			// Design stats
@@ -80,7 +80,7 @@ IncludeScript("solo/weapons/reskin/sharpdresser.nut") 			// Unsure
 IncludeScript("solo/weapons/reskin/wangaprick.nut") 			// Unsure
 IncludeScript("solo/weapons/reskin/blackrose.nut") 				// Design stats
 IncludeScript("solo/weapons/reskin/apsap.nut") 					// Design stats
-IncludeScript("solo/weapons/reskin/timepiece.nut") 				// Design stats
+//IncludeScript("solo/weapons/reskin/timepiece.nut") 				// Design stats
 IncludeScript("solo/weapons/reskin/quackenbirdt.nut") 			// Unsure
 IncludeScript("solo/weapons/reskin/snackattack.nut") 			// Unsure
 

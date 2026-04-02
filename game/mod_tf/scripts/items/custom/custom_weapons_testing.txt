@@ -73,6 +73,12 @@
 					"attribute_class"	"mult_maxammo_primary"
 					"value"	"0.5"
 				}
+				
+				"is sourcemod mod item"
+				{
+					"attribute_class"  "is_sourcemod_mod_item"
+					"value"			   "2"
+				}
 			}
 		}
 		
@@ -450,7 +456,7 @@
 					"value"			"0.8"
 				}
 				
-				"maxammo primary reduced"
+				"maxammo primary increased"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"	"2"
