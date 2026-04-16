@@ -82,15 +82,6 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-			"attributes"
-			{
-				"is sourcemod mod item"
-				{
-					"attribute_class"  "is_sourcemod_mod_item"
-					"value"			   "1"
-				}
-			}
-			
 				
 			"used_by_classes"
 			{

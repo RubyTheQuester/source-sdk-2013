@@ -1,3 +1,11 @@
+Version 0.1.2
+
+Last updated
+- April 16, 2026
+
+Changelog
+- Added more label credits for community contributed and sourcemod origin items
+================
 Version 0.1.0
 
 Last updated
