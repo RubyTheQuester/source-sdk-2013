@@ -6430,7 +6430,7 @@ void CTFGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecS
 //-----------------------------------------------------------------------------
 bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity *pVictimBaseEntity, bool bAllowDamage )
 {
-	info.SetDamageForForceCalc( info.GetDamage() );
+	if (!info.GetDamageForForceCalc()) info.SetDamageForForceCalc( info.GetDamage() );
 	bool bDebug = tf_debug_damage.GetBool();
 
 	CTFPlayer *pVictim = ToTFPlayer( pVictimBaseEntity );
@@ -10888,14 +10888,13 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	iFov = clamp( iFov, 75, MAX_FOV );
 
 	pTFPlayer->SetDefaultFOV( iFov );
-
-	pTFPlayer->m_bFlipViewModels = Q_strcmp( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ), "1" ) == 0;
-
+	
 	// Figure out why this fucks with bots.
 	//pTFPlayer->SetJumpSound( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
 	//pTFPlayer->SetSpywalkInvert( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
 
 	pTFPlayer->SetFireCenterProjectile( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_fire_center_projectile" ) ) > 0 );
+	pTFPlayer->m_bFlipViewModels = Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ) ) > 0;
 }
 
 //-----------------------------------------------------------------------------
