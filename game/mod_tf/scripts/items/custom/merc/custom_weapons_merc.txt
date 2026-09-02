@@ -201,12 +201,22 @@
 			"prefab"	"moditem_merc_prefab weapon_assault_rifle"
 		}
 		
-		
 		"34810"
 		{
-			"name"		"Merc SMG"
-			"prefab"	"moditem_merc_prefab weapon_merc_smg"
+			"name"		"Mercenary Combat Knife"
+			"prefab"	"moditem_merc_prefab weapon_knife"
 			
+			"item_name"		"#TF_Weapon_Knife"
+			
+			"propername"		"1"
+			
+			"image_inventory"	"backpack/crafting/token_melee"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+				"spy"		"0"
+			}
 		}
 		
 		// EQUIPMENT 
@@ -296,7 +306,207 @@
 			}
 		}
 		
-
+		"34852"
+		{
+			"name"		"Mercenary Ammo Backpack 1"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"Ammo Backpack 1"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_buffpack/c_buffpack"
+			
+			"extra_wearable" "models/weapons/c_models/c_buffpack/c_buffpack.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"ammo from dispensers reduced"
+				{
+					"attribute_class"	"mult_ammo_from_dispensers"
+					"value" "0.25"
+				}
+				
+				"ammo from packs increased"
+				{
+					"attribute_class"	"mult_ammo_frompacks"
+					"value"				"1.15"
+				}
+			}
+		}
+		
+		"34853"
+		{
+			"name"		"Mercenary Ammo Backpack 2"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"Ammo Backpack 2"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_buffpack/c_buffpack"
+			
+			"extra_wearable" "models/weapons/c_models/c_buffpack/c_buffpack.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"ammo from dispensers reduced"
+				{
+					"attribute_class"	"mult_ammo_from_dispensers"
+					"value" "0.25"
+				}
+				
+				"maxammo primary increased"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"				"1.5"
+				}
+				
+				"maxammo secondary increased"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"				"1.5"
+				}
+			}
+		}
+		
+		"34854"
+		{
+			"name"		"Faulty Uberheart 1"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"Faulty Uberheart 1"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/crafting/token_pda"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-70"
+				}
+				
+				"uber_instead_of_die"
+				{
+					"attribute_class"	"uber_instead_of_die"
+					"value" "0.5"
+				}
+			}
+		}
+		
+		
+		"34855"
+		{
+			"name"		"Faulty Uberheart 2"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"Faulty Uberheart 2"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/crafting/token_pda"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-70"
+				}
+				
+				"uber_on_damage_taken"
+				{
+					"attribute_class"	"uber_on_damage_taken"
+					"value" "0.3"
+				}
+			}
+		}
+		
+		"34856"
+		{
+			"name"		"TeleHeart"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"TeleHeart"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/crafting/token_pda"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "-70"
+				}
+				
+				"teleport_instead_of_die"
+				{
+					"attribute_class"	"teleport_instead_of_die"
+					"value" "0.4"
+				}
+			}
+		}
+		
 		// END OF THE OVERALL ITEMS LINE
 	}
 }

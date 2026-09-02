@@ -447,6 +447,11 @@
 					"value"			   "3"
 				}
 				
+				"maxammo primary override"
+				{
+					"attribute_class"	"override_maxammo_primary"
+					"value"	"90"
+				}
 				
 				"is sourcemod mod item"
 				{
@@ -485,6 +490,12 @@
 			
 			"attributes"
 			{
+				"maxammo primary override"
+				{
+					"attribute_class"	"override_maxammo_primary"
+					"value"	"90"
+				}
+				
 				"is sourcemod mod item"
 				{
 					"attribute_class"  "is_sourcemod_mod_item"

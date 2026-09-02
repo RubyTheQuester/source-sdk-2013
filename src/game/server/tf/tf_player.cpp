@@ -3164,6 +3164,11 @@ void CTFPlayer::PrecacheTFPlayer()
 	PrecacheScriptSound( "General.banana_slip" ); // Used for SodaPopper Hype Jumps
 	PrecacheScriptSound( "General.hop_boing" );
 
+	PrecacheParticleSystem("spell_overheal_red");
+	PrecacheParticleSystem("spell_overheal_blue");
+	PrecacheParticleSystem("medic_radiusheal_red_spikes");
+	PrecacheParticleSystem("medic_radiusheal_blue_spikes");
+	PrecacheScriptSound("Mannpower.InvulnerableOn");
 
 	PrecacheScriptSound( "Parachute_open" );
 	PrecacheScriptSound( "Parachute_close" );
@@ -9535,10 +9540,84 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			// us teleport to base rather than die
 			float flCheatDeathChance = 0.f;
 			CALL_ATTRIB_HOOK_FLOAT( flCheatDeathChance, teleport_instead_of_die );
+
+			//DevMsg("Test test test!\n");
+			//DevMsg("flCheatDeathChance = %f\n", flCheatDeathChance);
+
 			if( RandomFloat() < flCheatDeathChance )
 			{
+
+				Vector origin = GetAbsOrigin();
+				CPVSFilter filter(origin);
+
+				EmitSound("Building_Teleporter.Send");
+
+				int iTeam = GetTeamNumber();
+
+				switch (iTeam)
+				{
+				case TF_TEAM_RED:
+					TE_TFParticleEffect(filter, 0.0, "teleported_red", origin, vec3_angle);
+					TE_TFParticleEffect(filter, 0.0, "player_sparkles_red", origin, vec3_angle, this, PATTACH_ABSORIGIN);
+					break;
+				case TF_TEAM_BLUE:
+					TE_TFParticleEffect(filter, 0.0, "teleported_blue", origin, vec3_angle);
+					TE_TFParticleEffect(filter, 0.0, "player_sparkles_blue", origin, vec3_angle, this, PATTACH_ABSORIGIN);
+					break;
+				default:
+					break;
+				}
+
 				// Send back to base
 				ForceRespawn();
+
+				switch (iTeam)
+				{
+				case TF_TEAM_RED:
+					TE_TFParticleEffect(filter, 0.0, "teleportedin_red", origin, vec3_angle);
+					break;
+				case TF_TEAM_BLUE:
+					TE_TFParticleEffect(filter, 0.0, "teleportedin_blue", origin, vec3_angle);
+					break;
+				default:
+					break;
+				}
+
+				EmitSound("Building_Teleporter.Receive");
+
+				m_iHealth = 1;
+				return 0;
+			}
+
+			float flCheatDeathChanceUber = 0.f;
+			CALL_ATTRIB_HOOK_FLOAT( flCheatDeathChanceUber, uber_instead_of_die );
+
+			if ( RandomFloat() < flCheatDeathChanceUber )
+			{
+				/*
+				EmitSound("Mannpower.InvulnerableOn");
+
+				Vector origin = GetAbsOrigin();
+				CPVSFilter filter(origin);
+
+				int iTeam = GetTeamNumber();
+
+				switch (iTeam)
+				{
+				case TF_TEAM_RED:
+					TE_TFParticleEffect( filter, 0.0, "medic_radiusheal_red_spikes", origin, vec3_angle );
+					TE_TFParticleEffect( filter, 0.0, "spell_overheal_red", origin, vec3_angle );
+					break;
+				case TF_TEAM_BLUE:
+					TE_TFParticleEffect( filter, 0.0, "medic_radiusheal_blue_spikes", origin, vec3_angle );
+					TE_TFParticleEffect( filter, 0.0, "spell_overheal_blue", origin, vec3_angle );
+					break;
+				default:
+					break;
+				}
+				*/
+
+				m_Shared.AddCond( TF_COND_INVULNERABLE, 5.f );
 
 				m_iHealth = 1;
 				return 0;

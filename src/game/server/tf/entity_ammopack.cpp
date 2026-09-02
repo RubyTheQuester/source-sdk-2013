@@ -65,6 +65,8 @@ bool CAmmoPack::MyTouch( CBasePlayer *pPlayer )
 
 		float flPackRatio = PackRatios[GetPowerupSize()];
 
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pPlayer, flPackRatio, mult_ammo_frompacks);
+
 		int iMaxPrimary = pTFPlayer->GetMaxAmmo(TF_AMMO_PRIMARY);
 		if ( pTFPlayer->GiveAmmo( ceil(iMaxPrimary * flPackRatio), TF_AMMO_PRIMARY, true, kAmmoSource_Pickup ) )
 		{

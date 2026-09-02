@@ -510,7 +510,7 @@
 			"description_string"	"#Attrib_Overkill_Gib"
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
-			"effect_type"	"neutral"
+			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
 		
@@ -687,7 +687,7 @@
 			"attribute_class"	"burst_delay"
 			"description_string"	"#Attrib_Burst_Delay"
 			"description_format"	"value_is_additive"
-			"hidden"	"0"
+			"hidden"	"1"
 			"effect_type"	"neutral"
 		}
 		
@@ -699,6 +699,82 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
 			"effect_type"	"neutral"
+		}
+		
+		"3563"
+		{
+			"name"	"ammo from dispensers reduced"
+			"attribute_class"	"mult_ammo_from_dispensers"
+			"description_string"	"#Attrib_AmmoFromDispensers_Reduced"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"3564"
+		{
+			"name"	"ammo from dispensers increased"
+			"attribute_class"	"mult_ammo_from_dispensers"
+			"description_string"	"#Attrib_AmmoFromDispensers_Increased"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		
+		"3565"
+		{
+			"name"	"ammo from packs increased"
+			"attribute_class"	"mult_ammo_frompacks"
+			"description_string"	"#Attrib_AmmoFromPacks_Increased"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		"3566"
+		{
+			"name"	"ammo from packs decreased"
+			"attribute_class"	"mult_ammo_frompacks"
+			"description_string"	"#Attrib_AmmoFromPacks_Decreased"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"negative"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		
+		"3567"
+		{
+			"name"				"teleport_instead_of_die"
+			"attribute_class"	"teleport_instead_of_die"
+			"description_string"	"#Attrib_TeleportInsteadOfDie"
+			"description_format"	"value_is_additive_percentage"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3568"
+		{
+			"name"				"uber_instead_of_die"
+			"attribute_class"	"uber_instead_of_die"
+			"description_string"	"#Attrib_UberInsteadOfDie"
+			"description_format"	"value_is_additive_percentage"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3569"
+		{
+			"name"				"uber_on_damage_taken"
+			"attribute_class"	"uber_on_damage_taken"
+			"description_string"	"#Attrib_UberOnDamageTaken"
+			"description_format"	"value_is_additive_percentage"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
 		}
 		
 		//End of Line

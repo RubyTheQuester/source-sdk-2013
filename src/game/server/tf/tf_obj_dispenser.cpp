@@ -585,6 +585,9 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 	int nNoPrimaryAmmoFromDispensersWhileActive = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer->GetActiveWeapon(), nNoPrimaryAmmoFromDispensersWhileActive, no_primary_ammo_from_dispensers );
 
+	float flAttribModScale = 1.0;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pPlayer, flAttribModScale, mult_ammo_from_dispensers );
+
 #ifndef STAGING_ONLY
 	float flAmmoRate = IsMiniBuilding() ? DISPENSER_MINI_AMMO_RATE : g_flDispenserAmmoRates[GetUpgradeLevel()];
 #else
@@ -596,12 +599,12 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 	if ( nNoPrimaryAmmoFromDispensersWhileActive == 0 )
 	{
 		// primary
-		iAmmoToAdd = (int)( pPlayer->GetMaxAmmo( TF_AMMO_PRIMARY ) * flAmmoRate );
+		iAmmoToAdd = (int)( ( pPlayer->GetMaxAmmo( TF_AMMO_PRIMARY ) * flAmmoRate ) * flAttribModScale );
 		iTotalPickedUp += pPlayer->GiveAmmo( iAmmoToAdd, TF_AMMO_PRIMARY, !m_bPlayAmmoPickupSound, kAmmoSource_DispenserOrCart );
 	}
 
 	// secondary
-	iAmmoToAdd = (int)( pPlayer->GetMaxAmmo( TF_AMMO_SECONDARY ) * flAmmoRate );
+	iAmmoToAdd = (int)( ( pPlayer->GetMaxAmmo( TF_AMMO_SECONDARY ) * flAmmoRate ) * flAttribModScale );
 	iTotalPickedUp += pPlayer->GiveAmmo( iAmmoToAdd, TF_AMMO_SECONDARY, !m_bPlayAmmoPickupSound, kAmmoSource_DispenserOrCart );
 
 	// metal
