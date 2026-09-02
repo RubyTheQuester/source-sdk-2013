@@ -1032,6 +1032,8 @@ void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 	if ( m_iCurrentClassIndex == TF_CLASS_UNDEFINED )
 		return;
 
+	//DevMsg("FUCK\n");
+
 	const GameItemDefinition_t *pItemDef = pItem->GetItemDefinition();
 	Assert( pItemDef );
 
@@ -1043,39 +1045,66 @@ void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 	{
 		int iAnimSlot = pItem->GetAnimationSlot();
 
-		// Ignore items that don't want to control player animation
-		if ( iAnimSlot == -2 )
-			return;
+		//DevMsg("%i\n", iAnimSlot);
 
-		if ( iAnimSlot == -1 )
+		if ( iAnimSlot != -3 )
 		{
-			if ( 
-				( m_iCurrentClassIndex != TF_CLASS_MERCENARY ) || 
-				( (m_iCurrentClassIndex == TF_CLASS_MERCENARY) && Q_strcmp(pItemDef->GetItemClass(), "tf_weapon_shotgun") )
-				)
+			if (iAnimSlot == -1)
 			{
-				iAnimSlot = pItemDef->GetLoadoutSlot(m_iCurrentClassIndex);
+				if (
+					(m_iCurrentClassIndex != TF_CLASS_MERCENARY) ||
+					((m_iCurrentClassIndex == TF_CLASS_MERCENARY) && Q_strcmp(pItemDef->GetItemClass(), "tf_weapon_shotgun"))
+					)
+				{
+					iAnimSlot = pItemDef->GetLoadoutSlot(m_iCurrentClassIndex);
+				}
+				else //TODO - THIS IS DOGSHIT, FUCKING FIX IT!!!!!
+				{
+					iAnimSlot = TF_WPN_TYPE_ITEM1;
+				}
 			}
-			else //TODO - THIS IS DOGSHIT, FUCKING FIX IT!!!!!!
+
+			// Ignore items that don't want to control player animation
+			if (iAnimSlot == -2)
+				return;
+
+			const CUtlVector<const char*>& vecWeaponTypeSubstrings = GetItemSchema()->GetWeaponTypeSubstrings();
+			if (vecWeaponTypeSubstrings.IsValidIndex(iAnimSlot))
 			{
-				iAnimSlot = TF_WPN_TYPE_ITEM1;
+				MDLCACHE_CRITICAL_SECTION();
+
+				// Get the studio header of the root model.
+				if (!m_RootMDL.m_pStudioHdr)
+					return;
+
+				CStudioHdr& studioHdr = *m_RootMDL.m_pStudioHdr;
+				int iSequence = FindSequenceFromActivity(&studioHdr, s_pszDefaultAnimForWpnSlot[iAnimSlot]);
+				if (iSequence != ACT_INVALID)
+				{
+					SetSequence(iSequence, true);
+				}
 			}
 		}
-
-		const CUtlVector<const char *>& vecWeaponTypeSubstrings = GetItemSchema()->GetWeaponTypeSubstrings();
-		if ( vecWeaponTypeSubstrings.IsValidIndex( iAnimSlot ) )
+		else
 		{
+			const char* pszLoadoutAnimation = pItem->GetLoadoutAnimation();
+
+			if (!pszLoadoutAnimation)
+			{
+				pszLoadoutAnimation = "ACT_MP_STAND_MELEE";
+			}
+
 			MDLCACHE_CRITICAL_SECTION();
 
 			// Get the studio header of the root model.
-			if ( !m_RootMDL.m_pStudioHdr )
+			if (!m_RootMDL.m_pStudioHdr)
 				return;
 
-			CStudioHdr &studioHdr = *m_RootMDL.m_pStudioHdr;
-			int iSequence = FindSequenceFromActivity( &studioHdr, s_pszDefaultAnimForWpnSlot[ iAnimSlot ] );
-			if ( iSequence != ACT_INVALID )
+			CStudioHdr& studioHdr = *m_RootMDL.m_pStudioHdr;
+			int iSequence = FindSequenceFromActivity(&studioHdr, pszLoadoutAnimation);
+			if (iSequence != ACT_INVALID)
 			{
-				SetSequence( iSequence, true );
+				SetSequence(iSequence, true);
 			}
 		}
 	}

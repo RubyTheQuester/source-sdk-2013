@@ -1043,6 +1043,18 @@ const char *CEconItemView::GetWorldDisplayModel() const
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+const char* CEconItemView::GetLoadoutAnimation() const
+{
+	CEconItemDefinition* pData = GetStaticData();
+	if (!pData)
+		return NULL;
+
+	return pData->GetLoadoutAnimation();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 const char *CEconItemView::GetExtraWearableModel() const
 {
 	CEconItemDefinition *pData = GetStaticData();

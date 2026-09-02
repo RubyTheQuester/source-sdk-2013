@@ -681,6 +681,26 @@
 			"is_user_generated"	"5"
 		}
 		
+		"3561"
+		{
+			"name"	"burst delay"
+			"attribute_class"	"burst_delay"
+			"description_string"	"#Attrib_Burst_Delay"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+		}
+		
+		"3562"
+		{
+			"name"	"burst size"
+			"attribute_class"	"burst_size"
+			"description_string"	"#Attrib_Burst_Size"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

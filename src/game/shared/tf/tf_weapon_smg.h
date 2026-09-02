@@ -15,6 +15,7 @@
 #define CTFSMG C_TFSMG
 #define CTFChargedSMG C_TFChargedSMG
 #define CTFSMG_MEDIC C_TFSMG_MEDIC
+#define CTFRifle C_TFRifle
 #endif
 
 //=============================================================================
@@ -110,6 +111,33 @@ public:
 	~CTFSMG_MEDIC() {}
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SMG_MEDIC; }
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableSMGMerc[];
 };
 
+//=============================================================================
+//
+// TF Weapon Merc Assault Rifle
+//
+class CTFRifle : public CTFSMG
+{
+public:
+	DECLARE_CLASS(CTFRifle, CTFSMG);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	CTFRifle() {}
+	~CTFRifle() {}
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_ASSAULT_RIFLE; }
+
+	virtual acttable_t* ActivityList(int& iActivityCount);
+	static acttable_t m_acttableRifle[];
+};
 #endif // TF_WEAPON_SMG_H

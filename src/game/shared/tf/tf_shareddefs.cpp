@@ -729,6 +729,8 @@ const char *g_aWeaponNames[] =
 	"TF_WEAPON_SMG_MEDIC",
 	"TF_WEAPON_BOUNCER",
 
+	"TF_WEAPON_ASSAULT_RIFLE",
+
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_aWeaponNames ) == TF_WEAPON_COUNT );
 
@@ -857,6 +859,8 @@ int g_aWeaponDamageTypes[] =
 
 	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_SMG_MEDIC,
 	DMG_BLAST | DMG_HALF_FALLOFF,			// TF_WEAPON_BOUNCER,
+
+	DMG_BULLET | DMG_USEDISTANCEMOD,			// TF_WEAPON_ASSAULT_RIFLE,
 };
 
 const char *g_szSpecialDamageNames[] =

@@ -1019,6 +1019,10 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 		{
 			m_iAnimationSlot = -2;
 		}
+		else if (Q_stricmp(pszAnimSlot, "OVERRIDE") == 0)
+		{
+			m_iAnimationSlot = -3;
+		}
 		else
 		{
 			m_iAnimationSlot = StringFieldToInt( pszAnimSlot, GetItemSchema()->GetWeaponTypeSubstrings() );

@@ -415,6 +415,87 @@
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
 		}
 		
+		"weapon_assault_rifle"
+		{
+			"item_class"	"tf_weapon_assault_rifle"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_AssaultRifle"
+			
+			"item_name"	"#TF_Weapon_AssaultRifle"
+			"item_slot"	"primary"
+			
+			"anim_slot"	"OVERRIDE"
+			"loadout_animation" 	"ACT_MERC_STAND_ASSAULT_RIFLE"
+			
+			"image_inventory"		"backpack/weapons/c_models/merc/c_pistol/c_pistol"
+			
+			"model_player"	"models/weapons/v_models/v_assault_rifle_dm.mdl"
+			"model_world"	"models/weapons/w_models/w_assault_rifle.mdl"
+			
+			
+			"attributes"
+			{
+				"burst delay"
+				{
+					"attribute_class"  "burst_delay"
+					"value"			   "0.37"
+				}
+				"burst size"
+				{
+					"attribute_class"  "burst_size"
+					"value"			   "3"
+				}
+				
+				
+				"is sourcemod mod item"
+				{
+					"attribute_class"  "is_sourcemod_mod_item"
+					"value"			   "1"
+				}
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"				"10 0 -7"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"particle_suffix"		"pistol"
+		}
+		
+		"weapon_merc_smg"
+		{
+			"item_class"	"tf_weapon_smg_medic"
+			
+			"show_in_armory"	"1"
+			"item_type_name"	"#TF_Weapon_SMG"
+			
+			"item_name"	"#TF_Weapon_Syringegun_Hitscan"
+			"item_slot"	"primary"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_mat49/c_mat49"
+			
+			"model_player"	"models\weapons\v_models\v_smg_medic.mdl"
+			"model_world"	"models/weapons/w_models/w_smg_medic.mdl"
+			
+			"anim_slot"	"OVERRIDE"
+			"loadout_animation" 	"ACT_MERC_STAND_SMG_MERCENARY"
+			
+			"attributes"
+			{
+				"is sourcemod mod item"
+				{
+					"attribute_class"  "is_sourcemod_mod_item"
+					"value"			   "2"
+				}
+			}
+			
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"particle_suffix"		"pistol"
+		}
 		//END OF THE PREFABS LINE
 	}
 }

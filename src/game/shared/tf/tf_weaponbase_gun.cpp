@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "tf_weaponbase_gun.h"
+#include "in_buttons.h"
 #include "tf_fx_shared.h"
 #include "effect_dispatch_data.h"
 #include "takedamageinfo.h"
@@ -42,12 +43,19 @@
 //
 IMPLEMENT_NETWORKCLASS_ALIASED( TFWeaponBaseGun, DT_TFWeaponBaseGun )
 
-BEGIN_NETWORK_TABLE( CTFWeaponBaseGun, DT_TFWeaponBaseGun )
+BEGIN_NETWORK_TABLE(CTFWeaponBaseGun, DT_TFWeaponBaseGun)
+#if defined( CLIENT_DLL )
+RecvPropInt(RECVINFO(m_iBurstSize)),
+#else
+SendPropInt(SENDINFO(m_iBurstSize), 4, SPROP_UNSIGNED),
+#endif
 END_NETWORK_TABLE()
-
+#ifdef CLIENT_DLL
 BEGIN_PREDICTION_DATA( CTFWeaponBaseGun )
+DEFINE_PRED_FIELD(m_iBurstSize, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 END_PREDICTION_DATA()
-
+#endif
+// Server specific.
 // Server specific.
 #if !defined( CLIENT_DLL ) 
 BEGIN_DATADESC( CTFWeaponBaseGun )
@@ -69,6 +77,51 @@ CTFWeaponBaseGun::CTFWeaponBaseGun()
 {
 	m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
 	m_iAmmoToAdd = 0;
+	m_iBurstSize = 0;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFWeaponBaseGun::ItemPostFrame(void)
+{
+	int iOldBurstSize = m_iBurstSize;
+
+	CTFPlayer* pOwner = GetTFPlayerOwner();
+	if (pOwner)
+	{
+		if (m_iBurstSize > 0)
+		{
+			// Fake the fire button.
+			pOwner->m_nButtons |= IN_ATTACK;
+		}
+	}
+
+	int iClickFire = 0;
+	CALL_ATTRIB_HOOK_INT(iClickFire, click_fire);
+
+	if (iClickFire > 0 && pOwner->m_afButtonPressed & IN_ATTACK)
+	{
+		m_flNextPrimaryAttack = gpGlobals->curtime *= 0.1f;
+	}
+
+	BaseClass::ItemPostFrame();
+
+	// Stop burst if we run out of ammo.
+	if ( (UsesClipsForAmmo1() && m_iClip1 <= 0  ||
+		(!UsesClipsForAmmo1() && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0))
+		)
+	{
+		m_iBurstSize = 0;
+	}
+
+	if (iOldBurstSize > 0 && m_iBurstSize == 0)
+	{
+		float flBurstDelay = GetBurstFireDelay();
+
+		// Delay the next burst.
+		m_flNextPrimaryAttack = gpGlobals->curtime + flBurstDelay;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -98,6 +151,18 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 
 	if ( !CanAttack() )
 		return;
+
+	int iBurstSize = GetBurstFireSize();
+
+	if ( iBurstSize > 0 && m_iBurstSize == 0 )
+	{
+		// Start the burst.
+		m_iBurstSize = iBurstSize;
+	}
+	if ( m_iBurstSize > 0 )
+	{
+		m_iBurstSize--;
+	}
 
 	float flFireDelay = ApplyFireDelay( m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_flTimeFireDelay );
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pPlayer, flFireDelay, hwn_mult_postfiredelay );
@@ -482,6 +547,32 @@ int CTFWeaponBaseGun::GetAmmoPerShot( void )
 
 		return m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_iAmmoPerShot;
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+float CTFWeaponBaseGun::GetBurstFireDelay(void) const
+{
+	float flBurstDelay = 0.0f;
+	CALL_ATTRIB_HOOK_FLOAT(flBurstDelay, burst_delay);
+	if (flBurstDelay > 0)
+		return flBurstDelay;
+
+	return m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_flBurstDelay;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+int CTFWeaponBaseGun::GetBurstFireSize(void) const
+{
+	int iBurstSize = 0;
+	CALL_ATTRIB_HOOK_INT(iBurstSize, burst_size);
+	if (iBurstSize)
+		return iBurstSize;
+
+	return m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_nBurstSize;
 }
 
 //-----------------------------------------------------------------------------
@@ -1055,6 +1146,8 @@ bool CTFWeaponBaseGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 	SetContextThink( NULL, 0, ZOOM_CONTEXT );
 
 #endif
+	// Stop the burst.
+	m_iBurstSize = 0;
 
 	return BaseClass::Holster( pSwitchingTo );
 }

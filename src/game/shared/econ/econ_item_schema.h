@@ -1363,6 +1363,8 @@ public:
 	const char  *GetWorldDisplayModel() const					{ return m_pszWorldDisplayModel; }
 	const char  *GetCollectionReference() const					{ return m_pszCollectionReference; }
 
+	const char  *GetLoadoutAnimation() const					{ return m_pszLoadoutAnimation; }
+
 	// Some weapons need a custom model for icon generation. If this value is not present, the world model is used.
 	virtual const char  *GetIconDisplayModel()	const;
 
@@ -1547,6 +1549,7 @@ private:
 	int				m_iInspectPanelDistance;
 
 	const char		*m_pszBaseDisplayModel;
+	const char      *m_pszLoadoutAnimation;
 	int				m_iDefaultSkin;
 	bool			m_bLoadOnDemand;
 	bool			m_bHasBeenLoaded;

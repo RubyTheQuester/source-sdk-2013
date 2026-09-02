@@ -349,3 +349,74 @@
 	//"wave"		"common/null.wav"
 	"wave"		"items/medshotno1.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// ASSAULT RIFLE
+// ------------------------------------------------------------------------------------ //
+"Weapon_AR.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/assaultrifle/assaultrifle_shoot.wav"
+}
+
+"Weapon_AR.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/assaultrifle/assaultrifle_shoot_crit.wav"
+}
+
+"Weapon_AR.WorldReload"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.35"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		")weapons/assaultrifle/assaultrifle_worldreload.wav"
+}
+
+"Weapon_AR.ClipEmpty"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		"weapons/pistol/pistol_empty.wav"
+}
+
+"Weapon_AR.ClipOut"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.35"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		"weapons/assaultrifle/assaultrifle_clip_out.wav"
+}
+
+"Weapon_AR.ClipIn"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.35"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		")weapons/assaultrifle/assaultrifle_clip_in.wav"
+}
+
+"Weapon_AR.BoltBack"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".35"
+	"wave"		")weapons/assaultrifle/draw_assaultrifle_boltback.wav"
+}
+
+"Weapon_AR.BoltForward"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_74dB"
+	"volume"	".35"
+	"wave"		"weapons/assaultrifle/draw_assaultrifle_boltforward.wav"
+}

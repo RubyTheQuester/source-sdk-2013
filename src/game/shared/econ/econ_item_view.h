@@ -299,7 +299,8 @@ public:
 
 	// Return the load-out slot that this item must be placed into
 	int						GetAnimationSlot( void ) const;
-	
+	const char				*GetLoadoutAnimation() const;
+
 	// Return an int that indicates whether the item should be dropped from a dead owner.
 	int						GetDropType( void );
 

@@ -2290,6 +2290,7 @@ m_pszInventoryImage( NULL ),
 m_pszHolidayRestriction( NULL ),
 m_iSubType( 0 ),
 m_pszBaseDisplayModel( NULL ),
+m_pszLoadoutAnimation( NULL ),
 m_iDefaultSkin( -1 ),
 m_pszWorldDisplayModel( NULL ),
 m_pszWorldExtraWearableModel( NULL ),
@@ -2386,6 +2387,7 @@ bool CEconItemDefinition::BInitFromTestItemKVs( int iNewDefIndex, KeyValues *pKV
 #endif
 
 		m_pszBaseDisplayModel = pKVItem->GetString( "model_player", NULL );
+		m_pszLoadoutAnimation = m_pKVItem->GetString("loadout_animation", NULL);
 		m_pszVisionFilteredDisplayModel = pKVItem->GetString( "model_vision_filtered", NULL );
 		m_bAttachToHands = pKVItem->GetInt( "attach_to_hands", 0 ) != 0;
 		m_bModelAttachToHands = m_pKVItem->GetInt("model_attach_to_hands", 0) != 0;
@@ -3186,6 +3188,8 @@ bool CEconItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString
 	m_bIsTool = m_pKVItem->GetBool( "is_tool", 0 ) || ( GetItemClass() && !V_stricmp( GetItemClass(), "tool" ) );
 	m_iDropType = StringFieldToInt( m_pKVItem->GetString("drop_type"), g_szDropTypeStrings, ARRAYSIZE(g_szDropTypeStrings) );
 	m_pszCollectionReference = m_pKVItem->GetString( "collection_reference", NULL );
+
+	m_pszLoadoutAnimation = m_pKVItem->GetString("loadout_animation", NULL);
 
 	// Creation data
 	m_bHidden = m_pKVItem->GetInt( "hidden", 0 ) != 0;

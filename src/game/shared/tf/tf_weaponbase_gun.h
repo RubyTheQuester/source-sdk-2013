@@ -50,6 +50,7 @@ public:
 
 	CTFWeaponBaseGun();
 
+	virtual void ItemPostFrame( void );
 	virtual void PrimaryAttack();
 	virtual void SecondaryAttack( void );
 	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
@@ -87,6 +88,11 @@ public:
 
 	virtual int GetAmmoPerShot( void );
 
+	virtual float GetBurstFireDelay( void ) const;
+	virtual int GetBurstFireSize( void ) const;
+
+	bool CanHeadshot( void ) const { int iMode = 0; CALL_ATTRIB_HOOK_INT(iMode, set_weapon_mode); return (iMode == 1); };
+
 	void UpdatePunchAngles( CTFPlayer *pPlayer );
 	virtual float GetProjectileDamage( void );
 
@@ -102,6 +108,9 @@ public:
 	virtual bool CanBeSelected( void );
 
 	virtual bool ShouldRemoveDisguiseOnPrimaryAttack() const;
+
+protected:
+	CNetworkVar( int, m_iBurstSize );
 
 private:
 

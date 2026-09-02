@@ -195,6 +195,19 @@
 			}
 		}
 		
+		"34809"
+		{
+			"name"		"Assault Rifle"
+			"prefab"	"moditem_merc_prefab weapon_assault_rifle"
+		}
+		
+		
+		"34810"
+		{
+			"name"		"Merc SMG"
+			"prefab"	"moditem_merc_prefab weapon_merc_smg"
+			
+		}
 		
 		// EQUIPMENT 
 		
@@ -283,6 +296,7 @@
 			}
 		}
 		
+
 		// END OF THE OVERALL ITEMS LINE
 	}
 }
