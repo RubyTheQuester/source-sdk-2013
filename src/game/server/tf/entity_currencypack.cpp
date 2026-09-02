@@ -223,6 +223,19 @@ void CCurrencyPack::ComeToRest( void )
 		{
 			ForceCollect();
 			return;
+/*
+			Vector vecMins, vecMaxs;
+			pTrigger->GetCollideable()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
+			if ( IsPointInBox( GetCollideable()->GetCollisionOrigin(), vecMins, vecMaxs ) )
+			{
+				TFGameRules()->DistributeCurrencyAmount( m_nAmount );
+
+				m_bTouched = true;
+				UTIL_Remove( this );
+
+				return;
+			}
+*/
 		}
 	}
 
@@ -233,6 +246,13 @@ void CCurrencyPack::ComeToRest( void )
 		if ( pRespawnRoom->PointIsWithin( GetAbsOrigin() ) )
 		{
 			ForceCollect();
+/*
+			TFGameRules()->DistributeCurrencyAmount( m_nAmount );
+
+			m_bTouched = true;
+			UTIL_Remove( this );
+
+*/
 			return;
 		}
 	}
