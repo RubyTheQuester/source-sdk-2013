@@ -201,22 +201,12 @@
 			"prefab"	"moditem_merc_prefab weapon_assault_rifle"
 		}
 		
-		"34810"
+		"34811"
 		{
-			"name"		"Mercenary Combat Knife"
-			"prefab"	"moditem_merc_prefab weapon_knife"
+			"name"		"Mercenary Knife"
+			"prefab"	"moditem_merc_prefab weapon_combatknife"
 			
-			"item_name"		"#TF_Weapon_Knife"
-			
-			"propername"		"1"
-			
-			"image_inventory"	"backpack/crafting/token_melee"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-				"spy"		"0"
-			}
+			"item_slot"	"melee"
 		}
 		
 		// EQUIPMENT 

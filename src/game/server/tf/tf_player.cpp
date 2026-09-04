@@ -9541,49 +9541,39 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			float flCheatDeathChance = 0.f;
 			CALL_ATTRIB_HOOK_FLOAT( flCheatDeathChance, teleport_instead_of_die );
 
-			//DevMsg("Test test test!\n");
-			//DevMsg("flCheatDeathChance = %f\n", flCheatDeathChance);
-
 			if( RandomFloat() < flCheatDeathChance )
 			{
 
 				Vector origin = GetAbsOrigin();
 				CPVSFilter filter(origin);
 
-				EmitSound("Building_Teleporter.Send");
+				UserMessageBegin(filter, "PlayerTeleportHomeEffect");
+					WRITE_BYTE(entindex());
+				MessageEnd();
 
-				int iTeam = GetTeamNumber();
+				// DispatchParticleEffect( "drg_wrenchmotron_teleport", PATTACH_ABSORIGIN );
 
-				switch (iTeam)
+				switch (GetTeamNumber())
 				{
 				case TF_TEAM_RED:
 					TE_TFParticleEffect(filter, 0.0, "teleported_red", origin, vec3_angle);
-					TE_TFParticleEffect(filter, 0.0, "player_sparkles_red", origin, vec3_angle, this, PATTACH_ABSORIGIN);
+					TE_TFParticleEffect(filter, 0.0, "player_sparkles_red", origin, vec3_angle, this, PATTACH_POINT);
 					break;
 				case TF_TEAM_BLUE:
 					TE_TFParticleEffect(filter, 0.0, "teleported_blue", origin, vec3_angle);
-					TE_TFParticleEffect(filter, 0.0, "player_sparkles_blue", origin, vec3_angle, this, PATTACH_ABSORIGIN);
+					TE_TFParticleEffect(filter, 0.0, "player_sparkles_blue", origin, vec3_angle, this, PATTACH_POINT);
 					break;
 				default:
 					break;
 				}
+
+				DropFlag();
+				DropRune();
+
+				EmitSound( "Building_Teleporter.Send" );
 
 				// Send back to base
-				ForceRespawn();
-
-				switch (iTeam)
-				{
-				case TF_TEAM_RED:
-					TE_TFParticleEffect(filter, 0.0, "teleportedin_red", origin, vec3_angle);
-					break;
-				case TF_TEAM_BLUE:
-					TE_TFParticleEffect(filter, 0.0, "teleportedin_blue", origin, vec3_angle);
-					break;
-				default:
-					break;
-				}
-
-				EmitSound("Building_Teleporter.Receive");
+				TFGameRules()->GetPlayerSpawnSpot( this );
 
 				m_iHealth = 1;
 				return 0;
@@ -9594,29 +9584,6 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 			if ( RandomFloat() < flCheatDeathChanceUber )
 			{
-				/*
-				EmitSound("Mannpower.InvulnerableOn");
-
-				Vector origin = GetAbsOrigin();
-				CPVSFilter filter(origin);
-
-				int iTeam = GetTeamNumber();
-
-				switch (iTeam)
-				{
-				case TF_TEAM_RED:
-					TE_TFParticleEffect( filter, 0.0, "medic_radiusheal_red_spikes", origin, vec3_angle );
-					TE_TFParticleEffect( filter, 0.0, "spell_overheal_red", origin, vec3_angle );
-					break;
-				case TF_TEAM_BLUE:
-					TE_TFParticleEffect( filter, 0.0, "medic_radiusheal_blue_spikes", origin, vec3_angle );
-					TE_TFParticleEffect( filter, 0.0, "spell_overheal_blue", origin, vec3_angle );
-					break;
-				default:
-					break;
-				}
-				*/
-
 				m_Shared.AddCond( TF_COND_INVULNERABLE, 5.f );
 
 				m_iHealth = 1;

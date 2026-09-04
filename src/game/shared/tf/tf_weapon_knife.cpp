@@ -52,6 +52,17 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_knife, CTFKnife );
 PRECACHE_WEAPON_REGISTER( tf_weapon_knife );
 
+//=============================================================================
+IMPLEMENT_NETWORKCLASS_ALIASED( TFKnifeMerc, DT_TFWeaponKnife_Merc)
+
+BEGIN_NETWORK_TABLE( CTFKnifeMerc, DT_TFWeaponKnife_Merc )
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA(CTFKnifeMerc)
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_knife_merc, CTFKnifeMerc);
+PRECACHE_WEAPON_REGISTER( tf_weapon_knife_merc );
 
 //=============================================================================
 //

@@ -149,9 +149,7 @@ acttable_t* CTFSMG_MEDIC::ActivityList(int& iActivityCount)
 {
 	if (GetTFPlayerOwner()->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY)
 	{
-		iActivityCount = ARRAYSIZE(m_acttableSMGMerc);
-
-		DevMsg("Dev Message Debugging!");
+		iActivityCount = ARRAYSIZE(m_acttableSMGMerc);;
 
 		return m_acttableSMGMerc;
 	}

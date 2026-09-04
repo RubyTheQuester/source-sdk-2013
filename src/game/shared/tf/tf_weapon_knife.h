@@ -13,6 +13,7 @@
 
 #ifdef CLIENT_DLL
 #define CTFKnife C_TFKnife
+#define CTFKnifeMerc C_TFKnifeMerc
 #endif
 
 // Knives use the "set_weapon_mode" attribute to define which type of knife they are
@@ -113,5 +114,24 @@ inline float CTFKnife::GetProgress( void )
 	return meltedTime / m_flKnifeRegenerateDuration;
 }
 
+//=============================================================================
+//
+// KnifeMerc class.
+//
+//=============================================================================
+class CTFKnifeMerc : public CTFKnife
+{
+public:
 
+	DECLARE_CLASS( CTFKnifeMerc, CTFKnife );
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	CTFKnifeMerc() {}
+	virtual int			GetWeaponID(void) const { return TF_WEAPON_KNIFE_MERC; }
+
+private:
+
+	CTFKnifeMerc( const CTFKnifeMerc& ) {}
+};
 #endif // TF_WEAPON_KNIFE_H
