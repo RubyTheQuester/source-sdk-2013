@@ -147,9 +147,6 @@ public:
 	DECLARE_NETWORKCLASS(); 
 	DECLARE_PREDICTABLE();
 
-	virtual acttable_t* ActivityList(int& iActivityCount);
-	static acttable_t m_acttableChinaLakeMerc[];
-
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_GRENADELAUNCHER_MERCENARY; }
 };
 

@@ -205,9 +205,6 @@ public:
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_MERCENARY; }
 
-
-	virtual acttable_t* ActivityList(int& iActivityCount);
-	static acttable_t m_acttableShotgunMerc[];
 };
 
 class CTFShotgun_Super : public CTFShotgun
@@ -218,9 +215,6 @@ public:
 	DECLARE_PREDICTABLE();
 
 	CTFShotgun_Super();
-
-	virtual acttable_t* ActivityList(int& iActivityCount);
-	static acttable_t m_acttableShotgunSuper[];
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SUPER_SHOTGUN; }
 };

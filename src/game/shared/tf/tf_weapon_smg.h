@@ -111,9 +111,6 @@ public:
 	~CTFSMG_MEDIC() {}
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SMG_MEDIC; }
-
-	virtual acttable_t* ActivityList(int& iActivityCount);
-	static acttable_t m_acttableSMGMerc[];
 };
 
 //=============================================================================
@@ -136,8 +133,5 @@ public:
 	~CTFRifle() {}
 
 	virtual int		GetWeaponID(void) const { return TF_WEAPON_ASSAULT_RIFLE; }
-
-	virtual acttable_t* ActivityList(int& iActivityCount);
-	static acttable_t m_acttableRifle[];
 };
 #endif // TF_WEAPON_SMG_H

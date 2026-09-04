@@ -47,45 +47,6 @@ CREATE_SIMPLE_WEAPON_TABLE(TFRevolver_Secondary, tf_weapon_revolver_secondary)
 CREATE_SIMPLE_WEAPON_TABLE(TFRevolver_Merc, tf_weapon_revolver_mercenary)
 //============================
 
-acttable_t CTFRevolver_Merc::m_acttableRevolver[] =
-{
-	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_REVOLVER_MERCENARY, false },
-	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_REVOLVER_MERCENARY, false },
-	{ ACT_MP_RUN, ACT_MERC_RUN_REVOLVER_MERCENARY, false },
-	{ ACT_MP_WALK, ACT_MERC_WALK_REVOLVER_MERCENARY, false },
-	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_REVOLVER_MERCENARY, false },
-	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_REVOLVER_MERCENARY, false },
-	{ ACT_MP_SWIM, ACT_MERC_SWIM_REVOLVER_MERCENARY, false },
-
-	{ ACT_MP_JUMP, ACT_MERC_JUMP_REVOLVER_MERCENARY, false },
-	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_REVOLVER_MERCENARY, false },
-	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_REVOLVER_MERCENARY, false },
-	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_REVOLVER_MERCENARY, false },
-
-	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_REVOLVER_MERCENARY, false },
-	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_REVOLVER_MERCENARY, false },
-	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_REVOLVER_MERCENARY, false },
-
-	{ ACT_MP_RELOAD_STAND, ACT_MERC_RELOAD_STAND_REVOLVER_MERCENARY, false },
-	{ ACT_MP_RELOAD_CROUCH, ACT_MERC_RELOAD_CROUCH_REVOLVER_MERCENARY, false },
-	{ ACT_MP_RELOAD_SWIM, ACT_MERC_RELOAD_SWIM_REVOLVER_MERCENARY, false },
-	{ ACT_MP_RELOAD_AIRWALK, ACT_MERC_RELOAD_AIRWALK_REVOLVER_MERCENARY, false },
-};
-
-
-acttable_t* CTFRevolver_Merc::ActivityList(int& iActivityCount)
-{
-	if (GetTFPlayerOwner()->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY)
-	{
-		iActivityCount = ARRAYSIZE(m_acttableRevolver);
-		return m_acttableRevolver;
-	}
-	else
-	{
-		return BaseClass::ActivityList(iActivityCount);
-	}
-}
-
 //=============================================================================
 //
 // Weapon Revolver functions.
