@@ -75,6 +75,21 @@
 				"single wep deploy time decreased"		"0.85"
 				"switch from wep deploy time decreased"	"0.85"
 			}
+			
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value" "0.80"
+				}
+				
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.75"
+				}
+			}
 		}
 		
 		"34806"
@@ -134,6 +149,7 @@
 					"attribute_class"	"mult_postfiredelay"
 					"value"	"1.70"
 				}
+				
 				"mod crit while airborne"
 				{
 					"attribute_class"	"crit_while_airborne"
@@ -166,33 +182,6 @@
 			"item_slot"	"melee"
 			
 			"item_iconname"	"tfc_weapon_medkit"
-			
-			"attributes"
-			{
-				"syringe heal"
-				{
-					"attribute_class"	"syringe_heal"
-					"value" "36"
-				}
-				
-				"infection"
-				{
-					"attribute_class"	"can_infect"
-					"value" "30"
-				}
-				
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-				
-				"clear_effects"
-				{
-					"attribute_class"	"clear_effects"
-					"value" "1"
-				}
-			}
 		}
 		
 		"34809"
@@ -202,6 +191,15 @@
 			
 			"item_logname"	"assaultrifle"
 			"item_iconname"	"assaultrifle"
+			
+			"attributes"
+			{
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+			}
 		}
 		
 		"34811"
@@ -213,6 +211,15 @@
 			
 			"item_logname"	"combatknife"
 			"item_iconname"	"combatknife"
+			
+			"attributes"
+			{
+				"attack while cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
+			}
 		}
 		
 		// EQUIPMENT 
@@ -304,10 +311,10 @@
 		
 		"34852"
 		{
-			"name"		"Mercenary Ammo Backpack 1"
+			"name"		"Mercenary Backpack 1"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
-			"item_name"	"Ammo Backpack 1"
+			"item_name"	"Backpack 1"
 			
 			"item_slot"	"equipment"
 			
@@ -339,15 +346,27 @@
 					"attribute_class"	"mult_ammo_frompacks"
 					"value"				"1.15"
 				}
+				
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value"			"0.25"
+				}
+				
+				"health from packs increased"
+				{
+					"attribute_class"	"mult_health_frompacks"
+					"value"			"1.5"
+				}
 			}
 		}
 		
 		"34853"
 		{
-			"name"		"Mercenary Ammo Backpack 2"
+			"name"		"Mercenary Backpack 2"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
-			"item_name"	"Ammo Backpack 2"
+			"item_name"	"Backpack 2"
 			
 			"item_slot"	"equipment"
 			
@@ -385,15 +404,27 @@
 					"attribute_class"	"mult_maxammo_secondary"
 					"value"				"1.5"
 				}
+				
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value"			"0.25"
+				}
+				
+				"max health additive bonus"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "50"
+				}
 			}
 		}
 		
 		"34854"
 		{
-			"name"		"Faulty Uberheart 2"
+			"name"		"Faulty Uberheart"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
-			"item_name"	"Faulty Uberheart 2"
+			"item_name"	"Faulty Uberheart"
 			
 			"item_slot"	"equipment"
 			
@@ -421,7 +452,7 @@
 				"uber_on_damage_taken"
 				{
 					"attribute_class"	"uber_on_damage_taken"
-					"value" "0.05"
+					"value" "0.25"
 				}
 			}
 		}
@@ -431,7 +462,7 @@
 			"name"		"Stealth Device"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
-			"item_name"	"Stealth Device 1"
+			"item_name"	"Stealth Device"
 			
 			"item_slot"	"equipment"
 			
@@ -458,6 +489,63 @@
 			}
 		}
 		
+		"34856"
+		{
+			"name"		"Mercenary Backpack 2"
+			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			
+			"item_name"	"Backpack 3"
+			
+			"item_slot"	"equipment"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_buffpack/c_buffpack"
+			
+			"extra_wearable" "models/weapons/c_models/c_buffpack/c_buffpack.mdl"
+			
+			"used_by_classes"
+			{
+				"mercenary"	"1"
+			}
+			
+			"attributes"
+			{
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"	"1"
+				}
+				
+				"ammo from dispensers reduced"
+				{
+					"attribute_class"	"mult_ammo_from_dispensers"
+					"value" "0.25"
+				}
+				
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value"			"0.25"
+				}
+				
+				"health from healers reduced"
+				{
+					"attribute_class"	"mult_health_fromhealers"
+					"value"			"0.25"
+				}
+				
+				"health regen"
+				{
+					"attribute_class"	"add_health_regen"
+					"value"	"10"
+				}
+				
+				"ammo regen"
+				{
+					"attribute_class"	"addperc_ammo_regen"
+					"value"	"0.15"
+				}
+			}
+		}
 		// END OF THE OVERALL ITEMS LINE
 	}
 }
