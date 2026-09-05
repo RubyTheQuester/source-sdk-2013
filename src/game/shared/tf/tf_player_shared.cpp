@@ -8102,6 +8102,7 @@ void CTFPlayerShared::FadeInvis( float fAdditionalRateScale )
 //-----------------------------------------------------------------------------
 void CTFPlayerShared::InvisibilityThink( void )
 {
+	/*
 	if ( m_pOuter->GetPlayerClass()->GetClassIndex() != TF_CLASS_SPY && InCond( TF_COND_STEALTHED ) )
 	{
 		// Shouldn't happen, but it's a safety net
@@ -8112,6 +8113,7 @@ void CTFPlayerShared::InvisibilityThink( void )
 		}
 		return;
 	}
+	*/
 
 	float flTargetInvis = 0.0f;
 	float flTargetInvisScale = 1.0f;
@@ -8302,7 +8304,7 @@ void CTFPlayerShared::Disguise( int nTeam, int nClass, CTFPlayer* pDesiredTarget
 	int nRealTeam = m_pOuter->GetTeamNumber();
 	int nRealClass = m_pOuter->GetPlayerClass()->GetClassIndex();
 
-	Assert ( ( nClass >= TF_CLASS_SCOUT ) && ( nClass <= TF_CLASS_ENGINEER ) );
+	Assert ( ( nClass >= TF_CLASS_SCOUT ) && ( nClass <= TF_CLASS_MERCENARY ) );
 
 	// we're not a spy
 	if ( nRealClass != TF_CLASS_SPY )
