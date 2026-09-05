@@ -219,6 +219,12 @@ rule MedicTauntMedicSMG
 		response MercenaryTauntSoClose
 	}
 	
+	rule MercenaryTauntAssaultRifle
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsAssaultRifle
+		response MercenaryTauntSoClose
+	}
+	
 	//Groovy
 	rule MercenaryTauntCrowbar
 	{
@@ -233,10 +239,14 @@ rule MedicTauntMedicSMG
 	}
 	
 	//Dead Meat
-	//NONE
+	rule MercenaryTauntKnife
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsKnife
+		response MercenaryTauntDeadMeat
+	}
 	
 	//Bomb Scare
-	//NONE
+	//none, very long
 	
 	//Bond
 	rule MercenaryTauntPistolMercenary

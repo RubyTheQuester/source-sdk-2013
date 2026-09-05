@@ -1685,6 +1685,33 @@ void CTFPlayer::TFPlayerThink()
 		}
 	}
 
+	int nCloakOnCrouch = 0;
+	CALL_ATTRIB_HOOK_FLOAT( nCloakOnCrouch, cloak_on_crouch );
+
+	if ( GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY && (GetFlags() & FL_DUCKING) && (pGroundEntity != NULL) )
+	{
+		int nDisguiseAsDispenserOnCrouch = 0;
+		CALL_ATTRIB_HOOK_FLOAT( nDisguiseAsDispenserOnCrouch, disguise_as_dispenser_on_crouch );
+
+		if ( nDisguiseAsDispenserOnCrouch != 0 )
+		{
+			m_Shared.AddCond( TF_COND_DISGUISED_AS_DISPENSER, 0.5f );
+		}
+
+		if ( nCloakOnCrouch != 0 )
+		{
+			if ( !m_Shared.InCond( TF_COND_STEALTHED ) )
+			{
+				m_Shared.AddCond( TF_COND_STEALTHED );
+			}
+		}
+	}
+	else if ( GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY && m_Shared.InCond( TF_COND_STEALTHED ) && nCloakOnCrouch == 1)
+	{
+		m_Shared.m_flInvisibility = 0.0f;
+		m_Shared.RemoveCond( TF_COND_STEALTHED );
+	}
+
 	// rune charge over time
 	if ( m_Shared.CanRuneCharge() && !m_Shared.IsRuneCharged() )
 	{
@@ -14403,10 +14430,14 @@ void CTFPlayer::StateThinkDYING( void )
 	}
 
 	static ConVarRef mp_disable_respawn_times("mp_disable_respawn_times");
-	float flTimeInFreeze = mp_disable_respawn_times.GetInt() == 2 ? ( 0.01f ) : ( spec_freeze_traveltime.GetFloat() + spec_freeze_time.GetFloat() );
+
+	bool bIsPinocchio = this->IsBot();
+	bool bInstantRespawn = ( mp_disable_respawn_times.GetInt() == 3 && !bIsPinocchio ) || mp_disable_respawn_times.GetInt() == 2;
+
+	float flTimeInFreeze = bInstantRespawn ? ( 0.01f ) : ( spec_freeze_traveltime.GetFloat() + spec_freeze_time.GetFloat() );
 	float flFreezeEnd = (m_flDeathTime + TF_DEATH_ANIMATION_TIME + flTimeInFreeze );
 
-	if ( !m_bPlayedFreezeCamSound && mp_disable_respawn_times.GetInt() == 2 )
+	if ( !m_bPlayedFreezeCamSound && bInstantRespawn)
 	{
 		m_bPlayedFreezeCamSound = true;
 	}
@@ -14415,7 +14446,7 @@ void CTFPlayer::StateThinkDYING( void )
 	{
 		// Start the sound so that it ends at the freezecam lock on time
 		float flFreezeSoundLength = 0.3f;
-		float flFreezeSoundTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( mp_disable_respawn_times.GetInt() == 2 ? 0.01f : spec_freeze_traveltime.GetFloat() ) - flFreezeSoundLength;
+		float flFreezeSoundTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( bInstantRespawn ? 0.01f : spec_freeze_traveltime.GetFloat() ) - flFreezeSoundLength;
 		if ( gpGlobals->curtime >= flFreezeSoundTime )
 		{
 			CSingleUserRecipientFilter filter( this );
@@ -14492,7 +14523,11 @@ void CTFPlayer::StateThinkDYING( void )
 void CTFPlayer::AttemptToExitFreezeCam( void )
 {
 	static ConVarRef mp_disable_respawn_times("mp_disable_respawn_times");
-	float flFreezeTravelTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( mp_disable_respawn_times.GetInt() == 2 ? 0.01f : spec_freeze_traveltime.GetFloat() ) + 0.5f;
+
+	bool bIsPinocchio = this->IsBot();
+	bool bInstantRespawn = (mp_disable_respawn_times.GetInt() == 3 && !bIsPinocchio) || mp_disable_respawn_times.GetInt() == 2;
+
+	float flFreezeTravelTime = (m_flDeathTime + TF_DEATH_ANIMATION_TIME ) + ( bInstantRespawn ? 0.01f : spec_freeze_traveltime.GetFloat() ) + 0.5f;
 	if ( gpGlobals->curtime < flFreezeTravelTime )
 		return;
 

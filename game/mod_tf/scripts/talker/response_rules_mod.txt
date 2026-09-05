@@ -26,6 +26,7 @@ criterion "IsNotVictimMercenary" "victimclass" "!=Mercenary" "required" weight 0
 //Melees
 criterion "WeaponIsCrowbar" "playerweapon" "tf_weapon_crowbar" "required"
 criterion "WeaponIsMedkit" "playerweapon" "tf_weapon_medkit" "required"
+criterion "WeaponIsKnife" "playerweapon" "tf_weapon_knife_merc" "required"
 
 //Pistols
 criterion "WeaponIsPistolMercenary" "playerweapon" "tf_weapon_pistol_mercenary" "required"
@@ -39,7 +40,7 @@ criterion "WeaponIsSuperShotgun" "playerweapon" "tf_weapon_super_shotgun" "requi
 criterion "WeaponIsTommyGun" "playerweapon" "tf_weapon_tommygun" "required"
 
 //Long-Range
-criterion "WeaponIsAssaultRifle" "playerweapon" "tf_weapon_assaultrifle" "required"
+criterion "WeaponIsAssaultRifle" "playerweapon" "tf_weapon_assault_rifle" "required"
 
 //Wild-cards
 criterion "WeaponIsNailgun" "playerweapon" "tf_weapon_nailgun" "required"

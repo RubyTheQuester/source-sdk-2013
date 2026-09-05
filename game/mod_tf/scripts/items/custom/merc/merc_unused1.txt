@@ -1,0 +1,75 @@
+"34854"
+{
+	"name"		"Faulty Uberheart 1"
+	"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+	
+	"item_name"	"Faulty Uberheart 1"
+	
+	"item_slot"	"equipment"
+	
+	"image_inventory"	"backpack/crafting/token_pda"
+	
+	"used_by_classes"
+	{
+		"mercenary"	"1"
+	}
+	
+	"attributes"
+	{
+		"allowed in medieval mode"
+		{
+			"attribute_class"	"allowed_in_medieval_mode"
+			"value"	"1"
+		}
+		
+		"max health additive penalty"
+		{
+			"attribute_class"	"add_maxhealth"
+			"value" "-70"
+		}
+		
+		"uber_instead_of_die"
+		{
+			"attribute_class"	"uber_instead_of_die"
+			"value" "0.5"
+		}
+	}
+}
+
+"34856"
+{
+	"name"		"TeleHeart"
+	"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+	
+	"item_name"	"TeleHeart"
+	
+	"item_slot"	"equipment"
+	
+	"image_inventory"	"backpack/crafting/token_pda"
+	
+	"used_by_classes"
+	{
+		"mercenary"	"1"
+	}
+	
+	"attributes"
+	{
+		"allowed in medieval mode"
+		{
+			"attribute_class"	"allowed_in_medieval_mode"
+			"value"	"1"
+		}
+		
+		"max health additive penalty"
+		{
+			"attribute_class"	"add_maxhealth"
+			"value" "-70"
+		}
+		
+		"teleport_instead_of_die"
+		{
+			"attribute_class"	"teleport_instead_of_die"
+			"value" "0.4"
+		}
+	}
+}

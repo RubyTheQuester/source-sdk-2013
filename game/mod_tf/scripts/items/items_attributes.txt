@@ -777,6 +777,17 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3570"
+		{
+			"name"	"cloak_on_crouch"
+			"attribute_class"	"cloak_on_crouch"
+			"description_string"	"#Attrib_CloakOnCrouch"
+			"description_format"	"value_is_additive"
+			"effect_type"	"negative"
+			"armory_desc"	"on_wearer"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

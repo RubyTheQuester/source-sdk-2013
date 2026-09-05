@@ -318,7 +318,7 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
 			return false;
 		}
 		
-		if ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) && enemy->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
+		if ( ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) || enemy->m_Shared.InCond( TF_COND_DISGUISED_AS_DISPENSER ) )&& enemy->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team
 			return true;

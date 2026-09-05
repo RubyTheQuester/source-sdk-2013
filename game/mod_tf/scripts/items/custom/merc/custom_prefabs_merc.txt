@@ -453,6 +453,12 @@
 					"value"	"90"
 				}
 				
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
 				"is sourcemod mod item"
 				{
 					"attribute_class"  "is_sourcemod_mod_item"
@@ -520,6 +526,10 @@
 			"image_inventory"	"backpack/crafting/token_melee"
 			
 			"model_player"	"models\weapons\v_models\v_classic_knife.mdl"
+			"model_world"	"models/weapons/w_models/w_classic_knife.mdl"
+			
+			"anim_slot"	"OVERRIDE"
+			"loadout_animation" 	"ACT_MERC_STAND_KNIFE"
 			
 			"static_attrs"
 			{
@@ -528,6 +538,12 @@
 			
 			"attributes"
 			{
+				"attack while cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
+				
 				"is sourcemod mod item"
 				{
 					"attribute_class"  "is_sourcemod_mod_item"

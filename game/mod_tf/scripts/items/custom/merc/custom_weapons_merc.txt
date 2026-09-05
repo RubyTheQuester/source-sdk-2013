@@ -199,6 +199,9 @@
 		{
 			"name"		"Assault Rifle"
 			"prefab"	"moditem_merc_prefab weapon_assault_rifle"
+			
+			"item_logname"	"assaultrifle"
+			"item_iconname"	"assaultrifle"
 		}
 		
 		"34811"
@@ -207,6 +210,9 @@
 			"prefab"	"moditem_merc_prefab weapon_combatknife"
 			
 			"item_slot"	"melee"
+			
+			"item_logname"	"combatknife"
+			"item_iconname"	"combatknife"
 		}
 		
 		// EQUIPMENT 
@@ -384,45 +390,6 @@
 		
 		"34854"
 		{
-			"name"		"Faulty Uberheart 1"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
-			
-			"item_name"	"Faulty Uberheart 1"
-			
-			"item_slot"	"equipment"
-			
-			"image_inventory"	"backpack/crafting/token_pda"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
-			
-			"attributes"
-			{
-				"allowed in medieval mode"
-				{
-					"attribute_class"	"allowed_in_medieval_mode"
-					"value"	"1"
-				}
-				
-				"max health additive penalty"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" "-70"
-				}
-				
-				"uber_instead_of_die"
-				{
-					"attribute_class"	"uber_instead_of_die"
-					"value" "0.5"
-				}
-			}
-		}
-		
-		
-		"34855"
-		{
 			"name"		"Faulty Uberheart 2"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
@@ -454,17 +421,17 @@
 				"uber_on_damage_taken"
 				{
 					"attribute_class"	"uber_on_damage_taken"
-					"value" "0.3"
+					"value" "0.05"
 				}
 			}
 		}
 		
-		"34856"
+		"34855"
 		{
-			"name"		"TeleHeart"
+			"name"		"Stealth Device"
 			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
 			
-			"item_name"	"TeleHeart"
+			"item_name"	"Stealth Device 1"
 			
 			"item_slot"	"equipment"
 			
@@ -483,16 +450,10 @@
 					"value"	"1"
 				}
 				
-				"max health additive penalty"
+				"cloak_on_crouch"
 				{
-					"attribute_class"	"add_maxhealth"
-					"value" "-70"
-				}
-				
-				"teleport_instead_of_die"
-				{
-					"attribute_class"	"teleport_instead_of_die"
-					"value" "0.4"
+					"attribute_class"	"cloak_on_crouch"
+					"value"	"1"
 				}
 			}
 		}
