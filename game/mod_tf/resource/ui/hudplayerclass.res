@@ -1,4 +1,4 @@
-"Resource/UI/HudPlayerClass.res"
+"resource/ui/hudplayerclass.res"
 {
 	// player class data
 	"HudPlayerClass"
@@ -287,13 +287,14 @@
 			{
 				"fov"			"20"
 				"angles_x"		"-5"
-				"angles_x_minmode"	"0"
-				"angles_y"		"172"
+				"angles_x_minmode"	"3"
+				"angles_y"		"160"
 				"angles_z"		"0"
-				"origin_x"		"175"
-				"origin_y"		"-5"
-				"origin_z"		"-90"
-				"origin_z_minmode"	"-50"
+				"origin_x"		"160"
+				"origin_y"		"0"
+				"origin_y_minmode"	"-3"
+				"origin_z"		"-95"
+				"origin_z_minmode"	"-60"
 			}
 		}
 	}
