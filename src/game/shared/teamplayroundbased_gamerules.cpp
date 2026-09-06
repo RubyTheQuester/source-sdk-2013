@@ -624,11 +624,7 @@ float CTeamplayRoundBasedRules::GetMinTimeWhenPlayerMaySpawn( CBasePlayer *pPlay
 
 	bool bIsPinocchio = pPlayer->IsBot();
 
-	if ( mp_disable_respawn_times.GetInt() == 2 )
-	{
-		flDeathAnimLength += 0.01f;
-	}
-	else if (mp_disable_respawn_times.GetInt() == 3 && !bIsPinocchio)
+	if ( mp_disable_respawn_times.GetInt() == 2 || (mp_disable_respawn_times.GetInt() == 3 && !bIsPinocchio) )
 	{
 		flDeathAnimLength += 0.01f;
 	}
