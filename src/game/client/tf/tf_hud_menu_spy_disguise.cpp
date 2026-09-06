@@ -45,7 +45,7 @@ CHudMenuSpyDisguise::CHudMenuSpyDisguise( const char *pElementName )
 
 	SetHiddenBits( HIDEHUD_MISCSTATUS );
 
-	for ( int i=0; i<10; ++i )
+	for ( int i=0; i<9; ++i )
 	{
 		char buf[32];
 		Q_snprintf( buf, sizeof(buf), "class_item_red_%d", i+1 );
@@ -112,7 +112,6 @@ void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 		m_pClassItems_Red[6]->LoadControlSettings( VarArgs( "%s/medic_red.res", res_dir ) );
 		m_pClassItems_Red[7]->LoadControlSettings( VarArgs( "%s/sniper_red.res", res_dir ) );
 		m_pClassItems_Red[8]->LoadControlSettings( VarArgs( "%s/spy_red.res", res_dir ) );
-		m_pClassItems_Red[9]->LoadControlSettings( VarArgs( "%s/mercenary_red.res", res_dir ) );
 
 		m_pClassItems_Blue[0]->LoadControlSettings( VarArgs( "%s/scout_blue.res", res_dir ) );
 		m_pClassItems_Blue[1]->LoadControlSettings( VarArgs( "%s/soldier_blue.res", res_dir ) );
@@ -123,7 +122,6 @@ void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 		m_pClassItems_Blue[6]->LoadControlSettings( VarArgs( "%s/medic_blue.res", res_dir ) );
 		m_pClassItems_Blue[7]->LoadControlSettings( VarArgs( "%s/sniper_blue.res", res_dir ) );
 		m_pClassItems_Blue[8]->LoadControlSettings( VarArgs( "%s/spy_blue.res", res_dir ) );
-		m_pClassItems_Blue[9]->LoadControlSettings( VarArgs( "%s/mercenary_blue.res", res_dir ) );
 
 		m_pActiveSelection = dynamic_cast< EditablePanel * >( FindChildByName( "active_selection_bg" ) );
 
@@ -145,7 +143,6 @@ void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 		m_pClassItems_Red[6]->LoadControlSettings( "resource/UI/disguise_menu/medic_red.res" );
 		m_pClassItems_Red[7]->LoadControlSettings( "resource/UI/disguise_menu/sniper_red.res" );
 		m_pClassItems_Red[8]->LoadControlSettings( "resource/UI/disguise_menu/spy_red.res" );
-		m_pClassItems_Red[9]->LoadControlSettings( "resource/UI/disguise_menu/mercenary_red.res" );
 
 		m_pClassItems_Blue[0]->LoadControlSettings( "resource/UI/disguise_menu/scout_blue.res" );
 		m_pClassItems_Blue[1]->LoadControlSettings( "resource/UI/disguise_menu/soldier_blue.res" );
@@ -156,7 +153,6 @@ void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 		m_pClassItems_Blue[6]->LoadControlSettings( "resource/UI/disguise_menu/medic_blue.res" );
 		m_pClassItems_Blue[7]->LoadControlSettings( "resource/UI/disguise_menu/sniper_blue.res" );
 		m_pClassItems_Blue[8]->LoadControlSettings( "resource/UI/disguise_menu/spy_blue.res" );
-		m_pClassItems_Blue[9]->LoadControlSettings( "resource/UI/disguise_menu/mercenary_blue.res" );
 
 		m_pActiveSelection = NULL;
 	}
@@ -198,7 +194,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 	}
 
 	// menu classes are not in the same order as the defines
-	static int iRemapKeyToClass[10] = 
+	static int iRemapKeyToClass[9] = 
 	{
 		TF_CLASS_SCOUT,
 		TF_CLASS_SOLDIER,
@@ -208,8 +204,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 		TF_CLASS_ENGINEER,
 		TF_CLASS_MEDIC,
 		TF_CLASS_SNIPER,
-		TF_CLASS_SPY,
-		TF_CLASS_MERCENARY
+		TF_CLASS_SPY
 	};
 
 	bool bController = ( IsConsole() || ( keynum >= JOYSTICK_FIRST ) );
@@ -295,19 +290,17 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 				const char *pszNum = pszCurrentBinding+4;
 				iSlot = atoi(pszNum);
 
-				/*
 				// slot10 cancels
-				if ( iSlot == 11 )
+				if ( iSlot == 10 )
 				{
 					engine->ExecuteClientCmd( "lastinv" );
 					return 0;
 				}
-				*/
 
 				iSlot -= 1;	// adjust to be 0 based
 
 				// allow slot1 - slot4 
-				if ( iSlot < 0 || iSlot > 9 )
+				if ( iSlot < 0 || iSlot > 8 )
 					return 1;
 			}
 		}
@@ -322,7 +315,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 			int iNewSelection = m_iSelectedItem;
 
 			iNewSelection++;
-			if ( iNewSelection > 10 )
+			if ( iNewSelection > 9 )
 				iNewSelection = 1;
 
 			SetSelectedItem( iNewSelection );
@@ -334,7 +327,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 
 			iNewSelection--;
 			if ( iNewSelection < 1 )
-				iNewSelection = 10;
+				iNewSelection = 9;
 
 			SetSelectedItem( iNewSelection );
 			return 0;
@@ -394,18 +387,15 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 					case KEY_7:
 					case KEY_8:
 					case KEY_9:
-					case KEY_0:
 						{
 							iSlot = keynum - KEY_1;
 						}
 						break;
 
-					/*
 					case KEY_0:
 						// cancel, close the menu
 						engine->ExecuteClientCmd( "lastinv" );
 						return 0;
-					*/
 
 					default:
 						return 1;	// key not handled
@@ -493,7 +483,7 @@ void CHudMenuSpyDisguise::ToggleSelectionIcons( bool bGroup )
 	// in controller mode we don't want any of the key icons
 	if( tf_disguise_menu_controller_mode.GetBool() || ::input->IsSteamControllerActive() )
 	{
-		for ( int i=0; i<10; ++i )
+		for ( int i=0; i<9; ++i )
 		{
 			m_pKeyIcons_Red[i]->SetVisible( false );
 			m_pKeyLabels_Red[i]->SetVisible( false );
@@ -515,7 +505,7 @@ void CHudMenuSpyDisguise::ToggleSelectionIcons( bool bGroup )
 			m_pKeyIcons_Category[i]->SetVisible( !bGroup );
 			m_pKeyLabels_Category[i]->SetVisible( !bGroup );
 		}
-		for ( int i=0; i<10; ++i )
+		for ( int i=0; i<9; ++i )
 		{
 			int index = i-(m_iGroupSelection*3);
 			bool bVisible = bGroup && ((m_iGroupSelection == -1) || ((index<=2)&&(index>=0)));
@@ -534,7 +524,7 @@ void CHudMenuSpyDisguise::ToggleSelectionIcons( bool bGroup )
 			m_pKeyIcons_Category[i]->SetVisible( false );
 			m_pKeyLabels_Category[i]->SetVisible( false );
 		}
-		for ( int i=0; i<10; ++i )
+		for ( int i=0; i<9; ++i )
 		{
 			m_pKeyIcons_Red[i]->SetVisible( true );
 			m_pKeyLabels_Red[i]->SetVisible( true );
@@ -584,7 +574,7 @@ void CHudMenuSpyDisguise::ToggleDisguiseTeam( void )
 	// show / hide the class items
 	bool bShowBlue = ( m_iShowingTeam == TF_TEAM_BLUE );
 
-	for ( int i=0; i<10; i++ )
+	for ( int i=0; i<9; i++ )
 	{
 		m_pClassItems_Red[i]->SetVisible( !bShowBlue );
 		m_pClassItems_Blue[i]->SetVisible( bShowBlue );
@@ -625,7 +615,7 @@ void CHudMenuSpyDisguise::FireGameEvent( IGameEvent *event )
 		{
 			bool bShowBlue = ( pPlayer->GetTeamNumber() == TF_TEAM_RED );
 
-			for ( int i=0; i<10; i++ )
+			for ( int i=0; i<9; i++ )
 			{
 				m_pClassItems_Red[i]->SetVisible( !bShowBlue );
 				m_pClassItems_Blue[i]->SetVisible( bShowBlue );

@@ -49,15 +49,15 @@ private:
 	void FindToggleBinding( void );
 
 private:
-	EditablePanel *m_pClassItems_Red[10];
-	CIconPanel *m_pKeyIcons_Red[10];
-	CExLabel *m_pKeyLabels_Red[10];
-	CExLabel *m_pKeyLabelsNew_Red[10];
+	EditablePanel *m_pClassItems_Red[9];
+	CIconPanel *m_pKeyIcons_Red[9];
+	CExLabel *m_pKeyLabels_Red[9];
+	CExLabel *m_pKeyLabelsNew_Red[9];
 
-	EditablePanel *m_pClassItems_Blue[10];
-	CIconPanel *m_pKeyIcons_Blue[10];
-	CExLabel *m_pKeyLabels_Blue[10];
-	CExLabel *m_pKeyLabelsNew_Blue[10];
+	EditablePanel *m_pClassItems_Blue[9];
+	CIconPanel *m_pKeyIcons_Blue[9];
+	CExLabel *m_pKeyLabels_Blue[9];
+	CExLabel *m_pKeyLabelsNew_Blue[9];
 
 	CIconPanel *m_pKeyIcons_Category[3];
 	CExLabel *m_pKeyLabels_Category[3];
