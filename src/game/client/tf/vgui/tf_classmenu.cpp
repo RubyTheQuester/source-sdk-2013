@@ -696,7 +696,8 @@ const char *g_pszLegacyClassSelectVCDWeapons[TF_LAST_NORMAL_CLASS] =
 	"tf_weapon_minigun",					// TF_CLASS_HEAVYWEAPONS,
 	"tf_weapon_flamethrower",				// TF_CLASS_PYRO,
 	"",										// TF_CLASS_SPY,				// weapons handled individually
-	"tf_weapon_wrench",						// TF_CLASS_ENGINEER,		
+	"tf_weapon_wrench",						// TF_CLASS_ENGINEER,	
+	"tf_weapon_supershotgun",				// TF_CLASS_MERCENARY,
 };
 
 int g_iLegacyClassSelectWeaponSlots[TF_LAST_NORMAL_CLASS] =
@@ -711,6 +712,7 @@ int g_iLegacyClassSelectWeaponSlots[TF_LAST_NORMAL_CLASS] =
 	LOADOUT_POSITION_PRIMARY,		// TF_CLASS_PYRO,
 	LOADOUT_POSITION_MELEE,			// TF_CLASS_SPY,
 	LOADOUT_POSITION_MELEE,			// TF_CLASS_ENGINEER,		
+	LOADOUT_POSITION_PRIMARY,		// TF_CLASS_MERCENARY,	
 };
 
 //-----------------------------------------------------------------------------
@@ -1351,6 +1353,9 @@ static const char *g_sDialogVariables[] = {
 	"numMedic",
 	"numSniper",
 	"numSpy",
+
+	"numMerc",
+
 	"",
 };
 
@@ -1401,6 +1406,7 @@ int g_ClassDefinesRemap[] = {
 	TF_CLASS_MEDIC,
 	TF_CLASS_SNIPER,
 	TF_CLASS_SPY,
+
 	TF_CLASS_MERCENARY,
 
 	TF_CLASS_CIVILIAN,
