@@ -34,9 +34,10 @@
 	{
 		"ControlName"		"CExImageButton"
 		"fieldName"			"random"
-		"xpos"				"c-60"
-		"xpos_lodef"		"c-55"
-		"ypos"				"50"
+		"xpos"				"c-300"
+		"xpos_hidef"		"c-290"
+		"xpos_lodef"		"c-265"
+		"ypos"				"100"
 		"ypos_lodef"				"9"
 		"ypos_hidef"				"0"
 		"zpos"				"6"
