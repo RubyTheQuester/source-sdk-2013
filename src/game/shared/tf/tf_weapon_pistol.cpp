@@ -120,6 +120,37 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_pistol_charge );
 #endif
 //============================
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+int	CTFPistol::GetDamageType(void) const
+{
+	if (CanHeadshot())
+	{
+		int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
+		return iDamageType;
+	}
+
+	return BaseClass::GetDamageType();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CTFPistol::CanFireCriticalShot(bool bIsHeadshot, CBaseEntity* pTarget /*= NULL*/)
+{
+	if (!BaseClass::CanFireCriticalShot(bIsHeadshot, pTarget))
+		return false;
+
+	CTFPlayer* pPlayer = GetTFPlayerOwner();
+	if (pPlayer && pPlayer->m_Shared.IsCritBoosted())
+		return true;
+
+	if (!bIsHeadshot)
+		return !CanHeadshot();
+
+	return true;
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 
