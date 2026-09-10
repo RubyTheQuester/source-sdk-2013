@@ -285,13 +285,19 @@
 				"has gravity"
 				{
 					"attribute_class"	"projectile_has_gravity"
-					"value" "1"
+					"value" "0.5"
+				}
+				
+				"upchuck_amount"
+				{
+					"attribute_class"	"upchuck_amount"
+					"value" "20"
 				}
 				
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"1.25"
+					"value"				"1.75"
 				}
 				
 				"clip size penalty"
@@ -331,23 +337,41 @@
 					"value"				"2"
 				}
 				
-				"has gravity"
-				{
-					"attribute_class"	"projectile_has_gravity"
-					"value" "2"
-				}
-				
 				"bouncer"
 				{
 					"attribute_class"	"projectile_bounce"
 					"value" "1"
 				}
 				
+				"has gravity"
+				{
+					"attribute_class"	"projectile_has_gravity"
+					"value" "0.95"
+				}
+				
+				"projectile friction"
+				{
+					"attribute_class"	"projectile_friction"
+					"value" "0.2"
+				}
+				
 				"projectile elasticity"
 				{
 					"attribute_class"	"projectile_elasticity"
-					"value" "0.7"
+					"value" "0.45"
 				}
+				
+				"upchuck_amount"
+				{
+					"attribute_class"	"upchuck_amount"
+					"value" "20"
+				}
+				
+				//"bounce_limit"
+				//{
+				//	"attribute_class"	"projectile_bounce_limit"
+				//	"value" "4"
+				//}
 				
 				//"custom projectile model"
 				//{

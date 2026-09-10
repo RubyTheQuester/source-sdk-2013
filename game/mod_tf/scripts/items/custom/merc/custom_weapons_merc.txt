@@ -222,12 +222,112 @@
 			}
 		}
 		
+		"34812"
+		{
+			"name"		"Silenced Pistol"
+			"prefab"	"moditem_merc_prefab_custom weapon_pistol_merc"
+			
+			"item_name"	"#TF_Weapon_Silence_Pistol"
+			
+			"image_inventory"	"backpack/crafting/token_secondary"
+			
+			"attributes"
+			{
+				"silent killer"
+				{
+					"attribute_class"	"set_silent_killer"
+					"value" "1"
+				}
+				
+				"attack while cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
+				
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.85"
+				}
+				
+				"maxammo secondary override"
+				{
+					"attribute_class"	"override_maxammo_secondary"
+					"value"	"30"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
+				}
+				
+			}
+		}
+		
+		
+		"34813"
+		{
+			"name"		"Silenced Revolver"
+			"prefab"	"moditem_merc_prefab_custom weapon_revolver_merc"
+			
+			"item_name"	"#TF_Weapon_Silence_Revolver"
+			
+			"image_inventory"	"backpack/crafting/token_secondary"
+			
+			"attributes"
+			{
+				"silent killer"
+				{
+					"attribute_class"	"set_silent_killer"
+					"value" "1"
+				}
+				
+				"attack while cloak"
+				{
+					"attribute_class"	"attack_while_cloak"
+					"value" "1"
+				}
+				
+				"revolver use hit locations"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"	"1"
+				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.85"
+				}
+				
+				"maxammo secondary override"
+				{
+					"attribute_class"	"override_maxammo_secondary"
+					"value"	"12"
+				}
+				
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
+				}
+			}
+		}
+		
 		// EQUIPMENT 
 		
 		"34850"
 		{
 			"name"		"Mercenary Fall Boots"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			"prefab"	"moditem_merc_prefab_gadget weapon_merc_equipment"
 			
 			"item_name"	"#TF_Weapon_FallBoots"
 			
@@ -267,7 +367,7 @@
 		"34851"
 		{
 			"name"		"Mercenary Gunboats"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			"prefab"	"moditem_merc_prefab_gadget weapon_merc_equipment"
 			
 			"item_name"	"#TF_Weapon_Gunboats_Merc"
 			
@@ -311,10 +411,10 @@
 		
 		"34852"
 		{
-			"name"		"Mercenary Backpack 1"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			"name"		"Mercenary Backpack"
+			"prefab"	"moditem_merc_prefab_gadget weapon_merc_equipment"
 			
-			"item_name"	"Backpack 1"
+			"item_name"	"Roamer Backpack"
 			
 			"item_slot"	"equipment"
 			
@@ -335,22 +435,10 @@
 					"value"	"1"
 				}
 				
-				"ammo from dispensers reduced"
-				{
-					"attribute_class"	"mult_ammo_from_dispensers"
-					"value" "0.25"
-				}
-				
 				"ammo from packs increased"
 				{
 					"attribute_class"	"mult_ammo_frompacks"
-					"value"				"1.15"
-				}
-				
-				"health from healers reduced"
-				{
-					"attribute_class"	"mult_health_fromhealers"
-					"value"			"0.25"
+					"value"				"1.5"
 				}
 				
 				"health from packs increased"
@@ -358,34 +446,6 @@
 					"attribute_class"	"mult_health_frompacks"
 					"value"			"1.5"
 				}
-			}
-		}
-		
-		"34853"
-		{
-			"name"		"Mercenary Backpack 2"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
-			
-			"item_name"	"Backpack 2"
-			
-			"item_slot"	"equipment"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_buffpack/c_buffpack"
-			
-			"extra_wearable" "models/weapons/c_models/c_buffpack/c_buffpack.mdl"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
-			
-			"attributes"
-			{
-				"allowed in medieval mode"
-				{
-					"attribute_class"	"allowed_in_medieval_mode"
-					"value"	"1"
-				}
 				
 				"ammo from dispensers reduced"
 				{
@@ -393,28 +453,10 @@
 					"value" "0.25"
 				}
 				
-				"maxammo primary increased"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"				"1.5"
-				}
-				
-				"maxammo secondary increased"
-				{
-					"attribute_class"	"mult_maxammo_secondary"
-					"value"				"1.5"
-				}
-				
 				"health from healers reduced"
 				{
 					"attribute_class"	"mult_health_fromhealers"
 					"value"			"0.25"
-				}
-				
-				"max health additive bonus"
-				{
-					"attribute_class"	"add_maxhealth"
-					"value" "50"
 				}
 			}
 		}
@@ -422,7 +464,7 @@
 		"34854"
 		{
 			"name"		"Faulty Uberheart"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			"prefab"	"moditem_merc_prefab_gadget weapon_merc_equipment"
 			
 			"item_name"	"Faulty Uberheart"
 			
@@ -460,7 +502,7 @@
 		"34855"
 		{
 			"name"		"Stealth Device"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
+			"prefab"	"moditem_merc_prefab_gadget weapon_merc_equipment"
 			
 			"item_name"	"Stealth Device"
 			
@@ -489,63 +531,6 @@
 			}
 		}
 		
-		"34856"
-		{
-			"name"		"Mercenary Backpack 2"
-			"prefab"	"moditem_merc_prefab weapon_merc_equipment"
-			
-			"item_name"	"Backpack 3"
-			
-			"item_slot"	"equipment"
-			
-			"image_inventory"	"backpack/weapons/c_models/c_buffpack/c_buffpack"
-			
-			"extra_wearable" "models/weapons/c_models/c_buffpack/c_buffpack.mdl"
-			
-			"used_by_classes"
-			{
-				"mercenary"	"1"
-			}
-			
-			"attributes"
-			{
-				"allowed in medieval mode"
-				{
-					"attribute_class"	"allowed_in_medieval_mode"
-					"value"	"1"
-				}
-				
-				"ammo from dispensers reduced"
-				{
-					"attribute_class"	"mult_ammo_from_dispensers"
-					"value" "0.25"
-				}
-				
-				"health from healers reduced"
-				{
-					"attribute_class"	"mult_health_fromhealers"
-					"value"			"0.25"
-				}
-				
-				"health from healers reduced"
-				{
-					"attribute_class"	"mult_health_fromhealers"
-					"value"			"0.25"
-				}
-				
-				"health regen"
-				{
-					"attribute_class"	"add_health_regen"
-					"value"	"10"
-				}
-				
-				"ammo regen"
-				{
-					"attribute_class"	"addperc_ammo_regen"
-					"value"	"0.15"
-				}
-			}
-		}
 		// END OF THE OVERALL ITEMS LINE
 	}
 }

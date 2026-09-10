@@ -78,15 +78,29 @@
 			
 			"attach_to_hands"				"0"
 			"model_attach_to_hands"			"1"
-			
+
+			"item_quality"	"unique"
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			
-				
 			"used_by_classes"
 			{
 				"mercenary"	"1"
 			}
+		}
+		
+		"moditem_merc_prefab_gadget"
+		{
+			"prefab" "moditem_merc_prefab"
+			
+			"item_quality"	"moditem"
+		}
+		
+		"moditem_merc_prefab_custom"
+		{
+			"prefab" "moditem_merc_prefab"
+			
+			"item_quality"	"moditem"
 		}
 		
 		"moditem_testing_prefab"

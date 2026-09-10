@@ -387,7 +387,6 @@
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
 			"effect_type"	"positive"
-			"armory_desc"	"on_wearer"
 			"stored_as_integer"	"0"
 		}
 		
@@ -783,11 +782,32 @@
 			"attribute_class"	"cloak_on_crouch"
 			"description_string"	"#Attrib_CloakOnCrouch"
 			"description_format"	"value_is_additive"
-			"effect_type"	"negative"
+			"effect_type"	"neutral"
 			"armory_desc"	"on_wearer"
 			"stored_as_integer"	"0"
 		}
 		
+		"3571"
+		{
+			"name"	"upchuck_amount"
+			"attribute_class"	"upchuck_amount"
+			"description_string"	"#Attrib_Upchuck_Amount"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3572"
+		{
+			"name"	"projectile_bounce_limit"
+			"attribute_class"	"projectile_bounce_limit"
+			"description_string"	"#Attrib_Projectile_Bounce"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}
