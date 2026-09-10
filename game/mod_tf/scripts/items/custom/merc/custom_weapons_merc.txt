@@ -337,7 +337,7 @@
 		"34815"
 		{
 			"name"		"Stachel"
-			"prefab"	"moditem_merc_prefab weapon_stachel"
+			"prefab"	"moditem_merc_prefab_custom weapon_stachel"
 		}
 		
 		// EQUIPMENT 
