@@ -15,6 +15,11 @@ armory_config
 		Cost 0
 	}
 	
+	"Mercenary Knife"
+	{
+		Cost 0
+	}
+	
 	//===================================//
 	//=============Secondary=============//
 	//===================================//
@@ -42,6 +47,11 @@ armory_config
 		Cost 0
 	}
 	
+	"Assault Rifle"
+	{
+		Cost 0
+	}
+	
 	//===================================//
 	//=============Equipment=============//
 	//===================================//
@@ -52,6 +62,21 @@ armory_config
 	}
 	
 	"Mercenary Gunboats"
+	{
+		Cost 0
+	}
+	
+	"Mercenary Backpack"
+	{
+		Cost 0
+	}
+	
+	"Faulty Uberheart"
+	{
+		Cost 0
+	}
+	
+	"Stealth Device"
 	{
 		Cost 0
 	}
