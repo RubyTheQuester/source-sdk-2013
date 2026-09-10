@@ -66,6 +66,10 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_pipebomblauncher, CTFPipebombLauncher );
 PRECACHE_WEAPON_REGISTER( tf_weapon_pipebomblauncher );
 
+
+CREATE_SIMPLE_WEAPON_TABLE( TFDynamite, tf_weapon_dynamite )
+CREATE_SIMPLE_WEAPON_TABLE( TFStachel, tf_weapon_stachel )
+
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC( CTFPipebombLauncher )
@@ -254,9 +258,9 @@ void CTFPipebombLauncher::WeaponIdle( void )
 	if ( !pPlayer )
 		return;
 
-	if ( m_flChargeBeginTime > 0 && m_iClip1 > 0 && (pPlayer->m_afButtonReleased & IN_ATTACK) )
+	if ( m_flChargeBeginTime > 0 && ( m_iClip1 > 0 || m_iClip1 == -1 ) && (pPlayer->m_afButtonReleased & IN_ATTACK) )
 	{
-		if ( m_iClip1 > 0 )
+		if ( (m_iClip1 > 0 || m_iClip1 == -1) )
 		{
 			m_bWantsToShoot = true;
 		}
@@ -525,6 +529,11 @@ bool CTFPipebombLauncher::DetonateRemotePipebombs( bool bFizzle )
 	if ( GetDetonateMode() == TF_DETONATE_MODE_DOT && !bFizzle )
 	{
 		return ModifyPipebombsInView( TF_PIPEBOMB_DETONATE );
+	}
+
+	if ( GetDetonateMode() == TF_DETONATE_MODE_DENY )
+	{
+		return true;
 	}
 
 	bool bFailedToDetonate = false;

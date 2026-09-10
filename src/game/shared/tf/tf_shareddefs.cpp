@@ -732,6 +732,9 @@ const char *g_aWeaponNames[] =
 	"TF_WEAPON_ASSAULT_RIFLE",
 	"TF_WEAPON_KNIFE_MERC",
 
+	"TF_WEAPON_DYNAMITE",
+	"TF_WEAPON_STACHEL",
+
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_aWeaponNames ) == TF_WEAPON_COUNT );
 
@@ -863,6 +866,9 @@ int g_aWeaponDamageTypes[] =
 
 	DMG_BULLET | DMG_USEDISTANCEMOD,			// TF_WEAPON_ASSAULT_RIFLE,
 	DMG_SLASH,		// TF_WEAPON_KNIFE_MERC,
+
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_DYNAMITE,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_STACHEL,
 };
 
 const char *g_szSpecialDamageNames[] =
@@ -1014,6 +1020,7 @@ const char *g_szProjectileNames[] =
 	"projectile_jar_gas",
 	"tf_projectile_balloffire",
 	"projectile_tranq",
+	"projectile_stachel",
 
 };
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == TF_NUM_PROJECTILES );
@@ -1053,7 +1060,7 @@ int g_iProjectileWeapons[] =
 	TF_WEAPON_JAR_GAS,
 	TF_WEAPON_FLAME_BALL,
 	TF_WEAPON_TRANQ,
-
+	TF_WEAPON_STACHEL,
 };
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == ARRAYSIZE( g_iProjectileWeapons ) );

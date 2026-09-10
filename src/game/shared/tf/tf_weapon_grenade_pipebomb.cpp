@@ -421,6 +421,7 @@ const char* CTFGrenadePipebombProjectile::GetPipebombClass( int iPipeBombType )
 		return "tf_projectile_pipe";
 	case TF_GL_MODE_REMOTE_DETONATE:
 	case TF_GL_MODE_REMOTE_DETONATE_PRACTICE:
+	case TF_GL_MODE_REMOTE_DETONATE_ROLLER:
 		return "tf_projectile_pipe_remote";
 	default:
 		return "tf_projectile_pipe";
@@ -454,6 +455,11 @@ CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector
 			iPipeBombDetonateType = TF_GL_MODE_CANNONBALL;
 		}
 		break;
+	case TF_PROJECTILE_PIPEBOMB_REMOTE_ROLLER:
+		{
+			iPipeBombDetonateType = TF_GL_MODE_REMOTE_DETONATE_ROLLER;
+		}
+		break;
 	default:
 		iPipeBombDetonateType = TF_GL_MODE_REGULAR;
 	}
@@ -476,13 +482,6 @@ CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector
 			// we'll do less damage. If we explode on contact, we'll restore this to full damage.
 			pGrenade->SetDamage( pGrenade->GetDamage() * TF_WEAPON_PIPEBOMB_TIMER_DMG_REDUCTION );
 		}
-
-		/*
-		if ( bChinaLake )
-		{
-			pGrenade->SetTouch(&CTFGrenadePipebombProjectile::PipebombTouch);
-		}
-		*/
 
 		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 
@@ -655,7 +654,7 @@ bool CTFGrenadePipebombProjectile::DetonateStickies()
 		if ( !pGrenade )
 			continue;
 
-		if ( pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE )
+		if ( ( pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE ) || ( pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE_ROLLER ) )
 			continue;
 
 		if ( pGrenade->m_bFizzle )
@@ -856,11 +855,19 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 bool CTFGrenadePipebombProjectile::ExplodeOnImpact(void)
 {
 	CTFWeaponBase* pTFWeapon = dynamic_cast<CTFWeaponBase*>(GetOriginalLauncher());
+
+	int iStickTouchExplode = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOriginalLauncher(), iStickTouchExplode, sticky_touch_explode);
+
 	if ( pTFWeapon && 
 		pTFWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY && 
 		( ( m_flCreationTime + 0.05f ) >= gpGlobals->curtime ) 
 		)
 		return true;
+	else if ( iStickTouchExplode )
+	{
+		return true;
+	}
 	else
 		return false;
 }
@@ -896,7 +903,7 @@ void CTFGrenadePipebombProjectile::VPhysicsCollision( int index, gamevcollisione
 		return;
 	}
 
-	if ( m_iType == TF_GL_MODE_REGULAR || m_iType == TF_GL_MODE_CANNONBALL )
+	if ( m_iType == TF_GL_MODE_REGULAR || m_iType == TF_GL_MODE_CANNONBALL || m_iType == TF_GL_MODE_REMOTE_DETONATE_ROLLER )
 	{
 		if ( PropDynamic_CollidesWithGrenades( pHitEntity) )
 		{
@@ -959,7 +966,7 @@ void CTFGrenadePipebombProjectile::VPhysicsCollision( int index, gamevcollisione
 
 	// Pipebombs stick to the world when they touch it
 	if ( pHitEntity && ( pHitEntity->IsWorld() || bIsDynamicProp ) && gpGlobals->curtime > m_flMinSleepTime )
-	{
+	{	
 		m_bTouched = true;
 
 		g_PostSimulationQueue.QueueCall( VPhysicsGetObject(), &IPhysicsObject::EnableMotion, false );

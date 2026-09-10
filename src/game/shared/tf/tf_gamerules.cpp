@@ -6382,6 +6382,8 @@ int CTFRadiusDamageInfo::ApplyToEntity( CBaseEntity *pEntity )
 			case TF_WEAPON_CANNON :
 			case TF_WEAPON_STICKBOMB :
 			case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
+			case TF_WEAPON_DYNAMITE:
+			case TF_WEAPON_STACHEL:
 				flAdjustedDamage *= 0.75f;
 				break;
 		}
@@ -7219,6 +7221,8 @@ bool CTFGameRules::ApplyOnDamageModifyRules( CTakeDamageInfo &info, CBaseEntity 
 			case TF_WEAPON_CANNON :
 			case TF_WEAPON_STICKBOMB:
 			case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
+			case TF_WEAPON_DYNAMITE:
+			case TF_WEAPON_STACHEL:
 				if ( !( bitsDamage & DMG_NOCLOSEDISTANCEMOD ) )
 				{
 					flRandomDamage *= 0.2f;

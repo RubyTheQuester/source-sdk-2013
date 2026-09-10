@@ -25,6 +25,7 @@ enum
 	TF_GL_MODE_REMOTE_DETONATE,
 	TF_GL_MODE_REMOTE_DETONATE_PRACTICE,
 	TF_GL_MODE_CANNONBALL,
+	TF_GL_MODE_REMOTE_DETONATE_ROLLER,
 
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
@@ -50,7 +51,7 @@ public:
 
 	int GetType( void ) const { return m_iType; } 
 	virtual int			GetDamageType();
-	bool				HasStickyEffects() const { return m_iType == TF_GL_MODE_REMOTE_DETONATE || m_iType == TF_GL_MODE_REMOTE_DETONATE_PRACTICE; }
+	bool				HasStickyEffects() const { return m_iType == TF_GL_MODE_REMOTE_DETONATE || m_iType == TF_GL_MODE_REMOTE_DETONATE_PRACTICE || m_iType == TF_GL_MODE_REMOTE_DETONATE_ROLLER; }
 
 	bool				ShouldMiniCritOnReflect() const;
 

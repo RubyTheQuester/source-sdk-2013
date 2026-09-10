@@ -16,6 +16,8 @@
 // Client specific.
 #ifdef CLIENT_DLL
 #define CTFPipebombLauncher C_TFPipebombLauncher
+#define CTFDynamite C_TFDynamite
+#define CTFStachel C_TFStachel
 #endif
 
 #define TF_PIPEBOMB_MAX_CHARGE_TIME	 4.0f
@@ -23,6 +25,7 @@
 #define TF_DETONATE_MODE_STANDARD	0
 #define TF_DETONATE_MODE_DOT		1
 #define TF_DETONATE_MODE_AIR		2
+#define TF_DETONATE_MODE_DENY		3
 
 // hard code these eventually
 #define TF_PIPEBOMB_MIN_CHARGE_VEL 900
@@ -128,5 +131,25 @@ inline const CUtlVector< CHandle< CTFGrenadePipebombProjectile > > &CTFPipebombL
 	return m_Pipebombs;
 }
 
+
+class CTFDynamite : public CTFPipebombLauncher
+{
+public:
+	DECLARE_CLASS( CTFDynamite, CTFPipebombLauncher );
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_DYNAMITE; }
+};
+
+class CTFStachel : public CTFPipebombLauncher
+{
+public:
+	DECLARE_CLASS(CTFStachel, CTFPipebombLauncher);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_STACHEL; }
+};
 
 #endif // TF_WEAPON_PIPEBOMBLAUNCHER_H
