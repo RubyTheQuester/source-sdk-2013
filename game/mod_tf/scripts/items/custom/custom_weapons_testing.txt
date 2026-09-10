@@ -288,12 +288,6 @@
 					"value" "0.5"
 				}
 				
-				"upchuck_amount"
-				{
-					"attribute_class"	"upchuck_amount"
-					"value" "20"
-				}
-				
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
