@@ -122,6 +122,15 @@ void C_TFProjectile_Rocket::CreateTrails( void )
 					ParticleProp()->Create( "rocket_trail_classic", PATTACH_POINT_FOLLOW, iAttachment );
 					bUsingCustom = true;
 				}
+
+				int iBouncer = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iBouncer, projectile_bounce);
+
+				if (iBouncer)
+				{
+					ParticleProp()->Create("rocket_trail_classic", PATTACH_POINT_FOLLOW, iAttachment);
+					bUsingCustom = true;
+				}
 			}
 		}
 	}
