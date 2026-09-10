@@ -626,6 +626,9 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 	// Server only - create the rocket.
 #ifdef GAME_DLL
 
+	float flLaunchUpChuck = 0.0f;
+	CALL_ATTRIB_HOOK_FLOAT( flLaunchUpChuck, upchuck_amount );
+
 	Vector vecSrc;
 	QAngle angForward;
 	Vector vecOffset( 23.5f, 12.0f, -3.0f );
@@ -633,7 +636,13 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 	{
 		vecOffset.z = 8.0f;
 	}
+
 	GetProjectileFireSetup( pPlayer, vecOffset, &vecSrc, &angForward, false );
+
+	if ( flLaunchUpChuck )
+	{
+		angForward -= QAngle( flLaunchUpChuck, 0, 0 ); //????
+	}
 
 	trace_t trace;	
 	Vector vecEye = pPlayer->EyePosition();

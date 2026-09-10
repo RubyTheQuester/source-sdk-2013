@@ -143,6 +143,8 @@ protected:
 
 	float					m_flDamageForceScale;
 
+	int					m_iBounces;
+
 	CHandle<CBaseEntity>	m_hEnemy;
 
 #endif

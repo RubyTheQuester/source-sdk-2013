@@ -96,6 +96,7 @@ CTFBaseRocket::CTFBaseRocket()
 	m_flDestroyableTime = 0.0f;
 	m_bStunOnImpact = false;
 	m_flDamageForceScale = 1.0f;
+	m_iBounces = 0;
 
 #endif
 }
@@ -187,10 +188,10 @@ void CTFBaseRocket::Spawn( void )
 		SetTouch( &CTFBaseRocket::RocketTouch );
 	}
 
-	int bGravity = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), bGravity, projectile_has_gravity);
+	float bGravity = 0.0f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetLauncher(), bGravity, projectile_has_gravity);
 
-	if ( bGravity )
+	if ( bGravity != 0.0f)
 	{
 		SetThink( &CTFBaseRocket::GravityFlyThink );
 	}
@@ -300,6 +301,7 @@ CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszCla
 	Vector vecForward, vecRight, vecUp;
 	AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
 
+
 	float flLaunchSpeed = 1100.0f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pLauncher, flLaunchSpeed, mult_projectile_speed );
 
@@ -344,6 +346,7 @@ CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszCla
 
 	// Setup the initial angles.
 	QAngle angles;
+
 	VectorAngles( vecVelocity, angles );
 	pRocket->SetAbsAngles( angles );
 
@@ -392,17 +395,34 @@ void CTFBaseRocket::BouncyRocketTouch( CBaseEntity *pOther )
 	if (pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) && !bShield)
 		return;
 
+	
 	// Handle hitting skybox (disappear).
 	const trace_t* pTrace = &CBaseEntity::GetTouchTrace();
+
+	/*
 	if (pTrace->surface.flags & SURF_SKY)
 	{
 		UTIL_Remove(this);
 		return;
 	}
+	*/
 
-	if (pTrace->m_pEnt->IsWorld())
+	int iBouncer = 6;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iBouncer, projectile_bounce_limit);
+
+	if ( pTrace->m_pEnt->IsWorld() )
 	{
-		return;
+		if (m_iBounces < iBouncer)
+		{
+			m_iBounces += 1;
+			return;
+		}
+		else
+		{
+			trace_t trace;
+			memcpy(&trace, pTrace, sizeof(trace_t));
+			Explode(&trace, pOther);
+		}
 	}
 
 	trace_t trace;
