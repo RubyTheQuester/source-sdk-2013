@@ -328,18 +328,6 @@
 			}
 		}
 		
-		"34814"
-		{
-			"name"		"Dynamite"
-			"prefab"	"moditem_merc_prefab weapon_dynamite_merc"
-		}
-		
-		"34815"
-		{
-			"name"		"Stachel"
-			"prefab"	"moditem_merc_prefab_custom weapon_stachel"
-		}
-		
 		// EQUIPMENT 
 		
 		"34850"

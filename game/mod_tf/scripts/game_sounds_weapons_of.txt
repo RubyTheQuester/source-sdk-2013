@@ -299,7 +299,11 @@
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1"
 	"soundlevel"	"SNDLVL_94dB"
-	"wave"			")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
+	
+	"rndwave"
+	{
+		"wave"			")weapons\rocketlauncher/rocket_dm_shoot_crit.wav"
+	}
 }
 
 / ------------------------------------------------------------------------------------ //

@@ -241,7 +241,7 @@ rule MedicTauntMedicSMG
 	//Dead Meat
 	rule MercenaryTauntKnife
 	{
-		criteria ConceptPlayerTaunt IsMercenary WeaponIsKnife
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsCombatKnife
 		response MercenaryTauntDeadMeat
 	}
 	

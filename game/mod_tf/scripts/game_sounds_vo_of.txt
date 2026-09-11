@@ -1075,7 +1075,7 @@
 
 	"soundlevel"	"SNDLVL_95dB"
 
-	/"wave"			")vo/Mercenary_Jeers11.wav"
+	//"wave"			")vo/Mercenary_Jeers11.wav"
 	"wave"			")vo/Mercenary_NegativeVocalization05.wav"
 }
 
