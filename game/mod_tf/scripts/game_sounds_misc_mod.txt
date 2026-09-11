@@ -28,3 +28,11 @@
 		"wave"			"misc/boing5.wav"
 	}
 }
+
+"Taunt.BondGunFire"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	".75"
+	"soundlevel"  	"SNDLVL_75dB"		
+	"wave"	")player/taunt_bond_pistol.wav"
+}
