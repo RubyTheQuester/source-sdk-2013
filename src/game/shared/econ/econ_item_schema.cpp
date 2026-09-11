@@ -4895,7 +4895,7 @@ bool CEconItemSchema::BInitSchema( KeyValues *pKVRawDefinition, CUtlVector<CUtlS
 bool CEconItemSchema::BInitGameInfo( KeyValues *pKVGameInfo, CUtlVector<CUtlString> *pVecErrors )
 {
 	m_unFirstValidClass = pKVGameInfo->GetInt( "first_valid_class", 0 );
-	m_unLastValidClass = pKVGameInfo->GetInt( "last_valid_class", 0 );
+	m_unLastValidClass = 10; //pKVGameInfo->GetInt( "last_valid_class", 0 ); Hardcoded rn so it can give merc presets
 	SCHEMA_INIT_CHECK( 0 < m_unFirstValidClass, "First valid class must be greater than 0." );
 	SCHEMA_INIT_CHECK( m_unFirstValidClass <= m_unLastValidClass, "First valid class must be less than or equal to last valid class." );
 	m_unAccoutClassIndex = pKVGameInfo->GetInt( "account_class_index", 0 );

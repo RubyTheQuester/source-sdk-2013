@@ -18766,7 +18766,7 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 	{
 		if ( !V_stricmp( szResponse, "scenes/player/mercenary/low/taunt_bond.vcd" ) )
 		{
-			m_flTauntAttackTime = gpGlobals->curtime + 1.55;
+			m_flTauntAttackTime = gpGlobals->curtime + 1.673;
 			m_iTauntAttack = TAUNTATK_MERC_BOND;
 		}
 	}
