@@ -206,6 +206,12 @@ rule MedicTauntMedicSMG
 		response MercenaryTauntKnockKnockKnuckles
 	}
 	
+	rule MercenaryTauntTommyGun
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsTommyGun
+		response MercenaryTauntKnockKnockKnuckles
+	}
+	
 	//So Close	
 	rule MercenaryTauntShotgunSecondary
 	{
@@ -216,6 +222,12 @@ rule MedicTauntMedicSMG
 	rule MercenaryTauntChinaLake
 	{
 		criteria ConceptPlayerTaunt IsMercenary WeaponIsChinaLake
+		response MercenaryTauntSoClose
+	}
+	
+	rule MercenaryTauntDynamite
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsDynamite
 		response MercenaryTauntSoClose
 	}
 	

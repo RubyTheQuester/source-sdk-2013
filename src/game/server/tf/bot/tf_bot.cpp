@@ -3994,10 +3994,6 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 			{
 				gun = secondary;
 			}
-			else if ( melee && IsRangeLessThan(threat->GetLastKnownPosition(), flameRange/2) && !gun->Clip1() )
-			{
-				gun = melee;
-			}
 		}
 	}
 

@@ -48,6 +48,7 @@ criterion "WeaponIsNailgun" "playerweapon" "tf_weapon_nailgun" "required"
 //Explosives
 criterion "WeaponIsChinaLake" "playerweapon" "tf_weapon_grenadelauncher_mercenary" "required"
 criterion "WeaponIsDMRocketLauncher" "playerweapon" "tf_weapon_rocketlauncher_mercenary" "required"
+criterion "WeaponIsDynamite" "playerweapon" "tf_weapon_dynamite" "required"
 
 /////////
 //Other//
