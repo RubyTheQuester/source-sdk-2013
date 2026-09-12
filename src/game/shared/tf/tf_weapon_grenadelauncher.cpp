@@ -76,6 +76,9 @@ CREATE_SIMPLE_WEAPON_TABLE( TFCannon, tf_weapon_cannon )
 
 CREATE_SIMPLE_WEAPON_TABLE( TFGrenadeLauncher_Merc, tf_weapon_grenadelauncher_mercenary )
 
+CREATE_SIMPLE_WEAPON_TABLE( TFDynamite, tf_weapon_dynamite )
+
+
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC( CTFGrenadeLauncher )
@@ -86,8 +89,13 @@ END_DATADESC()
 
 #define TF_DETONATE_MODE_AIR		2
 #define TF_DETONATE_MODE_DENY		3
+#define TF_DETONATE_MODE_EXPLODE	4
 
 #define TF_WEAPON_CANNON_CHARGE_SOUND			"Weapon_LooseCannon.Charge"
+
+// hard code these eventually
+#define TF_PIPEBOMB_MIN_CHARGE_VEL 900
+#define TF_PIPEBOMB_MAX_CHARGE_VEL 2400
 
 //=============================================================================
 //
@@ -201,13 +209,15 @@ void CTFGrenadeLauncher::PrimaryAttack( void )
 			m_flDetonateTime = gpGlobals->curtime + GetMortarDetonateTimeLength();
 			SendWeaponAnim( ACT_VM_PULLBACK );
 #ifdef CLIENT_DLL
-			EmitSound( TF_WEAPON_CANNON_CHARGE_SOUND );
+			if ( GetWeaponID() != TF_WEAPON_DYNAMITE )
+				EmitSound( TF_WEAPON_CANNON_CHARGE_SOUND );
 #endif // CLIENT_DLL
 		}
 		else
 		{
 #ifdef CLIENT_DLL
-			StartChargeEffects();
+			if (GetWeaponID() != TF_WEAPON_DYNAMITE)
+				StartChargeEffects();
 #endif // CLIENT_DLL
 		}
 	}
@@ -233,7 +243,7 @@ void CTFGrenadeLauncher::ItemPostFrame( void )
 				return;
 
 			// If we're not holding down the attack button, launch our grenade
-			if ( m_iClip1 > 0  && !(pPlayer->m_nButtons & IN_ATTACK) )
+			if ( (m_iClip1 > 0 || m_iClip1 == -1 ) && !(pPlayer->m_nButtons & IN_ATTACK) )
 			{
 				LaunchGrenade();
 			}
@@ -275,6 +285,10 @@ void CTFGrenadeLauncher::FireProjectileInternal( CTFPlayer* pTFPlayer )
 		if ( GetDetonateMode() == TF_DETONATE_MODE_AIR )
 		{
 			pProjectile->m_bWallShatter = true;
+		}
+		else if ( GetDetonateMode() == TF_DETONATE_MODE_EXPLODE )
+		{
+			pProjectile->m_bWallExplode = true;
 		}
 		
 		if ( m_flDetonateTime > 0.f )
@@ -373,7 +387,7 @@ void CTFGrenadeLauncher::PostFire()
 	}
 	
 #ifndef CLIENT_DLL
-	if ( CanCharge() )
+	if ( CanCharge() && GetWeaponID() != TF_WEAPON_DYNAMITE)
 	{
 		Vector vPosition;
 		QAngle qAngles;
@@ -487,7 +501,18 @@ float CTFGrenadeLauncher::GetProjectileSpeed( void )
 		return 3000.f;
 
 	float flLaunchSpeed = TF_GRENADE_LAUNCER_MIN_VEL;
+
+	if ( GetDetonateMode() == 4 )
+	{
+		flLaunchSpeed = RemapValClamped((gpGlobals->curtime - m_flChargeBeginTime),
+			0.0f,
+			(GetMortarDetonateTimeLength() - GetChargeMaxTime() ),
+			TF_PIPEBOMB_MIN_CHARGE_VEL,
+			TF_PIPEBOMB_MAX_CHARGE_VEL);
+	}
+
 	CALL_ATTRIB_HOOK_FLOAT( flLaunchSpeed, mult_projectile_speed );
+
 	return flLaunchSpeed;
 }
 
@@ -530,7 +555,7 @@ void CTFGrenadeLauncher::FireFullClipAtOnce( void )
 
 bool CTFGrenadeLauncher::CanCharge( void )
 {
-	if ( GetWeaponID() == TF_WEAPON_CANNON )
+	if ( GetWeaponID() == TF_WEAPON_CANNON || GetWeaponID() == TF_WEAPON_DYNAMITE)
 	{
 		return GetMortarDetonateTimeLength() > 0.f;
 	}

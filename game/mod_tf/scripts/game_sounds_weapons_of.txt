@@ -424,3 +424,143 @@
 	"volume"	".35"
 	"wave"		"weapons/assaultrifle/draw_assaultrifle_boltforward.wav"
 }
+
+// ------------------------------------------------------------------------------------ //
+// TOMMY GUN
+// ------------------------------------------------------------------------------------ //
+"Weapon_Tommygun.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tommygun/tommy_shoot.wav"
+}
+
+"Weapon_Tommygun.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tommygun/tommy_shoot_crit.wav"
+}
+
+"Weapon_Tommmygun.DrumOut"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/tommygun/tommy_drum_out.wav"
+}
+
+"Weapon_Tommmygun.DrumIn"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/tommygun/tommy_drum_in.wav"
+}
+
+"Weapon_Tommmygun.BoltBack"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/tommygun/tommy_bolt_backward.wav"
+}
+
+"Weapon_Tommmygun.BoltForward"
+{
+	"channel"	"CHAN_STATIC"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	"1.0"
+	"wave"		"weapons/tommygun/tommy_bolt_forward.wav"
+}
+
+"Weapon_TommyGun.WorldReload"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		")weapons/tommygun/tommy_bolt_forward.wav"
+}
+
+// ------------------------------------------------------------------------------------ //
+// DYNAMITE BUNDLE
+// ------------------------------------------------------------------------------------ //
+"Weapon_DynamiteBundle.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/dynamite/dynamite_throw.wav"
+}
+
+"Weapon_DynamiteBundle.SingleCrit"
+{
+	"channel"	"CHAN_WEAPON"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	"1.0"
+	"wave"		"weapons/dynamite/dynamite_throw_crit.wav"
+}
+
+"Weapon_DynamiteBundle.LighterOpen"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_NORM"
+	"volume"	".65"
+	"wave"		")weapons/dynamite/dynamite_lighter_open.wav"
+}
+
+"Weapon_DynamiteBundle.LighterLight"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	".65"
+	"wave"		")weapons/dynamite/dynamite_lighter_light.wav"
+}
+
+"Weapon_DynamiteBundle.LighterClose"
+{
+	"channel"	"CHAN_ITEM"
+	"soundlevel"	"SNDLVL_94dB"
+	"volume"	".65"
+	"wave"		")weapons/dynamite/dynamite_lighter_close.wav"
+}
+
+"Weapon_DynamiteBundle.Fuse"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"VOL_NORM"
+	"soundlevel"	"SNDLVL_76dB"
+	"wave"		")weapons/dynamite/dynamite_fuse.wav"
+}
+
+"Weapon_DynamiteBundle.BundleExplode"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_95dB"
+	"pitch"		"PITCH_NORM"
+
+	"rndwave"
+	{
+			"wave"	")weapons/dynamite/dynamite_bundle_explode1.wav"
+			"wave"	")weapons/dynamite/dynamite_bundle_explode2.wav"
+			"wave"	")weapons/dynamite/dynamite_bundle_explode3.wav"
+	}
+}
+
+"Weapon_DynamiteBundle.StickExplode"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_95dB"
+	"pitch"		"PITCH_NORM"
+
+	"rndwave"
+	{
+			"wave"	")weapons/dynamite/dynamite_stick_explode1.wav"
+			"wave"	")weapons/dynamite/dynamite_stick_explode2.wav"
+			"wave"	")weapons/dynamite/dynamite_stick_explode3.wav"
+	}
+}

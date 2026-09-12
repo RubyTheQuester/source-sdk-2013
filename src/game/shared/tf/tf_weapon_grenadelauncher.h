@@ -16,6 +16,7 @@
 #define CTFGrenadeLauncher	C_TFGrenadeLauncher
 #define CTFCannon			C_TFCannon
 #define CTFGrenadeLauncher_Merc	C_TFGrenadeLauncher_Merc
+#define CTFDynamite C_TFDynamite
 #endif
 
 #define TF_GRENADE_LAUNCHER_XBOX_CLIP 4
@@ -150,4 +151,13 @@ public:
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_GRENADELAUNCHER_MERCENARY; }
 };
 
+class CTFDynamite : public CTFGrenadeLauncher
+{
+public:
+	DECLARE_CLASS( CTFDynamite, CTFGrenadeLauncher );
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_DYNAMITE; }
+};
 #endif // TF_WEAPON_GRENADELAUNCHER_H

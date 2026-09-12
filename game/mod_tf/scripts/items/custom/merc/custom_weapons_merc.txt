@@ -222,6 +222,18 @@
 			}
 		}
 		
+		"34812"
+		{
+			"name"		"Dynamite Bundle"
+			"prefab"	"moditem_merc_prefab weapon_dynamite"
+			
+			"item_slot"	"secondary"
+			
+			"item_logname"	"dynamite_bundle"
+			"item_iconname"	"dynamite_bundle"
+			
+		}
+		
 		// EQUIPMENT 
 		
 		"34851"

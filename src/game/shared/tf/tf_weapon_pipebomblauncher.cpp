@@ -66,8 +66,6 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_pipebomblauncher, CTFPipebombLauncher );
 PRECACHE_WEAPON_REGISTER( tf_weapon_pipebomblauncher );
 
-
-CREATE_SIMPLE_WEAPON_TABLE( TFDynamite, tf_weapon_dynamite )
 CREATE_SIMPLE_WEAPON_TABLE( TFStachel, tf_weapon_stachel )
 
 // Server specific.
@@ -305,6 +303,10 @@ void CTFPipebombLauncher::LaunchGrenade( void )
 		if ( GetDetonateMode() == TF_DETONATE_MODE_AIR )
 		{
 			pProjectile->m_bWallShatter = true;
+		}
+		else if (GetDetonateMode() == TF_DETONATE_MODE_EXPLODE)
+		{
+			pProjectile->m_bWallExplode = true;
 		}
 		else if ( GetDetonateMode() == TF_DETONATE_MODE_DOT )
 		{

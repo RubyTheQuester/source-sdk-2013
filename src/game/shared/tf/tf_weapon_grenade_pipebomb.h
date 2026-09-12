@@ -148,6 +148,7 @@ public:
 	bool		m_bFizzle;
 	bool		m_bWallShatter;
 	bool		m_bChinaLake;
+	bool		m_bWallExplode;
 private:
 	
 	float		m_flMinSleepTime;

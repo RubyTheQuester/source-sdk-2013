@@ -90,7 +90,7 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/tranq_shot.wav"
+		"wave"		"weapons/tranq/tranquilizer_gun_shoot.wav"
 	}
 }
 
@@ -101,7 +101,7 @@
 	"volume"	"1.0"
 	"rndwave"
 	{
-		"wave"		"weapons/tranq_shot_crit.wav"
+		"wave"		"weapons/tranq/tranquilizer_gun_shoot_crit.wav"
 	}
 }
 

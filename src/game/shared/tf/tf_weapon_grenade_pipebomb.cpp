@@ -94,6 +94,7 @@ CTFGrenadePipebombProjectile::CTFGrenadePipebombProjectile()
 	m_flDeflectedTime = 0.0f;
 	m_bWallShatter = false;
 	m_bChinaLake = false;
+	m_bWallExplode = false;
 	m_bDefensiveBomb = false;
 	m_bSendPlayerDestroyedEvent = true;
 	m_bCanTakeDamage = true;
@@ -856,15 +857,13 @@ bool CTFGrenadePipebombProjectile::ExplodeOnImpact(void)
 {
 	CTFWeaponBase* pTFWeapon = dynamic_cast<CTFWeaponBase*>(GetOriginalLauncher());
 
-	int iStickTouchExplode = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOriginalLauncher(), iStickTouchExplode, sticky_touch_explode);
-
-	if ( pTFWeapon && 
+	if ( 
+		pTFWeapon && 
 		pTFWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY && 
 		( ( m_flCreationTime + 0.05f ) >= gpGlobals->curtime ) 
 		)
 		return true;
-	else if ( iStickTouchExplode )
+	else if ( m_bWallExplode )
 	{
 		return true;
 	}
