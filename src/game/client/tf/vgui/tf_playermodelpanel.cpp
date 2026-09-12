@@ -414,6 +414,8 @@ void CTFPlayerModelPanel::ClearScene( void )
 extern CChoreoStringPool g_ChoreoStringPool;
 CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCallback, float *flSceneEndTime )
 {
+	DevMsg(2, "Taunt Menu Things Start \n");
+
 	char loadfile[ 512 ];
 	V_strcpy_safe( loadfile, filename );
 	V_SetExtension( loadfile, ".vcd", sizeof( loadfile ) );
@@ -422,12 +424,16 @@ CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCa
 	char *pBuffer = NULL;
 	size_t bufsize = scenefilecache->GetSceneBufferSize( loadfile );
 	if ( bufsize <= 0 )
+	{
+		DevMsg(2, "Taunt Menu Things Null Check 1 \n");
 		return NULL;
+	}
 
 	pBuffer = new char[ bufsize ];
 	if ( !scenefilecache->GetSceneData( filename, (byte *)pBuffer, bufsize ) )
 	{
 		delete[] pBuffer;
+		DevMsg(2, "Taunt Menu Things Null Check 2 \n");
 		return NULL;
 	}
 
@@ -440,6 +446,7 @@ CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCa
 		{
 			Warning( "Unable to restore binary scene '%s'\n", loadfile );
 			delete pScene;
+			DevMsg(2, "Taunt Menu Things Null Check 3 \n");
 			pScene = NULL;
 		}
 		else
@@ -484,6 +491,8 @@ CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCa
 			*flSceneEndTime += SCENE_LERP_TIME; // give time for lerp to idle pose
 		}
 	}
+
+	DevMsg(2, "Taunt Menu Things End\n");
 
 	return pScene;
 }
@@ -697,9 +706,13 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem, bool bPreserve
 	{	
 		MDLCACHE_CRITICAL_SECTION();
 
+		//DevMsg(2, "Test Taunt 2 \n");
+
 		if ( pScene )
 		{
 			m_pScene = LoadSceneForModel( pScene, this, &m_flSceneEndTime );
+
+			//DevMsg(2, "Test Taunt 3 \n");
 			
 			// load custom prop for taunt
 			const char *pszProp = pItem->GetStaticData()->GetTauntData()->GetProp( m_iCurrentClassIndex );
