@@ -13279,7 +13279,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 			{
 				CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFScorer->Weapon_GetWeaponByType( TF_WPN_TYPE_PRIMARY ) );
 				if ( pWeapon && 
-					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) 
+					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY || pWeapon->GetWeaponID() == TF_WEAPON_DYNAMITE ) 
 					&& pWeapon->GetAttributeContainer() )
 				{
 					CEconItemView *pItem = pWeapon->GetAttributeContainer()->GetItem();

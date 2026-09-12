@@ -203,9 +203,9 @@ ConVar tf_damage_multiplier_blue( "tf_damage_multiplier_blue", "1.0", FCVAR_CHEA
 ConVar tf_damage_multiplier_red( "tf_damage_multiplier_red", "1.0", FCVAR_CHEAT, "All incoming damage to a red player is multiplied by this value" );
 
 
-ConVar tf_max_voice_speak_delay( "tf_max_voice_speak_delay", "1.5", FCVAR_DEVELOPMENTONLY, "Max time after a voice command until player can do another one", true, 0.1f, false, 0.f );
+ConVar tf_max_voice_speak_delay( "tf_max_voice_speak_delay", "1.5", FCVAR_NOTIFY, "Max time after a voice command until player can do another one", true, 0.1f, false, 0.f );
 
-ConVar tf_allow_player_use( "tf_allow_player_use", "0", FCVAR_NOTIFY, "Allow players to execute +use while playing." );
+ConVar tf_allow_player_use( "tf_allow_player_use", "1", FCVAR_NOTIFY, "Allow players to execute +use while playing." );
 
 ConVar tf_deploying_bomb_time( "tf_deploying_bomb_time", "1.90", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Time to deploy bomb before the point of no return." );
 ConVar tf_deploying_bomb_delay_time( "tf_deploying_bomb_delay_time", "0.0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Time to delay before deploying bomb." );
@@ -277,7 +277,7 @@ ConVar tf_halloween_allow_ghost_hit_by_kart_delay( "tf_halloween_allow_ghost_hit
 ConVar tf_maxhealth_drain_hp_min( "tf_maxhealth_drain_hp_min", "100", FCVAR_DEVELOPMENTONLY );
 ConVar tf_maxhealth_drain_deploy_cost( "tf_maxhealth_drain_deploy_cost", "20", FCVAR_DEVELOPMENTONLY );
 
-ConVar tf_respawn_on_loadoutchanges_type( "tf_respawn_on_loadoutchanges_type", "2", FCVAR_NONE, "0 - Do nothing, 1 - Respawn and regenerate, 2 - Regenerate only" );
+ConVar tf_respawn_on_loadoutchanges_type( "tf_respawn_on_loadoutchanges_type", "1", FCVAR_NONE, "0 - Do nothing, 1 - Respawn and regenerate, 2 - Regenerate only" );
 
 extern ConVar sv_vote_allow_spectators;
 ConVar sv_vote_late_join_time( "sv_vote_late_join_time", "90", FCVAR_NONE, "Grace period after the match starts before players who join the match receive a vote-creation cooldown" );

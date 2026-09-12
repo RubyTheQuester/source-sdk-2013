@@ -79,6 +79,16 @@ BEGIN_DATADESC(CTFRifle)
 END_DATADESC()
 #endif
 
+// ---------- Tommy Gun -------------
+
+CREATE_SIMPLE_WEAPON_TABLE( TFTommyGun, tf_weapon_tommygun )
+
+// Server specific.
+#ifndef CLIENT_DLL
+BEGIN_DATADESC(CTFTommyGun)
+END_DATADESC()
+#endif
+
 //=============================================================================
 //
 // Weapon SMG functions.

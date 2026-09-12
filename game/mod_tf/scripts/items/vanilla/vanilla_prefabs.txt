@@ -1,6 +1,5 @@
 "items_game"
 {
-
 	"prefabs"
 	{
 	

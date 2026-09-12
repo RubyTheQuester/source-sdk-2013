@@ -2,30 +2,6 @@
 {
 	"prefabs"
 	{
-		"weapon_sniperrifle_alt1"
-		{
-			"attributes"
-			{
-				"sniper fires tracer HIDDEN"
- 				{
-					"attribute_class"	"sniper_fires_tracer_HIDDEN"
-					"value"	"1"
-				}
-			}
-		}
-		
-		"weapon_sniperrifle"
-		{
-			"attributes"
-			{
-				"sniper fires tracer HIDDEN"
- 				{
-					"attribute_class"	"sniper_fires_tracer_HIDDEN"
-					"value"	"1"
-				}
-			}
-		}
-		
 		"weapon_blackbox"
 		{
 			"attributes"
@@ -41,17 +17,7 @@
 	
 	"items"
 	{
-		"14"
-		{
-			"attributes"
-			{
-				"sniper fires tracer HIDDEN"
- 				{
-					"attribute_class"	"sniper_fires_tracer_HIDDEN"
-					"value"	"1"
-				}
-			}
-		}
+		
 		//Diret Hit
 		"127"
 		{
@@ -61,18 +27,6 @@
  				{
 					"attribute_class"	"custom_projectile_model"
 					"value"	"models/enhancedrockets2/w_rocket_directhit.mdl"
-				}
-			}
-		}
-		
-		"201"
-		{
-			"attributes"
-			{
-				"sniper fires tracer HIDDEN"
- 				{
-					"attribute_class"	"sniper_fires_tracer_HIDDEN"
-					"value"	"1"
 				}
 			}
 		}

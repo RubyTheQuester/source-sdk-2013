@@ -16,6 +16,7 @@
 #define CTFChargedSMG C_TFChargedSMG
 #define CTFSMG_MEDIC C_TFSMG_MEDIC
 #define CTFRifle C_TFRifle
+#define CTFTommyGun C_TFTommyGun
 #endif
 
 //=============================================================================
@@ -133,5 +134,27 @@ public:
 	~CTFRifle() {}
 
 	virtual int		GetWeaponID(void) const { return TF_WEAPON_ASSAULT_RIFLE; }
+};
+
+//=============================================================================
+//
+// TF Weapon Merc Assault Rifle
+//
+class CTFTommyGun : public CTFSMG
+{
+public:
+	DECLARE_CLASS(CTFTommyGun, CTFSMG);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	// Server specific.
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
+#endif
+
+	CTFTommyGun() {}
+	~CTFTommyGun() {}
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_TOMMYGUN; }
 };
 #endif // TF_WEAPON_SMG_H

@@ -961,6 +961,7 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		{ TF_CLASS_MEDIC,			4, 4, 1, { 1, 1, 2, 2 } },
 		{ TF_CLASS_SNIPER,			5, 0, 0, { 0, 1, 1, 1 } },
 		{ TF_CLASS_SPY,				5, 0, 0, { 0, 1, 2, 2 } },
+		{ TF_CLASS_MERCENARY,		0, 0, 0, { NoLimit, NoLimit, NoLimit, NoLimit } },
 
 		{ TF_CLASS_UNDEFINED,		0, -1 },
 	};
@@ -976,6 +977,7 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		{ TF_CLASS_SNIPER,			5, 0, 0, { 0, 1, 1, 1 } },
 		{ TF_CLASS_SPY,				5, 0, 0, { 0, 1, 2, 2 } },
 		{ TF_CLASS_ENGINEER,		5, 0, 0, { 1, 1, 1, 1 } },
+		{ TF_CLASS_MERCENARY,		0, 0, 0, { NoLimit, NoLimit, NoLimit, NoLimit } },
 
 		{ TF_CLASS_UNDEFINED,		0, -1 },
 	};
@@ -991,6 +993,7 @@ bool CTFBot::GetWeightDesiredClassToSpawn( CUtlVector< ETFClass > &vecClassToSpa
 		{ TF_CLASS_SNIPER,			0, -1 },
 		{ TF_CLASS_SPY,				0, -1 },
 		{ TF_CLASS_ENGINEER,		0, -1 },
+		{ TF_CLASS_MERCENARY,		0, 0, 0, { 0, 0, NoLimit, NoLimit } },
 
 		{ TF_CLASS_UNDEFINED,		0, -1 },
 	};
@@ -1166,6 +1169,8 @@ ETFClass CTFBot::GetPresetClassToSpawn() const
 		TF_CLASS_DEMOMAN,
 		TF_CLASS_SCOUT,
 
+		TF_CLASS_MERCENARY,
+
 		TF_CLASS_PYRO,
 		TF_CLASS_SOLDIER,
 		TF_CLASS_DEMOMAN,
@@ -1182,6 +1187,8 @@ ETFClass CTFBot::GetPresetClassToSpawn() const
 		TF_CLASS_DEMOMAN,
 		TF_CLASS_SCOUT,
 		TF_CLASS_HEAVYWEAPONS,
+
+		TF_CLASS_MERCENARY,
 
 		TF_CLASS_SNIPER,
 		TF_CLASS_ENGINEER,
@@ -1200,6 +1207,8 @@ ETFClass CTFBot::GetPresetClassToSpawn() const
 		TF_CLASS_SCOUT,
 		TF_CLASS_SOLDIER,
 
+		TF_CLASS_MERCENARY,
+
 		TF_CLASS_HEAVYWEAPONS,
 		TF_CLASS_PYRO,
 		TF_CLASS_MEDIC,
@@ -1209,9 +1218,9 @@ ETFClass CTFBot::GetPresetClassToSpawn() const
 	};
 
 	// make sure we have completed list of rolls per team
-	COMPILE_TIME_ASSERT( ARRAYSIZE( offenseRoster ) == 12 );
-	COMPILE_TIME_ASSERT( ARRAYSIZE( defenseRoster ) == 12 );
-	COMPILE_TIME_ASSERT( ARRAYSIZE( compRoster ) == 12 );
+	COMPILE_TIME_ASSERT( ARRAYSIZE( offenseRoster ) == 13 );
+	COMPILE_TIME_ASSERT( ARRAYSIZE( defenseRoster ) == 13 );
+	COMPILE_TIME_ASSERT( ARRAYSIZE( compRoster ) == 13 );
 
 	// assume offense
 	ETFClass *desiredRoster = offenseRoster;
@@ -3634,6 +3643,7 @@ float CTFBot::GetThreatDanger( CBaseCombatCharacter *who ) const
 
 		case TF_CLASS_SOLDIER:
 		case TF_CLASS_HEAVYWEAPONS:
+		case TF_CLASS_MERCENARY:
 			return 0.8f;		// 4/5
 
 		case TF_CLASS_PYRO:
@@ -3976,6 +3986,19 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 			}
 		}
 		break;
+
+	case TF_CLASS_MERCENARY:
+		{
+			const float flameRange = 750.0f;
+			if (secondary && IsRangeGreaterThan(threat->GetLastKnownPosition(), flameRange))
+			{
+				gun = secondary;
+			}
+			else if ( melee && IsRangeLessThan(threat->GetLastKnownPosition(), flameRange/2) && !gun->Clip1() )
+			{
+				gun = melee;
+			}
+		}
 	}
 
 	if ( gun )

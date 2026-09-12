@@ -815,8 +815,19 @@
 			"attribute_class"	"set_detonate_mode"
 			"description_string"	"#Attrib_StickyDetonateMode2"
 			"description_format"	"value_is_additive"
-			"hidden"	"0"
+			"hidden"	"1"
 			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
+		"3574"
+		{
+			"name"	"grenade launcher mortar mode2"
+			"attribute_class"	"grenade_launcher_mortar_mode"
+			"description_string"	"#Attrib_Grenade_Launcher_Mortar_Mode"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
 		

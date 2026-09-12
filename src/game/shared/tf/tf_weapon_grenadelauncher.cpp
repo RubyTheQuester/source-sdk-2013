@@ -52,18 +52,21 @@ IMPLEMENT_NETWORKCLASS_ALIASED( TFGrenadeLauncher, DT_WeaponGrenadeLauncher )
 BEGIN_NETWORK_TABLE( CTFGrenadeLauncher, DT_WeaponGrenadeLauncher )
 #ifdef CLIENT_DLL
 	RecvPropFloat( RECVINFO( m_flDetonateTime ) ),
+	RecvPropFloat( RECVINFO(m_flChargeBeginTime) ),
 	RecvPropInt( RECVINFO( m_iCurrentTube ) ),	
 	RecvPropInt( RECVINFO( m_iGoalTube ) ), 
 #else
 	SendPropFloat( SENDINFO( m_flDetonateTime ) ),
+	SendPropFloat( SENDINFO( m_flChargeBeginTime ) ),
 	SendPropInt( SENDINFO( m_iCurrentTube ) ),	
-	SendPropInt( SENDINFO( m_iGoalTube ) ), 
+	SendPropInt( SENDINFO( m_iGoalTube ) ),
 #endif
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
 BEGIN_PREDICTION_DATA( CTFGrenadeLauncher )
 	DEFINE_FIELD( m_flDetonateTime, FIELD_FLOAT ),
+	DEFINE_FIELD(m_flChargeBeginTime, FIELD_FLOAT ),
 	DEFINE_FIELD( m_iCurrentTube, FIELD_INTEGER ),
 	DEFINE_FIELD( m_iGoalTube, FIELD_INTEGER )
 END_PREDICTION_DATA()
@@ -77,7 +80,6 @@ CREATE_SIMPLE_WEAPON_TABLE( TFCannon, tf_weapon_cannon )
 CREATE_SIMPLE_WEAPON_TABLE( TFGrenadeLauncher_Merc, tf_weapon_grenadelauncher_mercenary )
 
 CREATE_SIMPLE_WEAPON_TABLE( TFDynamite, tf_weapon_dynamite )
-
 
 // Server specific.
 #ifndef CLIENT_DLL
@@ -207,6 +209,7 @@ void CTFGrenadeLauncher::PrimaryAttack( void )
 		if ( m_flDetonateTime == 0.f )
 		{
 			m_flDetonateTime = gpGlobals->curtime + GetMortarDetonateTimeLength();
+			m_flChargeBeginTime = gpGlobals->curtime;
 			SendWeaponAnim( ACT_VM_PULLBACK );
 #ifdef CLIENT_DLL
 			if ( GetWeaponID() != TF_WEAPON_DYNAMITE )
@@ -504,9 +507,9 @@ float CTFGrenadeLauncher::GetProjectileSpeed( void )
 
 	if ( GetDetonateMode() == 4 )
 	{
-		flLaunchSpeed = RemapValClamped((gpGlobals->curtime - m_flChargeBeginTime),
+		flLaunchSpeed = RemapValClamped( (gpGlobals->curtime - m_flChargeBeginTime),
 			0.0f,
-			(GetMortarDetonateTimeLength() - GetChargeMaxTime() ),
+			GetChargeMaxTime(),
 			TF_PIPEBOMB_MIN_CHARGE_VEL,
 			TF_PIPEBOMB_MAX_CHARGE_VEL);
 	}
@@ -587,6 +590,7 @@ float CTFGrenadeLauncher::GetChargeMaxTime( void )
 void CTFGrenadeLauncher::ResetDetonateTime()
 {
 	m_flDetonateTime = 0.f;
+	m_flChargeBeginTime = 0.f;
 
 #ifdef CLIENT_DLL
 	StopChargeEffects();

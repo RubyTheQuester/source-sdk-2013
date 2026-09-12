@@ -169,6 +169,35 @@
 				"height"	"32"
 		}
 		
+		"tommygun"
+		{
+				"dfile"	"HUD/d_images_of"
+				"dnegfile" "HUD/dneg_images_of"
+				"x"		"0"
+				"y"		"0"
+				"width"		"116"
+				"height"	"32"
+		}
+		
+		"dynamite_bundle"
+		{
+				"dfile"	"HUD/d_images_of"
+				"dnegfile" "HUD/dneg_images_of"
+				"x"		"127"
+				"y"		"129"
+				"width"		"58"
+				"height"	"35"
+		}
+		
+		"dynamite_bundle_bomblet"
+		{
+				"dfile"	"HUD/d_images_of"
+				"dnegfile" "HUD/dneg_images_of"
+				"x"		"0"
+				"y"		"389"
+				"width"		"58"
+				"height"	"35"
+		}
 		//PF2 ports	
 		
 		"syringe"

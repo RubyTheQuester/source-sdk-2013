@@ -89,6 +89,7 @@ private:
 	float GetMortarDetonateTimeLength();
 
 	CNetworkVar( float, m_flDetonateTime );
+	CNetworkVar( float, m_flChargeBeginTime );
 
 	// Barrel rotation needs to be in sync
 	CNetworkVar( int, m_iCurrentTube );	// Which tube is the one we just fired out of

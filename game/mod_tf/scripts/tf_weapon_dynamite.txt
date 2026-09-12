@@ -32,7 +32,7 @@ WeaponData
 	"bucket"		"1"
 	"bucket_position"	"0"
 	
-	"ExplosionSound"		"Weapon_LooseCannon.Explode"
+	"ExplosionSound"		"Weapon_DynamiteBundle.BundleExplode"
 	"ExplosionEffect"		"ExplosionCore_wall"
 	"ExplosionPlayerEffect"	"ExplosionCore_MidAir"
 	"ExplosionWaterEffect"	"ExplosionCore_MidAir_underwater"

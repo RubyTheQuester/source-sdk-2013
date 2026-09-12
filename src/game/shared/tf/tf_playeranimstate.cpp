@@ -448,6 +448,51 @@ static acttable_t m_acttableKnifeMerc[] =
 
 };
 
+static acttable_t m_acttableDynamite[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_DYNAMITE, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_DYNAMITE, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_DYNAMITE, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_DYNAMITE, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_DYNAMITE, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_DYNAMITE, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_DYNAMITE, false },
+
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_DYNAMITE, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_DYNAMITE, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_DYNAMITE, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_DYNAMITE, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_DYNAMITE, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_DYNAMITE, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_DYNAMITE, false },
+};
+
+static acttable_t m_acttableTommyGun[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_TOMMYGUN_MERCENARY, false },
+
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_TOMMYGUN_MERCENARY, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_TOMMYGUN_MERCENARY, false },
+
+	{ ACT_MP_RELOAD_STAND, ACT_MERC_RELOAD_STAND_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_RELOAD_CROUCH, ACT_MERC_RELOAD_CROUCH_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_RELOAD_SWIM, ACT_MERC_RELOAD_SWIM_TOMMYGUN_MERCENARY, false },
+	{ ACT_MP_RELOAD_AIRWALK, ACT_MERC_RELOAD_AIRWALK_TOMMYGUN_MERCENARY, false },
+};
+
 Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired )
 {
 	acttable_t *pTable = NULL;
@@ -539,7 +584,7 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 					break;
 				case TF_WEAPON_SMG:
 				case TF_WEAPON_SMG_MEDIC:
-					iActivityCount = ARRAYSIZE(m_acttableSMGMerc);
+					iActivityCount = ARRAYSIZE( m_acttableSMGMerc );
 					pTable = m_acttableSMGMerc;
 					break;
 				case TF_WEAPON_ASSAULT_RIFLE:
@@ -550,6 +595,15 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 				case TF_WEAPON_KNIFE_MERC:
 					iActivityCount = ARRAYSIZE(m_acttableKnifeMerc);
 					pTable = m_acttableKnifeMerc;
+					break;
+				case TF_WEAPON_DYNAMITE:
+				case TF_WEAPON_STACHEL:
+					iActivityCount = ARRAYSIZE(m_acttableDynamite);
+					pTable = m_acttableDynamite;
+					break;
+				case TF_WEAPON_TOMMYGUN:
+					iActivityCount = ARRAYSIZE(m_acttableTommyGun);
+					pTable = m_acttableTommyGun;
 					break;
 				}
 			}
