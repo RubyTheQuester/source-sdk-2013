@@ -14085,7 +14085,10 @@ float CTFGameRules::FlPlayerFallDamage( CBasePlayer *pPlayer )
 
 		int iCancelFallingDamage = 0;
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, iCancelFallingDamage, cancel_falling_damage );
-		if ( iCancelFallingDamage > 0  || tfmod_disable_fall_damage.GetBool() )
+
+		bool isMerc = pTFPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY;
+
+		if ( iCancelFallingDamage > 0  || tfmod_disable_fall_damage.GetBool() || isMerc )
 			flFallDamage = 0;
 
 		return flFallDamage;

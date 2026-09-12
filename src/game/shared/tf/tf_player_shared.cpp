@@ -12440,6 +12440,8 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 	bool bCanAttackWhileCloaked = false;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetActiveTFWeapon(), bCanAttackWhileCloaked, attack_while_cloak );
 
+	bool bIsMerc = GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY;
+
 	bool bCloakCheck = false;
 	CALL_ATTRIB_HOOK_INT( bCloakCheck, invis_allow_deploy_firing );
 
@@ -12462,7 +12464,7 @@ bool CTFPlayer::CanAttack( int iCanAttackFlags )
 	{
 
 		if ( 
-			( !bCloakCheck  && !bCanAttackWhileCloaked )
+			( !bCloakCheck  && !bCanAttackWhileCloaked && !bIsMerc)
 			&& !( iCanAttackFlags & TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK )
 			)
 		{

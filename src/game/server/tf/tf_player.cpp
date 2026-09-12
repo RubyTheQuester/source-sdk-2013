@@ -16596,7 +16596,9 @@ void CTFPlayer::RemoveInvisibility( bool bOnAttack )
 	if ( !m_Shared.IsStealthed() )
 		return;
 
-	if (bOnAttack && GetActiveTFWeapon())
+	bool bIsMerc = GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY;
+
+	if (bOnAttack && ( GetActiveTFWeapon() || bIsMerc) )
 	{
 		// L'Etranger can attack while invis but flash a little
 		bool bCanAttackWhileCloaked = false;
