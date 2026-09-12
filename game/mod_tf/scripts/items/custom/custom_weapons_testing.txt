@@ -355,23 +355,17 @@
 					"value" "0.45"
 				}
 				
-				"upchuck_amount"
+				"projectile_bounce_limit"
 				{
-					"attribute_class"	"upchuck_amount"
-					"value" "20"
+					"attribute_class"	"projectile_bounce_limit"
+					"value" "8"
 				}
 				
-				//"bounce_limit"
-				//{
-				//	"attribute_class"	"projectile_bounce_limit"
-				//	"value" "4"
-				//}
-				
-				//"custom projectile model"
-				//{
-				//	"attribute_class"	"custom_projectile_model"
-				//	"value"				"models/weapons/w_models/w_cannonball.mdl"
-				//}
+				"custom projectile model"
+				{
+					"attribute_class"	"custom_projectile_model"
+					"value"				"models/weapons/w_models/w_cannonball.mdl"
+				}
 			}
 			
 			"visuals"
