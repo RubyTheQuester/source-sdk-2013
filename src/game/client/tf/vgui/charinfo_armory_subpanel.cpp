@@ -49,6 +49,10 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 	"#ArmoryFilter_Customitems",	// ARMFILT_CUSTOMITEMS,
 	"#ArmoryFilter_Taunts",			// ARMFILT_TAUNT,
 
+	"#ArmoryFilter_Upper",			// ARMFILT_UPPER,
+	"#ArmoryFilter_Lower",			// ARMFILT_LOWER,
+	"#ArmoryFilter_Face",			// ARMFILT_HATS,
+
 	"",								// ARMFILT_NUM_IN_DROPDOWN
 	"Not Used",						// ARMFILT_CUSTOM
 	"#ArmoryFilter_Donationitems",	// ARMFILT_DONATIONITEMS,
@@ -782,7 +786,15 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 	case ARMFILT_WEAPONS:
 		{
 			int iSlot = pDef->GetDefaultLoadoutSlot();
-			bInList = ( iSlot == LOADOUT_POSITION_PRIMARY || iSlot == LOADOUT_POSITION_SECONDARY || iSlot == LOADOUT_POSITION_MELEE || iSlot == LOADOUT_POSITION_EQUIPMENT );
+			bInList = ( 
+				iSlot == LOADOUT_POSITION_PRIMARY 
+				|| iSlot == LOADOUT_POSITION_SECONDARY 
+				|| iSlot == LOADOUT_POSITION_MELEE 
+				|| iSlot == LOADOUT_POSITION_EQUIPMENT 
+				|| iSlot == LOADOUT_POSITION_PDA
+				|| iSlot == LOADOUT_POSITION_PDA2
+				|| iSlot == LOADOUT_POSITION_BUILDING
+				);
 			break;
 		}
 
@@ -867,6 +879,48 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 				|| (bIsTaunt);
 			break;
 		}
+
+	case ARMFILT_UPPER:
+	{
+		bInList = (
+			pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("shirt")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("arms")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("arm_tattoos")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("grenades")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("left_shoulder")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("sleeves")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("right_shoulder")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("back")
+			//|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("medal")
+			);
+		break;
+	}
+
+	case ARMFILT_LOWER:
+	{
+		bInList = (
+			pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("pants")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("feet")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("belt_misc")
+			);
+		break;
+	}
+
+	case ARMFILT_HATS:
+	{
+		bInList = (
+			pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("hat")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("whole_head")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("face")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("glasses")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("lenses")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("beard")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("ears")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("head_skin")
+			|| pDef->GetEquipRegionMask() & GetItemSchema()->GetEquipRegionBitMaskByName("necklace")
+			);
+		break;
+	}
 
 	}
 
