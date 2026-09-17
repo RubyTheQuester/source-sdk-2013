@@ -40,7 +40,7 @@
 
 extern ConVar tf_bot_health_ok_ratio;
 extern ConVar tf_bot_health_critical_ratio;
-extern ConVar tf_bot_spells;
+extern ConVar tfmod_bot_spells;
 extern ConVar tf_gamemode_pd;
 
 ConVar tf_bot_force_jump( "tf_bot_force_jump", "0", FCVAR_CHEAT, "Force bots to continuously jump" );
@@ -673,7 +673,7 @@ bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectCrumpkins( CTFBot* me 
 //-----------------------------------------------------------------------------------------
 bool CTFBotTacticalMonitor::ShouldOpportunisticallyCollectSpell( CTFBot* me ) const
 {
-	if ( !TFGameRules()->IsUsingSpells() || !tf_bot_spells.GetBool() )
+	if ( !TFGameRules()->IsUsingSpells() || !tfmod_bot_spells.GetBool() )
 	{
 		return false;
 	}

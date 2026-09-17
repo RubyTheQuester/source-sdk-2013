@@ -50,6 +50,7 @@ ConVar tf_bot_force_class( "tf_bot_force_class", "", FCVAR_GAMEDLL, "If set to a
 ConVar tf_bot_notice_gunfire_range( "tf_bot_notice_gunfire_range", "3000", FCVAR_GAMEDLL );
 ConVar tf_bot_notice_quiet_gunfire_range( "tf_bot_notice_quiet_gunfire_range", "500", FCVAR_GAMEDLL );
 ConVar tf_bot_sniper_personal_space_range( "tf_bot_sniper_personal_space_range", "1000", FCVAR_CHEAT, "Enemies beyond this range don't worry the Sniper" );
+ConVar tfmod_bot_pyro_deflect_tolerance("tfmod_bot_pyro_deflect_tolerance", "0.5", FCVAR_CHEAT);
 ConVar tf_bot_keep_class_after_death( "tf_bot_keep_class_after_death", "0", FCVAR_GAMEDLL );
 ConVar tf_bot_prefix_name_with_difficulty( "tf_bot_prefix_name_with_difficulty", "0", FCVAR_GAMEDLL, "Append the skill level of the bot to the bot's name" );
 ConVar tf_bot_near_point_travel_distance( "tf_bot_near_point_travel_distance", "750", FCVAR_CHEAT, "If within this travel distance to the current point, bot is 'near' it" );
@@ -71,20 +72,22 @@ ConVar tf_bot_debug_tags( "tf_bot_debug_tags", "0", FCVAR_CHEAT, "ent_text will 
 
 ConVar tf_bot_spawn_use_preset_roster( "tf_bot_spawn_use_preset_roster", "1", FCVAR_CHEAT, "Bot will choose class from a preset class table." );
 
-ConVar tf_bot_spells( "tf_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
-ConVar tf_bot_buy_upgrades( "tf_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
+ConVar tfmod_bot_spells( "tfmod_bot_spells", "1", FCVAR_CHEAT, "Bots will use spellbook spells if available." );
+ConVar tfmod_bot_buy_upgrades( "tfmod_bot_buy_upgrades", "1", FCVAR_NONE, "Bots will buy upgrades if available." );
 
-ConVar tf_bot_give_items("tf_bot_give_items", "0", FCVAR_GAMEDLL);
-ConVar tf_bot_give_items_nosteamcheck("tf_bot_give_items_nosteamcheck", "0", FCVAR_GAMEDLL);
-ConVar tf_bot_give_items_australium_rarity("tf_bot_give_items_australium_rarity", "3", FCVAR_GAMEDLL);
-ConVar tf_bot_give_items_killstreak("tf_bot_give_items_killstreak", "1", FCVAR_GAMEDLL);
-ConVar tf_bot_give_items_killstreak_rarity("tf_bot_give_items_killstreak_rarity", "6", FCVAR_GAMEDLL);
-ConVar tf_bot_give_items_killstreak_professional_rarity("tf_bot_give_items_killstreak_professional_rarity", "4", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items("tfmod_bot_give_items", "0", FCVAR_GAMEDLL | FCVAR_NOTIFY);
+ConVar tfmod_bot_give_items_nosteamcheck("tfmod_bot_give_items_nosteamcheck", "0", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_australium_rarity("tfmod_bot_give_items_australium_rarity", "3", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_killstreak("tfmod_bot_give_items_killstreak", "1", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_killstreak_rarity("tfmod_bot_give_items_killstreak_rarity", "6", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_killstreak_professional_rarity("tfmod_bot_give_items_killstreak_professional_rarity", "4", FCVAR_GAMEDLL);
 
-ConVar tf_bot_give_items_nocosmetics("tf_bot_give_items_nocosmetics", "0", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_nocosmetics("tfmod_bot_give_items_nocosmetics", "0", FCVAR_GAMEDLL);
 
-ConVar tf_bot_give_items_skip_reskins("tf_bot_give_items_skip_reskins", "0", FCVAR_GAMEDLL | FCVAR_NOTIFY);
-ConVar tf_bot_give_items_skip_australiums("tf_bot_give_items_skip_australiums", "0", FCVAR_GAMEDLL);
+ConVar tfmod_bot_give_items_skip_reskins("tfmod_bot_give_items_skip_reskins", "0", FCVAR_GAMEDLL | FCVAR_NOTIFY);
+ConVar tfmod_bot_give_items_skip_australiums("tfmod_bot_give_items_skip_australiums", "0", FCVAR_GAMEDLL);
+
+ConVar tfmod_bot_give_items_merc("tfmod_bot_give_items_merc", "1", FCVAR_GAMEDLL | FCVAR_NOTIFY, "If merc get randomized items");
 
 extern ConVar tf_bot_sniper_spot_max_count;
 extern ConVar tf_bot_fire_weapon_min_time;
@@ -3989,7 +3992,9 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 
 	case TF_CLASS_MERCENARY:
 		{
-			const float flameRange = 750.0f;
+			
+			const float flameRange = 500.0f;
+
 			if (secondary && IsRangeGreaterThan(threat->GetLastKnownPosition(), flameRange))
 			{
 				gun = secondary;
@@ -4015,7 +4020,8 @@ bool CTFBot::EquipLongRangeWeapon( void )
 	if ( IsPlayerClass( TF_CLASS_SOLDIER ) || 
 		 IsPlayerClass( TF_CLASS_DEMOMAN ) ||
 		 IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) ||
-		 IsPlayerClass( TF_CLASS_SNIPER ) )
+		 IsPlayerClass( TF_CLASS_SNIPER )
+		)
 	{
 		CBaseCombatWeapon *primary = Weapon_GetSlot( TF_WPN_TYPE_PRIMARY );
 		if ( primary )
@@ -4125,6 +4131,13 @@ bool CTFBot::IsHitScanWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_SNIPERRIFLE_DECAP:
 		case TF_WEAPON_PEP_BRAWLER_BLASTER:
 		case TF_WEAPON_SNIPERRIFLE_CLASSIC:
+
+		case TF_WEAPON_PISTOL_MERCENARY:
+		case TF_WEAPON_SHOTGUN_MERCENARY:
+		case TF_WEAPON_SUPER_SHOTGUN:
+		case TF_WEAPON_REVOLVER_MERCENARY:
+		case TF_WEAPON_ASSAULT_RIFLE:
+		case TF_WEAPON_TOMMYGUN:
 			return true;
 		};
 	}
@@ -4160,6 +4173,8 @@ bool CTFBot::IsContinuousFireWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_COMPOUND_BOW:
 		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
 		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
+		case TF_WEAPON_DYNAMITE:
+		case TF_WEAPON_SUPER_SHOTGUN:
 			return false;
 		};
 	}
@@ -4189,6 +4204,7 @@ bool CTFBot::IsExplosiveProjectileWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_JAR:
 		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
 		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
+		case TF_WEAPON_DYNAMITE:
 			return true;
 		};
 	}
@@ -4217,6 +4233,7 @@ bool CTFBot::IsBarrageAndReloadWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
 		case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
 		case TF_WEAPON_SCATTERGUN:
+		case TF_WEAPON_SUPER_SHOTGUN:
 			return true;
 		};
 	}
@@ -4255,6 +4272,7 @@ bool CTFBot::IsQuietWeapon( CTFWeaponBase *weapon ) const
 		case TF_WEAPON_SWORD:
 		case TF_WEAPON_CROSSBOW:
 		case TF_WEAPON_TRANQ:
+		case TF_WEAPON_KNIFE_MERC:
 			return true;
 		};
 	}
@@ -4653,99 +4671,102 @@ bool CTFBot::ScriptIsWeaponRestricted( HSCRIPT script ) const
 //
 // Return true if there is something we want to reflect directly ahead of us
 //
-bool CTFBot::ShouldFireCompressionBlast( void )
+bool CTFBot::ShouldFireCompressionBlast(void)
 {
-	if (!m_CompressionBlastTimer.IsElapsed())
-	{
-		return false;
-	}
-	else
-	{
-		// invalidate the timer when we go for another blast.
-		m_CompressionBlastTimer.Invalidate();
-	}
-
-	if ( TFGameRules()->IsInTraining() )
+	if (TFGameRules()->IsInTraining())
 	{
 		// no reflection in training mode
 		return false;
 	}
 
-	if ( !tf_bot_pyro_always_reflect.GetBool() )
+	if (!tf_bot_pyro_always_reflect.GetBool())
 	{
-		if ( IsDifficulty( CTFBot::EASY ) )
+		if (IsDifficulty(CTFBot::EASY))
 		{
 			// easy bots can't reflect at all
 			return false;
 		}
 
-		if ( IsDifficulty( CTFBot::NORMAL ) )
+		// In MvM, all of our reflects are random chance.
+		if (TFGameRules()->IsMannVsMachineMode())
 		{
-			// normal bots reflect some of the time
-			if ( TransientlyConsistentRandomValue( 1.0f ) < 0.5f )
+			if (IsDifficulty(CTFBot::NORMAL))
 			{
-				return false;
+				// normal bots reflect some of the time
+				if (TransientlyConsistentRandomValue(1.0f) < 0.5f)
+				{
+					return false;
+				}
 			}
-		}
 
-		if ( IsDifficulty( CTFBot::HARD ) )
-		{
-			// hard bots reflect most of the time
-			if ( TransientlyConsistentRandomValue( 1.0f ) < 0.1f )
+			if (IsDifficulty(CTFBot::HARD))
 			{
-				return false;
+				// hard bots reflect most of the time
+				if (TransientlyConsistentRandomValue(1.0f) < 0.1f)
+				{
+					return false;
+				}
 			}
 		}
 	}
 
-	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode() || GetTeamNumber() == TF_TEAM_PVE_DEFENDERS;
+	bool shouldPushPlayers = !TFGameRules()->IsMannVsMachineMode();
 
-	if ( shouldPushPlayers )
+	if (shouldPushPlayers)
 	{
-		const CKnownEntity *threat = GetVisionInterface()->GetPrimaryKnownThreat( true );
-		if ( threat && threat->GetEntity() && threat->GetEntity()->IsPlayer() )
+		const CKnownEntity* threat = GetVisionInterface()->GetPrimaryKnownThreat(true);
+		if (threat && threat->GetEntity() && threat->GetEntity()->IsPlayer())
 		{
-			CTFPlayer *pushVictim = ToTFPlayer( threat->GetEntity() );
+			CTFPlayer* pushVictim = ToTFPlayer(threat->GetEntity());
 
-			CTFWeaponBase* myWeapon = m_Shared.GetActiveTFWeapon();
-			bool isAtRange = false;
-
-			if (myWeapon)
+			if (IsRangeLessThan(pushVictim, tf_bot_pyro_shove_away_range.GetFloat()))
 			{
-				if (myWeapon->IsWeapon(TF_WEAPON_HANDGUN_SCOUT_PRIMARY))
+				if (!tf_bot_pyro_always_reflect.GetBool())
 				{
-					isAtRange = IsRangeLessThan(pushVictim, 125);
-				}
-				else
-				{
-					isAtRange = IsRangeLessThan(pushVictim, tf_bot_pyro_shove_away_range.GetFloat());
-				}
-			}
+					// in non-MvM, we still use randomness for pushing players only.
+					if (!TFGameRules()->IsMannVsMachineMode())
+					{
+						if (IsDifficulty(CTFBot::NORMAL))
+						{
+							// normal bots reflect some of the time
+							if (TransientlyConsistentRandomValue(1.0f) < 0.5f)
+							{
+								return false;
+							}
+						}
 
-			if (isAtRange)
-			{
+						if (IsDifficulty(CTFBot::HARD))
+						{
+							// hard bots reflect most of the time
+							if (TransientlyConsistentRandomValue(1.0f) < 0.1f)
+							{
+								return false;
+							}
+						}
+					}
+				}
 				// our threat is very close - shove them!
 
 				// always shove ubers
-				if ( pushVictim && pushVictim->m_Shared.IsInvulnerable() )
+				if (pushVictim && pushVictim->m_Shared.IsInvulnerable())
 				{
 					return true;
 				}
 
-				if ( pushVictim->GetGroundEntity() == NULL )
+				if (pushVictim->GetGroundEntity() == NULL)
 				{
 					// they are in the air - juggle them some of the time
-					return ( TransientlyConsistentRandomValue( 0.5f ) < 0.5f );
+					return (TransientlyConsistentRandomValue(0.5f) < 0.5f);
 				}
 
-				if ( pushVictim->IsCapturingPoint() )
+				if (pushVictim->IsCapturingPoint())
 				{
 					// push them off the point!
 					return true;
 				}
 
 				// be pushy sometimes
-				if ( TransientlyConsistentRandomValue( 3.0f ) < 0.5f )
+				if (TransientlyConsistentRandomValue(3.0f) < 0.5f)
 				{
 					return true;
 				}
@@ -4753,108 +4774,106 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 		}
 	}
 
-	// if we use the shortstop, we shouldn't try to push enemy projectiles here.
-	CTFWeaponBase* myWeapon = m_Shared.GetActiveTFWeapon();
-	if ( myWeapon->IsWeapon( TF_WEAPON_HANDGUN_SCOUT_PRIMARY ) )
-		return false;
 
 	Vector vecEye = EyePosition();
 	Vector vecForward, vecRight, vecUp;
 
-	AngleVectors( EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors(EyeAngles(), &vecForward, &vecRight, &vecUp);
 
 	Vector vecCenter = vecEye + vecForward * 128;
-	Vector vecSize = Vector( 128, 128, 64 );
+	Vector vecSize = Vector(128, 128, 64);
 
 	const int maxCollectedEntities = 128;
-	CBaseEntity	*pObjects[ maxCollectedEntities ];
-	int count = UTIL_EntitiesInBox( pObjects, maxCollectedEntities, vecCenter - vecSize, vecCenter + vecSize, FL_CLIENT | FL_GRENADE );
+	CBaseEntity* pObjects[maxCollectedEntities];
+	int count = UTIL_EntitiesInBox(pObjects, maxCollectedEntities, vecCenter - vecSize, vecCenter + vecSize, FL_CLIENT | FL_GRENADE);
 
-	for ( int i = 0; i < count; i++ )
+	for (int i = 0; i < count; i++)
 	{
-		CBaseEntity *pObject = pObjects[i];
-		if ( pObject == this )
+		CBaseEntity* pObject = pObjects[i];
+		if (pObject == this)
 			continue;
 
-		if ( pObject->GetTeamNumber() == GetTeamNumber() )
+		if (pObject->GetTeamNumber() == GetTeamNumber())
 			continue;
 
 		// should air blast player logic is already done before this loop
-		if ( pObject->IsPlayer() )
+		if (pObject->IsPlayer())
 			continue;
 
-		bool bSeesProjectile = false;
-
-		CTFBaseRocket *pBaseRocket = dynamic_cast<CTFBaseRocket *>( pObject );
-		if ( pBaseRocket )
-		{
-			// is this something I want to deflect?
-			if ( pBaseRocket->IsDeflectable() )
-			{
-				bSeesProjectile = true;
-			}
-		}
-
-		if ( !bSeesProjectile )
-		{
-			CTFGrenadePipebombProjectile* pBaseGrenade = dynamic_cast<CTFGrenadePipebombProjectile*>( pObject );
-			if ( pBaseGrenade )
-			{
-				// is this something I want to deflect?
-				if ( pBaseGrenade->IsDeflectable() )
-				{
-					bSeesProjectile = true;
-				}
-			}
-		}
-
-		// we can't deflect it.
-		if ( !bSeesProjectile )
+		// is this something I want to deflect?
+		if (!pObject->IsDeflectable())
 			continue;
 
-		if ( bSeesProjectile )
+		// In non-MvM we act a little bit more like a human with the reflect reaction time.
+		if (!TFGameRules()->IsMannVsMachineMode())
 		{
-			// on hard or expert, we're not restricted to what projectiles we should reflect.
-			// on lower difficulties, only deflect rockets or energy balls.
-			if ( !IsDifficulty( CTFBot::HARD ) && !IsDifficulty( CTFBot::EXPERT ) )
+			float flReactionTime = 0.0f;
+			float flReactionTimeMin = 0.0f;
+			float flReactionTimeLo = 0.0f;
+			float flReactionTimeHi = 0.0f;
+			if (!tf_bot_pyro_always_reflect.GetBool())
 			{
-				bool bCanReflectThisProj = false;
-
-				CTFProjectile_Rocket *pRocket = dynamic_cast<CTFProjectile_Rocket *>( pObject );
-				if ( pRocket )
+				if (IsDifficulty(CTFBot::NORMAL))
 				{
-					bCanReflectThisProj = true;
+					flReactionTimeMin = 0.05f;
+					flReactionTimeLo = 0.3f;
+					flReactionTimeHi = 0.7f;
 				}
-				else
+				else if (IsDifficulty(CTFBot::HARD))
 				{
-					CTFProjectile_EnergyBall *pBall = dynamic_cast<CTFProjectile_EnergyBall *>( pObject );
-					if ( pBall )
+					flReactionTimeLo = 0.1f;
+					flReactionTimeHi = 0.3f;
+				}
+				else if (IsDifficulty(CTFBot::EXPERT))
+				{
+					flReactionTimeLo = 0.0f;
+					flReactionTimeHi = 0.075f;
+				}
+				flReactionTime = RandomFloat(flReactionTimeLo, flReactionTimeHi);
+			}
+			// if we don't have a reaction time, then skip this.
+			if (flReactionTime > 0.01f)
+			{
+				CBaseProjectile* pProjectile = dynamic_cast<CBaseProjectile*>(pObject);
+				// TODO(mcoms): we should track when WE saw the projectile, but this is fine for now.
+				const float flProjectileSeenFor = gpGlobals->curtime - pProjectile->GetProjectileSpawnTime();
+				// degrade chance to reflect if we didn't have a good chance to react.
+				if (flProjectileSeenFor < flReactionTime)
+				{
+					float flThreshold = RemapValClamped(flProjectileSeenFor, flReactionTimeMin, flReactionTime, 0.0f, 1.0f);
+					if (RandomFloat() >= flThreshold)
 					{
-						bCanReflectThisProj = true;
+						continue;
 					}
 				}
-
-				if ( !bCanReflectThisProj )
-					continue;
 			}
+		}
+
+		if (FClassnameIs(pObject, "tf_projectile_rocket") || FClassnameIs(pObject, "tf_projectile_energy_ball"))
+		{
 			// is it headed right for me?
 			Vector vecThemUnitVel = pObject->GetAbsVelocity();
 			vecThemUnitVel.z = 0.0f;
 			vecThemUnitVel.NormalizeInPlace();
 
-			Vector horzForward( vecForward.x, vecForward.y, 0.0f );
+			Vector horzForward(vecForward.x, vecForward.y, 0.0f);
 			horzForward.NormalizeInPlace();
 
-			if ( DotProduct( horzForward, vecThemUnitVel ) > 0 )
+			if (DotProduct(horzForward, vecThemUnitVel) > -tfmod_bot_pyro_deflect_tolerance.GetFloat())
 				continue;
-
-			// bounce it!
-			return true;
 		}
+
+		// can I see it?
+		if (!GetVisionInterface()->IsLineOfSightClear(pObject->WorldSpaceCenter()))
+			continue;
+
+		// bounce it!
+		return true;
 	}
 
 	return false;
 }
+
 
 
 //---------------------------------------------------------------------------------------------
@@ -5112,7 +5131,7 @@ const CEconItemDefinition* CTFBot::GiveRandomItemEx(loadout_positions_t loadoutP
 			continue;
 		}
 
-		if (pItemDef->IsReskin() && tf_bot_give_items_skip_reskins.GetBool())
+		if (pItemDef->IsReskin() && tfmod_bot_give_items_skip_reskins.GetBool())
 		{
 			// if reskins aren't allowed, skip it.
 			continue;
@@ -5150,7 +5169,7 @@ void CTFBot::SelectRandomizedLoadout(void)
 		if (iSlot == LOADOUT_POSITION_UTILITY || iSlot == LOADOUT_POSITION_PDA)
 			continue;
 
-		const CEconItemDefinition* pItem = GiveRandomItemEx((loadout_positions_t)iSlot);
+		const CEconItemDefinition* pItem = GiveRandomItemEx( (loadout_positions_t)iSlot);
 
 		if (pItem)
 		{
@@ -5171,7 +5190,7 @@ void CTFBot::SelectRandomizedLoadout(void)
 	//int iChosenSlotVal = RandomInt(0, 2);
 	//int iCosmeticSlot = LOADOUT_POSITION_HEAD;
 
-	if (!tf_bot_give_items_nocosmetics.GetBool())
+	if (!tfmod_bot_give_items_nocosmetics.GetBool())
 	{
 		for (int iCosmeticSlot = LOADOUT_POSITION_HEAD; iCosmeticSlot <= LOADOUT_POSITION_MISC2; ++iCosmeticSlot)
 		{
@@ -5458,14 +5477,14 @@ bool TFBotSetItemAsKillstreak(CTFBot* pBot, CEconItemView* pItem, int iSlot)
 		{
 			CUniformRandomStream randomize;
 			randomize.SetSeed(pItem->GetItemDefinition()->GetDefinitionIndex());
-			int iTierRarity = randomize.RandomInt(0, tf_bot_give_items_killstreak_professional_rarity.GetInt());
+			int iTierRarity = randomize.RandomInt(0, tfmod_bot_give_items_killstreak_professional_rarity.GetInt());
 
-			if (iTierRarity == tf_bot_give_items_killstreak_professional_rarity.GetInt())
+			if (iTierRarity == tfmod_bot_give_items_killstreak_professional_rarity.GetInt())
 			{
 				//DevMsg("%s's [%i] %s chose Professional Killstreak!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
 				pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier = 3;
 			}
-			else if (iTierRarity == (tf_bot_give_items_killstreak_professional_rarity.GetInt() / 2))
+			else if (iTierRarity == (tfmod_bot_give_items_killstreak_professional_rarity.GetInt() / 2))
 			{
 				//DevMsg("%s's [%i] %s chose Specialized Killstreak!\n", pBot->GetPlayerName(), ownerSteamID.GetAccountID(), itemName);
 				pBot->vecSavedRandomLoadout[iSlot].flKillstreakTier = 2;
@@ -5545,14 +5564,14 @@ void CTFBot::GiveSavedLoadout(void)
 				bool painted = TFBotSetPaintkitQuality(this, pItemData, i);
 
 				//australium
-				if (!painted && !tf_bot_give_items_skip_reskins.GetBool() && !tf_bot_give_items_skip_australiums.GetBool())
+				if (!painted && !tfmod_bot_give_items_skip_reskins.GetBool() && !tfmod_bot_give_items_skip_australiums.GetBool())
 				{
 					if (!vecSavedRandomLoadout[i].bIsAustralium)
 					{
 						if (!vecSavedRandomLoadout[i].bHasCheckedIfAustralium)
 						{
 							//note: not all weapons can be australiums, so this can be rarer than what the cvar states.
-							int rarity = tf_bot_give_items_australium_rarity.GetInt();
+							int rarity = tfmod_bot_give_items_australium_rarity.GetInt();
 
 							if (randomize.RandomInt(1, rarity) == rarity)
 							{
@@ -5579,13 +5598,13 @@ void CTFBot::GiveSavedLoadout(void)
 				}
 
 				//killstreaks
-				if (tf_bot_give_items_killstreak.GetBool())
+				if (tfmod_bot_give_items_killstreak.GetBool())
 				{
 					if (!vecSavedRandomLoadout[i].bIsKillstreak)
 					{
 						if (!vecSavedRandomLoadout[i].bHasCheckedIfKillstreak)
 						{
-							int rarity = tf_bot_give_items_killstreak_rarity.GetInt();
+							int rarity = tfmod_bot_give_items_killstreak_rarity.GetInt();
 
 							if (randomize.RandomInt(1, rarity) == rarity)
 							{
@@ -5628,9 +5647,11 @@ void CTFBot::HandleLoadout(void)
 	if (!m_InitialLoadoutLoadTimer.IsElapsed())
 		return;
 
-	bool bLoggedIntoSteam = !tf_bot_give_items_nosteamcheck.GetBool() && (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn());
+	bool bLoggedIntoSteam = 
+		!tfmod_bot_give_items_nosteamcheck.GetBool() 
+		&& ( steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn() );
 
-	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && tf_bot_quota_use_presets.GetInt() != 1)
+	if (bLoggedIntoSteam && tfmod_bot_give_items.GetBool() && tf_bot_quota_use_presets.GetInt() != 1)
 	{
 		if (vecSavedRandomLoadout.Count() > 0)
 		{
@@ -5638,6 +5659,22 @@ void CTFBot::HandleLoadout(void)
 		}
 		else
 		{
+
+			SelectRandomizedLoadout();
+			GiveSavedLoadout();
+		}
+	}
+	else if ( bLoggedIntoSteam 
+		&& ( tfmod_bot_give_items_merc.GetBool() && GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY )
+		&& tf_bot_quota_use_presets.GetInt() != 1)
+	{
+		if (vecSavedRandomLoadout.Count() > 0)
+		{
+			GiveSavedLoadout();
+		}
+		else
+		{
+
 			SelectRandomizedLoadout();
 			GiveSavedLoadout();
 		}
@@ -5653,11 +5690,27 @@ void CTFBot::ResetLoadout(void)
 	if (TFGameRules() && TFGameRules()->IsMannVsMachineMode())
 		return;
 
-	bool bLoggedIntoSteam = !tf_bot_give_items_nosteamcheck.GetBool() && (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn());
-	if (bLoggedIntoSteam && tf_bot_give_items.GetBool() && !(TFGameRules() && TFGameRules()->IsMannVsMachineMode()))
+	bool bLoggedIntoSteam = !tfmod_bot_give_items_nosteamcheck.GetBool() && (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn());
+	if (
+		bLoggedIntoSteam 
+		&& tfmod_bot_give_items.GetBool() 
+		&& !( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+		)
 	{
 		vecSavedRandomLoadout.RemoveAll();
 		SelectRandomizedLoadout();
+	}
+	else if (
+		bLoggedIntoSteam
+		&& ( tfmod_bot_give_items_merc.GetBool() && GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY )
+		&& !(TFGameRules() && TFGameRules()->IsMannVsMachineMode())
+		)
+	{
+		vecSavedRandomLoadout.RemoveAll();
+		SelectRandomizedLoadout();
+	}
+	{
+
 	}
 }
 
@@ -5785,7 +5838,7 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 	m_opportunisticTimer.Start( RandomFloat( 0.1f, 0.2f ) );
 
 	// Buy upgrades inside spawn
-	if ( TFGameRules()->GameModeUsesUpgrades() && !m_bHasUpgradedAfterSpawn && tf_bot_buy_upgrades.GetBool() 
+	if ( TFGameRules()->GameModeUsesUpgrades() && !m_bHasUpgradedAfterSpawn && tfmod_bot_buy_upgrades.GetBool()
 		&& m_checkUpgradesTimer.IsElapsed() && GetCurrency() > 0 ) //&& ( PointInRespawnRoom( this, GetAbsOrigin() ) || m_bHasToUpgradeAfterWave ) )
 	{
 		m_bHasUpgradedAfterSpawn = true;
@@ -6095,7 +6148,7 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				}
 			}
 		}
-		else if ( weapon->GetWeaponID() == TF_WEAPON_SPELLBOOK && tf_bot_spells.GetBool() )
+		else if ( weapon->GetWeaponID() == TF_WEAPON_SPELLBOOK && tfmod_bot_spells.GetBool() )
 		{
 			CTFSpellBook *book = (CTFSpellBook *)weapon;
 			if ( book->HasASpellWithCharges() )

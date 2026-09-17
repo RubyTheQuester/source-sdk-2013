@@ -64,6 +64,8 @@ public:
 	virtual void SetLauncher( CBaseEntity *pLauncher );
 	CBaseEntity *GetOriginalLauncher() const { return m_hOriginalLauncher; }
 
+	float GetProjectileSpawnTime( void ) { return m_flProjectileSpawnTime; }
+
 protected:
 #ifdef GAME_DLL
 	void CollideWithTeammatesThink();
@@ -82,6 +84,7 @@ private:
 
 	CNetworkHandle( CBaseEntity, m_hOriginalLauncher );
 
+	float m_flProjectileSpawnTime;
 #ifdef TF_DLL
 	CUtlVector< int > m_vecEntsHit;
 	CUtlVector< int > m_vecEntsDirectHit;
