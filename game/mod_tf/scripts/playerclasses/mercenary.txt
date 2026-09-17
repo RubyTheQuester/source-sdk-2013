@@ -21,8 +21,8 @@ PlayerClass
 
 	// Weapons.
 	"weapon1"		"TF_WEAPON_CROWBAR"
-	"weapon2"		"TF_WEAPON_PISTOL"
-	"weapon3"		"TF_WEAPON_SHOTGUN_PRIMARY"
+	"weapon2"		"TF_WEAPON_PISTOL_MERCENARY"
+	"weapon3"		"TF_WEAPON_SUPER_SHOTGUN"
 	
 	// Buildables
 	"buildable1"	"OBJ_SENTRYGUN"
