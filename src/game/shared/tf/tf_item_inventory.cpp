@@ -366,11 +366,12 @@ void CTFInventoryManager::GenerateBaseItems( void )
 		pItem->Init( mapItems[it]->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false );
 		m_pBaseLoadoutItems.AddToTail( pItem );
 	}
+
 	const CEconItemSchema::BaseItemDefinitionMap_t& mapItemsSolo = GetItemSchema()->GetSoloItemDefinitionMap();
-	iStart = 0;
+	int iStart2 = 0;
 	if (mapItemsSolo.Count() != 0)
 	{
-		for (int it = iStart; it != mapItemsSolo.InvalidIndex(); it = mapItemsSolo.NextInorder(it))
+		for (int it = iStart2; it != mapItemsSolo.InvalidIndex(); it = mapItemsSolo.NextInorder(it))
 		{
 			AddSoloItem(mapItemsSolo[it]->GetDefinitionIndex());
 		}
