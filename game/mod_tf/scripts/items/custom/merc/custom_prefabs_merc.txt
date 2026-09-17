@@ -452,7 +452,7 @@
 			"anim_slot"	"OVERRIDE"
 			"loadout_animation" 	"ACT_MERC_STAND_ASSAULT_RIFLE"
 			
-			"image_inventory"	"backpack/crafting/token_primary"
+			"image_inventory" "backpack/weapons/c_models/merc/c_assualtrifle/c_assualtrifle"
 			
 			"model_player"	"models/weapons/v_models/v_assault_rifle_dm.mdl"
 			"model_world"	"models/weapons/w_models/w_assault_rifle.mdl"
@@ -503,7 +503,7 @@
 			
 			"item_slot"	"melee"
 			
-			"image_inventory"	"backpack/crafting/token_melee"
+			"image_inventory" "backpack/weapons/c_models/merc/c_combatknife/c_combatknife"
 			
 			"model_player"	"models\weapons\v_models\v_classic_knife.mdl"
 			"model_world"	"models/weapons/w_models/w_classic_knife.mdl"
@@ -543,7 +543,7 @@
 			"item_logname"	"dynamite_bundle"
 			"item_iconname"	"dynamite_bundle"
 			
-			"image_inventory"	"backpack/crafting/token_secondary"
+			"image_inventory" "backpack/weapons/c_models/merc/c_dynamite/c_dynamite"
 			
 			"anim_slot"	"OVERRIDE"
 			"loadout_animation" 	"ACT_MERC_STAND_DYNAMITE"
@@ -607,7 +607,7 @@
 			"anim_slot"	"OVERRIDE"
 			"loadout_animation" 	"ACT_MERC_STAND_TOMMYGUN_MERCENARY"
 			
-			"image_inventory"	"backpack/crafting/token_primary"
+			"image_inventory" "backpack/weapons/c_models/merc/c_tommygun/c_tommygun"
 			
 			"model_player"	"models/weapons/v_models/v_tommygun_merc.mdl"
 			"model_world"	"models/weapons/w_models/w_tommygun.mdl"

@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/merc/c_tommygun/c_tommygun_large"
+	$translucent 1
+}

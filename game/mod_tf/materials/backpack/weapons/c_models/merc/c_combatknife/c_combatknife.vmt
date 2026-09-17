@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/merc/c_combatknife/c_combatknife"
+	$translucent 1
+	$vertexcolor 1
+}

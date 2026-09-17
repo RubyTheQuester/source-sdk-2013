@@ -1,0 +1,18 @@
+"ModelViewerScript"
+{
+	"LoadModel"		"models\weapons\w_models\w_tommygun.mdl"
+	"SetAppWindowSize"		"1936 1066"
+	"SetCameraOrigin"		"156.469 -6.32439 -0.90194"
+	"SetCameraAngles"		"15.1631 -45.9043 -14.7065"
+	"SetCameraFOV"		"10.000000"
+	"SetCameraAspectCorrection"		"1.000000"
+	"SetLightType"		"2 0"
+	"SetLightPosition"		"0 0 0 0"
+	"SetLightAngles"		"1.7 -178.3 125 0"
+	"SetLightColor"		"255 255 255 0"
+	"SetLightCone"		"45 60 0"
+	"SetSkin"		"0"
+	"SetSequence"		"idle"
+	"SetFrame"		"0"
+	"SetAmbientColor"		"77 77 77"
+}
