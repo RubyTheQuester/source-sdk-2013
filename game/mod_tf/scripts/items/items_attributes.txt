@@ -831,6 +831,26 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3575"
+		{
+			"name"	"no_unscope"
+			"attribute_class"	"no_unscope"
+			"description_string"	"#Attrib_No_Unscope_on_Fire"
+			"description_format"	"value_is_additive"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
+		"3576"
+		{
+			"name"	"sniper_crit_quickscope_allowed"
+			"attribute_class"	"sniper_crit_quickscope_allowed"
+			"description_string"	"#Attrib_Quickscope_Headshots"
+			"description_format"	"value_is_additive"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

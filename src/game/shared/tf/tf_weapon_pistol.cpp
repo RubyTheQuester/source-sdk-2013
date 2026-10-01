@@ -125,7 +125,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_pistol_charge );
 //-----------------------------------------------------------------------------
 int	CTFPistol::GetDamageType(void) const
 {
-	if (CanHeadshot())
+	if ( CanHeadshot() )
 	{
 		int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
 		return iDamageType;

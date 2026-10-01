@@ -6403,7 +6403,8 @@ GC_REG_JOB( GCSDK::CGCClient, CGCPlayerKilledResponse, "CGCPlayerKilledResponse"
 bool WeaponID_IsSniperRifle( int iWeaponID )
 {
 	if ( iWeaponID == TF_WEAPON_SNIPERRIFLE ||
-		iWeaponID == TF_WEAPON_SNIPERRIFLE_DECAP || 
+		iWeaponID == TF_WEAPON_SNIPERRIFLE_DECAP ||
+		iWeaponID == TF_WEAPON_SNIPERRIFLE_RELOAD ||
 		iWeaponID == TF_WEAPON_SNIPERRIFLE_CLASSIC )
 		return true;
 	else

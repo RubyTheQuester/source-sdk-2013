@@ -10938,8 +10938,14 @@ void CTFGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 	// Figure out why this fucks with bots.
 	//pTFPlayer->SetJumpSound( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_jumpsound" ) ) > 0 );
 	//pTFPlayer->SetSpywalkInvert( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_spywalk_invert" ) ) > 0 );
-
-	pTFPlayer->SetFireCenterProjectile( Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "tfmod_fire_center_projectile" ) ) > 0 );
+	if (!pPlayer->IsFakeClient())
+	{
+		pTFPlayer->SetFireCenterProjectile(Q_atoi(engine->GetClientConVarValue(pPlayer->entindex(), "tfmod_fire_center_projectile")) > 0);
+	}
+	else
+	{
+		pTFPlayer->SetFireCenterProjectile(0);
+	}
 	pTFPlayer->m_bFlipViewModels = Q_atoi( engine->GetClientConVarValue( pPlayer->entindex(), "cl_flipviewmodels" ) ) > 0;
 }
 
@@ -13278,6 +13284,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 			if ( pTFScorer )
 			{
 				CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFScorer->Weapon_GetWeaponByType( TF_WPN_TYPE_PRIMARY ) );
+
 				if ( pWeapon && 
 					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY || pWeapon->GetWeaponID() == TF_WEAPON_DYNAMITE ) 
 					&& pWeapon->GetAttributeContainer() )

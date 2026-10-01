@@ -126,6 +126,16 @@ LINK_ENTITY_TO_CLASS( tf_weapon_sniperrifle_classic, CTFSniperRifleClassic );
 PRECACHE_WEAPON_REGISTER( tf_weapon_sniperrifle_classic );
 //=============================================================================
 
+IMPLEMENT_NETWORKCLASS_ALIASED( TFSniperRifleReload, DT_TFSniperRifleReload)
+
+BEGIN_NETWORK_TABLE( CTFSniperRifleReload, DT_TFSniperRifleReload)
+END_NETWORK_TABLE()
+
+BEGIN_PREDICTION_DATA( CTFSniperRifleReload)
+END_PREDICTION_DATA()
+
+LINK_ENTITY_TO_CLASS( tf_weapon_sniperrifle_reload, CTFSniperRifleReload );
+PRECACHE_WEAPON_REGISTER(tf_weapon_sniperrifle_reload);
 
 //=============================================================================
 //
@@ -200,8 +210,24 @@ void CTFSniperRifle::ResetTimers( void )
 //-----------------------------------------------------------------------------
 bool CTFSniperRifle::Reload( void )
 {
+	/*
 	// We currently don't reload.
-	return true;
+	if (Clip1() == -1)
+	{
+		return true;
+	}
+	else*/ if( BaseClass::Reload() == true )
+	{
+		if (IsZoomed())
+			ZoomOut();
+
+		if (Clip1() > 0)
+			m_iClip1 = 0;
+
+		return true;
+	}
+
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -337,6 +363,8 @@ void CTFSniperRifle::ItemPostFrame( void )
 	if ( !pPlayer )
 		return;
 
+	CheckReload();
+
 	if ( !CanAttack() )
 	{
 		if ( IsZoomed() )
@@ -408,6 +436,13 @@ void CTFSniperRifle::ItemPostFrame( void )
 	if ( pPlayer->m_nButtons & IN_ATTACK )
 	{
 		Fire( pPlayer );
+	}
+
+	//  Reload pressed / Clip Empty
+	if ( ( pPlayer->m_nButtons & IN_RELOAD ) && !m_bInReload )
+	{
+		// reload when reload is pressed, or if no buttons are down and weapon is empty.
+		Reload();
 	}
 
 	// Idle.
@@ -531,7 +566,7 @@ void CTFSniperRifle::ZoomIn( void )
 	if ( !pPlayer )
 		return;
 
-	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
+	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 || (Clip1() <= 0 && Clip1() != -1) )
 		return;
 
 	BaseClass::ZoomIn();
@@ -792,7 +827,7 @@ float CTFSniperRifle::GetRezoomTime() const
 void CTFSniperRifle::Fire( CTFPlayer *pPlayer )
 {
 	// Check the ammo.  We don't use clip ammo, check the primary ammo type.
-	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
+	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 || ( Clip1() <= 0 && Clip1() != -1 ) )
 	{
 		HandleFireOnEmpty();
 		return;
@@ -814,13 +849,16 @@ void CTFSniperRifle::Fire( CTFPlayer *pPlayer )
 	// Fire the sniper shot.
 	PrimaryAttack();
 
+	int iNoUnscopeOnFire = 0;
+	CALL_ATTRIB_HOOK_INT( iNoUnscopeOnFire, no_unscope );
+
 	if ( IsZoomed() )
 	{
 		// If we have more bullets, zoom out, play the bolt animation and zoom back in
-		if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) > 0 )
+		if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) > 0 || Clip1() > 0 )
 		{
 			// do not zoom out if we're under rage or about to enter it
-			if ( !( pPlayer->m_Shared.InCond( TF_COND_SNIPERCHARGE_RAGE_BUFF ) ) )
+			if ( !( pPlayer->m_Shared.InCond( TF_COND_SNIPERCHARGE_RAGE_BUFF ) ) && iNoUnscopeOnFire == 0 )
 			{
 				float flUnzoomDelay = 0.5f;
 				if ( !UsesClipsForAmmo1() )
@@ -919,7 +957,11 @@ int	CTFSniperRifle::GetDamageType( void ) const
 	CALL_ATTRIB_HOOK_INT(iCanCritNoScope, sniper_crit_no_scope);
 
 	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-	if ( pPlayer && ( pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) || iCanCritNoScope == 1 ) )
+
+	if ( 
+		( pPlayer && ( pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) )  )
+			|| iCanCritNoScope == 1 
+		)
 	{
 		return BaseClass::GetDamageType();
 	}
@@ -1016,6 +1058,8 @@ void CTFSniperRifle::UpdateSniperDot( void )
 //-----------------------------------------------------------------------------
 bool CTFSniperRifle::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget /*= NULL*/ )
 {
+	//DevMsg("Is this even reg?\n");
+
 	m_bCurrentAttackIsCrit = false;
 	m_bCurrentShotIsHeadshot = false;
 
@@ -1023,6 +1067,7 @@ bool CTFSniperRifle::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget
 		return false;
 
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
+
 	if ( pPlayer && pPlayer->m_Shared.IsCritBoosted() )
 	{
 		m_bCurrentShotIsHeadshot = bIsHeadshot;
@@ -1049,8 +1094,10 @@ bool CTFSniperRifle::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget
 
 	int iCanCritNoScope = 0;
 	CALL_ATTRIB_HOOK_INT( iCanCritNoScope, sniper_crit_no_scope );
+
 	if ( iCanCritNoScope == 0 )
 	{
+
 		if ( pPlayer )
 		{
 			// no crits if they're not zoomed
@@ -1060,7 +1107,15 @@ bool CTFSniperRifle::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget
 			}
 
 			// no crits for 0.2 seconds after starting to zoom
-			if ( ( gpGlobals->curtime - pPlayer->GetFOVTime() ) < TF_WEAPON_SNIPERRIFLE_NO_CRIT_AFTER_ZOOM_TIME )
+
+			int iCanCritQuickscope = 0;
+			CALL_ATTRIB_HOOK_INT(iCanCritQuickscope, sniper_crit_quickscope_allowed);
+
+			if 
+				( 
+					iCanCritQuickscope != 1 &&
+					( ( gpGlobals->curtime - pPlayer->GetFOVTime() ) < TF_WEAPON_SNIPERRIFLE_NO_CRIT_AFTER_ZOOM_TIME ) 
+				)
 			{
 				return false;
 			}
@@ -1847,7 +1902,7 @@ void CTFSniperRifleClassic::ZoomIn( void )
 	if ( !pPlayer )
 		return;
 
-	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
+	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 || (Clip1() <= 0 && Clip1() != -1) )
 		return;
 
 	CTFWeaponBaseGun::ZoomIn(); // intentionally skipping CTFSniperRifle::ZoomIn()
@@ -2109,3 +2164,27 @@ void CTFSniperRifleClassic::Detach( void )
 	BaseClass::Detach();
 }
 
+/*
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+int	CTFSniperRifleReload::GetDamageType(void) const
+{
+	// Only do hit location damage if we're zoomed
+
+	//WHY DID I NEED TO DO THIS???
+
+	int iCanCritNoScope = 0;
+	CALL_ATTRIB_HOOK_INT(iCanCritNoScope, sniper_crit_no_scope);
+
+	CTFPlayer* pPlayer = ToTFPlayer(GetPlayerOwner());
+
+	if ( !(pPlayer && (pPlayer->m_Shared.InCond(TF_COND_ZOOMED))) || iCanCritNoScope != 1 )
+	{
+		return BaseClass::GetDamageType();
+	}
+
+	int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
+	return iDamageType;
+}
+*/

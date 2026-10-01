@@ -584,6 +584,55 @@
 			}
 		}
 		
+		"34609"
+		{
+			"name"	"Sniper Rifle Reload"
+			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
+			
+			"item_name"	"Sniper Rifle That Reloads"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models\weapons\v_models\v_revrifle_sniper.mdl"
+			"model_world"	"models/weapons/w_models/w_revrifle_sniper.mdl"
+			
+			"attach_to_hands"				"0"
+			"model_attach_to_hands"			"1"
+			
+			"used_by_classes"
+			{
+				"sniper"		"1"
+			}
+			
+			"attributes"
+			{
+				"no_unscope"
+				{
+					"attribute_class"	"no_unscope"
+					"value" "1"
+				}
+				
+				"sniper_crit_quickscope_allowed"
+				{
+					"attribute_class"	"sniper_crit_quickscope_allowed"
+					"value" "1"
+				}
+				
+				"sniper zoom penalty"
+				{
+					"attribute_class"	"mult_zoom_fov"
+					"value"	"1.75"
+				}
+				
+				"sniper no charge real"
+				{
+					"attribute_class"	"mod_sniper_no_charge"
+					"value" "1"
+				}
+			}
+		}
 		//END OF THE LINE
 	}
 }
