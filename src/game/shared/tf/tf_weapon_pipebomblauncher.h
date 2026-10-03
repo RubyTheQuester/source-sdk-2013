@@ -16,7 +16,6 @@
 // Client specific.
 #ifdef CLIENT_DLL
 #define CTFPipebombLauncher C_TFPipebombLauncher
-#define CTFStachel C_TFStachel
 #endif
 
 #define TF_PIPEBOMB_MAX_CHARGE_TIME	 4.0f
@@ -130,15 +129,5 @@ inline const CUtlVector< CHandle< CTFGrenadePipebombProjectile > > &CTFPipebombL
 {
 	return m_Pipebombs;
 }
-
-class CTFStachel : public CTFPipebombLauncher
-{
-public:
-	DECLARE_CLASS(CTFStachel, CTFPipebombLauncher);
-	DECLARE_NETWORKCLASS();
-	DECLARE_PREDICTABLE();
-
-	virtual int		GetWeaponID(void) const { return TF_WEAPON_STACHEL; }
-};
 
 #endif // TF_WEAPON_PIPEBOMBLAUNCHER_H

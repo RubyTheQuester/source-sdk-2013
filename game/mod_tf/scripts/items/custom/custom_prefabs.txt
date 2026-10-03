@@ -120,7 +120,25 @@
 			"max_ilevel"		"1"
 			
 			"show_in_armory"	"1"
-			"item_type_name" 	"#TF_Wearable_SniperRifle"
+			"item_type_name" 	"#TF_Weapon_SniperRifle"
+			
+			"item_slot"		"primary"
+		}
+		
+		"weapon_nailgun"
+		{
+			"enabled"		"1"
+			"item_class"		"tf_weapon_nailgun"
+			
+			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
+			"drop_sound" 			"ui/item_hat_drop.wav"
+			
+			"item_quality"		"collector"
+			"min_ilevel"		"1"
+			"max_ilevel"		"1"
+			
+			"show_in_armory"	"1"
+			"item_type_name" 	"#TF_Weapon_Nailgun"
 			
 			"item_slot"		"primary"
 		}

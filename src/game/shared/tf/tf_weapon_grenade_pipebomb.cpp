@@ -456,11 +456,11 @@ CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector
 			iPipeBombDetonateType = TF_GL_MODE_CANNONBALL;
 		}
 		break;
-	case TF_PROJECTILE_PIPEBOMB_REMOTE_ROLLER:
+	/*case TF_PROJECTILE_PIPEBOMB_REMOTE_ROLLER:
 		{
 			iPipeBombDetonateType = TF_GL_MODE_REMOTE_DETONATE_ROLLER;
 		}
-		break;
+		break;*/
 	default:
 		iPipeBombDetonateType = TF_GL_MODE_REGULAR;
 	}

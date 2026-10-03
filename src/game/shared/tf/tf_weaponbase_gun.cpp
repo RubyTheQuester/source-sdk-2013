@@ -361,6 +361,7 @@ CBaseEntity *CTFWeaponBaseGun::FireProjectile( CTFPlayer *pPlayer )
 		break;
 
 	case TF_PROJECTILE_SYRINGE:
+	case TF_PROJECTILE_NAIL:
 		pProjectile = FireNail( pPlayer, iProjectile );
 		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_PRIMARY );
 		break;
@@ -371,7 +372,7 @@ CBaseEntity *CTFWeaponBaseGun::FireProjectile( CTFPlayer *pPlayer )
 		break;
 
 	case TF_PROJECTILE_PIPEBOMB:
-	case TF_PROJECTILE_PIPEBOMB_REMOTE_ROLLER:
+	//case TF_PROJECTILE_PIPEBOMB_REMOTE_ROLLER:
 	case TF_PROJECTILE_PIPEBOMB_REMOTE:
 	case TF_PROJECTILE_PIPEBOMB_PRACTICE:
 	case TF_PROJECTILE_CANNONBALL:
@@ -771,6 +772,15 @@ CBaseEntity *CTFWeaponBaseGun::FireNail( CTFPlayer *pPlayer, int iSpecificNail )
 			angForward.x += RandomFloat( -flSpread, flSpread );
 			angForward.y += RandomFloat( -flSpread, flSpread );
 			pProjectile = CTFProjectile_Syringe::Create( vecSrc, angForward, this, pPlayer, pPlayer, IsCurrentAttackACrit() );
+		}
+		break;
+	case TF_PROJECTILE_NAIL:
+		{
+			Vector vecOffset( 16, 6, -8 );
+			GetProjectileFireSetup( pPlayer, vecOffset, &vecSrc, &angForward );
+			angForward.x += RandomFloat( -flSpread, flSpread );
+			angForward.y += RandomFloat( -flSpread, flSpread );
+			pProjectile = CTFProjectile_Nail::Create( vecSrc, angForward, this, pPlayer, pPlayer, IsCurrentAttackACrit() );
 		}
 		break;
 	default:

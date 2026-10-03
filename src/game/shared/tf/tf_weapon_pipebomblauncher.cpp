@@ -66,8 +66,6 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weapon_pipebomblauncher, CTFPipebombLauncher );
 PRECACHE_WEAPON_REGISTER( tf_weapon_pipebomblauncher );
 
-CREATE_SIMPLE_WEAPON_TABLE( TFStachel, tf_weapon_stachel )
-
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC( CTFPipebombLauncher )

@@ -597,7 +597,6 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 					pTable = m_acttableKnifeMerc;
 					break;
 				case TF_WEAPON_DYNAMITE:
-				case TF_WEAPON_STACHEL:
 					iActivityCount = ARRAYSIZE(m_acttableDynamite);
 					pTable = m_acttableDynamite;
 					break;

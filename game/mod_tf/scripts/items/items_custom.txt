@@ -1,16 +1,10 @@
+#base items_game.txt
+#base items_attributes.txt
+
 #base vanilla/vanilla_items.txt
 #base solo/solo_items.txt
 #base custom/custom_items.txt
 
-#base items_attributes.txt
-#base items_game.txt
-
-// =============================
-// Additional notes:
-// =============================
-// The last file listed in here gets loaded first, in this case it's "items_game.txt" which gets loaded first.
-// And that pattern continues upwards, with each file overriding the previous ones as necessary.
-// ============================
 "items_game"
 {
 	"qualities"

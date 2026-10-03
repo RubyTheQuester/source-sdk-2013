@@ -509,7 +509,7 @@
 			"name"	"Sniper Rifle Reload"
 			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
 			
-			"item_name"	"Hunting Revolver"
+			"item_name"	"Hunting Revolver 2"
 			
 			"image_inventory"				"backpack/crafting/token_primary"
 			"image_inventory_size_w"		"128"
@@ -551,6 +551,25 @@
 					"attribute_class"	"mod_sniper_no_charge"
 					"value" "1"
 				}
+			}
+		}
+		
+		"34610"
+		{
+			"name"				"Nailgun"
+			"prefab"			"moditem_testing_prefab weapon_nailgun"
+			
+			"item_class"		"tf_weapon_nailgun"
+			
+			"item_name"			"#TF_Weapon_Nailgun"
+			
+			"image_inventory"				"backpack/crafting/token_primary"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			
+			"used_by_classes"
+			{
+				"scout"		"1"
 			}
 		}
 		//END OF THE LINE
