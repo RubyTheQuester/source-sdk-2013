@@ -1,9 +1,8 @@
-#base vanilla_prefabs.txt
-
-#base vanilla_weapons_bots.txt
 #base vanilla_weapons_rebalance.txt
 #base vanilla_weapons_share.txt
+#base vanilla_weapons_bots.txt
 
+#base vanilla_prefabs.txt
 "items_game"
 {
 

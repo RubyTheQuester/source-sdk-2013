@@ -13277,7 +13277,33 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 	}
 	else if ( 0 == Q_strcmp( killer_weapon_name, "tf_projectile_pipe" ) )
 	{
-		// let's look-up the primary weapon to see what type of grenade launcher it is
+		//Take 2 on this, reusing flamethrower code
+		CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( info.GetWeapon() );
+		if ( pWeapon )
+		{
+			CEconItemView *pItem = pWeapon->GetAttributeContainer()->GetItem();
+			if ( pItem && pItem->GetStaticData() && pItem->GetStaticData()->GetIconClassname() )
+			{
+				killer_weapon_name = pItem->GetStaticData()->GetIconClassname();
+				*iWeaponID = TF_WEAPON_NONE;
+			}
+		}
+
+		/*
+		//Below method was a stupid valve-ism
+		CTFWeaponBaseGrenadeProj *pBaseGrenade = dynamic_cast<CTFWeaponBaseGrenadeProj*>( pInflictor );
+
+		if ( pBaseGrenade )
+		{
+			if ( pBaseGrenade->GetKillIcon() )
+			{
+				killer_weapon_name = pBaseGrenade->GetKillIcon();
+				*iWeaponID = TF_WEAPON_NONE;
+			}
+		}
+		*
+		/*
+		* // let's look-up the primary weapon to see what type of grenade launcher it is
 		if ( pScorer )
 		{
 			CTFPlayer *pTFScorer = ToTFPlayer( pScorer );
@@ -13286,7 +13312,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 				CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFScorer->Weapon_GetWeaponByType( TF_WPN_TYPE_PRIMARY ) );
 
 				if ( pWeapon && 
-					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY || pWeapon->GetWeaponID() == TF_WEAPON_DYNAMITE ) 
+					( pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER || pWeapon->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY ) 
 					&& pWeapon->GetAttributeContainer() )
 				{
 					CEconItemView *pItem = pWeapon->GetAttributeContainer()->GetItem();
@@ -13301,6 +13327,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 				}
 			}
 		}
+		*/
 	}
 	else if ( 0 == Q_strcmp( killer_weapon_name, "tf_projectile_energy_ring" ) )
 	{

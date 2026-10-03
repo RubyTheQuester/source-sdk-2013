@@ -295,3 +295,21 @@
 	"volume"	"1.0"
 	"wave"		"weapons/councilman/pistol_shoot_crit.wav"
 }
+// ------------------------------------------------------------------------------------ //
+// Dynamite Sapper
+// ------------------------------------------------------------------------------------ //
+"WeaponDynamiteSapper.TickTock"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_74dB"
+	"wave"		"pl_hoodoo/alarm_clock_ticking_3.wav"
+}
+
+"WeaponDynamiteSapper.BellRing"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_74dB"
+	"wave"		"pl_hoodoo/alarm_clock_alarm_3.wav"
+}

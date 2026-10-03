@@ -220,6 +220,16 @@
 				"height"	"40"
 		}
 		
+		"obj_dispenser"
+		{
+				"dfile"	"HUD/d_images_pf"
+				"dnegfile"	"HUD/dneg_images_pf"
+				"x"		"0"
+				"y"		"224"
+				"width"		"96"
+				"height"	"32"
+		}
+		
 		// 	Custom entries (mostly ports)
 		"shotgun_mercenary"
 		{
@@ -260,6 +270,17 @@
 				"y"		"32"
 				"width"		"96"
 				"height"	"32"
-		}	
+		}
+		
+		// Placeholder
+		"revolver_secondary"
+		{
+				"dfile"	"HUD/d_images_of"
+				"dnegfile" "HUD/dneg_images_of"
+				"x"		"400"
+				"y"		"65"
+				"width"		"77"
+				"height"	"32"
+		}
 	}
 }

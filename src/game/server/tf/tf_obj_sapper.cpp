@@ -130,6 +130,8 @@ void CObjectSapper::Precache()
 
 	PrecacheScriptSound( "Weapon_Sapper.Plant" );
 	PrecacheScriptSound( "Weapon_Sapper.Timer" );
+	PrecacheScriptSound( "WeaponDynamiteSapper.TickTock" );
+	PrecacheScriptSound( "WeaponDynamiteSapper.BellRing" );
 	PrecacheScriptSound( "Weapon_sd_sapper.Timer" );
 	PrecacheScriptSound( "Weapon_p2rec.Timer" );
 

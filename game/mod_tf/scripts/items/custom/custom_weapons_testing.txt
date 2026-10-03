@@ -504,92 +504,12 @@
 			"xifier_class_remap"	"weapon_targe"
 		}
 		
-		"34608"
-		{
-			"name"	"Panic-Attack Cool"
-			"prefab"	"moditem_testing_prefab weapon_shotgun"
-			
-			"item_name"	"#TF_Weapon_Shotgun_Panic"
-			
-			"image_inventory"				"backpack/crafting/token_Secondary"
-			"model_player"	"models/workshop/weapons/c_models/c_trenchgun/c_trenchgun.mdl"
-			
-			"used_by_classes"
-			{
-				"engineer"		"1"
-			}
-			
-			"attributes"
-			{
-				"clip size penalty HIDDEN"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"	"0.75"
-				}
-				
-				// This causes auto fire
-				//"auto fires when full"
-				//{
-				//	"attribute_class"	"auto_fires_when_full"
-				//	"value"	"1"
-				//}
-				
-				// This causes the reload thing
-				//"auto fires full clip penalty"
-				//{
-				//	"attribute_class" 	"auto_fires_full_clip"
-				//	"value" "1"
-				//}
-				
-				"fire rate bonus with reduced health"
-				{
-					"attribute_class" 	"mult_postfiredelay_with_reduced_health"
-					"value" "0.25"
-				}
-				
-				"reload time decreased with reduced health"
-				{
-					"attribute_class" 	"mult_reload_time_with_reduced_health"
-					"value" "0.30"
-				}
-				
-				//"panic_attack"
-				//{
-				//	"attribute_class"	"panic_attack"
-				//	"value"	"1"
-				//}
-				
-				"panic_attack_negative"
-				{
-					"attribute_class" 	"panic_attack_negative"
-					"value" "1.5"
-				}
-				
-				//"Reload time decreased"
-				//{
-				//	"attribute_class"	"mult_reload_time"
-				//	"value"	"0.66"
-				//}
-			}
-			
-			"used_by_classes"
-			{
-				"engineer"	"primary"
-			}
-			
-			"visuals"
-			{
-				"sound_single_shot"		"Weapon_BackShot_Shotty.Single"
-				"sound_burst"			"Weapon_BackShot_Shotty.SingleCrit"
-			}
-		}
-		
 		"34609"
 		{
 			"name"	"Sniper Rifle Reload"
 			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
 			
-			"item_name"	"Sniper Rifle That Reloads"
+			"item_name"	"Hunting Revolver"
 			
 			"image_inventory"				"backpack/crafting/token_primary"
 			"image_inventory_size_w"		"128"
