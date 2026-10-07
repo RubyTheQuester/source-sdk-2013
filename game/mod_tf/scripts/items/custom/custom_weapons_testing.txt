@@ -509,7 +509,7 @@
 			"name"	"Sniper Rifle Reload"
 			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
 			
-			"item_name"	"Hunting Revolver 2"
+			"item_name"	"Hunting Revolver"
 			
 			"image_inventory"				"backpack/crafting/token_primary"
 			"image_inventory_size_w"		"128"
@@ -551,6 +551,12 @@
 					"attribute_class"	"mod_sniper_no_charge"
 					"value" "1"
 				}
+				
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.90"
+				}
 			}
 		}
 		
@@ -566,6 +572,8 @@
 			"image_inventory"				"backpack/crafting/token_primary"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
+			
+			"model_player"	"models/weapons/c_models/c_syringegun/c_syringegun.mdl"
 			
 			"used_by_classes"
 			{

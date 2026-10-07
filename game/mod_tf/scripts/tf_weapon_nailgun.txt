@@ -29,24 +29,21 @@ WeaponData
 	"bucket_position"		"0"
 
 	// Animation.
-	"viewmodel"			"models/weapons/v_models/v_nailgun.mdl"
-	"playermodel"		"models/weapons/w_models/w_nailgun.mdl"
+	"viewmodel"			"models/weapons/v_models/v_syringegun_medic.mdl"
+	"playermodel"		"models/weapons/w_models/w_syringegun.mdl"
 	"anim_prefix"		"ac"
 
 	// Muzzleflash
-	"MuzzleFlashParticleEffect" "muzzle_pistol"
-	
-	// Magazine.
-	"MagazineModel"		"models/weapons/mags/nailgun.mdl"	
+	"MuzzleFlashParticleEffect" "muzzle_pistol"	
 
 	// Sounds.
 	// Max of 16 per category (ie. max 16 "single_shot" sounds).
 	SoundData
 	{
-		"reload"			"Weapon_NailGun.Reload"
-		"empty"				"Weapon_NailGun.ClipEmpty"	
-		"single_shot"		"Weapon_NailGun.Single"
-		"burst"				"Weapon_NailGun.SingleCrit"
+		"reload"			"Weapon_SyringeGun.WorldReload"
+		"empty"			"Weapon_SyringeGun.ClipEmpty"	
+		"single_shot"		"Weapon_SyringeGun.Single"
+		"burst"			"Weapon_SyringeGun.SingleCrit"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

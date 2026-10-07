@@ -1,9 +1,9 @@
 #base items_game.txt
 #base items_attributes.txt
 
+#base custom/custom_items.txt
 #base vanilla/vanilla_items.txt
 #base solo/solo_items.txt
-#base custom/custom_items.txt
 
 "items_game"
 {
