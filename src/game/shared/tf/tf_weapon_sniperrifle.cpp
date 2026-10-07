@@ -47,6 +47,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 #ifdef CLIENT_DLL
 ConVar tf_sniper_fullcharge_bell( "tf_sniper_fullcharge_bell", "0", FCVAR_ARCHIVE );
+ConVar tfmod_bot_sniper_lasersight( "tfmod_bot_sniper_lasersight", "1", FCVAR_ARCHIVE, "All bots with sniper rifles have a visible laser sight outside MVM mode." );
 #endif
 
 //=============================================================================
@@ -1753,9 +1754,13 @@ bool CSniperDot::ShouldDraw( void )
 void CSniperDot::ClientThink( void )
 {
 	// snipers have laser sights in PvE mode
-	if ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+	C_TFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
+
+	bool bIsPinocchio = pPlayer->IsBot();
+
+	if //( tfmod_bot_sniper_lasersight.GetBool() )
+		( ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS ) )
 	{
-		C_TFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
 		if ( pPlayer )
 		{
 			if ( !m_laserBeamEffect )

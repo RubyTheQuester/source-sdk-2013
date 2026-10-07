@@ -149,7 +149,7 @@ DECLARE_CLIENT_EFFECT( SYRINGE_DISPATCH_EFFECT, ClientsideProjectileSyringeCallb
 // TF Nail Projectile functions (Server specific).
 //
 //=============================================================================
-#define NAIL_MODEL				"models/weapons/w_models/w_nail_proj.mdl"
+#define NAIL_MODEL				"models/weapons/w_models/w_nail.mdl"
 #define NAIL_DISPATCH_EFFECT	"ClientProjectile_Syringe"
 
 LINK_ENTITY_TO_CLASS( tf_projectile_nail, CTFProjectile_Nail );

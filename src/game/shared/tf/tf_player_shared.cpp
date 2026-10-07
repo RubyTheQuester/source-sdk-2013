@@ -10263,7 +10263,7 @@ void CTFPlayer::MaybeDrawRailgunBeam( IRecipientFilter *pFilter, CTFWeaponBase *
 	// Check for heatmaker
 	if ( !iShouldFireTracer )
 	{
-		iShouldFireTracer = m_Shared.InCond( TF_COND_SNIPERCHARGE_RAGE_BUFF ) && pWeapon && WeaponID_IsSniperRifle( pWeapon->GetWeaponID() );
+		iShouldFireTracer = pWeapon && WeaponID_IsSniperRifle( pWeapon->GetWeaponID() );//m_Shared.InCond( TF_COND_SNIPERCHARGE_RAGE_BUFF ) && pWeapon && WeaponID_IsSniperRifle( pWeapon->GetWeaponID() );
 	}
 
 	if ( iShouldFireTracer )

@@ -88,6 +88,7 @@ void CTFWeaponBaseGun::ItemPostFrame(void)
 	int iOldBurstSize = m_iBurstSize;
 
 	CTFPlayer* pOwner = GetTFPlayerOwner();
+
 	if (pOwner)
 	{
 		if (m_iBurstSize > 0)
@@ -95,21 +96,22 @@ void CTFWeaponBaseGun::ItemPostFrame(void)
 			// Fake the fire button.
 			pOwner->m_nButtons |= IN_ATTACK;
 		}
-	}
 
-	int iClickFire = 0;
-	CALL_ATTRIB_HOOK_INT(iClickFire, click_fire);
+		int iClickFire = 0;
+		CALL_ATTRIB_HOOK_INT(iClickFire, click_fire);
 
-	if (iClickFire > 0 && pOwner->m_afButtonPressed & IN_ATTACK)
-	{
-		m_flNextPrimaryAttack = gpGlobals->curtime *= 0.1f;
+		if (iClickFire > 0 && pOwner->m_afButtonPressed & IN_ATTACK)
+		{
+			m_flNextPrimaryAttack = gpGlobals->curtime *= 0.1f;
+		}
 	}
 
 	BaseClass::ItemPostFrame();
 
 	// Stop burst if we run out of ammo.
-	if ( (UsesClipsForAmmo1() && m_iClip1 <= 0  ||
-		(!UsesClipsForAmmo1() && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0))
+	if ( pOwner != NULL && (
+		( UsesClipsForAmmo1() && m_iClip1 <= 0 ) || 
+		( !UsesClipsForAmmo1() && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0 ) )
 		)
 	{
 		m_iBurstSize = 0;
@@ -159,6 +161,7 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 		// Start the burst.
 		m_iBurstSize = iBurstSize;
 	}
+
 	if ( m_iBurstSize > 0 )
 	{
 		m_iBurstSize--;
@@ -224,21 +227,8 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	int nBulletsPerShot = 0;
-	CALL_ATTRIB_HOOK_INT(nBulletsPerShot, mult_bullets_per_shot_hack );
-
-	if (nBulletsPerShot != 0)
-	{
-		for (int i = 0; i < nBulletsPerShot; i++)
-		{
-			CBaseEntity* pProj = FireProjectile(pPlayer);
-			ModifyProjectile(pProj);
-		}
-	}
-	else {
-		CBaseEntity* pProj = FireProjectile( pPlayer );
-		ModifyProjectile( pProj );
-	}
+	CBaseEntity* pProj = FireProjectile( pPlayer );
+	ModifyProjectile( pProj );
 
 	if ( !UsesClipsForAmmo1() )
 	{
@@ -1167,7 +1157,10 @@ bool CTFWeaponBaseGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 #endif
 	// Stop the burst.
-	m_iBurstSize = 0;
+	if ( m_iBurstSize != 0 )
+	{
+		return false;
+	}
 
 	return BaseClass::Holster( pSwitchingTo );
 }
