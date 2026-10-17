@@ -316,6 +316,7 @@ public:
 	void			Capture( CTFPlayer *pPlayer, int nCapturePoint );
 	virtual void	PickUp( CTFPlayer *pPlayer, bool bInvisible );
 	virtual void	Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
+	virtual void	Toss( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
 
 	ETFFlagType		GetType( void )	const { return (ETFFlagType)m_nType.Get(); }
 

@@ -258,6 +258,7 @@ public:
 	virtual bool		BumpWeapon( CBaseCombatWeapon *pWeapon );
 	bool				DropCurrentWeapon( void );
 	void				DropFlag( bool bSilent = false );
+	void				TossFlag(bool bSilent = false);
 	void				DropRune( bool bApplyForce = true, int nTeam = TEAM_ANY );
 	void				TFWeaponRemove( int iWeaponID );
 	bool				TFWeaponDrop( CTFWeaponBase *pWeapon, bool bThrowForward );

@@ -10,6 +10,7 @@
 #endif
 
 #include "triggers.h"
+#include "entity_capture_flag.h"
 
 // This class is to get around the fact that DEFINE_FUNCTION doesn't like multiple inheritance
 class CCaptureZoneShim : public CBaseTrigger
@@ -124,5 +125,6 @@ void HandleFlagDroppedInDetectionZone( CBasePlayer *pPlayer );
 void HandleFlagPickedUpInDetectionZone( CBasePlayer *pPlayer );
 void HandleFlagCapturedInDetectionZone( CBasePlayer *pPlayer );
 
+void PointInCaptureFlagZone( const Vector &vecPoint, CCaptureFlag* pEntity );
 
 #endif // FUNC_CAPTURE_ZONE_H

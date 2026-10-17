@@ -1026,6 +1026,7 @@ void CCaptureFlag::ResetMessage( void )
 //-----------------------------------------------------------------------------
 void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 {
+
 	// Is the flag disabled or stolen already?
 	if ( IsDisabled() || IsStolen() )
 	{
@@ -1170,6 +1171,8 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 			return;
 		}
 	}
+
+	SetMoveType( MOVETYPE_NONE );
 
 	if ( TFGameRules()->IsMannVsMachineMode() && pPlayer->IsBot() )
 	{
@@ -2131,6 +2134,82 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 	}
 #endif
 }
+//-----------------------------------------------------------------------------
+// Purpose: A player drops the flag.
+//-----------------------------------------------------------------------------
+void CCaptureFlag::Toss( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= false*/, bool bMessage /*= true*/ )
+{
+	// Is the flag enabled?
+	if ( IsDisabled() )
+		return;
+
+	// Call into the base class drop.
+	BaseClass::Drop( pPlayer, bVisible );
+
+	pPlayer->TeamFortress_SetSpeed();
+
+#ifdef GAME_DLL
+
+	if ( bThrown )
+	{
+		m_bAllowOwnerPickup = false;
+		m_flOwnerPickupTime = gpGlobals->curtime + TF_FLAG_OWNER_PICKUP_TIME;
+	}
+
+	// Throw out the health kit
+	Vector vecSrc = pPlayer->EyePosition() + Vector(0, 0, -8);
+	QAngle angForward = pPlayer->EyeAngles() + QAngle(-10, 0, 0);
+
+	SetMoveType(MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE);
+
+	SetGravity(1.0f);
+	SetFriction(0.8f);
+	SetElasticity(0.45f);
+
+	SetAbsOrigin(pPlayer->WorldSpaceCenter());
+
+	Vector vecForward, vecRight, vecUp;
+	AngleVectors(angForward, &vecForward, &vecRight, &vecUp);
+	Vector vecVelocity = vecForward * 500.0;
+
+	SetAbsAngles(vec3_angle);
+
+	SetAbsVelocity(vecVelocity);
+
+	if ( IsPoisonous() )
+	{
+		pPlayer->m_Shared.RemoveCond( TF_COND_MARKEDFORDEATH );
+	}
+	
+	m_nSkin = m_nSkin - TF_FLAG_NUMBEROFSKINS;
+
+	RemoveFlagTrail();
+
+    int nMaxReturnTime = GetMaxReturnTime();
+	SetFlagReturnIn( GetReturnTime( nMaxReturnTime ), nMaxReturnTime );
+
+	// Reset the flag's angles.
+	SetAbsAngles( m_vecResetAng );
+
+	// Reset the touch function.
+	SetTouch( &CCaptureFlag::FlagTouch );
+
+	SetFlagStatus( TF_FLAGINFO_DROPPED );
+
+	// Output.
+	m_outputOnDrop.FireOutput( this, this );
+	m_outputOnDrop1.FireOutput( pPlayer, this );
+
+	if ( !TFGameRules()->IsMannVsMachineMode() || ( GetMaxReturnTime() < 600 ) )
+	{
+		CreateReturnIcon();
+	}
+
+	HandleFlagDroppedInDetectionZone( pPlayer );
+
+#endif
+}
+
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -2306,6 +2385,15 @@ void CCaptureFlag::Think( void )
 				m_bAllowOwnerPickup = true;
 			}
 		}
+
+		// did we get dropped in a func_respawnflag zone?
+		if ( PointInRespawnFlagZone( GetAbsOrigin() ) == true )
+		{
+			Reset();
+			ResetMessage();
+		}
+
+		PointInCaptureFlagZone( GetAbsOrigin(), this );
 
 		if ( TFGameRules()->IsMannVsMachineMode() && m_bReturnBetweenWaves )
 		{

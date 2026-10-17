@@ -8705,6 +8705,31 @@ void CTFPlayer::DropFlag( bool bSilent /* = false */ )
 	}
 }
 //-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayer::TossFlag( bool bSilent /* = false */ )
+{
+	if ( HasItem() )
+	{
+		CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag*>( GetItem() );
+		if ( pFlag )
+		{
+			int nFlagTeamNumber = pFlag->GetTeamNumber();
+			pFlag->Toss( this, true, true, !bSilent );
+			IGameEvent *event = gameeventmanager->CreateEvent( "teamplay_flag_event" );
+			if ( event )
+			{
+				event->SetInt( "player", entindex() );
+				event->SetInt( "eventtype", TF_FLAGEVENT_DROPPED );
+				event->SetInt( "priority", 8 );
+				event->SetInt( "team", nFlagTeamNumber );
+
+				gameeventmanager->FireEvent( event );
+			}
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 // Purpose: Players can drop Powerup Runes
 //-----------------------------------------------------------------------------
 void CTFPlayer::DropRune( bool bApplyForce /* = true */, int nTeam /* = TEAM_ANY */ )
@@ -16701,6 +16726,22 @@ void CC_DropItem( void )
 	}
 }
 static ConCommand dropitem( "dropitem", CC_DropItem, "Drop the flag." );
+
+//-----------------------------------------------------------------------------
+// Purpose: drops the flag
+//-----------------------------------------------------------------------------
+void CC_ThrowItem(void)
+{
+	CTFPlayer* pPlayer = ToTFPlayer( UTIL_GetCommandClient() );
+	if ( !pPlayer )
+		return;
+
+	if ( pPlayer->HasTheFlag() )
+	{
+		pPlayer->TossFlag();
+	}
+}
+static ConCommand throwitem( "throwitem", CC_ThrowItem, "Drop the flag." );
 
 //-----------------------------------------------------------------------------
 // Purpose: 

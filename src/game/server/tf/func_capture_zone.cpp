@@ -749,3 +749,33 @@ void HandleFlagCapturedInDetectionZone( CBasePlayer *pPlayer )
 		}
 	}
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: Captures the flag if thrown into an capture zone
+//-----------------------------------------------------------------------------
+void PointInCaptureFlagZone( const Vector& vecPoint, CCaptureFlag* pEntity)
+{
+	Assert( pEntity );
+	if ( !pEntity)
+		return;
+
+	CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag*>( pEntity );
+
+	CBaseEntity *pTempEnt = NULL;
+	while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_capturezone" ) ) != NULL )
+	{
+		CCaptureZone*pZone = dynamic_cast<CCaptureZone*>(pTempEnt);
+
+		if ( pZone && !pZone->IsDisabled() && pZone->PointIsWithin( vecPoint ) )
+		{
+			int iTeam = pZone->GetTeamNumber();
+
+			if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() != iTeam ) ) )
+			{
+				CTFPlayer* pTFPlayer = ToTFPlayer( pFlag->GetPrevOwner() );
+
+				pFlag->Capture( pTFPlayer, pFlag->GetPointValue() );
+			}
+		}
+	}
+}
