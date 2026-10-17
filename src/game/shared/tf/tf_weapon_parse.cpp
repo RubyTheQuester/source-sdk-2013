@@ -176,6 +176,18 @@ void CTFWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 	m_bHasTeamSkins_Viewmodel	= ( pKeyValuesData->GetInt( "HasTeamSkins_Viewmodel", 0 ) != 0 );
 	m_bHasTeamSkins_Worldmodel	= ( pKeyValuesData->GetInt( "HasTeamSkins_Worldmodel", 0 ) != 0 );
 
+	// Bomblets.
+	m_bDropBomblets = (pKeyValuesData->GetInt("DropBomblets", 0) != 0);
+	m_iBombletAmount = pKeyValuesData->GetInt("BombletAmount", 0.0f);
+	m_flBombletTimer = pKeyValuesData->GetFloat("BombletTimer", 0.0f);
+	m_flBombletDamage = pKeyValuesData->GetFloat("BombletDamage", 0.0f);
+	m_flBombletDamageRadius = pKeyValuesData->GetFloat("BombletDamageRadius", 0.0f);
+	m_bBombletImpact = pKeyValuesData->GetBool("BombletImpact", 0.0f);
+	m_bBombletEffectTeamColored = pKeyValuesData->GetBool("BombletEffectTeamColored", 0.0f);
+
+	Q_strncpy(m_szBombletModel, pKeyValuesData->GetString("BombletModel"), MAX_WEAPON_STRING);
+	Q_strncpy(m_szBombletTrailParticle, pKeyValuesData->GetString("BombletParticleTrail"), MAX_WEAPON_STRING);
+
 	// Model muzzleflash
 	const char *pszMuzzleFlashModel = pKeyValuesData->GetString( "MuzzleFlashModel", NULL );
 

@@ -10,7 +10,7 @@ WeaponData
 
 	// Attributes TF.
 	"damage"		"100"
-	"DamageRadius"		"124"
+	"DamageRadius"		"110"
 	"BulletsPerShot"	"1"
 	"Spread"			"0.0"
 	"PunchAngle"		"3.0"	
@@ -37,6 +37,15 @@ WeaponData
 	"ExplosionPlayerEffect"	"ExplosionCore_MidAir"
 	"ExplosionWaterEffect"	"ExplosionCore_MidAir_underwater"
 
+	// Bomblets Attributes/Effects/Model
+	"DropBomblets"			"1"
+	"BombletAmount" 		"3"
+	"BombletDamage"			"70"
+	"BombletDamageRadius"	"124"
+	"BombletTimer"			"1"
+	"BombletModel"			"models/weapons/w_models/w_grenade_bomblet.mdl"
+	"BombletParticleTrail"			"fuse_spark"
+				
 	// Animation.
 	"viewmodel"			"models/weapons/v_models/v_dynamite_bundle.mdl"
 	"playermodel"		"models/weapons\w_models\w_dynamite.mdl"

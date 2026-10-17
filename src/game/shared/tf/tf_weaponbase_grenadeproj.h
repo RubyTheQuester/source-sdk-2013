@@ -129,6 +129,7 @@ public:
 
 	virtual CBaseEntity		*GetEnemy( void )			{ return m_hEnemy; }
 
+	bomblet_t* m_pBombletInfo;
 protected:
 
 

@@ -20,6 +20,7 @@
 #include "Sprite.h"
 #include "tf_fx.h"
 #include "halloween/merasmus/merasmus.h"
+#include "tf_projectile_bomblet.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -84,6 +85,7 @@ CTFWeaponBaseGrenadeProj::CTFWeaponBaseGrenadeProj()
 	m_flDestroyableTime = 0.0f;
 	m_bIsMerasmusGrenade = false;
 	m_iDestroyableHitCount = 0;
+	m_pBombletInfo = NULL;
 #endif
 }
 
@@ -405,6 +407,12 @@ void CTFWeaponBaseGrenadeProj::Explode( trace_t *pTrace, int bitsDamageType )
 			RecordEnemyPlayerHit( pTarget, true );
 		}
 	}
+
+	// Get the Weapon info
+#ifdef GAME_DLL
+	if( m_pBombletInfo )
+		SpawnBomblets( m_pBombletInfo, pTrace, GetTeamNumber() );
+#endif
 
 	SetThink( &CBaseGrenade::SUB_Remove );
 	SetTouch( NULL );

@@ -565,7 +565,6 @@
 					"value"	"models/weapons\w_models\w_dynamite.mdl"
 				}
 				
-				
 				"sticky detonate mode2"
 				{
 					"attribute_class"	"set_detonate_mode"

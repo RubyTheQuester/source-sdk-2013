@@ -38,6 +38,8 @@
 #define CTFWeaponBaseGrenadeProj C_TFWeaponBaseGrenadeProj
 #include "tf_fx_muzzleflash.h"
 #include "GameEventListener.h"
+#else
+struct bomblet_t;
 #endif // CLIENT_DLL
 
 #ifdef GAME_DLL

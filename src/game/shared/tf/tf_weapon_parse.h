@@ -87,6 +87,19 @@ public:
 	bool	m_bLowerWeapon;
 	bool	m_bSuppressGrenTimer;
 
+
+	// Bomblet functions for the dynamite pack and GIB
+	bool 	m_bDropBomblets;
+	int 	m_iBombletAmount;
+
+	float	m_flBombletTimer;
+	float	m_flBombletDamage;
+	float 	m_flBombletDamageRadius;
+	bool 	m_bBombletImpact;
+	bool 	m_bBombletEffectTeamColored;
+	char	m_szBombletModel[MAX_WEAPON_STRING];
+	char	m_szBombletTrailParticle[MAX_WEAPON_STRING];
+
 	// Skins
 	bool	m_bHasTeamSkins_Viewmodel;
 	bool	m_bHasTeamSkins_Worldmodel;

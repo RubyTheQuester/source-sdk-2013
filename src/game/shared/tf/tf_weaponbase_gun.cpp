@@ -14,6 +14,7 @@
 #include "tf_weapon_jar.h"
 #include "tf_weapon_flaregun.h"
 #include "tf_projectile_energy_ring.h"
+#include "tf_projectile_bomblet.h"
 
 #if !defined( CLIENT_DLL )	// Server specific.
 
@@ -876,6 +877,12 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 			// Set the grenade size again. It was previously set in CTFWeaponBaseGrenadeProj::Spawn() 
 			// during CTFGrenadePipebombProjectile::Create() above, but SetModel() resets it to the model's bounds.
 			UTIL_SetSize( pProjectile, TF_GRENADE_PROJECTILE_MINS, TF_GRENADE_PROJECTILE_MAXS );
+		}
+
+		if (GetTFWpnData().m_bDropBomblets)
+		{
+			pProjectile->m_pBombletInfo = new bomblet_t();
+			SetupBombletInfo(pProjectile->m_pBombletInfo, this, IsCurrentAttackACrit());
 		}
 	}
 
