@@ -580,6 +580,58 @@
 				"scout"		"1"
 			}
 		}
+		
+		"34611"
+		{
+			"name"	"Auto-Shotgun"
+			"prefab"	"moditem_prefab weapon_shotgun"
+			
+			"item_name"	"#TF_Weapon_AutoShotgun"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_broken_steel/c_broken_steel"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"model_player"					"models/weapons/c_models/c_broken_steel/c_broken_steel.mdl"
+			
+			"used_by_classes"
+			{
+				"heavy"		"secondary"
+			}
+			
+			"attributes"
+			{
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"0.85"
+				}
+				
+				"reload time increased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"1.5"
+				}
+				
+				"clip size bonus"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"2"
+				}
+				
+				"remaining clip spread multiplier negative"
+				{
+					"attribute_class"	"remaining_clip_spread_mult"
+					"value"				"5"
+				}
+				
+				"is community contributed item"
+				{
+					"attribute_class"  "is_community_contributed_item"
+					"value"			   "1"
+				}
+			}
+		}
+	
 		//END OF THE LINE
 	}
 }

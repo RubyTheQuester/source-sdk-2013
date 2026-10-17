@@ -851,6 +851,16 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3577"
+		{
+			"name"	"remaining clip spread multiplier negative"
+			"attribute_class"	"remaining_clip_spread_mult"
+			"description_string"	"#Attrib_Remaning_Clip_Spread_Negaitve"
+			"description_format"	"value_is_additive"
+			"effect_type"	"negative"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

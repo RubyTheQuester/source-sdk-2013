@@ -1035,6 +1035,18 @@ float CTFWeaponBaseGun::GetWeaponSpread( void )
 			fSpread *= flScaler;
 			//DevMsg( "Shot: %i  Scalar: %3.2f  Spread: %3.2f\n", m_iConsecutiveShots.Get(), flScaler, fSpread );
 		}
+
+		// Some weapons change fire delay based on player's health
+		float flRemaningClipSpreadBonus = 1.0f;
+		CALL_ATTRIB_HOOK_FLOAT( flRemaningClipSpreadBonus, remaining_clip_spread_mult );
+		if ( flRemaningClipSpreadBonus != 1.0f )
+		{
+			float flFraction = (float)m_iClip1 / (float)GetMaxClip1();
+			flFraction = clamp(flFraction, 0.0f, 1.0f);
+
+			flRemaningClipSpreadBonus = RemapValClamped( flFraction, 0.2f, 0.9f, flRemaningClipSpreadBonus, 1.0f);
+			fSpread *= flRemaningClipSpreadBonus;
+		}
 	}
 
 	return fSpread;
