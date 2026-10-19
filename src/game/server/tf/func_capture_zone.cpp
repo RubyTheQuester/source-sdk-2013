@@ -406,6 +406,84 @@ void CCaptureZone::SetDisabled( bool bDisabled )
 	}
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: Captures the flag if thrown into an capture zone
+//-----------------------------------------------------------------------------
+void PointInCaptureFlagZone(const Vector& vecPoint, CCaptureFlag* pEntity)
+{
+	Assert(pEntity);
+	if (!pEntity)
+		return;
+
+	//if (!TFGameRules()->CanFlagBeCaptured(pOther))
+		//return;
+
+	CCaptureFlag* pFlag = dynamic_cast<CCaptureFlag*>(pEntity);
+
+	CBaseEntity* pTempEnt = NULL;
+	while ((pTempEnt = gEntList.FindEntityByClassname(pTempEnt, "func_capturezone")) != NULL)
+	{
+		CCaptureZone* pZone = dynamic_cast<CCaptureZone*>(pTempEnt);
+
+		if (pZone && !pZone->IsDisabled() && pZone->PointIsWithin(vecPoint))
+		{
+			int iTeam = pZone->GetTeamNumber();
+
+			if (!iTeam || (iTeam && (pEntity->GetTeamNumber() != iTeam)))
+			{
+				CTFPlayer* pTFPlayer = ToTFPlayer(pFlag->GetPrevOwner());
+
+				pFlag->Capture(pTFPlayer, pFlag->GetPointValue());
+
+				// Outputs
+				pZone->m_outputOnCapture.FireOutput(pZone, pZone);
+
+				switch (pTFPlayer->GetTeamNumber())
+				{
+				case TF_TEAM_RED:
+					pZone->m_OnCapTeam1.FireOutput(pZone, pZone);
+					break;
+				case TF_TEAM_BLUE:
+					pZone->m_OnCapTeam2.FireOutput(pZone, pZone);
+					break;
+				default:
+					break;
+				}
+
+				IGameEvent* event = gameeventmanager->CreateEvent("ctf_flag_captured");
+				if (event)
+				{
+					int iCappingTeam = pTFPlayer->GetTeamNumber();
+					int	iCappingTeamScore = 0;
+					CTFTeam* pCappingTeam = pTFPlayer->GetTFTeam();
+					if (pCappingTeam)
+					{
+						iCappingTeamScore = pCappingTeam->GetFlagCaptures();
+					}
+
+					event->SetInt("capping_team", iCappingTeam);
+					event->SetInt("capping_team_score", iCappingTeamScore);
+					event->SetInt("capper", pTFPlayer->GetUserID());
+					event->SetInt("priority", 9); // HLTV priority
+
+					gameeventmanager->FireEvent(event);
+				}
+
+				if (TFGameRules())
+				{
+					if (TFGameRules()->IsHolidayActive(kHoliday_EOTL))
+					{
+						TFGameRules()->DropBonusDuck(pTFPlayer->GetAbsOrigin(), pTFPlayer, NULL, NULL, false, true);
+					}
+					else if (TFGameRules()->IsHolidayActive(kHoliday_Halloween))
+					{
+						TFGameRules()->DropHalloweenSoulPackToTeam(5, pZone->GetAbsOrigin(), pTFPlayer->GetTeamNumber(), TEAM_SPECTATOR);
+					}
+				}
+			}
+		}
+	}
+}
 
 //=============================================================================
 //
@@ -746,36 +824,6 @@ void HandleFlagCapturedInDetectionZone( CBasePlayer *pPlayer )
 		if ( !pZone->IsDisabled() )
 		{
 			pZone->FlagCaptured( pPlayer );
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Captures the flag if thrown into an capture zone
-//-----------------------------------------------------------------------------
-void PointInCaptureFlagZone( const Vector& vecPoint, CCaptureFlag* pEntity)
-{
-	Assert( pEntity );
-	if ( !pEntity)
-		return;
-
-	CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag*>( pEntity );
-
-	CBaseEntity *pTempEnt = NULL;
-	while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_capturezone" ) ) != NULL )
-	{
-		CCaptureZone*pZone = dynamic_cast<CCaptureZone*>(pTempEnt);
-
-		if ( pZone && !pZone->IsDisabled() && pZone->PointIsWithin( vecPoint ) )
-		{
-			int iTeam = pZone->GetTeamNumber();
-
-			if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() != iTeam ) ) )
-			{
-				CTFPlayer* pTFPlayer = ToTFPlayer( pFlag->GetPrevOwner() );
-
-				pFlag->Capture( pTFPlayer, pFlag->GetPointValue() );
-			}
 		}
 	}
 }

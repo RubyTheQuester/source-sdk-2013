@@ -2162,15 +2162,15 @@ void CCaptureFlag::Toss( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 
 	SetMoveType(MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE);
 
-	SetGravity(1.0f);
-	SetFriction(0.8f);
+	SetGravity(0.95f);
+	SetFriction(0.2f);
 	SetElasticity(0.45f);
 
 	SetAbsOrigin(pPlayer->WorldSpaceCenter());
 
 	Vector vecForward, vecRight, vecUp;
 	AngleVectors(angForward, &vecForward, &vecRight, &vecUp);
-	Vector vecVelocity = vecForward * 500.0;
+	Vector vecVelocity = vecForward * 750.0;
 
 	SetAbsAngles(vec3_angle);
 

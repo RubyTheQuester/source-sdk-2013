@@ -51,17 +51,16 @@ public:
 
 	void	PlayerDestructionThink( void );
 
-private:
-
-	CNetworkVar( bool, m_bDisabled );		// Enabled/Disabled?
-	
-	int				m_nCapturePoint;	// Used in non-CTF maps to identify this capture point
-
 	COutputEvent	m_outputOnCapture;	// Fired a flag is captured on this point.
 	COutputEvent	m_OnCapTeam1;
 	COutputEvent	m_OnCapTeam2;
 	COutputEvent	m_OnCapTeam1_PD;
 	COutputEvent	m_OnCapTeam2_PD;
+private:
+
+	CNetworkVar( bool, m_bDisabled );		// Enabled/Disabled?
+	
+	int				m_nCapturePoint;	// Used in non-CTF maps to identify this capture point
 
 	DECLARE_DATADESC();
 
