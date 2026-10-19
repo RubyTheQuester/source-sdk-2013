@@ -68,7 +68,13 @@ bool CanScatterGunKnockBack( CTFWeaponBase *pWeapon, float flDamage, float flDis
 //-----------------------------------------------------------------------------
 CTFShotgun::CTFShotgun()
 {
-	m_bReloadsSingly = true;
+	int iReloadOverride = 0;
+	CALL_ATTRIB_HOOK_INT(iReloadOverride, mod_reload_singly_override);
+
+	if (iReloadOverride)
+		m_bReloadsSingly = false;
+	else
+		m_bReloadsSingly = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +82,13 @@ CTFShotgun::CTFShotgun()
 //-----------------------------------------------------------------------------
 CTFShotgun_Super::CTFShotgun_Super()
 {
-	m_bReloadsSingly = false;
+	int iReloadOverride = 0;
+	CALL_ATTRIB_HOOK_INT(iReloadOverride, mod_reload_singly_override);
+
+	if (iReloadOverride)
+		m_bReloadsSingly = true;
+	else
+		m_bReloadsSingly = false;
 }
 
 //-----------------------------------------------------------------------------

@@ -408,6 +408,14 @@ bool CHudScope::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudScope::Paint( void )
 {
+	C_TFPlayer* pPlayer = C_TFPlayer::GetLocalTFPlayer();
+
+	int iNoScopeUI= 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iNoScopeUI, mod_sniper_no_scope_ui);
+
+	if ( iNoScopeUI )
+		return;
+
 	// We need to update the refraction texture so the scope can refract it
 	UpdateRefractTexture();
 
