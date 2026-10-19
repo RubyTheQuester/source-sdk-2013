@@ -635,6 +635,50 @@
 			"drop_sound"		"ui/item_light_gun_drop.wav"
 			"particle_suffix"		"pistol"
 		}
+		
+		"weapon_fists_merc"
+		{
+			"item_class"	"tf_weapon_fists_merc"
+			
+			"item_type_name"	"#TF_Weapon_Fists"
+			"item_name"			"#TF_Weapon_Fists"
+			
+			"item_slot"	"melee"
+			
+			"image_inventory" 	"backpack/crafting/token_melee"
+			
+			"model_player"	"models\weapons\v_models\v_berserk_merc.mdl"
+			
+			"anim_slot"	"OVERRIDE"
+			"loadout_animation" 	"ACT_MERC_STAND_BERSERK"
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -7"
+			}
+			
+			"attributes"
+			{
+				"is sourcemod mod item"
+				{
+					"attribute_class"  "is_sourcemod_mod_item"
+					"value"			   "1"
+				}
+			}
+			
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"	"ACT_FISTS_VM_IDLE"
+					"ACT_VM_HITLEFT"	"ACT_FISTS_VM_HITLEFT"
+					"ACT_VM_HITRIGHT"	"ACT_FISTS_VM_HITRIGHT"
+					"ACT_VM_SWINGHARD"	"ACT_FISTS_VM_SWINGHARD"
+					"ACT_VM_DRAW"	"ACT_FISTS_VM_DRAW"
+				}
+			}
+
+		}
 		//END OF THE PREFABS LINE
 	}
 }

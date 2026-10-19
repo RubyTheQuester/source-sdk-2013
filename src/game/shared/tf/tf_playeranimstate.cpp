@@ -493,6 +493,26 @@ static acttable_t m_acttableTommyGun[] =
 	{ ACT_MP_RELOAD_AIRWALK, ACT_MERC_RELOAD_AIRWALK_TOMMYGUN_MERCENARY, false },
 };
 
+static acttable_t m_acttableFistsMerc[] =
+{
+	{ ACT_MP_STAND_IDLE, ACT_MERC_STAND_BERSERK, false },
+	{ ACT_MP_CROUCH_IDLE, ACT_MERC_CROUCH_BERSERK, false },
+	{ ACT_MP_RUN, ACT_MERC_RUN_BERSERK, false },
+	{ ACT_MP_WALK, ACT_MERC_WALK_BERSERK, false },
+	{ ACT_MP_AIRWALK, ACT_MERC_AIRWALK_BERSERK, false },
+	{ ACT_MP_CROUCHWALK, ACT_MERC_CROUCHWALK_BERSERK, false },
+	{ ACT_MP_SWIM, ACT_MERC_SWIM_BERSERK, false },
+
+	{ ACT_MP_JUMP, ACT_MERC_JUMP_BERSERK, false },
+	{ ACT_MP_JUMP_START, ACT_MERC_JUMP_START_BERSERK, false },
+	{ ACT_MP_JUMP_FLOAT, ACT_MERC_JUMP_FLOAT_BERSERK, false },
+	{ ACT_MP_JUMP_LAND, ACT_MERC_JUMP_LAND_BERSERK, false },
+
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MERC_ATTACK_STAND_BERSERK, false },
+	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MERC_ATTACK_CROUCH_BERSERK, false },
+	{ ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MERC_ATTACK_SWIM_BERSERK, false },
+};
+
 Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired )
 {
 	acttable_t *pTable = NULL;
@@ -523,8 +543,8 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 			iActivityCount = ARRAYSIZE( s_acttableBuildingDeployed );
 			pTable = s_acttableBuildingDeployed;
 		}
-		else if ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY || 
-			( pPlayer->m_Shared.GetDisguiseClass() == TF_CLASS_MERCENARY ) 
+		else if ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_MERCENARY 
+			//|| ( pPlayer->m_Shared.GetDisguiseClass() == TF_CLASS_MERCENARY ) 
 			)
 		{
 			CTFWeaponBase* pTFWeapon = pPlayer->GetActiveTFWeapon();
@@ -565,33 +585,29 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 					iActivityCount = ARRAYSIZE(m_acttableShotgunSuper);
 					pTable = m_acttableShotgunSuper;
 					break;
-				case TF_WEAPON_REVOLVER:
-				case TF_WEAPON_REVOLVER_SECONDARY:
 				case TF_WEAPON_REVOLVER_MERCENARY:
 					iActivityCount = ARRAYSIZE(m_acttableRevolverMerc);
 					pTable = m_acttableRevolverMerc;
 					break;
-				case TF_WEAPON_ROCKETLAUNCHER:
-				case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT:
 				case TF_WEAPON_ROCKETLAUNCHER_MERCENARY:
 					iActivityCount = ARRAYSIZE(m_acttableRocketLauncherMerc);
 					pTable = m_acttableRocketLauncherMerc;
 					break;
 				case TF_WEAPON_GRENADELAUNCHER_MERCENARY:
-				case TF_WEAPON_BOUNCER:
 					iActivityCount = ARRAYSIZE(m_acttableChinaLakeMerc);
 					pTable = m_acttableChinaLakeMerc;
 					break;
+				/*
 				case TF_WEAPON_SMG:
 				case TF_WEAPON_SMG_MEDIC:
 					iActivityCount = ARRAYSIZE( m_acttableSMGMerc );
 					pTable = m_acttableSMGMerc;
 					break;
+				*/
 				case TF_WEAPON_ASSAULT_RIFLE:
 					iActivityCount = ARRAYSIZE(m_acttableRifleMerc);
 					pTable = m_acttableRifleMerc;
 					break;
-				case TF_WEAPON_KNIFE:
 				case TF_WEAPON_KNIFE_MERC:
 					iActivityCount = ARRAYSIZE(m_acttableKnifeMerc);
 					pTable = m_acttableKnifeMerc;
@@ -603,6 +619,10 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 				case TF_WEAPON_TOMMYGUN:
 					iActivityCount = ARRAYSIZE(m_acttableTommyGun);
 					pTable = m_acttableTommyGun;
+					break;
+				case TF_WEAPON_FISTS_MERC:
+					iActivityCount = ARRAYSIZE(m_acttableFistsMerc);
+					pTable = m_acttableFistsMerc;
 					break;
 				}
 			}

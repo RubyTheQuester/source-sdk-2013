@@ -51,6 +51,7 @@ public:
 	CTFShotgun();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_PRIMARY; }
+	virtual bool	Reload(void);
 	virtual void	PrimaryAttack();
 	virtual void	PlayWeaponShootSound( void );
 

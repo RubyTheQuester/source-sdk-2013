@@ -124,23 +124,24 @@
 		
 		"34807"
 		{
-			"name"		"Mercenary Leadpipe"
+			"name"		"Mercenary PunkBat"
 			"prefab"	"moditem_merc_prefab weapon_crowbar"
 			
-			"item_name"	"#TF_Weapon_LeadPipe"
+			"item_name"	"#TF_Weapon_PunkBat"
 			
 			"item_slot"		"melee"
 			"anim_slot"		"melee_allclass"
 			
-			"item_iconname"	"lead_pipe"
+			"item_iconname"	"crowbar"
 			
-			"image_inventory" "backpack/weapons/c_models/merc/c_leadpipe/c_leadpipe"
+			//"image_inventory" "backpack/weapons/c_models/merc/c_leadpipe/c_leadpipe"
+			"image_inventory" 	"backpack/crafting/token_melee"
 			
-			//"model_player"			"models/weapons/v_models/v_lead_pipe.mdl"
+			//"model_player"		"models/weapons/v_models/v_lead_pipe.mdl"
 			//"model_world"			"models/weapons/w_models/w_leadpipe_merc.mdl"
 				
-			"model_player"			"models/weapons/w_models/w_leadpipe_merc.mdl"
-			"model_world"			"models/weapons/w_models/w_leadpipe_merc.mdl"
+			"model_player"			"models/weapons/w_models/w_punkbat.mdl"
+			"model_world"			"models/weapons/w_models/w_punkbat.mdl"
 			
 			"attach_to_hands"				"1"
 			"model_attach_to_hands"			"0"
@@ -175,6 +176,15 @@
 					"value" "1"
 				}
 			}
+			
+			"visuals"
+			{
+				"sound_melee_hit"		"Weapon_BaseballBat.HitFlesh"
+				"sound_melee_hit_world"		"Weapon_BaseballBat.HitWorld"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_wood_pole_pickup.wav"
+			"drop_sound"		"ui/item_wood_pole_drop.wav"
 		}
 		
 		"34808"
@@ -247,6 +257,16 @@
 			"item_logname"	"tommygun"
 			"item_iconname"	"tommygun"
 			
+		}
+		
+		"34814"
+		{
+			"name"		"Mercenary Fists"
+			"prefab"	"moditem_merc_prefab weapon_fists_merc"
+			
+			"item_slot"	"melee"
+			
+			"item_iconname"	"berserk"
 		}
 		
 		// EQUIPMENT 

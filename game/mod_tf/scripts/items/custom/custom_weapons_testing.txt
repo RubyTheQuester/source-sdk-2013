@@ -588,11 +588,14 @@
 			
 			"item_name"	"#TF_Weapon_AutoShotgun"
 			
-			"image_inventory"				"backpack/weapons/c_models/c_broken_steel/c_broken_steel"
-			"image_inventory_size_w"		"128"
-			"image_inventory_size_h"		"82"
-			"model_player"					"models/weapons/c_models/c_broken_steel/c_broken_steel.mdl"
+			"image_inventory"	"backpack/weapons/c_models/merc/c_ssg/c_ssg"
 			
+			"model_player"	"models/weapons/v_models/v_supershotgun_mercenary.mdl"
+			"model_world"	"models/weapons/w_models/w_supershotgun.mdl"
+			
+			"attach_to_hands"				"0"
+			"model_attach_to_hands"			"1"
+
 			"used_by_classes"
 			{
 				"heavy"		"secondary"
@@ -603,13 +606,13 @@
 				"fire rate bonus"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"	"0.85"
+					"value"	"0.5"
 				}
 				
 				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"1.5"
+					"value"	"1.75"
 				}
 				
 				"clip size bonus"
@@ -627,6 +630,12 @@
 				"is community contributed item"
 				{
 					"attribute_class"  "is_community_contributed_item"
+					"value"			   "1"
+				}
+				
+				"shotgun reload override"
+				{
+					"attribute_class"  "mod_reload_singly_override"
 					"value"			   "1"
 				}
 			}

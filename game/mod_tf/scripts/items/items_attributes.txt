@@ -861,6 +861,16 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3578"
+		{
+			"name"	"shotgun reload override"
+			"attribute_class"	"mod_reload_singly_override"
+			"description_string"	"#Attrib_shotgun_reload_override"
+			"description_format"	"value_is_additive"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

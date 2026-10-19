@@ -14,6 +14,7 @@
 
 #ifdef CLIENT_DLL
 #define CTFFists C_TFFists
+#define CTFFists_Merc C_TFFists_Merc
 #endif
 
 enum fisttypes_t
@@ -67,4 +68,20 @@ private:
 	CTFFists( const CTFFists & ) {}
 };
 
+//=============================================================================
+//
+// TF Weapon Merc Assault Rifle
+//
+class CTFFists_Merc : public CTFFists
+{
+public:
+	DECLARE_CLASS(CTFFists_Merc, CTFFists);
+	DECLARE_NETWORKCLASS();
+	DECLARE_PREDICTABLE();
+
+	CTFFists_Merc() {}
+	~CTFFists_Merc() {}
+
+	virtual int		GetWeaponID(void) const { return TF_WEAPON_FISTS_MERC; }
+};
 #endif // TF_WEAPON_FISTS_H
