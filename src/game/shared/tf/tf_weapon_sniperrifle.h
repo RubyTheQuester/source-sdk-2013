@@ -82,6 +82,7 @@ protected:
 	EHANDLE					m_hTargetEnt;
 
 	CNetworkVar( float, m_flChargeStartTime );
+	CNetworkVar( bool, m_bBotOwned );
 };
 
 //=============================================================================

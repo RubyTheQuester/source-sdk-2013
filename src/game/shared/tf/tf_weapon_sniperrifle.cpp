@@ -1059,8 +1059,6 @@ void CTFSniperRifle::UpdateSniperDot( void )
 //-----------------------------------------------------------------------------
 bool CTFSniperRifle::CanFireCriticalShot( bool bIsHeadshot, CBaseEntity *pTarget /*= NULL*/ )
 {
-	//DevMsg("Is this even reg?\n");
-
 	m_bCurrentAttackIsCrit = false;
 	m_bCurrentShotIsHeadshot = false;
 
@@ -1474,8 +1472,10 @@ IMPLEMENT_NETWORKCLASS_ALIASED( SniperDot, DT_SniperDot )
 BEGIN_NETWORK_TABLE( CSniperDot, DT_SniperDot )
 #ifdef CLIENT_DLL
 	RecvPropFloat( RECVINFO( m_flChargeStartTime ) ),
+	RecvPropBool( RECVINFO( m_bBotOwned) ),
 #else
 	SendPropTime( SENDINFO( m_flChargeStartTime ) ),
+	SendPropBool( SENDINFO( m_bBotOwned ) ),
 #endif
 END_NETWORK_TABLE()
 
@@ -1546,6 +1546,10 @@ CSniperDot *CSniperDot::Create( const Vector &origin, CBaseEntity *pOwner, bool 
 
 	// Set owner.
 	pDot->SetOwnerEntity( pOwner );
+
+	CTFPlayer *pOwnerPlayer = ToTFPlayer( pOwner );
+
+	pDot->m_bBotOwned = ( pOwnerPlayer->IsBot() );
 
 	// Force updates even though we don't have a model.
 	pDot->AddEFlags( EFL_FORCE_CHECK_TRANSMIT );
@@ -1755,37 +1759,73 @@ void CSniperDot::ClientThink( void )
 {
 	// snipers have laser sights in PvE mode
 	C_TFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
+	C_TFPlayer *pViewingPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	bool bIsPinocchio = pPlayer->IsBot();
+	CBasePlayer * pOwner = ToTFPlayer( GetOwnerEntity() );
 
-	if //( tfmod_bot_sniper_lasersight.GetBool() )
-		( ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS ) )
+	if ( GetSpectatorTarget() != 0 && GetSpectatorMode() == OBS_MODE_IN_EYE )
+		pViewingPlayer = ToTFPlayer( UTIL_PlayerByIndex( GetSpectatorTarget() ) );
+
+	bool bPlayerIsRobot = false;
+
+	if ( TFGameRules()->IsPVEModeActive() && GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+		bPlayerIsRobot = true;
+
+	CTFWeaponBase *pBaseWeapon = pPlayer->GetActiveTFWeapon();
+	CTFSniperRifle *pWeapon = dynamic_cast<CTFSniperRifle*>( pBaseWeapon );
+
+	if ( pPlayer && ( bPlayerIsRobot || ( tfmod_bot_sniper_lasersight.GetBool() && m_bBotOwned ) ) && !( pPlayer == pViewingPlayer && pPlayer->GetFOV() < pPlayer->GetDefaultFOV() ) )
 	{
-		if ( pPlayer )
+		if ( !m_laserBeamEffect )
 		{
-			if ( !m_laserBeamEffect )
-			{
-				m_laserBeamEffect = ParticleProp()->Create( "laser_sight_beam", PATTACH_ABSORIGIN_FOLLOW );
-			}
+			m_laserBeamEffect = ParticleProp()->Create( "laser_sight_beam", PATTACH_ABSORIGIN_FOLLOW );
+		}
 
-			if ( m_laserBeamEffect )
+		if ( m_laserBeamEffect )
+		{
+			m_laserBeamEffect->SetSortOrigin( m_laserBeamEffect->GetRenderOrigin() );
+
+			if ( GetTeamNumber() == TF_TEAM_BLUE )
 			{
-				m_laserBeamEffect->SetSortOrigin( m_laserBeamEffect->GetRenderOrigin() );
 				m_laserBeamEffect->SetControlPoint( 2, Vector( 0, 0, 255 ) );
-
-				Vector vecAttachment;
-				Vector vecEndPos;
-				float flSize;
-
-				if ( pPlayer->GetAttachment( "eye_1", vecAttachment ) )
-				{
-					m_laserBeamEffect->SetControlPoint( 1, vecAttachment );
-				}
-				else if ( GetRenderingPositions( pPlayer, vecAttachment, vecEndPos, flSize ) )
-				{
-					m_laserBeamEffect->SetControlPoint( 1, vecAttachment );
-				}
 			}
+			else
+			{
+				m_laserBeamEffect->SetControlPoint( 2, Vector( 255, 0, 0 ) );
+			}
+
+			// Set location of beam
+			Vector vecAttachment;
+			Vector vecEndPos;
+			float flSize;
+			matrix3x4_t attachmentToWorld;
+			int iAttachment = pWeapon->LookupAttachment( "muzzle" );
+
+			if ( !bPlayerIsRobot && pWeapon && iAttachment && pWeapon->GetAttachment( iAttachment, attachmentToWorld ) )
+			{
+				Vector vecLocalOffset( 0, 0, 0 );
+
+				VectorTransform( vecLocalOffset, attachmentToWorld, vecAttachment );
+				m_laserBeamEffect->SetControlPoint( 1, vecAttachment );
+			}
+			else if ( bPlayerIsRobot && pPlayer->GetAttachment( "eye_1", vecAttachment ) )
+				m_laserBeamEffect->SetControlPoint( 1, vecAttachment );
+			else if (GetRenderingPositions( pPlayer, vecAttachment, vecEndPos, flSize ) )
+				m_laserBeamEffect->SetControlPoint( 1, vecAttachment );
+
+			Vector vecEyePos = pPlayer->EyePosition();
+			QAngle anglesEye = pPlayer->EyeAngles();
+			Vector vecDir;
+			AngleVectors( anglesEye, &vecDir );
+
+			trace_t tr;
+			CTraceFilterSimple filter( pPlayer, COLLISION_GROUP_NONE );
+			UTIL_TraceLine( vecEyePos, vecEyePos + ( vecDir * MAX_TRACE_LENGTH ), MASK_SHOT, &filter, &tr );
+
+			UTIL_ClipTraceToPlayers( vecEyePos, vecEyePos + ( vecDir * MAX_TRACE_LENGTH ), MASK_SHOT, &filter, &tr );
+
+			vecEndPos = tr.endpos + vecDir * -4;
+			m_laserBeamEffect->SetControlPoint( 0, vecEndPos );
 		}
 	}
 }
