@@ -268,9 +268,8 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	if (!pItemDef->IsSoloItem())
 	{
 		pItemView->SetItemLevel(1);
-#if CLIENT_DLL
-		pItemView->SetItemOriginOverride(kEconItemOrigin_ArmoryItem);
-#endif
+		pItem->SetOrigin(kEconItemOrigin_ArmoryItem);
+
 		if (pItemView->GetItemQuality() < AE_RARITY_DEFAULT)
 		{
 			pItemView->SetItemQuality(AE_ARMORY);
@@ -278,9 +277,7 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	}
 	else
 	{
-#if CLIENT_DLL
-		pItemView->SetItemOriginOverride(kEconItemOrigin_CustomItem);
-#endif
+		pItem->SetOrigin(kEconItemOrigin_CustomItem);
 	}
 
 #if CLIENT_DLL
