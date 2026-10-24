@@ -260,7 +260,10 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	pItem->m_unAccountID = 0;
 	pItem->m_unDefIndex = id;
 	pItem->m_unLevel = 1;
-	pItemView->Init(id, AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false);
+	pItem->SetFlags(0);
+	pItem->SetOrigin(kEconItemOrigin_Drop);
+	int quality = AE_USE_SCRIPT_VALUE;
+	pItemView->Init(id, quality, AE_USE_SCRIPT_VALUE, false);
 	pItemView->SetItemID(id);
 	
 	CEconItemDefinition* pItemDef = ItemSystem()->GetStaticDataForItemByDefIndex(id);
@@ -284,7 +287,7 @@ CEconItemView* CTFInventoryManager::AddSoloItem(int id)
 	}
 
 #if CLIENT_DLL
-	//pItemView->SetNonSOEconItem(pItem); //Is this even needed?
+	pItemView->SetNonSOEconItem(pItem); //Is this even needed?
 #endif
 
 	m_pSoloLoadoutItems.AddToTail(pItemView);
@@ -391,15 +394,17 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 	if ( iItemID == INVALID_ITEM_ID )
 		return m_LocalInventory.ClearLoadoutSlot( iClass, iSlot );
 
-	CEconItemView* pItem = m_LocalInventory.GetInventoryItemByItemID(iItemID);
-	if (iItemID < LOCAL_LOADOUT_RESERVE)
+	CEconItemView* pItem = m_LocalInventory.GetInventoryItemByItemID( iItemID );
+	if ( iItemID >= LOCAL_LOADOUT_RESERVE && iItemID != INVALID_ITEM_DEF_INDEX )
 	{
+		itemid_t remapItemID = iItemID - LOCAL_LOADOUT_RESERVE;
 		int count = TFInventoryManager()->GetSoloItemCount();
-		for (int i = 0; i < count; i++)
+		for ( int i = 0; i < count; i++ )
 		{
-			pItem = TFInventoryManager()->GetSoloItem(i);
-			if (pItem && pItem->GetItemDefIndex() == iItemID)
+			CEconItemView* pEItem = TFInventoryManager()->GetSoloItem(i);
+			if ( pEItem && pEItem->GetItemDefIndex() == remapItemID )
 			{
+				pItem = pEItem;
 				break;
 			}
 		}
@@ -429,7 +434,7 @@ bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iI
 	}
 
 	// Equip the new item
-	UpdateInventoryEquippedState( &m_LocalInventory, iItemID, iClass, iSlot );
+	UpdateInventoryEquippedState( &m_LocalInventory, iItemID, iClass, iSlot);
 
 	// TODO: Prediction
 	// Item has been moved, so update our loadout.
