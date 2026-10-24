@@ -4487,6 +4487,14 @@ public:
 		g_ScriptErrorScreenOverlay.Draw();
 	}
 
+	virtual void Reload()
+	{
+		m_bAllowEntityCreationInScripts = false;
+		VScriptServerTerm();
+		VScriptServerInit();
+		m_bAllowEntityCreationInScripts = true;
+	}
+
 	bool m_bAllowEntityCreationInScripts;
 };
 
@@ -4686,8 +4694,6 @@ INextBotComponentScriptInstanceHelper g_NextBotComponentScriptInstanceHelper;
 
 CON_COMMAND_F(vscript_reload_sv, "Reload Server Vscript.", FCVAR_CHEAT)
 {
-	VScriptServerTerm();
-	VScriptServerInit();
+	g_VScriptGameSystem.Reload();
 }
-
 #endif

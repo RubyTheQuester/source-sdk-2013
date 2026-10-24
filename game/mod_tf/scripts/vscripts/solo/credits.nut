@@ -1,14 +1,16 @@
 TFSOLO.CreditPool <- 0
 TFSOLO.CreditLines <- []
 TFSOLO.Rewards <- {
-	CampaignMain = 200
-	CampaignBonus = 300
-	CampaignReplay = 40
-	Victory = 100	
-	Point = 2
-	UniqueKill = 20
-	
+	CampaignMain = 100
+	CampaignBonus = 150
+	CampaignReplay = 30
+	Victory = 50
+	VictoryArena = 5
+	Point = 1
+	CustomVictory = 50
+	CustomVictoryArena = 5
 }
+TFSOLO.CustomPointTally <- 0
 
 TFSOLO.StartResults <- function()
 {
@@ -34,10 +36,41 @@ TFSOLO.CreditsEventTag <- UniqueString()
 getroottable()[TFSOLO.CreditsEventTag] <- {
 OnGameEvent_teamplay_round_start = function(params)
 {
+	if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
+	{
+		return
+	}
+	SetSoloObjectivesResFile("")
+	TFSOLO.CustomPointTally = 0
+}
+
+OnGameEvent_player_score_changed = function(params)
+{
+	if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
+	{
+		return
+	}
+	local player = EntIndexToHScript(params.player)
+	if (IsPlayerABot(player)) return
+	
+	local score = params.delta
+	if (score > 0)
+	{
+		TFSOLO.CustomPointTally += score
+	}
 }
 	
 OnGameEvent_teamplay_round_win = function(params)
 {
+	if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
+	{
+		return
+	}
+	
+	FireScriptHook("custom_match_over", 
+	{
+		team = params.team,
+	})
 }
 	
 OnGameEvent_teamplay_game_over = function(params)
@@ -47,7 +80,55 @@ OnGameEvent_teamplay_game_over = function(params)
 OnGameEvent_scorestats_accumulated_update = function(_)
 {
 }
+
+OnScriptHook_custom_match_over = function(params)
+{
+	TFSOLO.CreditPool = 0
+	TFSOLO.CreditLines = []
 	
+	local countRED = 0
+	local countBLU = 0
+	foreach (a in GetHumans())
+	{
+		if (a.GetTeam() == 2)
+			countRED++
+		else if (a.GetTeam() == 3)
+			countBLU++
+	}
+	
+	if ((countBLU > countRED && params.team != 3) ||
+	(countRED > countBLU && params.team != 2) || 
+	(countRED + countBLU == 0) )
+	{
+		
+	}
+	else
+	{
+		if (IsInArenaMode() || IsInMedievalMode())
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.CustomVictoryArena
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.CustomVictoryArena + " Victory")
+		}
+		else
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.CustomVictory
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.CustomVictory + " Victory")
+		}
+	}
+	
+	local PointTally = TFSOLO.CustomPointTally * TFSOLO.Rewards.Point
+	if (PointTally > 0)
+	{
+		TFSOLO.CreditPool += PointTally
+		TFSOLO.CreditLines.push("+" + PointTally + " Points")
+	}
+	
+	if (TFSOLO.CreditPool != 0)
+	{
+		TFSOLO.StartResults()
+	}
+}
+
 OnScriptHook_campaign_mission_over = function(params)
 {
 	TFSOLO.CreditPool = 0
@@ -96,8 +177,16 @@ OnScriptHook_solo_mission_over = function(params)
 	TFSOLO.CreditLines = []
 	if (params.playerWon)
 	{
-		TFSOLO.CreditPool += TFSOLO.Rewards.Victory
-		TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.Victory + " Victory")
+		if (IsInArenaMode())
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.VictoryArena
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.VictoryArena + " Victory")
+		}
+		else
+		{
+			TFSOLO.CreditPool += TFSOLO.Rewards.Victory
+			TFSOLO.CreditLines.push("+" + TFSOLO.Rewards.Victory + " Victory")
+		}
 	}
 	
 	local PointTally = 0

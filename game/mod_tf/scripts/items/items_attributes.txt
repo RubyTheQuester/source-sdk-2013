@@ -802,7 +802,7 @@
 		{
 			"name"	"projectile_bounce_limit"
 			"attribute_class"	"projectile_bounce_limit"
-			"description_string"	"#Attrib_Projectile_Bounce"
+			"description_string"	"#Attrib_Projectile_Bounce_Limit"
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
 			"effect_type"	"neutral"

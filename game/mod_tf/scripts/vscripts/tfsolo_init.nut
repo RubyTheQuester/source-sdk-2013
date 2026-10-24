@@ -15,12 +15,15 @@ if (TFSOLO.IsSolo)
 {
 	IncludeScript("solo/soloinit.nut")
 }
-if (TFSOLO.IsSolo || TFSOLO.IsCampaign)
-{
-	IncludeScript("solo/credits.nut")
-}
-
 IncludeScript("solo/credits.nut")
+if (TFSOLO.UseMapFixes && TFSOLO.MapEntryCvar != null && TFSOLO.MapEntryCvar.len() != 0)
+{
+	try { IncludeScript("mapfix/"+TFSOLO.MapEntryCvar+ ".nut"); } catch(e) { }
+}
+else if (TFSOLO.UseMapFixes)
+{
+	try { IncludeScript("mapfix/"+GetMapName()+ ".nut"); } catch(e) { }
+}
 
 TFSOLO.CoreEventTag <- UniqueString()
 getroottable()[TFSOLO.CoreEventTag] <- {
