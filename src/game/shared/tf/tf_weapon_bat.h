@@ -41,8 +41,6 @@ public:
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_BAT; }
 	virtual bool		BatDeflects() { return false; }
-	virtual void		Smack( void );
-	virtual void		PlayDeflectionSound( bool bPlayer );
 
 private:
 

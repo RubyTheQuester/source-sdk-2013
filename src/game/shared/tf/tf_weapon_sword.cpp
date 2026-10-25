@@ -623,18 +623,10 @@ void CTFKatana::Smack(void)
 	BaseClass::Smack();
 
 #ifdef GAME_DLL
-	int iCanDeflect = 0;
-	CALL_ATTRIB_HOOK_INT(iCanDeflect, sword_deflect);
-
-	if (iCanDeflect == 1)
-	{
-		DeflectProjectiles();
-	}
-
 	int iCanPush = 0;
-	CALL_ATTRIB_HOOK_INT(iCanPush, sword_push);
+	CALL_ATTRIB_HOOK_INT( iCanPush, sword_push );
 
-	if (iCanPush == 1)
+	if ( iCanPush == 1 )
 	{
 		Push();
 	}

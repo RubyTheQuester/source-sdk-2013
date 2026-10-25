@@ -266,12 +266,35 @@ void CTFWeaponBaseMelee::PlaySwingSound( void )
 	}
 }
 
+#ifdef GAME_DLL
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFWeaponBaseMelee::PlayDeflectionSound(bool bPlayer)
+{
+	if (!bPlayer)
+	{
+		EmitSound("Weapon_GolfClub.PushImpact");
+	}
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : *pPlayer - 
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::Swing( CTFPlayer *pPlayer )
 {
+#ifdef GAME_DLL
+		int iCanDeflect = 0;
+		CALL_ATTRIB_HOOK_INT( iCanDeflect, sword_deflect );
+
+		if ( iCanDeflect == 1 )
+		{
+			DeflectProjectiles();
+		}
+#endif
+
 	CalcIsAttackCritical();
 
 #ifdef GAME_DLL

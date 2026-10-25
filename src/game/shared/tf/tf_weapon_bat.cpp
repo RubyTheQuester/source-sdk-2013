@@ -143,32 +143,6 @@ CTFBat::CTFBat()
 {
 }
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-void CTFBat::Smack( void )
-{
-	BaseClass::Smack();
-
-#ifdef GAME_DLL
-		int iCanDeflect = 0;
-		CALL_ATTRIB_HOOK_INT(iCanDeflect, sword_deflect);
-
-		if (iCanDeflect == 1)
-		{
-			DeflectProjectiles();
-		}
-#endif
-}
-
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-void CTFBat::PlayDeflectionSound( bool bPlayer )
-{
-	WeaponSound( MELEE_HIT_WORLD );
-}
-
 //=============================================================================
 //
 // CTFBat_Wood

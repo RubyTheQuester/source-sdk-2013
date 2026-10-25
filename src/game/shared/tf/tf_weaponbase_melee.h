@@ -68,6 +68,7 @@ public:
 	virtual float	GetForceScale( void );
 	virtual int		GetDamageCustom( void ) { return TF_DMG_CUSTOM_NONE; }
 	virtual void	HealTeammate( CTFPlayer* pOther, float flHealth, bool bTakeAwayHealth);
+	virtual void	PlayDeflectionSound(bool bPlayer);
 #endif
 
 	// Call when we hit an entity. Use for special weapon effects on hit.
