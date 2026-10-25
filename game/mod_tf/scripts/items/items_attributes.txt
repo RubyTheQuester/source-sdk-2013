@@ -871,6 +871,18 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3579"
+		{
+			"name"	"set cloak is phase"
+			"attribute_class"	"ability_cloak_phase"
+			"description_string"	"#Attrib_CloakIsPhase"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"armory_desc"	"cloak_type"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

@@ -1893,6 +1893,10 @@ void CTFPlayerShared::OnConditionAdded( ETFCond eCond )
 		OnAddPoison();
 		break;
 
+	case TF_COND_STEALTHED_PHASE:
+		OnRemoveStealthedPhase();
+		break;
+
 	default:
 		break;
 	}
@@ -5868,6 +5872,52 @@ void CTFPlayerShared::OnRemovePoison(void)
 	m_flPoisonDamageTaken = 0;
 #endif
 }
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerShared::OnAddStealthedPhase(void)
+{
+#ifdef GAME_DLL
+	AddCond(TF_COND_SPEED_BOOST);
+	m_pOuter->m_takedamage = DAMAGE_NO;
+#else
+	IMaterial* pMaterial = materials->FindMaterial(TF_SCREEN_OVERLAY_MATERIAL_STEALTH, TEXTURE_GROUP_CLIENT_EFFECTS, false);
+	if (!IsErrorMaterial(pMaterial))
+	{
+		view->SetScreenOverlayMaterial(pMaterial);
+	}
+#endif
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerShared::OnRemoveStealthedPhase(void)
+{
+#ifdef GAME_DLL
+	RemoveCond(TF_COND_SPEED_BOOST);
+	m_pOuter->m_takedamage = DAMAGE_YES;
+
+	// See if the spy is inside another player or object
+	Vector vecPos = m_pOuter->GetAbsOrigin();
+	trace_t trace;
+	UTIL_TraceHull(vecPos, vecPos, VEC_HULL_MIN_SCALED(m_pOuter), VEC_HULL_MAX_SCALED(m_pOuter), (MASK_SOLID | CONTENTS_PLAYERCLIP), m_pOuter, COLLISION_GROUP_NONE, &trace);
+	if (trace.fraction < 1.f)
+	{
+		// Telefrag!
+		m_pOuter->TakeDamage(CTakeDamageInfo(m_pOuter, m_pOuter, 1000, DMG_CRUSH, TF_DMG_CUSTOM_TELEFRAG));
+	}
+#else
+	if (m_pOuter->IsLocalPlayer())
+	{
+		IMaterial* pMaterial = view->GetScreenOverlayMaterial();
+		if (pMaterial && FStrEq(pMaterial->GetName(), TF_SCREEN_OVERLAY_MATERIAL_STEALTH))
+		{
+			view->SetScreenOverlayMaterial(NULL);
+		}
+	}
+#endif
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -7251,6 +7301,12 @@ void CTFPlayerShared::OnRemoveStealthed( void )
 	}
 #endif
 
+#ifndef STAGING_ONLY
+	if ( HasPhaseCloakAbility() )
+	{
+		RemoveCond( TF_COND_STEALTHED_PHASE );
+	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -7952,6 +8008,18 @@ bool CTFPlayerShared::CanRuneCharge() const
 	return InCond( TF_COND_RUNE_SUPERNOVA );
 }
 
+#ifndef STAGING_ONLY
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CTFPlayerShared::HasPhaseCloakAbility(void)
+{
+	int iPhaseStealth = 0;
+	CALL_ATTRIB_HOOK_INT_ON_OTHER( m_pOuter, iPhaseStealth, ability_cloak_phase );
+	return iPhaseStealth > 0;
+}
+
+#endif // STAGING_ONLY
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -8175,6 +8243,14 @@ void CTFPlayerShared::InvisibilityThink( void )
 //-----------------------------------------------------------------------------
 float CTFPlayerShared::GetPercentInvisible( void ) const
 {
+#ifndef STAGING_ONLY
+#ifdef CLIENT_DLL
+	// This is a client hack to make everyone else invisible to the local player
+	C_TFPlayer* pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if (pLocalTFPlayer && pLocalTFPlayer->m_Shared.InCond(TF_COND_STEALTHED_PHASE) && pLocalTFPlayer != m_pOuter)
+		return 1.f;
+#endif // CLIENT_DLL
+#endif // STAGING_ONLY
 
 	return m_flInvisibility;
 }
@@ -8241,6 +8317,14 @@ bool CTFPlayerShared::IsInvulnerable( void ) const
 //-----------------------------------------------------------------------------
 bool CTFPlayerShared::IsStealthed( void ) const
 {
+#ifndef STAGING_ONLY
+#ifdef CLIENT_DLL
+	// This is a client hack to make everyone else invisible to the local player
+	C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if ( pLocalTFPlayer && pLocalTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) && pLocalTFPlayer != m_pOuter )
+		return true;
+#endif // CLIENT_DLL
+#endif // STAGING_ONLY
 
 	return ( InCond( TF_COND_STEALTHED ) || InCond( TF_COND_STEALTHED_USER_BUFF ) || InCond( TF_COND_STEALTHED_USER_BUFF_FADING ) );
 }

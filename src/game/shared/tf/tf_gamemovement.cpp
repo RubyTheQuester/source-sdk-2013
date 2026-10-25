@@ -2413,7 +2413,25 @@ bool CTraceFilterObject::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
 
 	if ( pEntity )
 	{
-	
+#ifndef STAGING_ONLY
+		// Special case stealth clips through all players and objects
+		CTFPlayer *pTFPlayerMe = ToTFPlayer( pMe );
+		if ( pTFPlayerMe && pTFPlayerMe->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) )
+		{
+			// if we don't want to collide with anything, just remove this if
+			if ( pEntity->IsBaseObject() || pEntity->IsPlayer() )
+			{
+				return false;
+			}
+		}
+		
+		if ( pEntity->IsPlayer() )
+		{
+			CTFPlayer *pTFPlayerThem = ToTFPlayer( pEntity );
+			if ( pTFPlayerThem && pTFPlayerThem->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) )
+				return false;
+		}
+#endif // STAGING_ONLY
 		if ( pEntity->IsBaseObject() )
 		{
 			CBaseObject *pObject = assert_cast<CBaseObject *>( pEntity );

@@ -320,6 +320,12 @@ bool CTFWeaponInvis::ActivateInvisibilityWatch( void )
 			// Do standard cloak.
 			pOwner->m_Shared.AddCond( TF_COND_STEALTHED, -1.f, pOwner );
 
+#ifndef STAGING_ONLY
+			if (pOwner->m_Shared.HasPhaseCloakAbility())
+			{
+				pOwner->m_Shared.AddCond(TF_COND_STEALTHED_PHASE, -1.f, pOwner);
+			}
+#endif // STAGING_ONLY
 
 			bDoSkill = true;
 		}

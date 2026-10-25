@@ -70,6 +70,8 @@ void CObjectSapper::UpdateOnRemove()
 	StopSound( "Weapon_Sapper.Timer" );
 	StopSound( "Weapon_sd_sapper.Timer" );
 	StopSound( "Weapon_p2rec.Timer" );
+	StopSound( "WeaponDynamiteSapper.BellRing" );
+
 
 	if( GetBuilder() )
 	{

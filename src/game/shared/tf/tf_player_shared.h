@@ -468,7 +468,7 @@ public:
 	void	OnSpyTouchedByEnemy( void );
 	float	GetLastStealthExposedTime( void ) { return m_flLastStealthExposeTime; }
 	void	SetNextStealthTime( float flTime ) { m_flStealthNextChangeTime = flTime; }
-	bool	IsFullyInvisible( void ) { return ( GetPercentInvisible() == 1.f ); }
+	bool	IsFullyInvisible( void ) { return GetPercentInvisible() == 1.f || InCond( TF_COND_STEALTHED_PHASE ); }
 
 	bool	IsEnteringOrExitingFullyInvisible( void );
 
@@ -476,6 +476,10 @@ public:
 	float	GetRuneCharge() const { return m_flRuneCharge; }
 	void	SetRuneCharge( float flVal ) { m_flRuneCharge = Clamp( flVal, 0.f, 100.f ); }
 	bool	IsRuneCharged() const { return m_flRuneCharge == 100.f; }
+
+#ifndef STAGING_ONLY
+	bool	HasPhaseCloakAbility( void );
+#endif 
 
 	bool	IsRocketPackReady( void ) { return GetItemChargeMeter( LOADOUT_POSITION_SECONDARY ) >= 50.f; }
 	float	GetRocketPackCharge( void ) { return GetItemChargeMeter( LOADOUT_POSITION_SECONDARY ); }
@@ -834,8 +838,6 @@ private:
 	void OnAddCompetitiveLoser( void );
 	void OnAddCondGas( void );
 	void OnAddRocketPack( void );
-	void OnAddPoison(void);
-
 
 	void OnRemoveZoomed( void );
 	void OnRemoveBurning( void );
@@ -915,7 +917,6 @@ private:
 	void OnRemoveCondGas( void );
 	void OnRemoveRocketPack( void );
 	void OnRemoveBurningPyro( void );
-	void OnRemovePoison( void );
 
 	// Starting a new trend, putting Add and Remove next to each other
 	void OnAddCondParachute( void );
@@ -923,6 +924,12 @@ private:
 
 	void OnAddHalloweenHellHeal( void );
 	void OnRemoveHalloweenHellHeal( void );
+
+	void OnAddPoison(void);
+	void OnRemovePoison(void);
+
+	void OnAddStealthedPhase(void);
+	void OnRemoveStealthedPhase(void);
 
 	float GetCritMult( void );
 

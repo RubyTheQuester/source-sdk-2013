@@ -1774,6 +1774,9 @@ void CSniperDot::ClientThink( void )
 	CTFWeaponBase *pBaseWeapon = pPlayer->GetActiveTFWeapon();
 	CTFSniperRifle *pWeapon = dynamic_cast<CTFSniperRifle*>( pBaseWeapon );
 
+	if (pWeapon == null)
+		return;
+
 	if ( pPlayer && ( bPlayerIsRobot || ( tfmod_bot_sniper_lasersight.GetBool() && m_bBotOwned ) ) && !( pPlayer == pViewingPlayer && pPlayer->GetFOV() < pPlayer->GetDefaultFOV() ) )
 	{
 		if ( !m_laserBeamEffect )

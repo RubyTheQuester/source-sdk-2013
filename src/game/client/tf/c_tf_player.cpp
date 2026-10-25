@@ -5908,6 +5908,11 @@ void C_TFPlayer::HalloweenBombHeadUpdate( void )
 //-----------------------------------------------------------------------------
 bool C_TFPlayer::ShouldPlayerDrawParticles( void )
 {
+#ifndef STAGING_ONLY
+	C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if ( pLocalTFPlayer && pLocalTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) )
+		return false;
+#endif // TF_CLIENT_DLL
 
 	return true;
 }
@@ -6857,6 +6862,13 @@ float C_TFPlayer::GetEffectiveInvisibilityLevel( void )
 	bool bHalloweenSpellStealth = TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) && m_Shared.InCond( TF_COND_STEALTHED_USER_BUFF );
 	bool bLimitedInvis = !IsEnemyPlayer() || bHalloweenSpellStealth;
 
+#ifndef STAGING_ONLY
+	C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if ( pLocalTFPlayer && pLocalTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) && pLocalTFPlayer != this )
+	{
+		bLimitedInvis = false;
+	}
+#endif // STAGING_ONLY
 
 	// If this is a teammate of the local player or viewer is observer,
 	// dont go above a certain max invis

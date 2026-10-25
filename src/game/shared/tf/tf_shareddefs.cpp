@@ -196,6 +196,7 @@ const char *g_pszBreadModels[] =
 	"models/weapons/c_models/c_bread/c_bread_pretzel.mdl",		// Medic
 	"models/weapons/c_models/c_bread/c_bread_ration.mdl",		// Soldier
 	"models/weapons/c_models/c_bread/c_bread_russianblack.mdl",	// Heavy?
+	"models/weapons/c_models/c_bread/c_bread_plainloaf.mdl",	// Scout
 };
 
 int GetClassIndexFromString( const char *pClassName, int nLastClassIndex/*=TF_LAST_NORMAL_CLASS*/ )
@@ -432,6 +433,7 @@ static const char *g_aConditionNames[] =
 	"TF_COND_IMMUNE_TO_PUSHBACK",				// = 130
 	"TF_COND_CRITBOOSTED_SELF",					// = 131
 	"TF_COND_POISON",							// = 132
+	"TF_COND_STEALTHED_PHASE",					// = 133
 
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS

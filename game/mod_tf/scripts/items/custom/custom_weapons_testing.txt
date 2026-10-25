@@ -547,7 +547,7 @@
 		"34611"
 		{
 			"name"	"Auto-Shotgun"
-			"prefab"	"moditem_prefab weapon_shotgun"
+			"prefab"	"moditem_testing_prefab weapon_shotgun"
 			
 			"item_name"	"#TF_Weapon_AutoShotgun"
 			
@@ -603,7 +603,62 @@
 				}
 			}
 		}
-	
+		
+		"34612"
+		{
+			"name"	"Cloak Phase Watch"
+			
+			"first_sale_date"	"2012/11/28"
+			"item_class"	"tf_weapon_invis"
+			"prefab"	"moditem_testing_prefab weapon_invis"
+
+			"item_type_name"	"#TF_Weapon_Watch"
+			"item_name"	"Cloak Phase Watch"
+			"item_slot"	"pda2"
+			"anim_slot"	"FORCE_NOT_USED"
+
+			"used_by_classes"
+			{
+				"spy"	"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"8 0 -6"	
+			}
+			
+			"attributes"
+			{
+				"kill eater score type"
+				{
+					"attribute_class"	"kill_eater_score_type"
+					"value" 	"58" 
+				}
+				
+				"set cloak is phase"
+				{
+					"attribute_class"	"ability_cloak_phase"
+					"value"	"1"
+				}
+				
+				"mult cloak meter regen rate"
+				{
+					"attribute_class"	"mult_cloak_meter_regen_rate"
+					"value"	"2.0"
+				}
+
+				
+				"ReducedCloakFromAmmo"
+				{
+					"attribute_class"	"ReducedCloakFromAmmo"
+					"value"	"0.65"
+				}
+			}
+			
+			"mouse_pressed_sound"	"ui/item_watch_pickup.wav"
+			"drop_sound"		"ui/item_watch_drop.wav"
+		}
+		
 		//END OF THE LINE
 	}
 }

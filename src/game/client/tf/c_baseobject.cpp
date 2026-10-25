@@ -1097,6 +1097,12 @@ ShadowType_t C_BaseObject::ShadowCastType( void )
 //-----------------------------------------------------------------------------
 float C_BaseObject::GetInvisibilityLevel( void )
 {
+#ifndef STAGING_ONLY
+	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+	C_TFPlayer *pOwner = GetOwner();
+	if ( pLocalPlayer && pLocalPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) && pLocalPlayer != pOwner )
+		return 1.f;
+#endif // STAGING_ONLY
 
 	return m_flInvisibilityPercent;
 }

@@ -347,6 +347,10 @@ bool CTargetID::IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, floa
 	if ( !pLocalTFPlayer )
 		return false;
 
+#ifndef STAGING_ONLY
+	if ( pLocalTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) )
+		return false;
+#endif // STAGING_ONLY
 
 	if ( nEntIndex )
 	{
