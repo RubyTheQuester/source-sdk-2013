@@ -471,8 +471,8 @@
 		
 		"3542"
 		{
-			"name"	"has gravity"
-			"attribute_class"	"projectile_has_gravity"
+			"name"	"rocket gravity"
+			"attribute_class"	"mod_rocket_gravity"
 			"description_string"	"#Attrib_Projectile_Has_Gravity"
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
@@ -482,8 +482,8 @@
 		
 		"3543"
 		{
-			"name"	"bouncer"
-			"attribute_class"	"projectile_bounce"
+			"name"	"rocket bounce"
+			"attribute_class"	"mod_rocket_bounce"
 			"description_string"	"#Attrib_Projectile_Bounce"
 			"description_format"	"value_is_additive"
 			"hidden"	"0"
@@ -800,8 +800,8 @@
 		
 		"3572"
 		{
-			"name"	"projectile_bounce_limit"
-			"attribute_class"	"projectile_bounce_limit"
+			"name"	"rocket bounce limit"
+			"attribute_class"	"mod_rocket_bounce_limit"
 			"description_string"	"#Attrib_Projectile_Bounce_Limit"
 			"description_format"	"value_is_additive"
 			"hidden"	"0"

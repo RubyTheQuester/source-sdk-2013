@@ -257,6 +257,12 @@ rule MedicTauntMedicSMG
 		response MercenaryTauntDeadMeat
 	}
 	
+	rule MercenaryTauntBerserk
+	{
+		criteria ConceptPlayerTaunt IsMercenary WeaponIsBerserk
+		response MercenaryTauntDeadMeat
+	}
+	
 	//Bomb Scare
 	//none, very long
 	

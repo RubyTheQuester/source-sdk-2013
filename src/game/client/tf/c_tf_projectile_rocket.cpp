@@ -124,7 +124,7 @@ void C_TFProjectile_Rocket::CreateTrails( void )
 				}
 
 				int iBouncer = 0;
-				CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iBouncer, projectile_bounce);
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iBouncer, mod_rocket_bounce);
 
 				if (iBouncer)
 				{

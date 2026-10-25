@@ -38,50 +38,6 @@
 			}
 		}
 		
-		"34601"
-		{
-			"name"				"Medic SMG"
-			"prefab"			"moditem_testing_prefab weapon_syringegun"
-			
-			"item_class"		"tf_weapon_smg_medic"
-			
-			"item_name"			"#TF_Weapon_Syringegun_Hitscan"
-			"item_description"	"#TF_Weapon_Syringegun_Hitscan_Desc"
-			
-			"anim_slot"		"item2"
-			
-			"image_inventory"				"backpack/weapons/c_models/c_mat49/c_mat49"
-			
-			"model_player"	"models\weapons\v_models\v_smg_medic.mdl"
-			"model_world"	"models/weapons/w_models/w_smg_medic.mdl"
-			
-			"attach_to_hands"				"0"
-			"model_attach_to_hands"			"1"
-			
-			"propername"		"1"
-			
-			"attributes"
-			{
-				"clip size penalty"
-				{
-					"attribute_class"	"mult_clipsize"
-					"value"				"0.50"
-				}
-				
-				"maxammo primary reduced"
-				{
-					"attribute_class"	"mult_maxammo_primary"
-					"value"	"0.5"
-				}
-				
-				"is sourcemod mod item"
-				{
-					"attribute_class"  "is_sourcemod_mod_item"
-					"value"			   "2"
-				}
-			}
-		}
-		
 		"34602"
 		{
 			"name"	"Bombard"
@@ -282,10 +238,16 @@
 			
 			"attributes"
 			{
-				"has gravity"
+				"rocket gravity"
 				{
-					"attribute_class"	"projectile_has_gravity"
-					"value" "0.5"
+					"attribute_class"	"mod_rocket_gravity"
+					"value"				"0.45"
+				}
+				
+				"Projectile speed decreased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"				"0.75"
 				}
 				
 				"damage bonus"
@@ -331,40 +293,41 @@
 					"value"				"2"
 				}
 				
-				"bouncer"
+				"rocket bounce"
 				{
-					"attribute_class"	"projectile_bounce"
+					"attribute_class"	"mod_rocket_bounce"
 					"value" "1"
 				}
 				
-				"has gravity"
+				"rocket gravity"
 				{
-					"attribute_class"	"projectile_has_gravity"
+					"attribute_class"	"mod_rocket_gravity"
 					"value" "0.95"
 				}
 				
-				"projectile friction"
+				"rocket bounce limit"
 				{
-					"attribute_class"	"projectile_friction"
-					"value" "0.2"
-				}
-				
-				"projectile elasticity"
-				{
-					"attribute_class"	"projectile_elasticity"
-					"value" "0.45"
-				}
-				
-				"projectile_bounce_limit"
-				{
-					"attribute_class"	"projectile_bounce_limit"
+					"attribute_class"	"mod_rocket_bounce_limit"
 					"value" "8"
 				}
 				
+				
+				//"projectile friction"
+				//{
+				//	"attribute_class"	"projectile_friction"
+				//	"value" "0.2"
+				//}
+				//
+				//"projectile elasticity"
+				//{
+				//	"attribute_class"	"projectile_elasticity"
+				//	"value" "0.45"
+				//}
+				
 				"custom projectile model"
-				{
+ 				{
 					"attribute_class"	"custom_projectile_model"
-					"value"				"models/weapons/w_models/w_cannonball.mdl"
+					"value"	"models/enhancedrockets2/w_rocket_original.mdl"
 				}
 			}
 			

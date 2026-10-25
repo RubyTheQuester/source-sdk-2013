@@ -10,9 +10,9 @@ WeaponData
 	"DontDrop"			"1"
 	
 	// Attributes TF.
-	"Damage"			"50"
+	"Damage"			"40"
 	"TimeFireDelay"		"0.6"
-	"SmackDelay"		"0.1"
+	"SmackDelay"		"0.2"
 	"TimeIdle"			"5.0"
 
 	// Ammo & Clip
@@ -24,7 +24,7 @@ WeaponData
 	"bucket_position"		"0"
 
 	// Model & Animation
-	"viewmodel"			"models/weapons/v_models/v_berserk_merc.mdl"
+	"viewmodel"				"models/weapons/v_models/v_berserk_merc.mdl"
 	"playermodel"			""
 	"anim_prefix"			"pipe"
 

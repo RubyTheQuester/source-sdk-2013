@@ -645,7 +645,7 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 	CTFProjectile_Rocket *pProjectile = CTFProjectile_Rocket::Create( this, trace.endpos, angForward, pPlayer, pPlayer );
 
 	float fGravityProjectile = 0;
-	CALL_ATTRIB_HOOK_FLOAT( fGravityProjectile, projectile_has_gravity );
+	CALL_ATTRIB_HOOK_FLOAT( fGravityProjectile, mod_rocket_gravity);
 
 	if ( pProjectile )
 	{

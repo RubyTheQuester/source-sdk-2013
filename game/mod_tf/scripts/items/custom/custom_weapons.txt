@@ -795,7 +795,7 @@
 		"34461"
 		{
 			"name"				"Mobile Minigun"
-			"prefab"			"moditem_testing_prefab weapon_minigun"
+			"prefab"			"moditem_prefab weapon_minigun"
 			
 			"item_name"			"#TF_Weapon_MobileMinigun"
 			"item_description"	"#TF_Weapon_MobileMinigun_Desc"
@@ -859,7 +859,7 @@
 		"34462"
 		{
 			"name"				"Reflect Bat"
-			"prefab"			"moditem_testing_prefab weapon_bat"
+			"prefab"			"moditem_prefab weapon_bat"
 
 			"item_name"			"#TF_Weapon_Reflect_Bat"
 			"item_description"	"#TF_Weapon_Reflect_Bat_Desc"
@@ -915,7 +915,7 @@
 		"34463"
 		{
 			"name"				"Dynamite Sapper"
-			"prefab"			"moditem_testing_prefab weapon_sapper"
+			"prefab"			"moditem_prefab weapon_sapper"
 			
 			"item_class"		"tf_weapon_sapper"
 
@@ -954,6 +954,51 @@
 				}
 			}
 		}
+		
+		"34464"
+		{
+			"name"				"Medic SMG"
+			"prefab"			"moditem_prefab weapon_syringegun"
+			
+			"item_class"		"tf_weapon_smg_medic"
+			
+			"item_name"			"#TF_Weapon_Syringegun_Hitscan"
+			"item_description"	"#TF_Weapon_Syringegun_Hitscan_Desc"
+			
+			"anim_slot"		"item2"
+			
+			"image_inventory"				"backpack/weapons/c_models/c_mat49/c_mat49"
+			
+			"model_player"	"models\weapons\v_models\v_smg_medic.mdl"
+			"model_world"	"models/weapons/w_models/w_smg_medic.mdl"
+			
+			"attach_to_hands"				"0"
+			"model_attach_to_hands"			"1"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.50"
+				}
+				
+				"maxammo primary reduced"
+				{
+					"attribute_class"	"mult_maxammo_primary"
+					"value"	"0.5"
+				}
+				
+				"is sourcemod mod item"
+				{
+					"attribute_class"  "is_sourcemod_mod_item"
+					"value"			   "2"
+				}
+			}
+		}
+		
 		//END OF THE LINE
 	}
 }

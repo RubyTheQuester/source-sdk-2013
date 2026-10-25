@@ -267,6 +267,21 @@
 			"item_slot"	"melee"
 			
 			"item_iconname"	"berserk"
+			
+			"attributes"
+			{
+				"sword deflect"
+				{
+					"attribute_class"	"sword_deflect"
+					"value"	"1"
+				}
+				
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
 		}
 		
 		// EQUIPMENT 

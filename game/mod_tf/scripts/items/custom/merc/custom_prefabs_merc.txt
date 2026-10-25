@@ -648,6 +648,7 @@
 			"image_inventory" 	"backpack/crafting/token_melee"
 			
 			"model_player"	"models\weapons\v_models\v_berserk_merc.mdl"
+			"model_world"	""
 			
 			"anim_slot"	"OVERRIDE"
 			"loadout_animation" 	"ACT_MERC_STAND_BERSERK"
