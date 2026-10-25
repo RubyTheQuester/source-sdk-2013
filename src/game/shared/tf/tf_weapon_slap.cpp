@@ -57,7 +57,7 @@ void RecvProxy_UpdateSlapKills( const CRecvProxyData *pData, void *pStruct, void
 {
 	CTFSlap *pSlap = ( CTFSlap* )pStruct;
 	pSlap->SetNumKills( pData->m_Value.m_Int );
-//	pSlap->UpdateFireEffect();
+	pSlap->UpdateFireEffect();
 }
 #endif
 
@@ -72,9 +72,9 @@ CTFSlap::CTFSlap()
 	m_nNumKills = 0;
 
 #ifdef CLIENT_DLL
-//	m_pFlameEffect = NULL;
-//	m_pFlameEffectSound = NULL;
-//	m_hEffectOwner = NULL;
+	m_pFlameEffect = NULL;
+	m_pFlameEffectSound = NULL;
+	m_hEffectOwner = NULL;
 #endif // CLIENT_DLL
 }
 
@@ -87,13 +87,13 @@ void CTFSlap::Precache()
 	PrecacheScriptSound( "Weapon_Slap.OpenHandHitWorld" );
 	PrecacheScriptSound( "Weapon_Slap.BackHandHitWorld" );
 
-//	PrecacheScriptSound( SLAP_SOUND_LEVEL_1 );
-//	PrecacheScriptSound( SLAP_SOUND_LEVEL_2 );
-//	PrecacheScriptSound( SLAP_SOUND_LEVEL_3 );
+	PrecacheScriptSound( SLAP_SOUND_LEVEL_1 );
+	PrecacheScriptSound( SLAP_SOUND_LEVEL_2 );
+	PrecacheScriptSound( SLAP_SOUND_LEVEL_3 );
 
-//	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_1 );
-//	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_2 );
-//	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_3 );
+	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_1 );
+	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_2 );
+	PrecacheParticleSystem( SLAP_PARTICLE_LEVEL_3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ bool CTFSlap::Holster( CBaseCombatWeapon *pSwitchingTo )
 	m_nNumKills = 0;
 
 #ifdef CLIENT_DLL
-//	UpdateFireEffect();
+	UpdateFireEffect();
 #endif // CLIENT_DLL
 
 	return BaseClass::Holster( pSwitchingTo );
@@ -249,10 +249,10 @@ char const *CTFSlap::GetShootSound( int iIndex ) const
 void CTFSlap::UpdateVisibility( void )
 {
 	BaseClass::UpdateVisibility();
-//	UpdateFireEffect();
+	UpdateFireEffect();
 }
 
-/*
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -349,5 +349,5 @@ void CTFSlap::UpdateFireEffect( void )
 		StopFlameEffects();
 	}
 }
-*/
+
 #endif // CLIENT_DLL

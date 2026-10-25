@@ -51,7 +51,7 @@ public:
 #else
 	virtual void UpdateVisibility( void ) OVERRIDE;
 	void SetNumKills( int nNumKills ) { m_nNumKills = nNumKills; }
-//	void UpdateFireEffect( void );
+	void UpdateFireEffect( void );
 #endif // GAME_DLL
 
 private:
@@ -59,11 +59,11 @@ private:
 	CNetworkVar( int, m_nNumKills );
 
 #ifdef CLIENT_DLL
-//	void StartFlameEffects( void );
-//	void StopFlameEffects( void );
-//	CNewParticleEffect *m_pFlameEffect;
-//	CSoundPatch *m_pFlameEffectSound;
-//	EHANDLE m_hEffectOwner;
+	void StartFlameEffects( void );
+	void StopFlameEffects( void );
+	CNewParticleEffect *m_pFlameEffect;
+	CSoundPatch *m_pFlameEffectSound;
+	EHANDLE m_hEffectOwner;
 #endif // CLIENT_DLL
 };
 
