@@ -1558,8 +1558,12 @@ bool CHudItemEffectMeter_Weapon< CTFBonesaw >::IsEnabled( void )
 
 	float flPreserveUber = 0.f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_pPlayer, flPreserveUber, ubercharge_preserved_on_spawn_max );
-	if ( !flPreserveUber )
+
+	int flUberOrgans = 0.f;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(m_pPlayer, flPreserveUber, add_organ_on_hit);
+	if ( !flPreserveUber && !flUberOrgans)
 		return false;
+
 
 	return true;
 }

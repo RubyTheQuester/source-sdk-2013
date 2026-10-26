@@ -883,6 +883,18 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3580"
+		{
+			"name"	"add organ on hit"
+			"attribute_class"	"add_organ_on_hit"
+			"description_string"	"#Attrib_UberchargeSavedOnHit"
+			"description_format"	"value_is_additive_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"armory_desc"	"on_hit"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

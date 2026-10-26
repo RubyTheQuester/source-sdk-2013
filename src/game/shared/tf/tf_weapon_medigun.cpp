@@ -1532,6 +1532,23 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 
 				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, flChargeAmount, mult_medigun_uberchargerate );
 
+				int iTakeOrgans = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER(pOwner, iTakeOrgans, add_organ_on_hit);
+
+				if (iTakeOrgans)
+				{
+					/*
+					int nOrgans = pOwner->m_Shared.GetDecapitations() + 1;
+					float flOrganCharge = min(20, nOrgans);
+					flChargeModifier *= (flOrganCharge * 0.15f);
+					*/
+
+					int nOrgans = pOwner->m_Shared.GetDecapitations();
+
+					float flOrganCharge = min(3.75f, (1.0f + (nOrgans * 0.30f)) );
+
+					flChargeAmount *= flOrganCharge;
+				}
 
 				// Apply any bonus our target gives us.
 				if ( pTarget )
@@ -1556,6 +1573,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 						flChargeAmount *= 3.f;
 					}
 				}
+
 #endif
 
 				float flNewLevel = MIN( m_flChargeLevel + flChargeAmount, 1.0 );

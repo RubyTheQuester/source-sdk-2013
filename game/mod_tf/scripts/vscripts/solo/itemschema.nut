@@ -36,6 +36,7 @@ IncludeScript("solo/weapons/balancing/pomson.nut")
 
 //-Medic-//
 IncludeScript("solo/weapons/balancing/ubersaw.nut")
+IncludeScript("solo/weapons/balancing/vitasaw.nut")
 
 //-Sniper-//
 IncludeScript("solo/weapons/balancing/carbine.nut")

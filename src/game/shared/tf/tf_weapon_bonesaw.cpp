@@ -110,6 +110,15 @@ void CTFBonesaw::DoMeleeDamage( CBaseEntity* ent, trace_t& trace )
 						pMedigun->SetChargeLevelToPreserve( ( iDecaps * VITASAW_CHARGE_PER_HIT ) );
 					}
 				}
+
+				
+				float flUberChargeRate = 0.f;
+				CALL_ATTRIB_HOOK_FLOAT(flUberChargeRate, add_organ_on_hit);
+
+				if (flUberChargeRate)
+				{
+					pTFOwner->m_Shared.SetDecapitations( iDecaps );
+				}
 			}
 		}
 	}
