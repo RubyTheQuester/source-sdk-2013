@@ -242,16 +242,20 @@ public:
 		}
 
 		Vector forward;
-		//me->EyeVectors(&forward);
+		me->EyeVectors( &forward );
+
+		const float placementRange = 100.0f;
+		forward *= placementRange;
+
 		forward.z = 0.0f;
 		forward.NormalizeInPlace();
 		me->GetVectors( &forward, NULL, NULL );
 
 		me->GetLocomotionInterface()->SetDesiredSpeed( FLT_MAX );	// this is just a rate limiter
 		me->GetLocomotionInterface()->Run();
-		me->GetLocomotionInterface()->Approach( me->GetAbsOrigin() + (100.0f * forward) );
+		me->GetLocomotionInterface()->Approach( me->EyePosition() + forward );
 
-		NDebugOverlay::Cross3D( (me->GetAbsOrigin() + 100.0f * forward), 16, 255, 255, 255, false, 0.5);
+		NDebugOverlay::Cross3D( (me->EyePosition() + forward), 16, 255, 255, 255, false, 0.5);
 
 		return Continue();
 	}
@@ -262,6 +266,14 @@ private:
 	CountdownTimer m_timer;
 };
 
+
+//-----------------------------------------------------------------------------
+// Returns eye vectors
+//-----------------------------------------------------------------------------
+void CBotNPCDecoy::EyeVectors( Vector *pForward, Vector *pRight, Vector *pUp )
+{
+	AngleVectors( EyeAngles(), pForward, pRight, pUp );
+}
 
 IMPLEMENT_INTENTION_INTERFACE( CBotNPCDecoy, CBotNPCDecoyBehavior );
 

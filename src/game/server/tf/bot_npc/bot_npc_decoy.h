@@ -51,6 +51,7 @@ public:
 	virtual CBotNPCBody *GetBodyInterface( void ) const						{ return m_body; }
 
 	virtual Vector EyePosition( void );
+	void EyeVectors(Vector* pForward, Vector* pRight = NULL, Vector* pUp = NULL);
 
 	virtual unsigned int PhysicsSolidMaskForEntity( void ) const;
 	virtual bool	ShouldCollide( int collisionGroup, int contentsMask ) const;

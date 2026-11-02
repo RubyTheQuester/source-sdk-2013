@@ -13,7 +13,7 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	a1.SetString("attribute_class","add_organ_on_hit")
 	a1.SetInt("value",1)
 	
-	prefab.RemoveSubKey("item_description")
+	prefab.SetString("item_description", "#TF_Vitasaw_Rework_Desc")
 	
 	prefab.SetString("item_quality","moditem_newstats")
 })

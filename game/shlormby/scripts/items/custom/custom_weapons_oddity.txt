@@ -71,10 +71,10 @@
 			"item_name"			"#TF_Decoy"
 			"item_description"	"#TF_Decoy_Desc"
 			
-			"item_type_name"	"#TF_Weapon_Spy_Sapper"
+			"item_type_name"	"#TF_Weapon_Decoy"
 			
-			"item_slot"	"pda"
-			"anim_slot"	"melee"
+			"item_slot"	"pda2"
+			"anim_slot"	"FORCE_NOT_USED"
 			"attach_to_hands"	"1"
 			
 			"image_inventory"	"backpack/crafting/token_pda"
@@ -85,7 +85,7 @@
 			
 			"used_by_classes"
 			{
-				"spy"	"1"
+				"spy"	"-1"
 			}
 			
 			"static_attrs"

@@ -895,6 +895,17 @@
 			"stored_as_integer"	"0"
 		}
 		
+		"3581"
+		{
+			"name"	"mult cloak rate decreased"
+			"attribute_class"	"mult_cloak_rate"
+			"description_string"	"#Attrib_CloakRate_Decreased"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		
 		//End of Line
 		// IF AN ATTIRBUTE DOESN'T WORK, CHECK THE FUCKING description_format INPUT
 	}

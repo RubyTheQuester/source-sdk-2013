@@ -20,8 +20,8 @@ Scheme
 		"ItemArmory_3_GreyedOut"			"25 35 85 255"
 
 		//Oddity, Just doing whatever
-		"ItemArmory_4"						"255 255 255 255"
-		"ItemArmory_4_GreyedOut"			"78 25 25 255"
+		"ItemArmory_4"						"255 0 220 255"
+		"ItemArmory_4_GreyedOut"			"125 0 110 255"
 		
 		//Tweaked stats of Live TF2 Weapon
 		"ItemArmory_5"						"218 157 40 255"

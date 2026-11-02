@@ -170,7 +170,7 @@
 			"0"			"#Attrib_ModItem_Test"
 			"1"			"#Attrib_ModItem_Credit_OpenFortress"
 			"2"			"#Attrib_ModItem_Credit_PreFortress"
-			"3"			"#Attrib_ModItem_Credit_3"
+			"3"			"#Attrib_ModItem_Credit_TeamFortressClassic"
 		}
 		
 		"is custom mod item"
