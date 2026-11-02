@@ -1,0 +1,116 @@
+		
+"drop_bomblets_amount"
+{
+	"attribute_class"	"drop_bomblets_amount"
+	"value"				"3"
+}
+
+"bomblet_damage"
+{
+	"attribute_class"	"bomblet_damage"
+	"value"				"100"
+}
+
+"bomblet_timer"
+{
+	"attribute_class"	"bomblet_timer"
+	"value"				"3"
+}
+
+"bomblet_radius"
+{
+	"attribute_class"	"bomblet_radius"
+	"value"				"192"
+}
+
+"3578"
+{
+	"name"	"drop_bomblets_amount"
+	"attribute_class"	"drop_bomblets_amount"
+	"description_string"	"#Attrib_Bomblets_Amount"
+	"description_format"	"value_is_additive"
+	"effect_type"	"positive"
+	"stored_as_integer"	"0"
+}
+
+"3579"
+{
+	"name"	"bomblet_damage"
+	"attribute_class"	"bomblet_damage"
+	"description_string"	"#Attrib_Bomblets_Damage"
+	"description_format"	"value_is_additive"
+	"effect_type"	"positive"
+	"stored_as_integer"	"0"
+}
+
+"3580"
+{
+	"name"	"bomblet_timer"
+	"attribute_class"	"bomblet_timer"
+	"description_string"	"#Attrib_Bomblets_Damage"
+	"description_format"	"value_is_additive"
+	"effect_type"	"positive"
+	"stored_as_integer"	"0"
+}
+
+"3581"
+{
+	"name"	"bomblet_radius"
+	"attribute_class"	"bomblet_radius"
+	"description_string"	"#Attrib_Bomblets_Damage"
+	"description_format"	"value_is_additive"
+	"effect_type"	"positive"
+	"stored_as_integer"	"0"
+}
+
+/*
+int iDropBomblets = 0;
+CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, iDropBomblets, drop_bomblets_amount );
+
+if ( iDropBomblets != 0 && !m_bBombletSpawned )
+{
+	float flBaseOffset = RandomFloat(40, 60);
+	for (int iBomb = 0; iBomb < iDropBomblets; ++iBomb)
+	{
+		Vector vecSrc = pTrace->endpos + (pTrace->plane.normal * 4);
+
+		Vector vecVelocity;
+		QAngle angBase;
+		VectorAngles(pTrace->plane.normal, angBase);
+		angBase.x += flBaseOffset;
+		float flRot = DEG2RAD((360 / iDropBomblets) * iBomb);
+
+
+		AngleVectors(angBase, &vecVelocity);
+
+		vecVelocity *= RandomFloat(275, 300);
+
+		vecVelocity = (vecVelocity * cos(flRot)) +
+			(CrossProduct(pTrace->plane.normal, vecVelocity) * sin(flRot)) +
+			(pTrace->plane.normal * DotProduct(pTrace->plane.normal, vecVelocity) * (1 - cos(flRot)));
+
+		Vector vecZero(0, 0, 0);
+
+		CBaseCombatCharacter* pOwner = m_hLauncher ? (CBaseCombatCharacter*)m_hLauncher.Get() : NULL;
+
+		CTFGrenadePipebombProjectile* pBomb = CTFGrenadePipebombProjectile::Create(vecSrc, vec3_angle, vecVelocity, vecZero, pOwner, pWeapon->GetTFWpnData(), 1, 1);
+
+		float flBombletDamage = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( m_hLauncher, flBombletDamage, bomblet_damage);
+
+		float flBombletTimer = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_hLauncher, flBombletTimer, bomblet_timer);
+
+		float flBombletRadius = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(m_hLauncher, flBombletRadius, bomblet_radius);
+
+		pBomb->SetLauncher(pOwner);
+		pBomb->SetDamage(flBombletDamage);
+		pBomb->SetDetonateTimerLength(flBombletTimer + random->RandomFloat(0.0f, 1.0f));
+		pBomb->SetDamageRadius(flBombletRadius);
+		pBomb->SetCritical(m_bCritical);
+		pBomb->SetBomblet(true);
+		//pBomb->SetKillIcon(pInfo->m_szKillIcon);
+	}
+}
+*/
