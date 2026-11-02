@@ -168,7 +168,7 @@ PRECACHE_REGISTER_FN(PrecacheNail);
 // CTFProjectile_Nail
 //-----------------------------------------------------------------------------
 #define NAIL_GRAVITY		0.3f
-#define NAIL_VELOCITY	1000.0f
+#define NAIL_VELOCITY	1500.0f
 // Purpose:
 //-----------------------------------------------------------------------------
 CTFBaseProjectile* CTFProjectile_Nail::Create(
