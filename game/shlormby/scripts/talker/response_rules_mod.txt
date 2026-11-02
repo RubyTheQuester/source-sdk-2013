@@ -1,0 +1,82 @@
+criterion "WeaponIsRocketLauncherMortar" "playerweapon" "tf_weapon_rocketlauncher_mortar" "required"
+
+criterion "WeaponIsRevolverSecondary" "playerweapon" "tf_weapon_revolver_secondary" "required"
+criterion "WeaponIsRevolverEngineer" "playerweapon" "tf_weapon_revolver" "required"
+
+criterion "WeaponIsTranq" "playerweapon" "tf_weapon_tranq" "required"
+
+criterion "WeaponIsHandshake" "item_name" "The Scottish Handshake" "required" weight 10
+
+criterion "WeaponIsMedicSMG" "playerweapon" "tf_weapon_smg_medic" "required"
+
+//============================================================================================================
+//START OPEN FORTRESS
+//------------------------------------------------------------------------------------------------------------
+criterion "IsMercenary" "playerclass" "Mercenary" "required"
+criterion "IsOnMercenary" "crosshair_on" "Mercenary" "required"
+criterion "OrMercenary" "playerclass" "Mercenary"
+criterion "IsNotMercenary" "playerclass" "!=Mercenary" "required"
+criterion "IsVictimMercenary" "victimclass" "Mercenary" "required" weight 0
+criterion "IsNotVictimMercenary" "victimclass" "!=Mercenary" "required" weight 0
+
+//////////////
+//Is Weapons//
+//////////////
+
+//Melees
+criterion "WeaponIsCrowbar" "playerweapon" "tf_weapon_crowbar" "required"
+criterion "WeaponIsMedkit" "playerweapon" "tf_weapon_medkit" "required"
+criterion "WeaponIsCombatKnife" "playerweapon" "tf_weapon_knife_merc" "required"
+criterion "WeaponIsBerserk" "playerweapon" "tf_weapon_fists_merc" "required"
+
+//Pistols
+criterion "WeaponIsPistolMercenary" "playerweapon" "tf_weapon_pistol_mercenary" "required"
+criterion "WeaponIsDMRevolver" "playerweapon" "tf_weapon_revolver_mercenary" "required"
+
+//Shotguns
+criterion "WeaponIsShotgunMerc" "playerweapon" "tf_weapon_shotgun_mercenary" "required"
+criterion "WeaponIsSuperShotgun" "playerweapon" "tf_weapon_super_shotgun" "required"
+
+//Autos
+criterion "WeaponIsTommyGun" "playerweapon" "tf_weapon_tommygun" "required"
+
+//Long-Range
+criterion "WeaponIsAssaultRifle" "playerweapon" "tf_weapon_assault_rifle" "required"
+
+//Wild-cards
+criterion "WeaponIsNailgun" "playerweapon" "tf_weapon_nailgun" "required"
+
+//Explosives
+criterion "WeaponIsChinaLake" "playerweapon" "tf_weapon_grenadelauncher_mercenary" "required"
+criterion "WeaponIsDMRocketLauncher" "playerweapon" "tf_weapon_rocketlauncher_mercenary" "required"
+criterion "WeaponIsDynamite" "playerweapon" "tf_weapon_dynamite" "required"
+
+/////////
+//Other//
+/////////
+
+criterion "WeaponIsNotShotgunMercenary" "playerweapon" "!=tf_weapon_shotgun_mercenary" "required"
+criterion "WeaponIsNotDMRevolver" "playerweapon" "!=tf_weapon_revolver_mercenary" "required"
+criterion "WeaponIsNotOriginal" "playerweapon" "!=tf_weapon_rocketlauncher_mercenary" "required"
+criterion "WeaponIsNotDMGrenade" "playerweapon" "!=tf_weapon_grenadelauncher_mercenary" "required"
+criterion "WeaponIsNotPistolMercenary" "playerweapon" "!=tf_weapon_pistol_mercenary" "required"
+
+criterion "IsDamageBlast" "damagetype" "DMG_BLAST" "required" 
+
+criterion "ConceptPlayerTauntKnucklesCrack" 	"Concept" "TLK_TAUNT_KNUCKLES" 		required
+criterion "ConceptPlayerTauntSoClose" 			"Concept" "TLK_TAUNT_SO_CLOSE" 		required
+criterion "ConceptPlayerTauntGroovy" 			"Concept" "TLK_TAUNT_GROOVY" 		required
+criterion "ConceptPlayerTauntDeadMeat" 			"Concept" "TLK_TAUNT_DEAD_MEAT" 	required
+criterion "ConceptPlayerTauntBond" 				"Concept" "TLK_TAUNT_BOND" 			required
+criterion "ConceptPlayerTauntBombScare" 		"Concept" "TLK_TAUNT_BOMB_SCARE" 	required
+
+criterion "ConceptPlayerTauntCustom" 		"Concept" "TLK_TAUNT_CUSTOM" 	required
+
+//============================================================================================================
+
+// Test rules
+#include "talker/response_rules.txt"
+#include "talker/tf_mod.txt"
+
+#include "talker/Mercenary.txt"
+

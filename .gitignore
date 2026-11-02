@@ -537,7 +537,6 @@ workshop_localcache.txt
 
 /game/shlormby/campaigns/pd_atom_smash
 /game/shlormby/test
-/game/shlormby/scripts/talker/ref
 /game/shlormby/sound/weapons/of
 /game/shlormby/test_custom
 /game/shlormby/maps/dev_pvp_arena.bsp
@@ -552,3 +551,4 @@ workshop_localcache.txt
 /game/shlormby/scripts/1_weapons_unused
 /game/shlormby/cfg/1_hud-fixes
 game/shlormby/cfg/1_hud-fixes_temporary_cfg_backup.cfg
+game/shlormby/scripts/talker/1_ref
