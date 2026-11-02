@@ -517,6 +517,13 @@ tf2_playerstats.dmx
 user.scr
 InGameDialogConfig.vdf
 
+local_loadout_*.txt
+save_*.txt
+save_73117512.txt
+savedata.nut
+workshop_localcache.txt
+*.7z
+
 /game/mod_tf/custom
 /game/mod_tf/downloadlists
 /game/mod_tf/scripts/items/unused
@@ -528,12 +535,6 @@ InGameDialogConfig.vdf
 /game/mod_tf/scripts/items/tfsolo
 /game/mod_tf/scripts/items/gold
 
-local_loadout_*.txt
-save_*.txt
-save_73117512.txt
-savedata.nut
-workshop_localcache.txt
-*.7z
 /game/mod_tf/campaigns/pd_atom_smash
 /game/mod_tf/test
 /game/mod_tf/scripts/talker/ref
@@ -542,6 +543,12 @@ workshop_localcache.txt
 /game/mod_tf/maps/dev_pvp_arena.bsp
 /game/mod_tf/maps/tr_target_fb.bsp
 /game/mod_tf/cfg/hud-fixes
-game/mod_tf/cfg/hud-fixes_temporary_cfg_backup.cfg
-game/mod_tf/scripts/items/bomble stuff.txt
+/game/mod_tf/cfg/hud-fixes_temporary_cfg_backup.cfg
+/game/mod_tf/scripts/items/bomble stuff.txt
 /game/mod_tf/scripts/weapons_unused
+
+/game/shlormby/1_custom
+/game/shlormby/scripts/1_talker
+/game/shlormby/scripts/1_weapons_unused
+/game/shlormby/cfg/1_hud-fixes
+game/shlormby/cfg/1_hud-fixes_temporary_cfg_backup.cfg
