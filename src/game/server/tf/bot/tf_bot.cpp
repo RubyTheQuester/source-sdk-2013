@@ -3992,12 +3992,33 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 
 	case TF_CLASS_MERCENARY:
 		{
-			
-			const float flameRange = 500.0f;
+			const float closeRangeSSG = 500.0f;
+			const float closeRangeExplosive = 300.0f;
 
-			if (secondary && IsRangeGreaterThan(threat->GetLastKnownPosition(), flameRange))
+			if ( primary && primary->GetWeaponID() == TF_WEAPON_SUPER_SHOTGUN )
 			{
-				gun = secondary;
+				if ( secondary && IsRangeGreaterThan(threat->GetLastKnownPosition(), closeRangeSSG) )
+				{
+					gun = secondary;
+				}
+			}
+			else if ( 
+				( primary && primary->GetWeaponID() == TF_WEAPON_ROCKETLAUNCHER_MERCENARY ) || 
+				( primary && primary->GetWeaponID() == TF_WEAPON_GRENADELAUNCHER_MERCENARY )) //Why is it saying dereferencing a null pointer if I don't do it like this?
+			{
+				if (
+					secondary && (secondary->GetWeaponID() != TF_WEAPON_DYNAMITE)
+					&& IsRangeLessThan(threat->GetLastKnownPosition(), closeRangeExplosive))
+				{
+					gun = secondary;
+				}
+			}
+			else
+			{
+				if ( gun && !gun->Clip1() )
+				{
+					gun = secondary;
+				}
 			}
 		}
 	}

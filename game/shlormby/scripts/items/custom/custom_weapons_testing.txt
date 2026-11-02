@@ -352,65 +352,6 @@
 			
 		}
 		
-		"34606"
-		{
-			"name"	"Councilman"
-			"prefab" " moditem_testing_prefab weapon_revolver_engineer"
-			
-			"propername"		"0"
-			
-			"item_name"		"#TF_Weapon_Councilman"
-			"item_description"	"#TF_Weapon_Councilman_Desc"
-			
-			"image_inventory"				"backpack/weapons/c_models/c_councilman/c_councilman"
-			"model_player"					"models/weapons/c_models/c_councilman/c_councilman.mdl"
-			
-			"static_attrs"
-			{
-				"min_viewmodel_offset"		"10 0 -6"
-				"crit_dmg_falloff"			"1"
-			}
-			
-			"attributes"
-			{
-				"revolver use hit locations"
-				{
-					"attribute_class"	"set_weapon_mode"
-					"value"	"1"
-				}
-				
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" "0.85"
-				}
-				
-				"fire rate penalty"
-				{
-					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.2"
-				}
-				
-				"crit mod disabled"
-				{
-					"attribute_class"	"mult_crit_chance"
-					"value"	"0"
-				}
-				
-				"is community contributed item"
-				{
-					"attribute_class"  "is_community_contributed_item"
-					"value"			   "0"
-				}
-			}
-			
-			"visuals"
-			{
-				"sound_single_shot" "Weapon_Councilman.Single"
-				"sound_burst" 		"Weapon_Councilman.SingleCrit"
-			}
-		}
-		
 		"34607"
 		{
 			"name"	"Blast Shield"
@@ -481,7 +422,7 @@
 		
 		"34609"
 		{
-			"name"	"Sniper Rifle Reload"
+			"name"	"Hunting Revolver"
 			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
 			
 			"item_name"	"Hunting Revolver"
@@ -627,10 +568,10 @@
 					"value"				"5"
 				}
 				
-				"is community contributed item"
+				"is custom mod item"
 				{
-					"attribute_class"  "is_community_contributed_item"
-					"value"			   "1"
+					"attribute_class"  "is_custom_mod_item"
+					"value"			   "2"
 				}
 				
 				"shotgun reload override"
@@ -700,7 +641,25 @@
 				"mult cloak rate decreased"
 				{
 					"attribute_class"	"mult_cloak_rate"
-					"value" "-1.0"
+					"value" "-0.1"
+				}
+				
+				"mult decloak rate"
+				{
+					"attribute_class"	"mult_decloak_rate"
+					"value" "0.1"
+				}
+				
+				"NoCloakWhenCloaked"
+				{
+					"attribute_class"	"NoCloakWhenCloaked"
+					"value"	"1"
+				}
+				
+				"cloak phase negative DISPLAY ONLY"
+				{
+					"attribute_class"	"ability_cloak_phase_negative_display_only"
+					"value" "0"
 				}
 				
 				"ReducedCloakFromAmmo"
