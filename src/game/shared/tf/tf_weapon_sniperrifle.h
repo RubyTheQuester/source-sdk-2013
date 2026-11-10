@@ -16,7 +16,7 @@
 #define CTFSniperRifle C_TFSniperRifle
 #define CTFSniperRifleDecap C_TFSniperRifleDecap
 #define CTFSniperRifleClassic C_TFSniperRifleClassic
-#define CTFSniperRifleReload C_TFSniperRifleReload
+#define CTFSniperRifleClip C_TFSniperRifleClip
 #define CSniperDot C_SniperDot
 #endif
 
@@ -281,14 +281,14 @@ private:
 
 //=============================================================================
 
-class CTFSniperRifleReload : public CTFSniperRifle
+class CTFSniperRifleClip : public CTFSniperRifle
 {
 public:
-	DECLARE_CLASS( CTFSniperRifleReload, CTFSniperRifle );
+	DECLARE_CLASS( CTFSniperRifleClip, CTFSniperRifle );
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual int	GetWeaponID(void) const { return TF_WEAPON_SNIPERRIFLE_RELOAD; }
+	virtual int	GetWeaponID(void) const { return TF_WEAPON_SNIPERRIFLE_CLIP; }
 
 	//virtual int	GetDamageType() const OVERRIDE;
 

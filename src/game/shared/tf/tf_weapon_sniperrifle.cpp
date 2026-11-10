@@ -125,18 +125,19 @@ END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( tf_weapon_sniperrifle_classic, CTFSniperRifleClassic );
 PRECACHE_WEAPON_REGISTER( tf_weapon_sniperrifle_classic );
+
 //=============================================================================
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFSniperRifleReload, DT_TFSniperRifleReload)
+IMPLEMENT_NETWORKCLASS_ALIASED( TFSniperRifleClip, DT_TFSniperRifleClip )
 
-BEGIN_NETWORK_TABLE( CTFSniperRifleReload, DT_TFSniperRifleReload)
+BEGIN_NETWORK_TABLE( CTFSniperRifleClip, DT_TFSniperRifleClip)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFSniperRifleReload)
+BEGIN_PREDICTION_DATA( CTFSniperRifleClip)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_sniperrifle_reload, CTFSniperRifleReload );
-PRECACHE_WEAPON_REGISTER(tf_weapon_sniperrifle_reload);
+LINK_ENTITY_TO_CLASS( tf_weapon_sniperrifle_clip, CTFSniperRifleClip );
+PRECACHE_WEAPON_REGISTER( tf_weapon_sniperrifle_clip );
 
 //=============================================================================
 //

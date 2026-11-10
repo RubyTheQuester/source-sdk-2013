@@ -107,10 +107,10 @@
 			}
 		}
 		
-		"weapon_sniperrifle_reload"
+		"weapon_sniperrifle_clip"
 		{
 			"enabled"		"1"
-			"item_class"		"tf_weapon_sniperrifle_reload"
+			"item_class"		"tf_weapon_sniperrifle_clip"
 			
 			"mouse_pressed_sound" 	"ui/item_hat_pickup.wav"
 			"drop_sound" 			"ui/item_hat_drop.wav"

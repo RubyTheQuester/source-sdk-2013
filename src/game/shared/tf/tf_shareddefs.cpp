@@ -733,7 +733,7 @@ const char *g_aWeaponNames[] =
 	"TF_WEAPON_KNIFE_MERC",
 	"TF_WEAPON_DYNAMITE",
 	"TF_WEAPON_TOMMYGUN",
-	"TF_WEAPON_SNIPERRIFLE_RELOAD",
+	"TF_WEAPON_SNIPERRIFLE_CLIP",
 	"TF_WEAPON_FISTS_MERC",
 
 };
@@ -867,7 +867,7 @@ int g_aWeaponDamageTypes[] =
 	DMG_SLASH,													// TF_WEAPON_KNIFE_MERC,
 	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,			// TF_WEAPON_DYNAMITE,
 	DMG_BULLET | DMG_USEDISTANCEMOD,							// TF_WEAPON_TOMMYGUN,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD  | DMG_USE_HITLOCATIONS,		// TF_WEAPON_SNIPERRIFLE_RELOAD,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD  | DMG_USE_HITLOCATIONS,		// TF_WEAPON_SNIPERRIFLE_CLIP,
 	DMG_CLUB,		// TF_WEAPON_FISTS_MERC,
 };
 
@@ -1768,6 +1768,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_crowbar",		// TF_CLASS_MERCENARY,
 		}
 	},
+	/*
 	{
 		"tf_weapon_throwable",
 		{
@@ -1784,6 +1785,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_throwable_secondary",			// TF_CLASS_MERCENARY,	
 		}
 	},
+	*/
 	{
 		"tf_weapon_parachute",
 		{

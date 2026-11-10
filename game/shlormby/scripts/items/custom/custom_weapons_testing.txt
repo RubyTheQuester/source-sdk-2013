@@ -423,7 +423,7 @@
 		"34609"
 		{
 			"name"	"Hunting Revolver"
-			"prefab" "moditem_testing_prefab weapon_sniperrifle_reload"
+			"prefab" "moditem_testing_prefab weapon_sniperrifle_clip"
 			
 			"item_name"	"Hunting Revolver"
 			
