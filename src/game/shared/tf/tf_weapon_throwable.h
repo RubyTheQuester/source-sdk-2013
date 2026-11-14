@@ -179,7 +179,7 @@ public:
 	DECLARE_CLASS( CTFProjectile_ThrowableRepel, CTFProjectile_Throwable );
 	DECLARE_NETWORKCLASS();
 
-	virtual void		SetCustomPipebombModel()			{ SetModel( "models/weapons/c_models/c_balloon_default.mdl" ); }
+	virtual void		SetCustomPipebombModel()			{ SetModel( "models/weapons/c_models/c_bread/c_bread_plainloaf.mdl" ); }
 	virtual bool		ExplodesOnHit()						{ return true; }
 
 #ifdef GAME_DLL

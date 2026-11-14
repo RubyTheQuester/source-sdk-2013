@@ -1,0 +1,47 @@
+"34702"
+{
+	"name"		"Throwable Normal"
+	"prefab"	"moditem_oddity_prefab weapon_throwable"
+	
+	"item_name"		"Throwable Normal"
+	
+	"propername"		"1"
+}
+
+"34703"
+{
+	"name"		"Throwable Chargeable"
+	"prefab"	"moditem_oddity_prefab weapon_throwable"
+	
+	"item_name"		"Throwable Chargeable"
+	
+	"propername"		"1"
+
+	"attributes"
+	{
+		"is throwable chargeable"
+		{
+			"attribute_class"	"is_throwable_chargeable"
+			"value"	"1"
+		}
+	}
+}
+
+"34704"
+{
+	"name"		"Throwable Primable"
+	"prefab"	"moditem_oddity_prefab weapon_throwable"
+	
+	"item_name"		"Throwable Primable"
+	
+	"propername"		"1"
+	
+	"attributes"
+	{
+		"is throwable primable"
+		{
+			"attribute_class"	"is_throwable_primable"
+			"value"	"1"
+		}
+	}
+}

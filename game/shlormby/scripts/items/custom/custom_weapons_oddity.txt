@@ -57,11 +57,105 @@
 					"value"	"2"
 				}
 			}
+		}
+		
+		"34702"
+		{
+			"name"		"Throwable Normal"
+			"prefab"	"moditem_oddity_prefab weapon_throwable"
 			
+			"item_name"		"Throwable Normal"
+			
+			"propername"		"1"
+		}
+		
+		"34703"
+		{
+			"name"		"Throwable Brick"
+			"prefab"	"moditem_oddity_prefab weapon_throwable"
+			
+			"item_name"		"Throwable Brick"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"projectile entity name"
+				{
+					"attribute_class"	"projectile_entity_name"
+					"value"				"tf_projectile_throwable_brick" 
+				}
+			}
+		}
+		
+		"34704"
+		{
+			"name"		"Throwable Repel"
+			"prefab"	"moditem_oddity_prefab weapon_throwable"
+			
+			"item_name"		"Throwable Repel"
+			
+			"propername"		"1"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_flamethrower/c_flamethrower"
+			
+			"attributes"
+			{
+				"projectile entity name"
+				{
+					"attribute_class"	"projectile_entity_name"
+					"value"				"tf_projectile_throwable_repel" 
+				}
+			}
+		}
+		
+		"34705"
+		{
+			"name"		"Throwable Bread Monster"
+			"prefab"	"moditem_oddity_prefab weapon_throwable"
+			
+			"item_name"		"Throwable Bread Monster"
+			
+			"propername"		"1"
+			
+			"image_inventory"	"backpack/weapons/c_models/c_breadmonster/c_breadmonster"
+			
+			"attributes"
+			{
+				"projectile entity name"
+				{
+					"attribute_class"	"projectile_entity_name"
+					"value"				"tf_projectile_throwable_breadmonster" 
+				}
+			}
+		}
+		
+		"34706"
+		{
+			"name"		"Throwable Both"
+			"prefab"	"moditem_oddity_prefab weapon_throwable"
+			
+			"item_name"		"Throwable Both"
+			
+			"propername"		"1"
+			
+			"attributes"
+			{
+				"is throwable chargeable"
+				{
+					"attribute_class"	"is_throwable_chargeable"
+					"value"	"1"
+				}
+				
+				"is throwable primable"
+				{
+					"attribute_class"	"is_throwable_primable"
+					"value"	"1"
+				}
+			}
 		}
 		
 		// BATSHIT INSANE STUFF
-		
 		"34799"
 		{
 			"name"	"The Decoy"

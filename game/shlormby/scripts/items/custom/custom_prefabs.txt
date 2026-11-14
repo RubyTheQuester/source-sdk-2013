@@ -143,6 +143,99 @@
 			"item_slot"		"primary"
 		}
 		
+		"weapon_throwable"
+		{
+			"item_class"		"tf_weapon_throwable"
+			"item_type_name"	"#TF_UsableItem"
+			
+			"item_slot"	"action"
+			"anim_slot" "MELEE_ALLCLASS"
+			"attach_to_hands"	"1"
+			"act_as_weapon"		"1"
+			
+			"image_inventory"	"backpack/weapons/c_models/urinejar"
+			"image_inventory_size_w"		"128"
+			"image_inventory_size_h"		"82"
+			"inspect_panel_dist" 			"22"
+			"model_player"	"models/weapons/c_models/urinejar.mdl"
+			
+			"item_description"	"WIP, may not even work!"
+			
+			"item_quality"	"unique"
+			
+			"propername" "0"
+			"min_ilevel"	"1"
+			"max_ilevel"	"100"
+			
+			"model_player"	"models/weapons/c_models/c_bread/c_bread_plainloaf.mdl"
+			
+			"used_by_classes"
+			{
+				"scout"			"1"
+				"sniper"		"1"
+				"soldier"		"1"
+				"demoman"		"1"
+				"medic"			"1"
+				"heavy"			"1"
+				"spy" 			"1"
+				"engineer" 		"1"
+				"pyro" 			"1"
+				"mercenary"		"1"
+			}
+			
+			"static_attrs"
+			{
+				"min_viewmodel_offset"		"10 0 -9"
+			}
+			
+			"attributes"
+			{
+				"throwable detonation time"
+				{
+					"attribute_class"	"throwable_detonation_time"
+					"value"	"3"
+				}
+				
+				"throwable recharge time"
+				{
+					"attribute_class"	"throwable_recharge_time"
+					"value"	"3"
+				}
+				
+				"single wep deploy time decreased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"	"0.5"
+				}
+				
+				"projectile entity name"
+				{
+					"attribute_class"	"projectile_entity_name"
+					"value"				"tf_projectile_throwable" 
+				}
+			}
+			
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_MP_ATTACK_STAND_MELEE_ALLCLASS"	"ACT_MP_THROW"
+					"ACT_VM_DRAW"							"ACT_THROWABLE_VM_DRAW"
+					"ACT_VM_IDLE"							"ACT_THROWABLE_VM_IDLE"
+					"ACT_VM_PRIMARYATTACK"					"ACT_THROWABLE_VM_FIRE"
+					"ACT_SECONDARY_VM_INSPECT_START"		"ACT_ITEM1_VM_INSPECT_START"
+					"ACT_SECONDARY_VM_INSPECT_IDLE"			"ACT_ITEM1_VM_INSPECT_IDLE"
+					"ACT_SECONDARY_VM_INSPECT_END"			"ACT_ITEM1_VM_INSPECT_END"
+				}
+
+				"sound_deploy"			"Weapon_ToolBox.Draw"
+				"sound_single_shot"		"Passtime.Throw"
+				"sound_special1"		"Carpet.Impact"
+			}
+			
+			"mouse_pressed_sound"	"ui/item_hat_pickup.wav"
+			"drop_sound"		"ui/item_hat_drop.wav"
+		}
 		//END OF THE LINE
 	}
 }
