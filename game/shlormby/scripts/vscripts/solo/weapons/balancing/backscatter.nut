@@ -14,25 +14,25 @@ TFSOLO.BalancingFuncs.push(function(kv)
 	//a1.SetString("attribute_class","mult_bullets_per_shot")
 	//a1.SetFloat("value", 0.75)
 	
-	// 90% less spread
-	local a2 = attrib.GetKey("weapon spread bonus", true)
+	// 25% more spread
+	local a2 = attrib.GetKey("spread penalty", true)
 	a2.SetString("attribute_class","mult_spread_scale")
-	a2.SetFloat("value", 0.1)
+	a2.SetFloat("value", 1.25)
 	
-	// 10% less damage
-	local a3 = attrib.GetKey("damage penalty", true)
+	// 25% more damage
+	local a3 = attrib.GetKey("damage bonus", true)
 	a3.SetString("attribute_class","mult_dmg")
-	a3.SetFloat("value", 0.9)
+	a3.SetFloat("value", 1.25)
 	
-	// 10% slower fire rate
-	//local a4 = attrib.GetKey("fire rate penalty", true)
-	//a4.SetString("attribute_class","mult_postfiredelay")
-	//a4.SetFloat("value", 1.1)
+	// 25% slower fire rate
+	local a4 = attrib.GetKey("fire rate penalty", true)
+	a4.SetString("attribute_class","mult_postfiredelay")
+	a4.SetFloat("value", 1.25)
 	
-	// 10% slower reload rate
-	//local a5 = attrib.GetKey("Reload time increased", true)
-	//a5.SetString("attribute_class","mult_reload_time")
-	//a5.SetFloat("value", 1.1)
+	// 30% slower reload rate
+	local a5 = attrib.GetKey("Reload time increased", true)
+	a5.SetString("attribute_class","mult_reload_time")
+	a5.SetFloat("value", 1.30)
 
 	prefab.SetString("item_quality","moditem_newstats")
 	prefab.SetString("item_name","#TF_Weapon_3lbTrigger")
